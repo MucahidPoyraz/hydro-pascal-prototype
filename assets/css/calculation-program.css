@@ -1,0 +1,218 @@
+/* ==========================================================================
+   HPL Silindir Hesaplayıcı — statik HTML/JS sürümü
+   Site temasıyla (koyu slate + mavi/cyan aksan) uyumlu, bağımsız stylesheet.
+   ========================================================================== */
+
+#hpl-calculator,
+#hpl-calculator *,
+#hpl-calculator *::before,
+#hpl-calculator *::after {
+  box-sizing: border-box;
+}
+
+#hpl-calculator {
+  position: relative;
+}
+
+#hpl-calculator .hpl-row {
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+}
+
+#hpl-calculator .hpl-unit {
+  font-size: .75rem;
+  color: #94a3b8; /* slate-400 */
+  margin-left: .25rem;
+  font-weight: 500;
+}
+
+#hpl-calculator select:disabled {
+  opacity: .5;
+  cursor: not-allowed;
+}
+
+/* Native <select> açıldığında tarayıcı, dropdown listesini kendi varsayılan
+   (genelde beyaz) temasıyla render eder — Tailwind sınıfları buraya işlemez.
+   Option'ları da koyu temaya zorlayarak "beyaz zemin, beyaz yazı" sorununu çöz. */
+#hpl-calculator select {
+  color-scheme: dark;
+  background-color: #0f172a; /* slate-900 */
+  color: #f1f5f9; /* slate-100 */
+}
+
+#hpl-calculator select option {
+  background-color: #0f172a;
+  color: #f1f5f9;
+}
+
+/* Hesapla butonu — mobilde kesilmeyi önle */
+#hpl-calculator .hpl-calc-btn {
+  max-width: 100%;
+  white-space: normal;
+  word-break: break-word;
+}
+
+/* Sonuç grid'i: masaüstünde 2 sütun, mobilde 1 sütun */
+#hpl-results-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: .875rem;
+}
+
+@media (max-width: 640px) {
+  #hpl-results-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.hpl-res-item {
+  background: rgba(255, 255, 255, .04);
+  border: 1px solid rgba(255, 255, 255, .1);
+  border-radius: .75rem;
+  padding: .875rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .5rem;
+  min-height: 56px;
+}
+
+.hpl-res-item span {
+  font-size: .85rem;
+  font-weight: 600;
+  color: #cbd5e1; /* slate-300 */
+}
+
+.hpl-res-val {
+  background: rgba(34, 211, 238, .1); /* cyan-400/10 */
+  border: 1px solid rgba(34, 211, 238, .3);
+  color: #67e8f9; /* cyan-300 */
+  padding: .3rem .6rem;
+  border-radius: .5rem;
+  min-width: 96px;
+  text-align: center;
+  font-weight: 700;
+  font-size: .85rem;
+  white-space: nowrap;
+}
+
+/* Eşleşen ürün bulunamadı / hata mesajı */
+.hpl-notice {
+  border-radius: .75rem;
+  padding: .875rem 1.1rem;
+  font-size: .9rem;
+  font-weight: 600;
+  border: 1px solid;
+}
+
+.hpl-notice-warn {
+  background: rgba(251, 191, 36, .08);
+  border-color: rgba(251, 191, 36, .35);
+  color: #fcd34d;
+}
+
+/* Accordion (ürün eşleştirme sonuçları) */
+.hpl-accordion {
+  border: 1px solid rgba(255, 255, 255, .1);
+  border-radius: .75rem;
+  overflow: hidden;
+  background: rgba(255, 255, 255, .03);
+}
+
+.hpl-accordion + .hpl-accordion {
+  margin-top: .75rem;
+}
+
+.hpl-accordion-header {
+  background: rgba(255, 255, 255, .04);
+  padding: .9rem 1.1rem;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: .75rem;
+  border: none;
+  width: 100%;
+  text-align: left;
+  color: #e2e8f0;
+  font-size: .9rem;
+}
+
+.hpl-accordion-header:hover {
+  background: rgba(255, 255, 255, .07);
+}
+
+.hpl-accordion-code {
+  color: #22d3ee; /* cyan-400 */
+  font-weight: 800;
+}
+
+.hpl-accordion-icon {
+  color: #22d3ee;
+  font-size: .65rem;
+  flex-shrink: 0;
+  transition: transform .2s ease;
+}
+
+.hpl-accordion.closed .hpl-accordion-icon {
+  transform: rotate(-90deg);
+}
+
+.hpl-accordion-content {
+  border-top: 1px solid rgba(255, 255, 255, .08);
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+
+.hpl-accordion.closed .hpl-accordion-content {
+  display: none;
+}
+
+.hpl-drawing {
+  width: 100%;
+  text-align: center;
+  background: rgba(255, 255, 255, .03);
+  border: 1px solid rgba(255, 255, 255, .08);
+  border-radius: .5rem;
+  padding: 1rem;
+}
+
+.hpl-drawing img {
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
+  border-radius: .375rem;
+}
+
+.hpl-table-container {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.hpl-clean-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: .72rem;
+  min-width: 480px;
+  margin-bottom: .6rem;
+}
+
+.hpl-clean-table th {
+  background: rgba(255, 255, 255, .05);
+  color: #94a3b8;
+  padding: .45rem;
+  border: 1px solid rgba(255, 255, 255, .1);
+  text-align: center;
+  font-weight: 700;
+}
+
+.hpl-clean-table td {
+  padding: .45rem;
+  border: 1px solid rgba(255, 255, 255, .1);
+  text-align: center;
+  font-weight: 600;
+  color: #e2e8f0;
+}

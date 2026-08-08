@@ -6,6 +6,13 @@
 <title>Silindir Seçim Programı | HydroPascal</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+<link rel="stylesheet" href="../assets/css/calculation-program.css">
+<style>
+  /* Prevents decorative glow elements (e.g. the -right-24 blur circle in the
+     contact card) from pushing the page wider than the viewport on mobile,
+     which shifted the whole layout right and hid the hamburger menu. */
+  html, body { overflow-x: hidden; }
+</style>
 </head>
 <body class="bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 text-slate-300 antialiased">
 
@@ -26,14 +33,14 @@
         <a href="pascalcast.html" class="text-slate-300 hover:text-white hover:bg-white/5 px-4 py-2 rounded-full transition">PascalCast</a>
         <a href="contact.html" class="ml-2 px-5 py-2.5 rounded-full font-semibold bg-gradient-to-r from-blue-500 to-cyan-400 text-slate-950 hover:brightness-110 hover:shadow-lg hover:shadow-cyan-500/30 transition">İletişim</a>
       <div class="ml-3 flex items-center gap-1 rounded-full border border-white/20 bg-white/5 p-1">
-        <span class="px-3 py-1.5 rounded-full text-xs font-bold bg-white/15 text-white">TR</span>
-        <a href="../en/calculation-program.html" aria-label="Switch to English" class="px-3 py-1.5 rounded-full text-xs font-semibold text-slate-400 hover:text-white hover:bg-white/10 transition">EN</a>
+        <div class="relative flex items-center gap-0.5 rounded-full border border-white/15 bg-white/5 p-0.5"><span class="absolute inset-y-0.5 left-0.5 w-9 rounded-full bg-gradient-to-r from-blue-500/40 to-cyan-400/40 ring-1 ring-cyan-400/60"></span><span aria-label="Türkçe (aktif dil)" title="Türkçe" class="relative z-10 flex items-center justify-center w-9 h-8 rounded-full overflow-hidden ring-2 ring-cyan-300 scale-110 shadow-lg shadow-cyan-500/30"><svg viewBox="0 0 30 20" class="w-full h-full" preserveAspectRatio="xMidYMid slice"><rect width="30" height="20" fill="#E30A17"/><circle cx="12" cy="10" r="5" fill="#fff"/><circle cx="13.4" cy="10" r="4" fill="#E30A17"/><polygon fill="#fff" points="18.5,10 15.7,10.9 17.4,8.6 17.4,11.4 15.7,9.1"/></svg></span><a href="../en/calculation-program.html" aria-label="Switch to English" title="English" class="relative z-10 flex items-center justify-center w-9 h-8 rounded-full overflow-hidden grayscale opacity-35 hover:grayscale-0 hover:opacity-100 transition"><svg viewBox="0 0 60 40" class="w-full h-full" preserveAspectRatio="xMidYMid slice"><rect width="60" height="40" fill="#00247d"/><path d="M0,0 60,40 M60,0 0,40" stroke="#fff" stroke-width="8"/><path d="M0,0 60,40 M60,0 0,40" stroke="#cf142b" stroke-width="3"/><path d="M30,0 30,40 M0,20 60,20" stroke="#fff" stroke-width="13"/><path d="M30,0 30,40 M0,20 60,20" stroke="#cf142b" stroke-width="8"/></svg></a></div>
       </div>
       </nav>
-      <div class="flex items-center gap-2 lg:hidden">
-        <div class="flex items-center gap-0.5 rounded-full border border-white/20 bg-white/5 p-0.5"><span class="px-2 py-1 rounded-full text-[11px] font-bold bg-white/15 text-white">TR</span><a href="../en/calculation-program.html" aria-label="Switch to English" class="px-2 py-1 rounded-full text-[11px] font-semibold text-slate-400 hover:text-white hover:bg-white/10 transition">EN</a></div>
-        <button @click="open = !open" class="p-2 text-white">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
+      <div class="flex items-center gap-4 lg:hidden">
+        <div class="relative flex items-center gap-0.5 rounded-full border border-white/20 bg-white/5 p-0.5"><span class="absolute inset-y-0.5 left-0.5 w-7 rounded-full bg-gradient-to-r from-blue-500/40 to-cyan-400/40 ring-1 ring-cyan-400/60"></span><span aria-label="Türkçe (aktif dil)" title="Türkçe" class="relative z-10 flex items-center justify-center w-7 h-7 rounded-full overflow-hidden ring-2 ring-cyan-300 scale-110 shadow-lg shadow-cyan-500/30"><svg viewBox="0 0 30 20" class="w-full h-full" preserveAspectRatio="xMidYMid slice"><rect width="30" height="20" fill="#E30A17"/><circle cx="12" cy="10" r="5" fill="#fff"/><circle cx="13.4" cy="10" r="4" fill="#E30A17"/><polygon fill="#fff" points="18.5,10 15.7,10.9 17.4,8.6 17.4,11.4 15.7,9.1"/></svg></span><a href="../en/calculation-program.html" aria-label="Switch to English" title="English" class="relative z-10 flex items-center justify-center w-7 h-7 rounded-full overflow-hidden grayscale opacity-35 hover:grayscale-0 hover:opacity-100 transition"><svg viewBox="0 0 60 40" class="w-full h-full" preserveAspectRatio="xMidYMid slice"><rect width="60" height="40" fill="#00247d"/><path d="M0,0 60,40 M60,0 0,40" stroke="#fff" stroke-width="8"/><path d="M0,0 60,40 M60,0 0,40" stroke="#cf142b" stroke-width="3"/><path d="M30,0 30,40 M0,20 60,20" stroke="#fff" stroke-width="13"/><path d="M30,0 30,40 M0,20 60,20" stroke="#cf142b" stroke-width="8"/></svg></a></div>
+        <button @click="open = !open" :aria-expanded="open" aria-label="Menü" class="relative flex items-center justify-center h-11 w-11 rounded-xl border border-cyan-400/40 bg-gradient-to-r from-blue-500/20 to-cyan-400/20 text-white shadow-lg shadow-cyan-500/10 hover:border-cyan-400 hover:shadow-cyan-500/30 active:scale-95 transition-all">
+          <svg x-show="!open" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
+          <svg x-show="open" x-cloak xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
         </button>
       </div>
     </div>
@@ -53,7 +60,7 @@
 <div class="h-20"></div>
 
 <!-- HERO -->
-<section id="hero-1" class="relative overflow-hidden py-28">
+<section id="hero-1" class="relative overflow-hidden py-14">
   <div class="pointer-events-none absolute -top-32 -left-32 w-[500px] h-[500px] bg-blue-600/30 rounded-full blur-3xl"></div>
   <div class="pointer-events-none absolute -bottom-32 -right-32 w-[500px] h-[500px] bg-purple-600/30 rounded-full blur-3xl"></div>
   <img src="../assets/images/loho-yeni-1.jpg" alt="Silindir Seçim Programı Hero" class="absolute inset-0 w-full h-full object-cover opacity-10">
@@ -71,40 +78,75 @@
     <p>HydroPascal, üretim kapasitesinin yanı sıra, PascalForge ve PascalCast markaları altında döküm ve dövme tedarik çözümleri sunmasını sağlayan stratejik iş birlikleri geliştirmiştir. Bu entegre yaklaşım sayesinde şirket, tarım sektörünün gelişen taleplerini karşılamak için güvenilir, dayanıklı ve performans odaklı bileşenler sunmaktadır.</p>
   </div>
 
-  <form action="#" method="POST" class="relative bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-10 shadow-2xl grid sm:grid-cols-2 gap-6">
-    <div class="pointer-events-none absolute -top-24 -right-24 w-72 h-72 bg-cyan-500/20 rounded-full blur-3xl"></div>
-    <div class="relative">
-      <label class="block text-sm font-semibold text-slate-200 mb-2" for="p_flow">⚡ Debi (L/dk)</label>
-      <input type="number" id="p_flow" name="p_flow" class="w-full text-lg bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-slate-400 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/30 focus:outline-none transition" placeholder="örn. 25">
+  <div id="hpl-calculator">
+    <form id="hpl-calc-form" class="relative bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-10 shadow-2xl grid sm:grid-cols-2 gap-6">
+      <div class="pointer-events-none absolute -top-24 -right-24 w-72 h-72 bg-cyan-500/20 rounded-full blur-3xl"></div>
+
+      <div class="relative hpl-row">
+        <label class="block text-sm font-semibold text-slate-200" for="p_press">🔵 Pompa Basıncı</label>
+        <select id="p_press" name="p_press" required class="w-full text-lg bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/30 focus:outline-none transition">
+          <option value="" class="bg-slate-900">Seçiniz...</option>
+        </select>
+        <span class="hpl-unit">[bar]</span>
+      </div>
+
+      <div class="relative hpl-row">
+        <label class="block text-sm font-semibold text-slate-200" for="p_flow">⚡ Pompa Debisi</label>
+        <input type="number" step="0.1" id="p_flow" name="p_flow" required class="w-full text-lg bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-slate-400 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/30 focus:outline-none transition" placeholder="örn. 25">
+        <span class="hpl-unit">[L/dk]</span>
+      </div>
+
+      <div class="relative hpl-row">
+        <label class="block text-sm font-semibold text-slate-200" for="c_diam">⭕ Silindir İç Çapı</label>
+        <select id="c_diam" name="c_diam" required class="w-full text-lg bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/30 focus:outline-none transition">
+          <option value="" class="bg-slate-900">Seçiniz...</option>
+        </select>
+        <span class="hpl-unit">[mm]</span>
+      </div>
+
+      <div class="relative hpl-row">
+        <label class="block text-sm font-semibold text-slate-200" for="r_diam">📏 Piston Kolu (Mil) Çapı</label>
+        <select id="r_diam" name="r_diam" required disabled class="w-full text-lg bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/30 focus:outline-none transition">
+          <option value="" class="bg-slate-900">Önce iç çap seçin</option>
+        </select>
+        <span class="hpl-unit">[mm]</span>
+      </div>
+
+      <div class="relative hpl-row">
+        <label class="block text-sm font-semibold text-slate-200" for="stroke">↕️ Strok Uzunluğu</label>
+        <select id="stroke" name="stroke" required class="w-full text-lg bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/30 focus:outline-none transition">
+          <option value="" class="bg-slate-900">Seçiniz...</option>
+        </select>
+        <span class="hpl-unit">[mm]</span>
+      </div>
+
+      <div class="relative hpl-row">
+        <label class="block text-sm font-semibold text-slate-200" for="force_unit">⚙️ Kuvvet Birimi</label>
+        <select id="force_unit" name="force_unit" class="w-full text-lg bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/30 focus:outline-none transition">
+          <option value="kg" class="bg-slate-900">Kilogram (kg)</option>
+          <option value="kN" class="bg-slate-900">Kilonewton (kN)</option>
+        </select>
+      </div>
+
+      <div id="hpl-form-notice" class="hpl-notice hpl-notice-warn sm:col-span-2 hidden"></div>
+
+      <button type="submit" class="hpl-calc-btn relative sm:col-span-2 bg-gradient-to-r from-blue-500 to-cyan-400 text-slate-950 font-semibold text-lg py-4 rounded-full shadow-2xl hover:brightness-110 hover:shadow-lg hover:shadow-cyan-500/30 transition">HESAPLA</button>
+    </form>
+
+    <div id="hpl-results-section" class="hidden mt-10 space-y-10">
+      <div>
+        <h3 class="text-2xl font-bold text-white text-center mb-6">Hesaplama Sonuçları</h3>
+        <div id="hpl-results-grid" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-6"></div>
+      </div>
+      <div>
+        <h3 class="text-2xl font-bold text-white text-center mb-6">Eşleşen Ürünler</h3>
+        <div id="hpl-matching-products"></div>
+      </div>
     </div>
-    <div class="relative">
-      <label class="block text-sm font-semibold text-slate-200 mb-2" for="pressure">🔵 Çalışma Basıncı (Bar)</label>
-      <input type="number" id="pressure" name="pressure" class="w-full text-lg bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-slate-400 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/30 focus:outline-none transition" placeholder="örn. 180">
-    </div>
-    <div class="relative">
-      <label class="block text-sm font-semibold text-slate-200 mb-2" for="bore">⭕ Gövde Çapı (mm)</label>
-      <input type="number" id="bore" name="bore" class="w-full text-lg bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-slate-400 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/30 focus:outline-none transition" placeholder="örn. 80">
-    </div>
-    <div class="relative">
-      <label class="block text-sm font-semibold text-slate-200 mb-2" for="rod">📏 Piston Kolu Çapı (mm)</label>
-      <input type="number" id="rod" name="rod" class="w-full text-lg bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-slate-400 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/30 focus:outline-none transition" placeholder="örn. 45">
-    </div>
-    <div class="relative">
-      <label class="block text-sm font-semibold text-slate-200 mb-2" for="stroke">↕️ Strok Uzunluğu (mm)</label>
-      <input type="number" id="stroke" name="stroke" class="w-full text-lg bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-slate-400 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/30 focus:outline-none transition" placeholder="örn. 500">
-    </div>
-    <div class="relative">
-      <label class="block text-sm font-semibold text-slate-200 mb-2" for="cylinder_type">⚙️ Silindir Tipi</label>
-      <select id="cylinder_type" name="cylinder_type" class="w-full text-lg bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/30 focus:outline-none transition">
-        <option class="bg-slate-900">Çift Etkili</option>
-        <option class="bg-slate-900">Teleskopik</option>
-        <option class="bg-slate-900">OEM</option>
-        <option class="bg-slate-900">Dikey Ayarlanabilir</option>
-      </select>
-    </div>
-    <button type="submit" class="relative sm:col-span-2 bg-gradient-to-r from-blue-500 to-cyan-400 text-slate-950 font-semibold text-lg py-4 rounded-full shadow-2xl hover:brightness-110 hover:shadow-lg hover:shadow-cyan-500/30 transition">Hesapla</button>
-  </form>
+  </div>
 </section>
+
+<script src="../assets/js/calculation-program.js"></script>
 
 <!-- FOOTER START -->
 <footer class="relative bg-slate-950 border-t border-white/10 text-slate-400 overflow-hidden">
