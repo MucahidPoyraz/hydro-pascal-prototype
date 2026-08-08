@@ -44,6 +44,7 @@
 </script>
 <script src="https://cdn.tailwindcss.com"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+<link rel="stylesheet" href="../assets/css/calculation-program.css">
 <style>
   /* Prevents decorative glow elements (e.g. the -right-24 blur circle in the
      contact card) from pushing the page wider than the viewport on mobile,
@@ -116,40 +117,75 @@
     <p>In addition to its manufacturing capabilities, HydroPascal has developed strategic partnerships that enable it to provide casting and forging supply solutions under the PascalForge and PascalCast brands. Through this integrated approach, the company delivers reliable, durable, and performance-driven components to meet the evolving demands of the agricultural sector.</p>
   </div>
 
-  <form action="#" method="POST" class="relative bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-10 shadow-2xl grid sm:grid-cols-2 gap-6">
-    <div class="pointer-events-none absolute -top-24 -right-24 w-72 h-72 bg-cyan-500/20 rounded-full blur-3xl"></div>
-    <div class="relative">
-      <label class="block text-sm font-semibold text-slate-200 mb-2" for="p_flow">⚡ Flow Rate (L/min)</label>
-      <input type="number" id="p_flow" name="p_flow" class="w-full text-lg bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-slate-400 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/30 focus:outline-none transition" placeholder="e.g. 25">
+  <div id="hpl-calculator">
+    <form id="hpl-calc-form" class="relative bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-10 shadow-2xl grid sm:grid-cols-2 gap-6">
+      <div class="pointer-events-none absolute -top-24 -right-24 w-72 h-72 bg-cyan-500/20 rounded-full blur-3xl"></div>
+
+      <div class="relative hpl-row">
+        <label class="block text-sm font-semibold text-slate-200" for="p_press">🔵 Pump Pressure</label>
+        <select id="p_press" name="p_press" required class="w-full text-lg bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/30 focus:outline-none transition">
+          <option value="" class="bg-slate-900">Select...</option>
+        </select>
+        <span class="hpl-unit">[bar]</span>
+      </div>
+
+      <div class="relative hpl-row">
+        <label class="block text-sm font-semibold text-slate-200" for="p_flow">⚡ Pump Flow Rate</label>
+        <input type="number" step="0.1" id="p_flow" name="p_flow" required class="w-full text-lg bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-slate-400 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/30 focus:outline-none transition" placeholder="e.g. 25">
+        <span class="hpl-unit">[L/min]</span>
+      </div>
+
+      <div class="relative hpl-row">
+        <label class="block text-sm font-semibold text-slate-200" for="c_diam">⭕ Bore Diameter</label>
+        <select id="c_diam" name="c_diam" required class="w-full text-lg bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/30 focus:outline-none transition">
+          <option value="" class="bg-slate-900">Select...</option>
+        </select>
+        <span class="hpl-unit">[mm]</span>
+      </div>
+
+      <div class="relative hpl-row">
+        <label class="block text-sm font-semibold text-slate-200" for="r_diam">📏 Rod Diameter</label>
+        <select id="r_diam" name="r_diam" required disabled class="w-full text-lg bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/30 focus:outline-none transition">
+          <option value="" class="bg-slate-900">Select bore diameter first</option>
+        </select>
+        <span class="hpl-unit">[mm]</span>
+      </div>
+
+      <div class="relative hpl-row">
+        <label class="block text-sm font-semibold text-slate-200" for="stroke">↕️ Stroke Length</label>
+        <select id="stroke" name="stroke" required class="w-full text-lg bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/30 focus:outline-none transition">
+          <option value="" class="bg-slate-900">Select...</option>
+        </select>
+        <span class="hpl-unit">[mm]</span>
+      </div>
+
+      <div class="relative hpl-row">
+        <label class="block text-sm font-semibold text-slate-200" for="force_unit">⚙️ Force Unit</label>
+        <select id="force_unit" name="force_unit" class="w-full text-lg bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/30 focus:outline-none transition">
+          <option value="kg" class="bg-slate-900">Kilogram (kg)</option>
+          <option value="kN" class="bg-slate-900">Kilonewton (kN)</option>
+        </select>
+      </div>
+
+      <div id="hpl-form-notice" class="hpl-notice hpl-notice-warn sm:col-span-2 hidden"></div>
+
+      <button type="submit" class="hpl-calc-btn relative sm:col-span-2 bg-gradient-to-r from-blue-500 to-cyan-400 text-slate-950 font-semibold text-lg py-4 rounded-full shadow-2xl hover:brightness-110 hover:shadow-lg hover:shadow-cyan-500/30 transition">CALCULATE</button>
+    </form>
+
+    <div id="hpl-results-section" class="hidden mt-10 space-y-10">
+      <div>
+        <h3 class="text-2xl font-bold text-white text-center mb-6">Calculation Results</h3>
+        <div id="hpl-results-grid" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-6"></div>
+      </div>
+      <div>
+        <h3 class="text-2xl font-bold text-white text-center mb-6">Matching Products</h3>
+        <div id="hpl-matching-products"></div>
+      </div>
     </div>
-    <div class="relative">
-      <label class="block text-sm font-semibold text-slate-200 mb-2" for="pressure">🔵 Working Pressure (Bar)</label>
-      <input type="number" id="pressure" name="pressure" class="w-full text-lg bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-slate-400 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/30 focus:outline-none transition" placeholder="e.g. 180">
-    </div>
-    <div class="relative">
-      <label class="block text-sm font-semibold text-slate-200 mb-2" for="bore">⭕ Bore Diameter (mm)</label>
-      <input type="number" id="bore" name="bore" class="w-full text-lg bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-slate-400 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/30 focus:outline-none transition" placeholder="e.g. 80">
-    </div>
-    <div class="relative">
-      <label class="block text-sm font-semibold text-slate-200 mb-2" for="rod">📏 Rod Diameter (mm)</label>
-      <input type="number" id="rod" name="rod" class="w-full text-lg bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-slate-400 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/30 focus:outline-none transition" placeholder="e.g. 45">
-    </div>
-    <div class="relative">
-      <label class="block text-sm font-semibold text-slate-200 mb-2" for="stroke">↕️ Stroke Length (mm)</label>
-      <input type="number" id="stroke" name="stroke" class="w-full text-lg bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-slate-400 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/30 focus:outline-none transition" placeholder="e.g. 500">
-    </div>
-    <div class="relative">
-      <label class="block text-sm font-semibold text-slate-200 mb-2" for="cylinder_type">⚙️ Cylinder Type</label>
-      <select id="cylinder_type" name="cylinder_type" class="w-full text-lg bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/30 focus:outline-none transition">
-        <option class="bg-slate-900">Double Action</option>
-        <option class="bg-slate-900">Telescopic</option>
-        <option class="bg-slate-900">OEM</option>
-        <option class="bg-slate-900">Vertical Adjustable</option>
-      </select>
-    </div>
-    <button type="submit" class="relative sm:col-span-2 bg-gradient-to-r from-blue-500 to-cyan-400 text-slate-950 font-semibold text-lg py-4 rounded-full shadow-2xl hover:brightness-110 hover:shadow-lg hover:shadow-cyan-500/30 transition">Calculate</button>
-  </form>
+  </div>
 </section>
+
+<script src="../assets/js/calculation-program.en.js"></script>
 </main>
 
 <!-- FOOTER START -->
