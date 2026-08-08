@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>İletişim | HydroPascal</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+<style>
+  /* Fallback: keeps the header/hamburger visible even if the Tailwind CDN
+     is blocked or slow to load on mobile (icon would otherwise render
+     white-on-white and disappear). */
+  html, body { background:#020617; color:#cbd5e1; margin:0; }
+  header { background: rgba(2,6,23,.85); }
+  header button { color:#ffffff; }
+  header button svg { stroke:#ffffff; display:block; }
+  [x-cloak] { display:none !important; }
+</style>
+</head>
+<body class="bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 text-slate-300 antialiased">
+
+<!-- HEADER START -->
+<header class="fixed top-0 inset-x-0 z-50 border-b border-white/10 bg-slate-950/70 backdrop-blur-xl" x-data="{ open: false, scrolled: false }" x-init="window.addEventListener('scroll', () => scrolled = window.scrollY > 20)" :class="scrolled ? 'bg-slate-950/90 shadow-lg shadow-black/20' : ''">
+  <div class="max-w-7xl mx-auto px-6 lg:px-8">
+    <div class="flex items-center justify-between h-20">
+      <a href="index.html" class="flex items-center gap-3 group">
+        <img src="../assets/images/loho-yeni-1.jpg" alt="HydroPascal Logo" class="h-11 w-auto object-contain rounded-lg ring-1 ring-white/10 group-hover:ring-white/30 transition">
+      </a>
+      <nav class="hidden lg:flex items-center gap-1 text-sm font-medium">
+        <a href="index.html" class="text-slate-300 hover:text-white hover:bg-white/5 px-4 py-2 rounded-full transition">Ana Sayfa</a>
+        <a href="about-us.html" class="text-slate-300 hover:text-white hover:bg-white/5 px-4 py-2 rounded-full transition">Hakkımızda</a>
+        <a href="hpl-products.html" class="text-slate-300 hover:text-white hover:bg-white/5 px-4 py-2 rounded-full transition">HPL Ürünleri</a>
+        <a href="oem-parts.html" class="text-slate-300 hover:text-white hover:bg-white/5 px-4 py-2 rounded-full transition">HPL OEM</a>
+        <a href="calculation-program.html" class="text-slate-300 hover:text-white hover:bg-white/5 px-4 py-2 rounded-full transition">Silindir Yazılımı</a>
+        <a href="pascalforge.html" class="text-slate-300 hover:text-white hover:bg-white/5 px-4 py-2 rounded-full transition">PascalForge</a>
+        <a href="pascalcast.html" class="text-slate-300 hover:text-white hover:bg-white/5 px-4 py-2 rounded-full transition">PascalCast</a>
+        <a href="contact.html" class="ml-2 px-5 py-2.5 rounded-full font-semibold bg-gradient-to-r from-blue-500 to-cyan-400 text-slate-950 hover:brightness-110 hover:shadow-lg hover:shadow-cyan-500/30 transition">İletişim</a>
+      <div class="ml-3 flex items-center gap-1 rounded-full border border-white/20 bg-white/5 p-1">
+        <span class="px-3 py-1.5 rounded-full text-xs font-bold bg-white/15 text-white">TR</span>
+        <a href="../en/contact.html" aria-label="Switch to English" class="px-3 py-1.5 rounded-full text-xs font-semibold text-slate-400 hover:text-white hover:bg-white/10 transition">EN</a>
+      </div>
+      </nav>
+      <div class="flex items-center gap-2 lg:hidden">
+        <div class="flex items-center gap-0.5 rounded-full border border-white/20 bg-white/5 p-0.5"><span class="px-2 py-1 rounded-full text-[11px] font-bold bg-white/15 text-white">TR</span><a href="../en/contact.html" aria-label="Switch to English" class="px-2 py-1 rounded-full text-[11px] font-semibold text-slate-400 hover:text-white hover:bg-white/10 transition">EN</a></div>
+        <button @click="open = !open" class="p-2 text-white">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
+        </button>
+      </div>
+    </div>
+    <div x-show="open" x-transition x-cloak class="lg:hidden pb-6 flex flex-col gap-2 text-sm font-medium border-t border-white/10 pt-4">
+      <a href="index.html" class="px-4 py-2 rounded-lg text-slate-300 hover:bg-white/5 hover:text-white transition">Ana Sayfa</a>
+      <a href="about-us.html" class="px-4 py-2 rounded-lg text-slate-300 hover:bg-white/5 hover:text-white transition">Hakkımızda</a>
+      <a href="hpl-products.html" class="px-4 py-2 rounded-lg text-slate-300 hover:bg-white/5 hover:text-white transition">HPL Ürünleri</a>
+      <a href="oem-parts.html" class="px-4 py-2 rounded-lg text-slate-300 hover:bg-white/5 hover:text-white transition">HPL OEM</a>
+      <a href="calculation-program.html" class="px-4 py-2 rounded-lg text-slate-300 hover:bg-white/5 hover:text-white transition">Silindir Yazılımı</a>
+      <a href="pascalforge.html" class="px-4 py-2 rounded-lg text-slate-300 hover:bg-white/5 hover:text-white transition">PascalForge</a>
+      <a href="pascalcast.html" class="px-4 py-2 rounded-lg text-slate-300 hover:bg-white/5 hover:text-white transition">PascalCast</a>
+      <a href="contact.html" class="px-4 py-2 rounded-lg text-center font-semibold bg-gradient-to-r from-blue-500 to-cyan-400 text-slate-950">İletişim</a>
+    </div>
+  </div>
+</header>
+<!-- HEADER END -->
+<div class="h-20"></div>
+
+<!-- HERO -->
+<section id="hero-1" class="relative overflow-hidden py-28">
+  <div class="pointer-events-none absolute -top-32 -left-32 w-[500px] h-[500px] bg-blue-600/30 rounded-full blur-3xl"></div>
+  <div class="pointer-events-none absolute -bottom-32 -right-32 w-[500px] h-[500px] bg-purple-600/30 rounded-full blur-3xl"></div>
+  <img src="../assets/images/loho-yeni-1.jpg" alt="İletişim Hero" class="absolute inset-0 w-full h-full object-cover opacity-10">
+  <div class="relative max-w-7xl mx-auto px-6 lg:px-8">
+    <span class="inline-block mb-6 text-xs font-semibold tracking-widest uppercase text-cyan-300 bg-white/5 border border-white/10 rounded-full px-4 py-1.5">Bize Ulaşın</span>
+    <h1 class="text-5xl md:text-6xl font-extrabold bg-gradient-to-r from-blue-400 via-cyan-300 to-purple-400 bg-clip-text text-transparent" data-section="hero-1" data-field="title">İletişim</h1>
+  </div>
+</section>
+
+<!-- CONTACT SECTION -->
+<section id="contact-form-2" class="max-w-7xl mx-auto px-6 lg:px-8 py-24 grid lg:grid-cols-2 gap-16">
+  <div>
+    <h2 class="text-3xl md:text-4xl font-extrabold text-white mb-6" data-section="contact-form-2" data-field="title">Bizimle İletişime Geçin</h2>
+    <div class="space-y-4 text-lg text-slate-300 leading-relaxed mb-10" data-section="contact-form-2" data-field="content">
+      <p>HydroPascal, tarım makineleri yedek parça sektörüne hizmet vermek misyonuyla 2019 yılında kurulmuştur. Şirket, Massey Ferguson, Ford, New Holland, John Deere, Case, Renault, Zetor, Landini, Fendt, Deutz, Same gibi markalar dahil olmak üzere hem klasik hem de modern traktörler için geniş bir yelpazede yüksek kaliteli yedek parça üretiminde uzmanlaşmıştır.</p>
+      <p>HydroPascal, üretim kapasitesinin yanı sıra, PascalForge ve PascalCast markaları altında döküm ve dövme tedarik çözümleri sunmasını sağlayan stratejik iş birlikleri geliştirmiştir. Bu entegre yaklaşım sayesinde şirket, tarım sektörünün gelişen taleplerini karşılamak için güvenilir, dayanıklı ve performans odaklı bileşenler sunmaktadır.</p>
+    </div>
+    <ul class="space-y-4">
+      <li class="flex items-start gap-4 bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-5 shadow-2xl hover:-translate-y-1 hover:border-cyan-400/40 hover:shadow-cyan-500/20 transition-all duration-300">
+        <span class="text-2xl shrink-0">✉️</span>
+        <div class="text-sm text-slate-300 space-y-1">
+          <p data-section="contact-form-2" data-field="email-export">export@hydropascal.com.tr</p>
+          <p data-section="contact-form-2" data-field="email-factory">factory@hydropascal.com.tr</p>
+          <p data-section="contact-form-2" data-field="email-info">info@hydropascal.com.tr</p>
+        </div>
+      </li>
+      <li class="flex items-start gap-4 bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-5 shadow-2xl hover:-translate-y-1 hover:border-cyan-400/40 hover:shadow-cyan-500/20 transition-all duration-300">
+        <span class="text-2xl shrink-0">📍</span>
+        <span class="text-sm text-slate-300 mt-1" data-section="contact-form-2" data-field="address">Fevziçakmak, 10757 Sk No:3/B, 42210 Karatay/Konya</span>
+      </li>
+      <li class="flex items-start gap-4 bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-5 shadow-2xl hover:-translate-y-1 hover:border-cyan-400/40 hover:shadow-cyan-500/20 transition-all duration-300">
+        <span class="text-2xl shrink-0">📞</span>
+        <span class="text-sm text-slate-300 mt-1" data-section="contact-form-2" data-field="phone">(+90) 555-384-82-29</span>
+      </li>
+      <li class="flex items-start gap-4 bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-5 shadow-2xl hover:-translate-y-1 hover:border-cyan-400/40 hover:shadow-cyan-500/20 transition-all duration-300">
+        <span class="text-2xl shrink-0">🕒</span>
+        <span class="text-sm text-slate-300 mt-1" data-section="contact-form-2" data-field="hours">Pzt – Cuma: 09:00 – 18:30</span>
+      </li>
+    </ul>
+  </div>
+
+  <form action="#" method="POST" class="relative bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-10 shadow-2xl space-y-6 h-fit">
+    <div class="pointer-events-none absolute -top-24 -right-24 w-72 h-72 bg-cyan-500/20 rounded-full blur-3xl"></div>
+    <div class="relative">
+      <label class="block text-sm font-semibold text-slate-200 mb-2" for="name">Ad Soyad</label>
+      <input type="text" id="name" name="name" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-slate-400 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/30 focus:outline-none transition">
+    </div>
+    <div class="relative">
+      <label class="block text-sm font-semibold text-slate-200 mb-2" for="email">E-posta</label>
+      <input type="email" id="email" name="email" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-slate-400 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/30 focus:outline-none transition">
+    </div>
+    <div class="relative">
+      <label class="block text-sm font-semibold text-slate-200 mb-2" for="subject">Konu</label>
+      <input type="text" id="subject" name="subject" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-slate-400 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/30 focus:outline-none transition">
+    </div>
+    <div class="relative">
+      <label class="block text-sm font-semibold text-slate-200 mb-2" for="message">Mesaj</label>
+      <textarea id="message" name="message" rows="5" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-slate-400 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/30 focus:outline-none transition"></textarea>
+    </div>
+    <button type="submit" class="relative w-full bg-gradient-to-r from-blue-500 to-cyan-400 text-slate-950 font-semibold text-lg py-4 rounded-full shadow-2xl hover:brightness-110 hover:shadow-lg hover:shadow-cyan-500/30 transition">Mesaj Gönder</button>
+  </form>
+</section>
+
+<!-- MAP -->
+<section id="contact-map-6" class="max-w-7xl mx-auto px-6 lg:px-8 pb-24">
+  <div class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-4 shadow-2xl">
+    <iframe
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3146.7730739075437!2d32.556440699999996!3d37.935731499999996!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14d091f8848e9837%3A0x65a77557fa40d6ac!2sALD%20Otomotiv!5e0!3m2!1str!2str!4v1786183693817!5m2!1str!2str"
+      class="w-full h-96 rounded-xl border-0"
+      allowfullscreen=""
+      loading="lazy"
+      referrerpolicy="strict-origin-when-cross-origin"
+      title="HydroPascal Konum - Fevziçakmak, 10757 Sk No:3/B, 42210 Karatay/Konya"
+      data-section="contact-map-6" data-field="map-embed">
+    </iframe>
+  </div>
+</section>
+
+<!-- FOOTER START -->
+<footer class="relative bg-slate-950 border-t border-white/10 text-slate-400 overflow-hidden">
+  <div class="pointer-events-none absolute -top-40 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-gradient-to-br from-blue-600/20 to-cyan-400/10 rounded-full blur-3xl"></div>
+  <div class="relative max-w-7xl mx-auto px-6 lg:px-8 py-20 grid grid-cols-1 md:grid-cols-4 gap-12">
+    <div>
+      <img src="../assets/images/logo01-removebg-preview.png" alt="HydroPascal Logo" class="h-12 mb-5 bg-white rounded-lg p-1.5 object-contain">
+      <p class="text-sm leading-relaxed text-slate-400">HPL HydroPascal olarak, 2019 yılından bu yana Hidrolik Silindir Sistemleri üretiyor, tarım makineleri sektörüne tutarlı kalite ve güvenilirlik sunuyoruz.</p>
+    </div>
+    <div id="footer-widgets-3" data-section="footer-widgets-3">
+      <h2 class="text-white font-bold mb-5 text-sm uppercase tracking-wider" data-section="footer-widgets-3" data-field="title">Sayfalar</h2>
+      <ul class="space-y-3 text-sm">
+        <li><a href="index.html" data-section="footer-widgets-3" data-field="link-home" class="hover:text-cyan-400 transition">Ana Sayfa</a></li>
+        <li><a href="about-us.html" data-section="footer-widgets-3" data-field="link-about" class="hover:text-cyan-400 transition">Hakkımızda</a></li>
+        <li><a href="hpl-products.html" data-section="footer-widgets-3" data-field="link-products" class="hover:text-cyan-400 transition">HPL Ürünleri</a></li>
+        <li><a href="pascalforge.html" data-section="footer-widgets-3" data-field="link-forge" class="hover:text-cyan-400 transition">PascalForge</a></li>
+        <li><a href="pascalcast.html" data-section="footer-widgets-3" data-field="link-cast" class="hover:text-cyan-400 transition">PascalCast</a></li>
+        <li><a href="media.html" data-section="footer-widgets-3" data-field="link-media" class="hover:text-cyan-400 transition">Medya</a></li>
+        <li><a href="contact.html" data-section="footer-widgets-3" data-field="link-contact" class="hover:text-cyan-400 transition">İletişim</a></li>
+      </ul>
+    </div>
+    <div id="footer-widgets-4" data-section="footer-widgets-4">
+      <h2 class="text-white font-bold mb-5 text-sm uppercase tracking-wider" data-section="footer-widgets-4" data-field="title">Hızlı Bağlantılar</h2>
+      <ul class="space-y-3 text-sm">
+        <li><a href="privacy-policy.html" data-section="footer-widgets-4" data-field="link-privacy" class="hover:text-cyan-400 transition">Gizlilik Politikası</a></li>
+        <li><a href="terms-of-service.html" data-section="footer-widgets-4" data-field="link-terms" class="hover:text-cyan-400 transition">Kullanım Şartları</a></li>
+        <li><a href="disclaimer.html" data-section="footer-widgets-4" data-field="link-disclaimer" class="hover:text-cyan-400 transition">Sorumluluk Reddi</a></li>
+        <li><a href="faq.html" data-section="footer-widgets-4" data-field="link-faq" class="hover:text-cyan-400 transition">SSS</a></li>
+      </ul>
+    </div>
+    <div id="map-5" data-section="map-5">
+      <h2 class="text-white font-bold mb-5 text-sm uppercase tracking-wider" data-section="map-5" data-field="title">Fabrika Konumu</h2>
+      <ul class="space-y-4 text-sm">
+        <li class="flex gap-3"><span class="mt-0.5 h-5 w-5 shrink-0 text-cyan-400">📍</span><span data-section="map-5" data-field="address">Fevziçakmak, 10757 Sk No:3/B, 42210 Karatay/Konya</span></li>
+        <li class="flex gap-3"><span class="mt-0.5 h-5 w-5 shrink-0 text-cyan-400">📞</span><span data-section="map-5" data-field="phone">(+90) 555-384-82-29</span></li>
+        <li class="flex gap-3"><span class="mt-0.5 h-5 w-5 shrink-0 text-cyan-400">🕒</span><span data-section="map-5" data-field="hours">Pzt – Cuma: 09:00 – 18:30</span></li>
+      </ul>
+    </div>
+  </div>
+  <div class="relative border-t border-white/10 py-6 text-center text-sm text-slate-500" data-section="map-5" data-field="copyright">
+    Tüm Hakları Saklıdır HydroPascal / Telif Hakkı © 2026
+  </div>
+</footer>
+<!-- FOOTER END -->
+
+<!-- WHATSAPP FLOATING BUTTON START -->
+<a href="https://wa.me/905553848229?text=Merhaba%2C%20HydroPascal%20%C3%BCr%C3%BCnleri%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum." target="_blank" rel="noopener noreferrer" aria-label="WhatsApp ile Satış & Destek" class="group fixed bottom-6 right-6 z-[60] flex items-center gap-3">
+  <span class="hidden sm:inline-block whitespace-nowrap rounded-full bg-slate-900/90 border border-white/10 px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-black/30 opacity-0 translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300">
+    Satış &amp; Destek · +90 555 384 82 29
+  </span>
+  <span class="flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] shadow-lg shadow-black/30 ring-4 ring-[#25D366]/20 hover:scale-110 hover:shadow-[#25D366]/40 transition-all duration-300">
+    <svg viewBox="0 0 32 32" class="h-8 w-8 fill-white" aria-hidden="true">
+      <path d="M16.004 3C9.376 3 4 8.373 4 15c0 2.36.7 4.556 1.9 6.4L4 29l7.79-1.86A11.94 11.94 0 0 0 16.004 27C22.63 27 28 21.627 28 15S22.63 3 16.004 3Zm0 21.8c-1.98 0-3.83-.55-5.41-1.5l-.39-.23-4.62 1.1 1.12-4.5-.25-.4A9.75 9.75 0 0 1 5.2 15c0-5.96 4.85-10.8 10.8-10.8S26.8 9.04 26.8 15 21.96 24.8 16.004 24.8Zm6-8.13c-.33-.17-1.95-.96-2.25-1.07-.3-.11-.52-.17-.74.17-.22.33-.85 1.07-1.04 1.29-.19.22-.38.24-.71.08-.33-.17-1.4-.51-2.66-1.63-.98-.87-1.65-1.95-1.84-2.28-.19-.33-.02-.5.15-.67.15-.15.33-.38.5-.57.17-.19.22-.33.33-.55.11-.22.06-.41-.03-.58-.08-.17-.74-1.78-1.01-2.43-.27-.65-.54-.56-.74-.57l-.63-.01c-.22 0-.58.08-.88.41-.3.33-1.15 1.12-1.15 2.73s1.18 3.17 1.34 3.39c.17.22 2.32 3.55 5.63 4.97.79.34 1.4.55 1.88.7.79.25 1.51.21 2.08.13.63-.09 1.95-.8 2.23-1.57.28-.77.28-1.43.19-1.57-.08-.14-.3-.22-.63-.39Z"/>
+    </svg>
+  </span>
+</a>
+<!-- WHATSAPP FLOATING BUTTON END -->
+</body>
+</html>

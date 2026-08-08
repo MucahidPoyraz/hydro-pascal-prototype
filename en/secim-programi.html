@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HPL Calculation Software | HydroPascal</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</head>
+<body class="bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 text-slate-300 antialiased">
+
+<!-- HEADER START -->
+<header class="fixed top-0 inset-x-0 z-50 border-b border-white/10 bg-slate-950/70 backdrop-blur-xl" x-data="{ open: false, scrolled: false }" x-init="window.addEventListener('scroll', () => scrolled = window.scrollY > 20)" :class="scrolled ? 'bg-slate-950/90 shadow-lg shadow-black/20' : ''">
+  <div class="max-w-7xl mx-auto px-6 lg:px-8">
+    <div class="flex items-center justify-between h-20">
+      <a href="index.html" class="flex items-center gap-3 group">
+        <img src="../assets/images/loho-yeni-1.jpg" alt="HydroPascal Logo" class="h-11 w-auto object-contain rounded-lg ring-1 ring-white/10 group-hover:ring-white/30 transition">
+      </a>
+      <nav class="hidden lg:flex items-center gap-1 text-sm font-medium">
+        <a href="index.html" class="text-slate-300 hover:text-white hover:bg-white/5 px-4 py-2 rounded-full transition">Main Page</a>
+        <a href="about-us.html" class="text-slate-300 hover:text-white hover:bg-white/5 px-4 py-2 rounded-full transition">About Us</a>
+        <a href="hpl-products.html" class="text-slate-300 hover:text-white hover:bg-white/5 px-4 py-2 rounded-full transition">HPL Products</a>
+        <a href="oem-parts.html" class="text-slate-300 hover:text-white hover:bg-white/5 px-4 py-2 rounded-full transition">HPL OEM</a>
+        <a href="calculation-program.html" class="text-slate-300 hover:text-white hover:bg-white/5 px-4 py-2 rounded-full transition">Cylinder Software</a>
+        <a href="pascalforge.html" class="text-slate-300 hover:text-white hover:bg-white/5 px-4 py-2 rounded-full transition">PascalForge</a>
+        <a href="pascalcast.html" class="text-slate-300 hover:text-white hover:bg-white/5 px-4 py-2 rounded-full transition">PascalCast</a>
+        <a href="contact.html" class="ml-2 px-5 py-2.5 rounded-full font-semibold bg-gradient-to-r from-blue-500 to-cyan-400 text-slate-950 hover:brightness-110 hover:shadow-lg hover:shadow-cyan-500/30 transition">Contact</a>
+      <div class="ml-3 flex items-center gap-1 rounded-full border border-white/20 bg-white/5 p-1">
+        <a href="../tr/secim-programi.html" aria-label="Türkçe'ye geç" class="px-3 py-1.5 rounded-full text-xs font-semibold text-slate-400 hover:text-white hover:bg-white/10 transition">TR</a>
+        <span class="px-3 py-1.5 rounded-full text-xs font-bold bg-white/15 text-white">EN</span>
+      </div>
+      </nav>
+      <div class="flex items-center gap-2 lg:hidden">
+        <div class="flex items-center gap-0.5 rounded-full border border-white/20 bg-white/5 p-0.5"><a href="../tr/secim-programi.html" aria-label="Türkçe'ye geç" class="px-2 py-1 rounded-full text-[11px] font-semibold text-slate-400 hover:text-white hover:bg-white/10 transition">TR</a><span class="px-2 py-1 rounded-full text-[11px] font-bold bg-white/15 text-white">EN</span></div>
+        <button @click="open = !open" class="p-2 text-white">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
+        </button>
+      </div>
+    </div>
+    <div x-show="open" x-transition x-cloak class="lg:hidden pb-6 flex flex-col gap-2 text-sm font-medium border-t border-white/10 pt-4">
+      <a href="index.html" class="px-4 py-2 rounded-lg text-slate-300 hover:bg-white/5 hover:text-white transition">Main Page</a>
+      <a href="about-us.html" class="px-4 py-2 rounded-lg text-slate-300 hover:bg-white/5 hover:text-white transition">About Us</a>
+      <a href="hpl-products.html" class="px-4 py-2 rounded-lg text-slate-300 hover:bg-white/5 hover:text-white transition">HPL Products</a>
+      <a href="oem-parts.html" class="px-4 py-2 rounded-lg text-slate-300 hover:bg-white/5 hover:text-white transition">HPL OEM</a>
+      <a href="calculation-program.html" class="px-4 py-2 rounded-lg text-slate-300 hover:bg-white/5 hover:text-white transition">Cylinder Software</a>
+      <a href="pascalforge.html" class="px-4 py-2 rounded-lg text-slate-300 hover:bg-white/5 hover:text-white transition">PascalForge</a>
+      <a href="pascalcast.html" class="px-4 py-2 rounded-lg text-slate-300 hover:bg-white/5 hover:text-white transition">PascalCast</a>
+      <a href="contact.html" class="px-4 py-2 rounded-lg text-center font-semibold bg-gradient-to-r from-blue-500 to-cyan-400 text-slate-950">Contact</a>
+    </div>
+  </div>
+</header>
+<!-- HEADER END -->
+<div class="h-20"></div>
+
+<!-- HERO -->
+<section id="hero-1" class="relative overflow-hidden py-24 lg:py-32">
+  <img src="../assets/images/loho-yeni-1.jpg" alt="Calculation Program Hero" class="absolute inset-0 w-full h-full object-cover opacity-10">
+  <div class="pointer-events-none absolute -top-32 -left-32 w-[500px] h-[500px] bg-blue-600/30 rounded-full blur-3xl"></div>
+  <div class="pointer-events-none absolute -bottom-32 -right-32 w-[500px] h-[500px] bg-purple-600/20 rounded-full blur-3xl"></div>
+  <div class="relative max-w-5xl mx-auto px-6 lg:px-8 text-center">
+    <span class="inline-block mb-6 px-4 py-1.5 rounded-full text-xs font-semibold tracking-wider uppercase bg-white/5 border border-white/10 text-cyan-300">Engineering Tool</span>
+    <h1 class="text-5xl md:text-6xl font-extrabold bg-gradient-to-r from-blue-400 via-cyan-300 to-purple-400 bg-clip-text text-transparent" data-section="hero-1" data-field="title">HPL Calculation Software</h1>
+  </div>
+</section>
+
+<!-- CALCULATION FORM -->
+<section id="contact-form-2" class="max-w-5xl mx-auto px-6 lg:px-8 pb-24">
+  <h2 class="text-3xl md:text-4xl font-extrabold text-white text-center mb-6" data-section="contact-form-2" data-field="title">HPL Calculation Software</h2>
+  <div class="space-y-4 text-slate-300 leading-relaxed text-lg mb-12 text-center max-w-3xl mx-auto" data-section="contact-form-2" data-field="content">
+    <p>HydroPascal was established in 2019 with the mission of serving the agricultural machinery spare parts industry. The company specializes in the production of high-quality spare parts for a wide range of both classic and modern tractors, including brands such as Massey Ferguson, Ford, New Holland, John Deere, Case, Renault, Zetor, Landini, Fendt, Deutz, Same.</p>
+    <p>In addition to its manufacturing capabilities, HydroPascal has developed strategic partnerships that enable it to provide casting and forging supply solutions under the PascalForge and PascalCast brands. Through this integrated approach, the company delivers reliable, durable, and performance-driven components to meet the evolving demands of the agricultural sector.</p>
+  </div>
+
+  <form action="#" method="POST" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl p-8 md:p-10 grid sm:grid-cols-2 gap-6 hover:shadow-cyan-500/10 transition-shadow">
+    <div>
+      <label class="block text-sm font-semibold text-slate-300 mb-2" for="p_flow">Flow Rate (L/min)</label>
+      <input type="number" id="p_flow" name="p_flow" class="w-full rounded-xl bg-slate-900/60 border border-white/10 px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:border-transparent transition" placeholder="e.g. 25">
+    </div>
+    <div>
+      <label class="block text-sm font-semibold text-slate-300 mb-2" for="pressure">Working Pressure (Bar)</label>
+      <input type="number" id="pressure" name="pressure" class="w-full rounded-xl bg-slate-900/60 border border-white/10 px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:border-transparent transition" placeholder="e.g. 180">
+    </div>
+    <div>
+      <label class="block text-sm font-semibold text-slate-300 mb-2" for="bore">Bore Diameter (mm)</label>
+      <input type="number" id="bore" name="bore" class="w-full rounded-xl bg-slate-900/60 border border-white/10 px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:border-transparent transition" placeholder="e.g. 80">
+    </div>
+    <div>
+      <label class="block text-sm font-semibold text-slate-300 mb-2" for="rod">Rod Diameter (mm)</label>
+      <input type="number" id="rod" name="rod" class="w-full rounded-xl bg-slate-900/60 border border-white/10 px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:border-transparent transition" placeholder="e.g. 45">
+    </div>
+    <div>
+      <label class="block text-sm font-semibold text-slate-300 mb-2" for="stroke">Stroke Length (mm)</label>
+      <input type="number" id="stroke" name="stroke" class="w-full rounded-xl bg-slate-900/60 border border-white/10 px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:border-transparent transition" placeholder="e.g. 500">
+    </div>
+    <div>
+      <label class="block text-sm font-semibold text-slate-300 mb-2" for="cylinder_type">Cylinder Type</label>
+      <select id="cylinder_type" name="cylinder_type" class="w-full rounded-xl bg-slate-900/60 border border-white/10 px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:border-transparent transition">
+        <option class="bg-slate-900">Double Action</option>
+        <option class="bg-slate-900">Telescopic</option>
+        <option class="bg-slate-900">OEM</option>
+        <option class="bg-slate-900">Vertical Adjustable</option>
+      </select>
+    </div>
+    <button type="submit" class="sm:col-span-2 rounded-full bg-gradient-to-r from-blue-500 to-cyan-400 text-slate-950 font-semibold py-3.5 text-lg shadow-xl hover:brightness-110 hover:shadow-lg hover:shadow-cyan-500/30 transition">Calculate</button>
+  </form>
+</section>
+
+<!-- FOOTER START -->
+<footer class="relative bg-slate-950 border-t border-white/10 text-slate-400 overflow-hidden">
+  <div class="pointer-events-none absolute -top-40 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-gradient-to-br from-blue-600/20 to-cyan-400/10 rounded-full blur-3xl"></div>
+  <div class="relative max-w-7xl mx-auto px-6 lg:px-8 py-20 grid grid-cols-1 md:grid-cols-4 gap-12">
+    <div>
+      <img src="../assets/images/logo01-removebg-preview.png" alt="HydroPascal Logo" class="h-12 mb-5 bg-white rounded-lg p-1.5 object-contain">
+      <p class="text-sm leading-relaxed text-slate-400">As HPL HydroPascal, we manufacture Hydraulic Cylinder Systems since 2019, delivering consistent quality and reliability to the agricultural machinery sector.</p>
+    </div>
+    <div id="footer-widgets-3" data-section="footer-widgets-3">
+      <h2 class="text-white font-bold mb-5 text-sm uppercase tracking-wider" data-section="footer-widgets-3" data-field="title">Pages</h2>
+      <ul class="space-y-3 text-sm">
+        <li><a href="index.html" data-section="footer-widgets-3" data-field="link-home" class="hover:text-cyan-400 transition">Home</a></li>
+        <li><a href="about-us.html" data-section="footer-widgets-3" data-field="link-about" class="hover:text-cyan-400 transition">About Us</a></li>
+        <li><a href="hpl-products.html" data-section="footer-widgets-3" data-field="link-products" class="hover:text-cyan-400 transition">HPL Products</a></li>
+        <li><a href="pascalforge.html" data-section="footer-widgets-3" data-field="link-forge" class="hover:text-cyan-400 transition">PascalForge</a></li>
+        <li><a href="pascalcast.html" data-section="footer-widgets-3" data-field="link-cast" class="hover:text-cyan-400 transition">PascalCast</a></li>
+        <li><a href="media.html" data-section="footer-widgets-3" data-field="link-media" class="hover:text-cyan-400 transition">Media</a></li>
+        <li><a href="contact.html" data-section="footer-widgets-3" data-field="link-contact" class="hover:text-cyan-400 transition">Contact</a></li>
+      </ul>
+    </div>
+    <div id="footer-widgets-4" data-section="footer-widgets-4">
+      <h2 class="text-white font-bold mb-5 text-sm uppercase tracking-wider" data-section="footer-widgets-4" data-field="title">Quick Links</h2>
+      <ul class="space-y-3 text-sm">
+        <li><a href="privacy-policy.html" data-section="footer-widgets-4" data-field="link-privacy" class="hover:text-cyan-400 transition">Privacy Policy</a></li>
+        <li><a href="terms-of-service.html" data-section="footer-widgets-4" data-field="link-terms" class="hover:text-cyan-400 transition">Term Of Service</a></li>
+        <li><a href="disclaimer.html" data-section="footer-widgets-4" data-field="link-disclaimer" class="hover:text-cyan-400 transition">Disclaimer</a></li>
+        <li><a href="faq.html" data-section="footer-widgets-4" data-field="link-faq" class="hover:text-cyan-400 transition">FAQ</a></li>
+      </ul>
+    </div>
+    <div id="map-5" data-section="map-5">
+      <h2 class="text-white font-bold mb-5 text-sm uppercase tracking-wider" data-section="map-5" data-field="title">Factory Location</h2>
+      <ul class="space-y-4 text-sm">
+        <li class="flex gap-3"><span class="mt-0.5 h-5 w-5 shrink-0 text-cyan-400">📍</span><span data-section="map-5" data-field="address">Fevziçakmak, 10757 Sk No:3/B, 42210 Karatay/Konya</span></li>
+        <li class="flex gap-3"><span class="mt-0.5 h-5 w-5 shrink-0 text-cyan-400">📞</span><span data-section="map-5" data-field="phone">(+90) 555-384-82-29</span></li>
+        <li class="flex gap-3"><span class="mt-0.5 h-5 w-5 shrink-0 text-cyan-400">🕒</span><span data-section="map-5" data-field="hours">Mon – Fri : 09:00 AM – 18:30 PM</span></li>
+      </ul>
+    </div>
+  </div>
+  <div class="relative border-t border-white/10 py-6 text-center text-sm text-slate-500" data-section="map-5" data-field="copyright">
+    All Rights Reserved By HydroPascal / Copyright © 2026
+  </div>
+</footer>
+<!-- FOOTER END -->
+
+<!-- WHATSAPP FLOATING BUTTON START -->
+<a href="https://wa.me/905553848229?text=Hello%2C%20I%20would%20like%20to%20get%20information%20about%20HydroPascal%20products." target="_blank" rel="noopener noreferrer" aria-label="Sales & Support via WhatsApp" class="group fixed bottom-6 right-6 z-[60] flex items-center gap-3">
+  <span class="hidden sm:inline-block whitespace-nowrap rounded-full bg-slate-900/90 border border-white/10 px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-black/30 opacity-0 translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300">
+    Sales &amp; Support · +90 555 384 82 29
+  </span>
+  <span class="flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] shadow-lg shadow-black/30 ring-4 ring-[#25D366]/20 hover:scale-110 hover:shadow-[#25D366]/40 transition-all duration-300">
+    <svg viewBox="0 0 32 32" class="h-8 w-8 fill-white" aria-hidden="true">
+      <path d="M16.004 3C9.376 3 4 8.373 4 15c0 2.36.7 4.556 1.9 6.4L4 29l7.79-1.86A11.94 11.94 0 0 0 16.004 27C22.63 27 28 21.627 28 15S22.63 3 16.004 3Zm0 21.8c-1.98 0-3.83-.55-5.41-1.5l-.39-.23-4.62 1.1 1.12-4.5-.25-.4A9.75 9.75 0 0 1 5.2 15c0-5.96 4.85-10.8 10.8-10.8S26.8 9.04 26.8 15 21.96 24.8 16.004 24.8Zm6-8.13c-.33-.17-1.95-.96-2.25-1.07-.3-.11-.52-.17-.74.17-.22.33-.85 1.07-1.04 1.29-.19.22-.38.24-.71.08-.33-.17-1.4-.51-2.66-1.63-.98-.87-1.65-1.95-1.84-2.28-.19-.33-.02-.5.15-.67.15-.15.33-.38.5-.57.17-.19.22-.33.33-.55.11-.22.06-.41-.03-.58-.08-.17-.74-1.78-1.01-2.43-.27-.65-.54-.56-.74-.57l-.63-.01c-.22 0-.58.08-.88.41-.3.33-1.15 1.12-1.15 2.73s1.18 3.17 1.34 3.39c.17.22 2.32 3.55 5.63 4.97.79.34 1.4.55 1.88.7.79.25 1.51.21 2.08.13.63-.09 1.95-.8 2.23-1.57.28-.77.28-1.43.19-1.57-.08-.14-.3-.22-.63-.39Z"/>
+    </svg>
+  </span>
+</a>
+<!-- WHATSAPP FLOATING BUTTON END -->
+</body>
+</html>
