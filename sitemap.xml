@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+
+  <url>
+    <loc>https://www.hydropascal.com.tr/tr/index.html</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://www.hydropascal.com.tr/tr/index.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.hydropascal.com.tr/en/index.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.hydropascal.com.tr/en/index.html"/>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://www.hydropascal.com.tr/en/index.html</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://www.hydropascal.com.tr/tr/index.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.hydropascal.com.tr/en/index.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.hydropascal.com.tr/en/index.html"/>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <url>
+    <loc>https://www.hydropascal.com.tr/tr/about-us.html</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://www.hydropascal.com.tr/tr/about-us.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.hydropascal.com.tr/en/about-us.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.hydropascal.com.tr/en/about-us.html"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.hydropascal.com.tr/en/about-us.html</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://www.hydropascal.com.tr/tr/about-us.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.hydropascal.com.tr/en/about-us.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.hydropascal.com.tr/en/about-us.html"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://www.hydropascal.com.tr/tr/hpl-products.html</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://www.hydropascal.com.tr/tr/hpl-products.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.hydropascal.com.tr/en/hpl-products.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.hydropascal.com.tr/en/hpl-products.html"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.hydropascal.com.tr/en/hpl-products.html</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://www.hydropascal.com.tr/tr/hpl-products.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.hydropascal.com.tr/en/hpl-products.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.hydropascal.com.tr/en/hpl-products.html"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://www.hydropascal.com.tr/tr/hpl-cylinders.html</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://www.hydropascal.com.tr/tr/hpl-cylinders.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.hydropascal.com.tr/en/hpl-cylinders.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.hydropascal.com.tr/en/hpl-cylinders.html"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.hydropascal.com.tr/en/hpl-cylinders.html</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://www.hydropascal.com.tr/tr/hpl-cylinders.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.hydropascal.com.tr/en/hpl-cylinders.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.hydropascal.com.tr/en/hpl-cylinders.html"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://www.hydropascal.com.tr/tr/oem-parts.html</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://www.hydropascal.com.tr/tr/oem-parts.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.hydropascal.com.tr/en/oem-parts.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.hydropascal.com.tr/en/oem-parts.html"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.hydropascal.com.tr/en/oem-parts.html</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://www.hydropascal.com.tr/tr/oem-parts.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.hydropascal.com.tr/en/oem-parts.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.hydropascal.com.tr/en/oem-parts.html"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://www.hydropascal.com.tr/tr/calculation-program.html</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://www.hydropascal.com.tr/tr/calculation-program.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.hydropascal.com.tr/en/calculation-program.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.hydropascal.com.tr/en/calculation-program.html"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.hydropascal.com.tr/en/calculation-program.html</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://www.hydropascal.com.tr/tr/calculation-program.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.hydropascal.com.tr/en/calculation-program.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.hydropascal.com.tr/en/calculation-program.html"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://www.hydropascal.com.tr/tr/calculation-program-2.html</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://www.hydropascal.com.tr/tr/calculation-program-2.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.hydropascal.com.tr/en/calculation-program-2.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.hydropascal.com.tr/en/calculation-program-2.html"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.hydropascal.com.tr/en/calculation-program-2.html</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://www.hydropascal.com.tr/tr/calculation-program-2.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.hydropascal.com.tr/en/calculation-program-2.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.hydropascal.com.tr/en/calculation-program-2.html"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://www.hydropascal.com.tr/tr/secim-programi.html</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://www.hydropascal.com.tr/tr/secim-programi.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.hydropascal.com.tr/en/secim-programi.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.hydropascal.com.tr/en/secim-programi.html"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.hydropascal.com.tr/en/secim-programi.html</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://www.hydropascal.com.tr/tr/secim-programi.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.hydropascal.com.tr/en/secim-programi.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.hydropascal.com.tr/en/secim-programi.html"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://www.hydropascal.com.tr/tr/pascalforge.html</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://www.hydropascal.com.tr/tr/pascalforge.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.hydropascal.com.tr/en/pascalforge.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.hydropascal.com.tr/en/pascalforge.html"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.hydropascal.com.tr/en/pascalforge.html</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://www.hydropascal.com.tr/tr/pascalforge.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.hydropascal.com.tr/en/pascalforge.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.hydropascal.com.tr/en/pascalforge.html"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://www.hydropascal.com.tr/tr/pascalcast.html</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://www.hydropascal.com.tr/tr/pascalcast.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.hydropascal.com.tr/en/pascalcast.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.hydropascal.com.tr/en/pascalcast.html"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.hydropascal.com.tr/en/pascalcast.html</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://www.hydropascal.com.tr/tr/pascalcast.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.hydropascal.com.tr/en/pascalcast.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.hydropascal.com.tr/en/pascalcast.html"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://www.hydropascal.com.tr/tr/media.html</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://www.hydropascal.com.tr/tr/media.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.hydropascal.com.tr/en/media.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.hydropascal.com.tr/en/media.html"/>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.hydropascal.com.tr/en/media.html</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://www.hydropascal.com.tr/tr/media.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.hydropascal.com.tr/en/media.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.hydropascal.com.tr/en/media.html"/>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://www.hydropascal.com.tr/tr/contact.html</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://www.hydropascal.com.tr/tr/contact.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.hydropascal.com.tr/en/contact.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.hydropascal.com.tr/en/contact.html"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.hydropascal.com.tr/en/contact.html</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://www.hydropascal.com.tr/tr/contact.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.hydropascal.com.tr/en/contact.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.hydropascal.com.tr/en/contact.html"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://www.hydropascal.com.tr/tr/faq.html</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://www.hydropascal.com.tr/tr/faq.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.hydropascal.com.tr/en/faq.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.hydropascal.com.tr/en/faq.html"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.hydropascal.com.tr/en/faq.html</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://www.hydropascal.com.tr/tr/faq.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.hydropascal.com.tr/en/faq.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.hydropascal.com.tr/en/faq.html"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://www.hydropascal.com.tr/tr/privacy-policy.html</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://www.hydropascal.com.tr/tr/privacy-policy.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.hydropascal.com.tr/en/privacy-policy.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.hydropascal.com.tr/en/privacy-policy.html"/>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://www.hydropascal.com.tr/en/privacy-policy.html</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://www.hydropascal.com.tr/tr/privacy-policy.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.hydropascal.com.tr/en/privacy-policy.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.hydropascal.com.tr/en/privacy-policy.html"/>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+
+  <url>
+    <loc>https://www.hydropascal.com.tr/tr/terms-of-service.html</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://www.hydropascal.com.tr/tr/terms-of-service.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.hydropascal.com.tr/en/terms-of-service.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.hydropascal.com.tr/en/terms-of-service.html"/>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://www.hydropascal.com.tr/en/terms-of-service.html</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://www.hydropascal.com.tr/tr/terms-of-service.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.hydropascal.com.tr/en/terms-of-service.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.hydropascal.com.tr/en/terms-of-service.html"/>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+
+  <url>
+    <loc>https://www.hydropascal.com.tr/tr/disclaimer.html</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://www.hydropascal.com.tr/tr/disclaimer.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.hydropascal.com.tr/en/disclaimer.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.hydropascal.com.tr/en/disclaimer.html"/>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://www.hydropascal.com.tr/en/disclaimer.html</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://www.hydropascal.com.tr/tr/disclaimer.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.hydropascal.com.tr/en/disclaimer.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.hydropascal.com.tr/en/disclaimer.html"/>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+
+</urlset>
