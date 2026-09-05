@@ -2,6 +2,12 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<script>
+(function(){try{if(localStorage.getItem('hp-theme')==='light'){document.documentElement.classList.add('light');}}catch(e){}})();
+function toggleTheme(){try{var isLight=document.documentElement.classList.toggle('light');localStorage.setItem('hp-theme',isLight?'light':'dark');}catch(e){}}
+function setTheme(mode){try{var isLight=mode==='light';document.documentElement.classList.toggle('light',isLight);localStorage.setItem('hp-theme',isLight?'light':'dark');}catch(e){}}
+</script>
+
 <link rel="icon" href="../assets/images/favicon/favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="32x32" href="../assets/images/favicon/favicon-32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon/favicon-16.png">
@@ -42,34 +48,136 @@
   }
 }
 </script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <script src="https://cdn.tailwindcss.com"></script>
+<script>tailwind.config = { theme: { extend: { fontFamily: { sans: ['Inter','ui-sans-serif','system-ui','sans-serif'] } } } }</script>
 <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+<style>
+/* Light theme overrides (default theme stays dark/glassmorphism, unchanged) */
+.icon-sun{display:none}
+html.light .icon-sun{display:inline-block}
+html.light .icon-moon{display:none}
+html.light body{background:linear-gradient(to bottom,#ffffff,#f8fafc,#ffffff)!important;color:#475569!important}
+html.light .bg-slate-950{background-color:#ffffff!important}
+html.light .bg-slate-950\/70{background-color:rgba(255,255,255,.75)!important}
+html.light .bg-slate-950\/90{background-color:rgba(255,255,255,.92)!important}
+html.light .bg-slate-900\/90{background-color:rgba(255,255,255,.92)!important}
+html.light .via-slate-950{--tw-gradient-to:rgba(255,255,255,0)!important;--tw-gradient-stops:var(--tw-gradient-from),#ffffff,var(--tw-gradient-to)!important}
+html.light .bg-white\/5{background-color:rgba(255,255,255,.65)!important}
+html.light .hover\:bg-white\/5:hover{background-color:rgba(255,255,255,.9)!important}
+html.light .bg-white\/10{background-color:#f1f5f9!important}
+html.light .hover\:bg-white\/10:hover{background-color:#e2e8f0!important}
+html.light .bg-white\/30{background-color:#cbd5e1!important}
+html.light .border-white\/10{border-color:#e2e8f0!important}
+html.light .border-white\/15{border-color:#e2e8f0!important}
+html.light .border-white\/20{border-color:#e2e8f0!important}
+html.light .hover\:border-white\/40:hover{border-color:#cbd5e1!important}
+html.light .text-slate-300{color:#475569!important}
+html.light .text-slate-400{color:#64748b!important}
+html.light .text-slate-500{color:#64748b!important}
+html.light .text-slate-200{color:#1e293b!important}
+html.light select option{color:#0f172a;background:#ffffff}
+html.light input,html.light select,html.light textarea{border-color:#94a3b8!important;background-color:#f8fafc!important}
+html.light input::placeholder,html.light textarea::placeholder{color:#94a3b8!important}
+html.light .text-white{color:#0f172a!important}
+html.light .hover\:text-white:hover{color:#0f172a!important}
+html.light .text-\[\#fb923c\]{color:#c2610a!important}
+html.light .hover\:text-\[\#fb923c\]:hover{color:#c2610a!important}
+html.light .hover\:border-\[\#fb923c\]\/40:hover{border-color:#fb923c!important}
+html.light .shadow-2xl{box-shadow:0 25px 50px -12px rgba(15,23,42,.12)!important}
+html.light .shadow-black\/20{box-shadow:0 10px 25px -5px rgba(15,23,42,.08)!important}
+</style>
 </head>
 <body class="bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 text-slate-300 antialiased">
 
 <!-- HEADER START -->
-<header class="fixed top-0 inset-x-0 z-50 border-b border-white/10 bg-slate-950/70 backdrop-blur-xl" x-data="{ open: false, scrolled: false }" x-init="window.addEventListener('scroll', () => scrolled = window.scrollY > 20)" :class="scrolled ? 'bg-slate-950/90 shadow-lg shadow-black/20' : ''">
+<header class="fixed top-0 inset-x-0 z-50 border-b border-white/10 bg-slate-950/70 backdrop-blur-xl" x-data="{ open: false, scrolled: false, settingsOpen: false, productsOpen: false, resourcesOpen: false }" x-init="window.addEventListener('scroll', () => scrolled = window.scrollY > 20)" :class="scrolled ? 'bg-slate-950/90 shadow-lg shadow-black/20' : ''">
   <div class="max-w-7xl mx-auto px-6 lg:px-8">
     <div class="flex items-center justify-between h-20">
       <a href="index.html" class="flex items-center gap-3 group">
-        <img src="../assets/images/loho-yeni-1.jpg" alt="HydroPascal hydraulic cylinder logo" width="180" height="44" loading="eager" class="h-11 w-auto object-contain rounded-lg ring-1 ring-white/10 group-hover:ring-white/30 transition">
+        <img src="../assets/images/loho-yeni-1.jpg" alt="HydroPascal Logo" width="160" height="44" loading="eager" class="h-11 w-auto object-contain rounded-lg ring-1 ring-white/10 group-hover:ring-white/30 transition">
       </a>
       <nav class="hidden lg:flex items-center gap-1 text-sm font-medium">
-        <a href="index.html" class="text-slate-300 hover:text-white hover:bg-white/5 px-4 py-2 rounded-full transition">Main Page</a>
-        <a href="about-us.html" class="text-slate-300 hover:text-white hover:bg-white/5 px-4 py-2 rounded-full transition">About Us</a>
-        <a href="hpl-products.html" class="text-slate-300 hover:text-white hover:bg-white/5 px-4 py-2 rounded-full transition">HPL Products</a>
-        <a href="oem-parts.html" class="text-slate-300 hover:text-white hover:bg-white/5 px-4 py-2 rounded-full transition">HPL OEM</a>
+        <a href="index.html" class="text-slate-300 hover:text-white hover:bg-white/5 px-4 py-2 rounded-md transition">Main Page</a>
+        <a href="about-us.html" class="text-slate-300 hover:text-white hover:bg-white/5 px-4 py-2 rounded-md transition">About Us</a>
+        <div class="relative" @click.outside="productsOpen = false">
+          <button @click="productsOpen = !productsOpen" :aria-expanded="productsOpen" class="flex items-center gap-1 text-slate-300 hover:text-white hover:bg-white/5 px-4 py-2 rounded-full transition">
+            Products
+            <svg class="h-3.5 w-3.5 transition-transform text-slate-300" :class="productsOpen ? 'rotate-180' : ''" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="m19 9-7 7-7-7"/></svg>
+          </button>
+          <div x-show="productsOpen" x-transition x-cloak class="absolute left-0 mt-2 w-56 rounded-md border border-slate-200 bg-white shadow-2xl p-2 flex flex-col gap-1 z-50">
+            <a href="hpl-products.html" class="px-3 py-2 rounded-md text-sm text-slate-700 hover:text-[#fb923c] hover:bg-slate-50 transition">HPL Products</a>
+            <a href="oem-parts.html" class="px-3 py-2 rounded-md text-sm text-slate-700 hover:text-[#fb923c] hover:bg-slate-50 transition">HPL OEM</a>
+            <a href="pascalforge.html" class="px-3 py-2 rounded-md text-sm text-slate-700 hover:text-[#fb923c] hover:bg-slate-50 transition">PascalForge</a>
+            <a href="pascalcast.html" class="px-3 py-2 rounded-md text-sm text-slate-700 hover:text-[#fb923c] hover:bg-slate-50 transition">PascalCast</a>
+          </div>
+        </div>
         <a href="calculation-program.html" class="text-slate-300 hover:text-white hover:bg-white/5 px-4 py-2 rounded-full transition">Cylinder Software</a>
-        <a href="pascalforge.html" class="text-slate-300 hover:text-white hover:bg-white/5 px-4 py-2 rounded-full transition">PascalForge</a>
-        <a href="pascalcast.html" class="text-slate-300 hover:text-white hover:bg-white/5 px-4 py-2 rounded-full transition">PascalCast</a>
-        <a href="contact.html" class="ml-2 px-5 py-2.5 rounded-full font-semibold bg-gradient-to-r from-blue-500 to-cyan-400 text-slate-950 hover:brightness-110 hover:shadow-lg hover:shadow-cyan-500/30 transition">Contact</a>
-      <div class="ml-3 flex items-center gap-1 rounded-full border border-white/20 bg-white/5 p-1">
-        <div class="relative flex items-center gap-0.5 rounded-full border border-white/15 bg-white/5 p-0.5"><a href="../tr/terms-of-service.html" aria-label="Türkçe'ye geç" title="Türkçe" class="relative z-10 flex items-center justify-center w-9 h-8 rounded-full overflow-hidden grayscale opacity-35 hover:grayscale-0 hover:opacity-100 transition"><svg viewBox="0 0 30 20" class="w-full h-full" preserveAspectRatio="xMidYMid slice"><rect width="30" height="20" fill="#E30A17"/><circle cx="12" cy="10" r="5" fill="#fff"/><circle cx="13.4" cy="10" r="4" fill="#E30A17"/><polygon fill="#fff" points="18.5,10 15.7,10.9 17.4,8.6 17.4,11.4 15.7,9.1"/></svg></a><span class="absolute inset-y-0.5 right-0.5 w-9 rounded-full bg-gradient-to-r from-blue-500/40 to-cyan-400/40 ring-1 ring-cyan-400/60"></span><span aria-label="English (active)" title="English" class="relative z-10 flex items-center justify-center w-9 h-8 rounded-full overflow-hidden ring-2 ring-cyan-300 scale-110 shadow-lg shadow-cyan-500/30"><svg viewBox="0 0 60 40" class="w-full h-full" preserveAspectRatio="xMidYMid slice"><rect width="60" height="40" fill="#00247d"/><path d="M0,0 60,40 M60,0 0,40" stroke="#fff" stroke-width="8"/><path d="M0,0 60,40 M60,0 0,40" stroke="#cf142b" stroke-width="3"/><path d="M30,0 30,40 M0,20 60,20" stroke="#fff" stroke-width="13"/><path d="M30,0 30,40 M0,20 60,20" stroke="#cf142b" stroke-width="8"/></svg></span></div>
+        <div class="relative" @click.outside="resourcesOpen = false">
+          <button @click="resourcesOpen = !resourcesOpen" :aria-expanded="resourcesOpen" class="flex items-center gap-1 text-slate-300 hover:text-white hover:bg-white/5 px-4 py-2 rounded-full transition">
+            Resources
+            <svg class="h-3.5 w-3.5 transition-transform text-slate-300" :class="resourcesOpen ? 'rotate-180' : ''" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="m19 9-7 7-7-7"/></svg>
+          </button>
+          <div x-show="resourcesOpen" x-transition x-cloak class="absolute left-0 mt-2 w-56 rounded-md border border-slate-200 bg-white shadow-2xl p-2 flex flex-col gap-1 z-50">
+            <a href="kataloglar.html" class="px-3 py-2 rounded-md text-sm text-slate-700 hover:text-[#fb923c] hover:bg-slate-50 transition">Catalogs</a>
+            <a href="media.html" class="px-3 py-2 rounded-md text-sm text-slate-700 hover:text-[#fb923c] hover:bg-slate-50 transition">Media</a>
+            <a href="referanslar.html" class="px-3 py-2 rounded-md text-sm text-slate-700 hover:text-[#fb923c] hover:bg-slate-50 transition">References</a>
+            <a href="faq.html" class="px-3 py-2 rounded-md text-sm text-slate-700 hover:text-[#fb923c] hover:bg-slate-50 transition">FAQ</a>
+          </div>
+        </div>
+        <a href="contact.html" class="text-slate-300 hover:text-white hover:bg-white/5 px-4 py-2 rounded-full transition">Contact</a>
+        <a href="teklif-al.html" class="ml-2 px-5 py-2.5 rounded-md font-semibold bg-[#fb923c] text-slate-950 hover:brightness-110 hover:shadow-lg hover:shadow-[#fb923c]/30 transition">Get a Quote</a>
+      <div class="relative ml-3">
+        <button @click="settingsOpen = !settingsOpen" :aria-expanded="settingsOpen" aria-label="Settings" title="Settings" class="flex items-center justify-center w-10 h-10 rounded-md border border-white/20 bg-white/5 hover:bg-white/10 hover:border-white/30 transition">
+          <svg class="h-5 w-5 text-slate-300" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75"><circle cx="12" cy="12" r="3"/><path stroke-linecap="round" stroke-linejoin="round" d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        </button>
+        <div x-show="settingsOpen" x-transition x-cloak @click.outside="settingsOpen = false" class="absolute right-0 mt-2 w-fit rounded-md border border-white/10 bg-slate-900/95 backdrop-blur-xl shadow-2xl p-3 flex flex-col gap-3 z-50">
+          <div>
+            <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Language</p>
+            <div class="relative flex items-center gap-0.5 rounded-full border border-white/15 bg-white/5 p-0.5 w-fit"><a href="../tr/terms-of-service.html" aria-label="Türkçe'ye geç" title="Türkçe" class="relative z-10 flex items-center justify-center w-9 h-8 rounded-full overflow-hidden grayscale opacity-35 hover:grayscale-0 hover:opacity-100 transition"><svg viewBox="0 0 30 20" class="w-full h-full" preserveAspectRatio="xMidYMid slice"><rect width="30" height="20" fill="#E30A17"/><circle cx="12" cy="10" r="5" fill="#fff"/><circle cx="13.4" cy="10" r="4" fill="#E30A17"/><polygon fill="#fff" points="18.5,10 15.7,10.9 17.4,8.6 17.4,11.4 15.7,9.1"/></svg></a><span class="absolute inset-y-0.5 right-0.5 w-9 rounded-full bg-gradient-to-r from-blue-500/40 to-cyan-400/40 ring-1 ring-cyan-400/60"></span><span aria-label="English (active)" title="English" class="relative z-10 flex items-center justify-center w-9 h-8 rounded-full overflow-hidden ring-2 ring-cyan-300 scale-110 shadow-lg shadow-cyan-500/30"><svg viewBox="0 0 60 40" class="w-full h-full" preserveAspectRatio="xMidYMid slice"><rect width="60" height="40" fill="#00247d"/><path d="M0,0 60,40 M60,0 0,40" stroke="#fff" stroke-width="8"/><path d="M0,0 60,40 M60,0 0,40" stroke="#cf142b" stroke-width="3"/><path d="M30,0 30,40 M0,20 60,20" stroke="#fff" stroke-width="13"/><path d="M30,0 30,40 M0,20 60,20" stroke="#cf142b" stroke-width="8"/></svg></span></div>
+          </div>
+          <div>
+            <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Theme</p>
+            <div class="relative flex items-center gap-0.5 rounded-full border border-white/15 bg-white/5 p-0.5 w-fit" x-data="{ light: document.documentElement.classList.contains('light') }">
+              <span class="absolute inset-y-0.5 w-9 rounded-full bg-gradient-to-r from-blue-500/40 to-cyan-400/40 ring-1 ring-cyan-400/60 transition-all duration-200" :class="light ? 'right-0.5' : 'left-0.5'"></span>
+              <button type="button" @click="setTheme('dark'); light=false" aria-label="Dark theme" title="Dark Theme" class="relative z-10 flex items-center justify-center w-9 h-8 rounded-full transition" :class="!light ? 'ring-2 ring-cyan-300 scale-110' : 'opacity-40'">
+                <svg class="h-4 w-4 text-[#fb923c]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"/></svg>
+              </button>
+              <button type="button" @click="setTheme('light'); light=true" aria-label="Light theme" title="Light Theme" class="relative z-10 flex items-center justify-center w-9 h-8 rounded-full transition" :class="light ? 'ring-2 ring-cyan-300 scale-110' : 'opacity-40'">
+                <svg class="h-4 w-4 text-yellow-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4.5"/><path stroke-linecap="round" d="M12 2.5v2M12 19.5v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2.5 12h2M19.5 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
       </nav>
       <div class="flex items-center gap-4 lg:hidden">
-        <div class="relative flex items-center gap-0.5 rounded-full border border-white/20 bg-white/5 p-0.5"><a href="../tr/terms-of-service.html" aria-label="Türkçe'ye geç" title="Türkçe" class="relative z-10 flex items-center justify-center w-7 h-7 rounded-full overflow-hidden grayscale opacity-35 hover:grayscale-0 hover:opacity-100 transition"><svg viewBox="0 0 30 20" class="w-full h-full" preserveAspectRatio="xMidYMid slice"><rect width="30" height="20" fill="#E30A17"/><circle cx="12" cy="10" r="5" fill="#fff"/><circle cx="13.4" cy="10" r="4" fill="#E30A17"/><polygon fill="#fff" points="18.5,10 15.7,10.9 17.4,8.6 17.4,11.4 15.7,9.1"/></svg></a><span class="absolute inset-y-0.5 right-0.5 w-7 rounded-full bg-gradient-to-r from-blue-500/40 to-cyan-400/40 ring-1 ring-cyan-400/60"></span><span aria-label="English (active)" title="English" class="relative z-10 flex items-center justify-center w-7 h-7 rounded-full overflow-hidden ring-2 ring-cyan-300 scale-110 shadow-lg shadow-cyan-500/30"><svg viewBox="0 0 60 40" class="w-full h-full" preserveAspectRatio="xMidYMid slice"><rect width="60" height="40" fill="#00247d"/><path d="M0,0 60,40 M60,0 0,40" stroke="#fff" stroke-width="8"/><path d="M0,0 60,40 M60,0 0,40" stroke="#cf142b" stroke-width="3"/><path d="M30,0 30,40 M0,20 60,20" stroke="#fff" stroke-width="13"/><path d="M30,0 30,40 M0,20 60,20" stroke="#cf142b" stroke-width="8"/></svg></span></div>
-        <button @click="open = !open" :aria-expanded="open" aria-label="Menü" class="relative flex items-center justify-center h-11 w-11 rounded-xl border border-cyan-400/40 bg-gradient-to-r from-blue-500/20 to-cyan-400/20 text-white shadow-lg shadow-cyan-500/10 hover:border-cyan-400 hover:shadow-cyan-500/30 active:scale-95 transition-all">
+        <div class="relative">
+          <button @click="settingsOpen = !settingsOpen" :aria-expanded="settingsOpen" aria-label="Settings" title="Settings" class="flex items-center justify-center w-10 h-10 rounded-md border border-white/20 bg-white/5 hover:bg-white/10 hover:border-white/30 transition">
+            <svg class="h-5 w-5 text-slate-300" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75"><circle cx="12" cy="12" r="3"/><path stroke-linecap="round" stroke-linejoin="round" d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+          </button>
+          <div x-show="settingsOpen" x-transition x-cloak @click.outside="settingsOpen = false" class="absolute right-0 mt-2 w-fit rounded-md border border-white/10 bg-slate-900/95 backdrop-blur-xl shadow-2xl p-3 flex flex-col gap-3 z-50">
+            <div>
+              <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Language</p>
+              <div class="relative flex items-center gap-0.5 rounded-full border border-white/20 bg-white/5 p-0.5 w-fit"><a href="../tr/terms-of-service.html" aria-label="Türkçe'ye geç" title="Türkçe" class="relative z-10 flex items-center justify-center w-7 h-7 rounded-full overflow-hidden grayscale opacity-35 hover:grayscale-0 hover:opacity-100 transition"><svg viewBox="0 0 30 20" class="w-full h-full" preserveAspectRatio="xMidYMid slice"><rect width="30" height="20" fill="#E30A17"/><circle cx="12" cy="10" r="5" fill="#fff"/><circle cx="13.4" cy="10" r="4" fill="#E30A17"/><polygon fill="#fff" points="18.5,10 15.7,10.9 17.4,8.6 17.4,11.4 15.7,9.1"/></svg></a><span class="absolute inset-y-0.5 right-0.5 w-7 rounded-full bg-gradient-to-r from-blue-500/40 to-cyan-400/40 ring-1 ring-cyan-400/60"></span><span aria-label="English (active)" title="English" class="relative z-10 flex items-center justify-center w-7 h-7 rounded-full overflow-hidden ring-2 ring-cyan-300 scale-110 shadow-lg shadow-cyan-500/30"><svg viewBox="0 0 60 40" class="w-full h-full" preserveAspectRatio="xMidYMid slice"><rect width="60" height="40" fill="#00247d"/><path d="M0,0 60,40 M60,0 0,40" stroke="#fff" stroke-width="8"/><path d="M0,0 60,40 M60,0 0,40" stroke="#cf142b" stroke-width="3"/><path d="M30,0 30,40 M0,20 60,20" stroke="#fff" stroke-width="13"/><path d="M30,0 30,40 M0,20 60,20" stroke="#cf142b" stroke-width="8"/></svg></span></div>
+            </div>
+            <div>
+              <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Theme</p>
+              <div class="relative flex items-center gap-0.5 rounded-full border border-white/15 bg-white/5 p-0.5 w-fit" x-data="{ light: document.documentElement.classList.contains('light') }">
+                <span class="absolute inset-y-0.5 w-9 rounded-full bg-gradient-to-r from-blue-500/40 to-cyan-400/40 ring-1 ring-cyan-400/60 transition-all duration-200" :class="light ? 'right-0.5' : 'left-0.5'"></span>
+                <button type="button" @click="setTheme('dark'); light=false" aria-label="Dark theme" title="Dark Theme" class="relative z-10 flex items-center justify-center w-9 h-8 rounded-full transition" :class="!light ? 'ring-2 ring-cyan-300 scale-110' : 'opacity-40'">
+                  <svg class="h-4 w-4 text-[#fb923c]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"/></svg>
+                </button>
+                <button type="button" @click="setTheme('light'); light=true" aria-label="Light theme" title="Light Theme" class="relative z-10 flex items-center justify-center w-9 h-8 rounded-full transition" :class="light ? 'ring-2 ring-cyan-300 scale-110' : 'opacity-40'">
+                  <svg class="h-4 w-4 text-yellow-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4.5"/><path stroke-linecap="round" d="M12 2.5v2M12 19.5v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2.5 12h2M19.5 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <button @click="open = !open" :aria-expanded="open" aria-label="Menu" class="relative flex items-center justify-center h-11 w-11 rounded-md border border-[#fb923c]/40 bg-[#fb923c]/20 text-white shadow-lg shadow-[#fb923c]/10 hover:border-[#fb923c] hover:shadow-[#fb923c]/30 active:scale-95 transition-all">
           <svg x-show="!open" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
           <svg x-show="open" x-cloak xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
         </button>
@@ -78,12 +186,19 @@
     <div x-show="open" x-transition x-cloak class="lg:hidden pb-6 flex flex-col gap-2 text-sm font-medium border-t border-white/10 pt-4">
       <a href="index.html" class="px-4 py-2 rounded-lg text-slate-300 hover:bg-white/5 hover:text-white transition">Main Page</a>
       <a href="about-us.html" class="px-4 py-2 rounded-lg text-slate-300 hover:bg-white/5 hover:text-white transition">About Us</a>
-      <a href="hpl-products.html" class="px-4 py-2 rounded-lg text-slate-300 hover:bg-white/5 hover:text-white transition">HPL Products</a>
-      <a href="oem-parts.html" class="px-4 py-2 rounded-lg text-slate-300 hover:bg-white/5 hover:text-white transition">HPL OEM</a>
+      <p class="px-4 pt-2 text-xs font-semibold text-slate-500 uppercase tracking-wider">Products</p>
+      <a href="hpl-products.html" class="px-4 py-2 pl-7 rounded-lg text-slate-300 hover:bg-white/5 hover:text-white transition text-sm">HPL Products</a>
+      <a href="oem-parts.html" class="px-4 py-2 pl-7 rounded-lg text-slate-300 hover:bg-white/5 hover:text-white transition text-sm">HPL OEM</a>
+      <a href="pascalforge.html" class="px-4 py-2 pl-7 rounded-lg text-slate-300 hover:bg-white/5 hover:text-white transition text-sm">PascalForge</a>
+      <a href="pascalcast.html" class="px-4 py-2 pl-7 rounded-lg text-slate-300 hover:bg-white/5 hover:text-white transition text-sm">PascalCast</a>
       <a href="calculation-program.html" class="px-4 py-2 rounded-lg text-slate-300 hover:bg-white/5 hover:text-white transition">Cylinder Software</a>
-      <a href="pascalforge.html" class="px-4 py-2 rounded-lg text-slate-300 hover:bg-white/5 hover:text-white transition">PascalForge</a>
-      <a href="pascalcast.html" class="px-4 py-2 rounded-lg text-slate-300 hover:bg-white/5 hover:text-white transition">PascalCast</a>
-      <a href="contact.html" class="px-4 py-2 rounded-lg text-center font-semibold bg-gradient-to-r from-blue-500 to-cyan-400 text-slate-950">Contact</a>
+      <p class="px-4 pt-2 text-xs font-semibold text-slate-500 uppercase tracking-wider">Resources</p>
+      <a href="kataloglar.html" class="px-4 py-2 pl-7 rounded-lg text-slate-300 hover:bg-white/5 hover:text-white transition text-sm">Catalogs</a>
+      <a href="media.html" class="px-4 py-2 pl-7 rounded-lg text-slate-300 hover:bg-white/5 hover:text-white transition text-sm">Media</a>
+      <a href="referanslar.html" class="px-4 py-2 pl-7 rounded-lg text-slate-300 hover:bg-white/5 hover:text-white transition text-sm">References</a>
+      <a href="faq.html" class="px-4 py-2 pl-7 rounded-lg text-slate-300 hover:bg-white/5 hover:text-white transition text-sm">FAQ</a>
+      <a href="contact.html" class="px-4 py-2 rounded-lg text-slate-300 hover:bg-white/5 hover:text-white transition">Contact</a>
+      <a href="teklif-al.html" class="px-4 py-2 rounded-lg text-center font-semibold bg-[#fb923c] text-slate-950">Get a Quote</a>
     </div>
   </div>
 </header>
@@ -93,26 +208,26 @@
 <main>
 <!-- HERO -->
 <section id="hero-1" class="relative overflow-hidden py-12 lg:py-16">
-  <div class="pointer-events-none absolute -top-32 -left-32 w-[500px] h-[500px] bg-blue-600/30 rounded-full blur-3xl"></div>
-  <div class="pointer-events-none absolute -bottom-32 -right-32 w-[500px] h-[500px] bg-purple-600/20 rounded-full blur-3xl"></div>
+  <div class="pointer-events-none absolute -top-32 -left-32 w-[500px] h-[500px] bg-[#fb923c]/15 rounded-full blur-3xl"></div>
+  <div class="pointer-events-none absolute -bottom-32 -right-32 w-[500px] h-[500px] bg-[#fb923c]/10 rounded-full blur-3xl"></div>
   <div class="relative max-w-5xl mx-auto px-6 lg:px-8 text-center">
-    <span class="inline-block mb-6 px-4 py-1.5 rounded-full text-xs font-semibold tracking-wider uppercase bg-white/5 border border-white/10 text-cyan-300">Legal</span>
-    <h1 class="text-5xl md:text-6xl font-extrabold bg-gradient-to-r from-blue-400 via-cyan-300 to-purple-400 bg-clip-text text-transparent" data-section="hero-1" data-field="title">Term Of Service</h1>
+    <span class="inline-block mb-6 px-4 py-1.5 rounded-full text-xs font-semibold tracking-wider uppercase bg-white/5 border border-white/10 text-[#fb923c]">Legal</span>
+    <h1 class="text-5xl md:text-6xl font-extrabold text-[#fb923c]" data-section="hero-1" data-field="title">Term Of Service</h1>
   </div>
 </section>
 
 <!-- CONTENT -->
 <section id="content-terms-of-service" class="max-w-4xl mx-auto px-6 lg:px-8 pb-24">
-  <div class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-10 shadow-2xl hover:shadow-cyan-500/10 transition-shadow">
+  <div class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-10 shadow-2xl hover:shadow-[#fb923c]/10 transition-shadow">
     <h2 class="text-3xl font-bold text-white mb-8 flex items-center gap-3" data-section="content-terms-of-service" data-field="title">
-      <span class="h-10 w-10 rounded-xl bg-gradient-to-br from-blue-500 to-cyan-400 flex items-center justify-center shadow-lg shadow-cyan-500/30">
+      <span class="h-10 w-10 rounded-xl bg-[#fb923c] flex items-center justify-center shadow-lg shadow-[#fb923c]/30">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-950" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" /></svg>
       </span>
       Term Of Service
     </h2>
     <div class="space-y-6 text-slate-300 leading-relaxed text-lg" data-section="content-terms-of-service" data-field="content">
       <p>This page is a placeholder for HydroPascal's Terms of Service. It will describe the terms and conditions governing the use of this website, our products, catalogues, and calculation tools.</p>
-      <p>For questions regarding our terms, please reach us via our <a href="contact.html" class="text-cyan-400 font-semibold hover:text-cyan-300 hover:underline transition">Contact</a> page.</p>
+      <p>For questions regarding our terms, please reach us via our <a href="contact.html" class="text-[#fb923c] font-semibold hover:text-[#fb923c] hover:underline transition">Contact</a> page.</p>
     </div>
   </div>
 </section>
@@ -120,43 +235,46 @@
 
 <!-- FOOTER START -->
 <footer class="relative bg-slate-950 border-t border-white/10 text-slate-400 overflow-hidden">
-  <div class="pointer-events-none absolute -top-40 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-gradient-to-br from-blue-600/20 to-cyan-400/10 rounded-full blur-3xl"></div>
+  <div class="pointer-events-none absolute -top-40 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-gradient-to-br from-[#fb923c]/15 to-[#fb923c]/10 rounded-full blur-3xl"></div>
   <div class="relative max-w-7xl mx-auto px-6 lg:px-8 py-20 grid grid-cols-1 md:grid-cols-4 gap-12">
     <div>
-      <img src="../assets/images/logo01-removebg-preview.png" alt="HydroPascal hydraulic cylinder manufacturer logo" width="160" height="48" loading="lazy" class="h-12 mb-5 bg-white rounded-lg p-1.5 object-contain">
+      <img src="../assets/images/logo01-removebg-preview.png" alt="HydroPascal Logo" width="180" height="48" loading="lazy" class="h-12 mb-5 bg-white rounded-lg p-1.5 object-contain">
       <p class="text-sm leading-relaxed text-slate-400">As HPL HydroPascal, we manufacture Hydraulic Cylinder Systems since 2019, delivering consistent quality and reliability to the agricultural machinery sector.</p>
     </div>
-    <div id="footer-widgets-page" data-section="footer-widgets-page">
-      <h2 class="text-white font-bold mb-5 text-sm uppercase tracking-wider" data-section="footer-widgets-page" data-field="title">Pages</h2>
+    <div id="footer-widgets-19" data-section="footer-widgets-19">
+      <h2 class="text-white font-bold mb-5 text-sm uppercase tracking-wider" data-section="footer-widgets-19" data-field="title">Pages</h2>
       <ul class="space-y-3 text-sm">
-        <li><a href="index.html" data-section="footer-widgets-page" data-field="link-home" class="hover:text-cyan-400 transition">Home</a></li>
-        <li><a href="about-us.html" data-section="footer-widgets-page" data-field="link-about" class="hover:text-cyan-400 transition">About Us</a></li>
-        <li><a href="hpl-products.html" data-section="footer-widgets-page" data-field="link-products" class="hover:text-cyan-400 transition">HPL Products</a></li>
-        <li><a href="pascalforge.html" data-section="footer-widgets-page" data-field="link-forge" class="hover:text-cyan-400 transition">PascalForge</a></li>
-        <li><a href="pascalcast.html" data-section="footer-widgets-page" data-field="link-cast" class="hover:text-cyan-400 transition">PascalCast</a></li>
-        <li><a href="media.html" data-section="footer-widgets-page" data-field="link-media" class="hover:text-cyan-400 transition">Media</a></li>
-        <li><a href="contact.html" data-section="footer-widgets-page" data-field="link-contact" class="hover:text-cyan-400 transition">Contact</a></li>
+        <li><a href="index.html" data-section="footer-widgets-19" data-field="link-home" class="hover:text-[#fb923c] transition">Home</a></li>
+        <li><a href="about-us.html" data-section="footer-widgets-19" data-field="link-about" class="hover:text-[#fb923c] transition">About Us</a></li>
+        <li><a href="hpl-products.html" data-section="footer-widgets-19" data-field="link-products" class="hover:text-[#fb923c] transition">HPL Products</a></li>
+        <li><a href="kataloglar.html" class="hover:text-[#fb923c] transition">Catalogs</a></li>
+        <li><a href="teklif-al.html" class="hover:text-[#fb923c] transition">Get a Quote</a></li>
+        <li><a href="referanslar.html" class="hover:text-[#fb923c] transition">References</a></li>
+        <li><a href="pascalforge.html" data-section="footer-widgets-19" data-field="link-forge" class="hover:text-[#fb923c] transition">PascalForge</a></li>
+        <li><a href="pascalcast.html" data-section="footer-widgets-19" data-field="link-cast" class="hover:text-[#fb923c] transition">PascalCast</a></li>
+        <li><a href="media.html" data-section="footer-widgets-19" data-field="link-media" class="hover:text-[#fb923c] transition">Media</a></li>
+        <li><a href="contact.html" data-section="footer-widgets-19" data-field="link-contact" class="hover:text-[#fb923c] transition">Contact</a></li>
       </ul>
     </div>
-    <div id="footer-widgets-quicklinks" data-section="footer-widgets-quicklinks">
-      <h2 class="text-white font-bold mb-5 text-sm uppercase tracking-wider" data-section="footer-widgets-quicklinks" data-field="title">Quick Links</h2>
+    <div id="footer-widgets-20" data-section="footer-widgets-20">
+      <h2 class="text-white font-bold mb-5 text-sm uppercase tracking-wider" data-section="footer-widgets-20" data-field="title">Quick Links</h2>
       <ul class="space-y-3 text-sm">
-        <li><a href="privacy-policy.html" data-section="footer-widgets-quicklinks" data-field="link-privacy" class="hover:text-cyan-400 transition">Privacy Policy</a></li>
-        <li><a href="terms-of-service.html" data-section="footer-widgets-quicklinks" data-field="link-terms" class="text-white font-semibold">Term Of Service</a></li>
-        <li><a href="disclaimer.html" data-section="footer-widgets-quicklinks" data-field="link-disclaimer" class="hover:text-cyan-400 transition">Disclaimer</a></li>
-        <li><a href="faq.html" data-section="footer-widgets-quicklinks" data-field="link-faq" class="hover:text-cyan-400 transition">FAQ</a></li>
+        <li><a href="privacy-policy.html" data-section="footer-widgets-20" data-field="link-privacy" class="hover:text-[#fb923c] transition">Privacy Policy</a></li>
+        <li><a href="terms-of-service.html" data-section="footer-widgets-20" data-field="link-terms" class="hover:text-[#fb923c] transition">Term Of Service</a></li>
+        <li><a href="disclaimer.html" data-section="footer-widgets-20" data-field="link-disclaimer" class="hover:text-[#fb923c] transition">Disclaimer</a></li>
+        <li><a href="faq.html" data-section="footer-widgets-20" data-field="link-faq" class="hover:text-[#fb923c] transition">FAQ</a></li>
       </ul>
     </div>
-    <div id="map-page" data-section="map-page">
-      <h2 class="text-white font-bold mb-5 text-sm uppercase tracking-wider" data-section="map-page" data-field="title">Factory Location</h2>
+    <div id="map-21" data-section="map-21">
+      <h2 class="text-white font-bold mb-5 text-sm uppercase tracking-wider" data-section="map-21" data-field="title">Factory Location</h2>
       <ul class="space-y-4 text-sm">
-        <li class="flex gap-3"><span class="mt-0.5 h-5 w-5 shrink-0 text-cyan-400">📍</span><span data-section="map-page" data-field="address">Fevziçakmak, 10757 Sk No:3/B, 42210 Karatay/Konya</span></li>
-        <li class="flex gap-3"><span class="mt-0.5 h-5 w-5 shrink-0 text-cyan-400">📞</span><span data-section="map-page" data-field="phone">(+90) 555-384-82-29</span></li>
-        <li class="flex gap-3"><span class="mt-0.5 h-5 w-5 shrink-0 text-cyan-400">🕒</span><span data-section="map-page" data-field="hours">Mon – Fri : 09:00 AM – 18:30 PM</span></li>
+        <li class="flex gap-3"><span class="mt-0.5 h-5 w-5 shrink-0 text-[#fb923c]"><svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0Z"/><circle cx="12" cy="10" r="3"/></svg></span><span data-section="map-21" data-field="address">Fevziçakmak, 10757 Sk No:3/B, 42210 Karatay/Konya</span></li>
+        <li class="flex gap-3"><span class="mt-0.5 h-5 w-5 shrink-0 text-[#fb923c]"><svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92Z"/></svg></span><span data-section="map-21" data-field="phone">(+90) 555-384-82-29</span></li>
+        <li class="flex gap-3"><span class="mt-0.5 h-5 w-5 shrink-0 text-[#fb923c]"><svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75"><circle cx="12" cy="12" r="10"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6l4 2"/></svg></span><span data-section="map-21" data-field="hours">Mon – Fri : 09:00 AM – 18:30 PM</span></li>
       </ul>
     </div>
   </div>
-  <div class="relative border-t border-white/10 py-6 text-center text-sm text-slate-500" data-section="map-page" data-field="copyright">
+  <div class="relative border-t border-white/10 py-6 text-center text-sm text-slate-500" data-section="map-21" data-field="copyright">
     All Rights Reserved By HydroPascal / Copyright © 2026
   </div>
 </footer>

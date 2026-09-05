@@ -14,40 +14,10 @@ function setTheme(mode){try{var isLight=mode==='light';document.documentElement.
 <link rel="apple-touch-icon" sizes="180x180" href="../assets/images/favicon/favicon-180.png">
 <link rel="icon" type="image/png" sizes="192x192" href="../assets/images/favicon/favicon-192.png">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Disclaimer - Legal Notice & Terms | HydroPascal</title>
-<meta name="description" content="Read HydroPascal's disclaimer regarding product specifications, catalogues, and cylinder calculation results published on this website. Contact us for details.">
-<meta name="keywords" content="hydropascal disclaimer, legal notice, terms, hydraulic cylinder information, liability notice">
-<link rel="canonical" href="https://www.hydropascal.com.tr/en/disclaimer.html">
+<title>Product Detail | HydroPascal Hydraulic Cylinders</title>
+<meta name="description" content="HydroPascal product detail page: general technical information, PDF catalog download, and quote request.">
 <meta name="robots" content="noindex, follow">
-<link rel="alternate" hreflang="en" href="https://www.hydropascal.com.tr/en/disclaimer.html">
-<link rel="alternate" hreflang="tr" href="https://www.hydropascal.com.tr/tr/disclaimer.html">
-<link rel="alternate" hreflang="x-default" href="https://www.hydropascal.com.tr/en/disclaimer.html">
-<meta property="og:title" content="Disclaimer - Legal Notice & Terms | HydroPascal">
-<meta property="og:description" content="Read HydroPascal's disclaimer regarding product specifications, catalogues, and cylinder calculation results published on this website.">
-<meta property="og:image" content="https://www.hydropascal.com.tr/assets/images/banner.jpg">
-<meta property="og:url" content="https://www.hydropascal.com.tr/en/disclaimer.html">
-<meta property="og:type" content="website">
-<meta property="og:locale" content="en_US">
-<meta property="og:site_name" content="HydroPascal">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Disclaimer - Legal Notice & Terms | HydroPascal">
-<meta name="twitter:description" content="Read HydroPascal's disclaimer regarding product specifications, catalogues, and cylinder calculation results published on this website.">
-<meta name="twitter:image" content="https://www.hydropascal.com.tr/assets/images/banner.jpg">
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "WebPage",
-  "name": "Disclaimer - Legal Notice & Terms",
-  "description": "HydroPascal's disclaimer regarding product specifications, catalogues, and cylinder calculation results published on this website.",
-  "url": "https://www.hydropascal.com.tr/en/disclaimer.html",
-  "inLanguage": "en",
-  "isPartOf": {
-    "@type": "WebSite",
-    "name": "HydroPascal",
-    "url": "https://www.hydropascal.com.tr/en/index.html"
-  }
-}
-</script>
+<link rel="canonical" href="https://www.hydropascal.com.tr/en/urun-detay.html">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -90,7 +60,7 @@ html.light .shadow-2xl{box-shadow:0 25px 50px -12px rgba(15,23,42,.12)!important
 html.light .shadow-black\/20{box-shadow:0 10px 25px -5px rgba(15,23,42,.08)!important}
 </style>
 </head>
-<body class="bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 text-slate-300 antialiased">
+<body class="bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 text-slate-300 antialiased" x-data="productDetail()" x-init="init()">
 
 <!-- HEADER START -->
 <header class="fixed top-0 inset-x-0 z-50 border-b border-white/10 bg-slate-950/70 backdrop-blur-xl" x-data="{ open: false, scrolled: false, settingsOpen: false, productsOpen: false, resourcesOpen: false }" x-init="window.addEventListener('scroll', () => scrolled = window.scrollY > 20)" :class="scrolled ? 'bg-slate-950/90 shadow-lg shadow-black/20' : ''">
@@ -136,7 +106,7 @@ html.light .shadow-black\/20{box-shadow:0 10px 25px -5px rgba(15,23,42,.08)!impo
         <div x-show="settingsOpen" x-transition x-cloak @click.outside="settingsOpen = false" class="absolute right-0 mt-2 w-fit rounded-md border border-white/10 bg-slate-900/95 backdrop-blur-xl shadow-2xl p-3 flex flex-col gap-3 z-50">
           <div>
             <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Language</p>
-            <div class="relative flex items-center gap-0.5 rounded-full border border-white/15 bg-white/5 p-0.5 w-fit"><a href="../tr/disclaimer.html" aria-label="Türkçe'ye geç" title="Türkçe" class="relative z-10 flex items-center justify-center w-9 h-8 rounded-full overflow-hidden grayscale opacity-35 hover:grayscale-0 hover:opacity-100 transition"><svg viewBox="0 0 30 20" class="w-full h-full" preserveAspectRatio="xMidYMid slice"><rect width="30" height="20" fill="#E30A17"/><circle cx="12" cy="10" r="5" fill="#fff"/><circle cx="13.4" cy="10" r="4" fill="#E30A17"/><polygon fill="#fff" points="18.5,10 15.7,10.9 17.4,8.6 17.4,11.4 15.7,9.1"/></svg></a><span class="absolute inset-y-0.5 right-0.5 w-9 rounded-full bg-gradient-to-r from-blue-500/40 to-cyan-400/40 ring-1 ring-cyan-400/60"></span><span aria-label="English (active)" title="English" class="relative z-10 flex items-center justify-center w-9 h-8 rounded-full overflow-hidden ring-2 ring-cyan-300 scale-110 shadow-lg shadow-cyan-500/30"><svg viewBox="0 0 60 40" class="w-full h-full" preserveAspectRatio="xMidYMid slice"><rect width="60" height="40" fill="#00247d"/><path d="M0,0 60,40 M60,0 0,40" stroke="#fff" stroke-width="8"/><path d="M0,0 60,40 M60,0 0,40" stroke="#cf142b" stroke-width="3"/><path d="M30,0 30,40 M0,20 60,20" stroke="#fff" stroke-width="13"/><path d="M30,0 30,40 M0,20 60,20" stroke="#cf142b" stroke-width="8"/></svg></span></div>
+            <div class="relative flex items-center gap-0.5 rounded-full border border-white/15 bg-white/5 p-0.5 w-fit"><a href="../tr/urun-detay.html" aria-label="Türkçe'ye geç" title="Türkçe" class="relative z-10 flex items-center justify-center w-9 h-8 rounded-full overflow-hidden grayscale opacity-35 hover:grayscale-0 hover:opacity-100 transition"><svg viewBox="0 0 30 20" class="w-full h-full" preserveAspectRatio="xMidYMid slice"><rect width="30" height="20" fill="#E30A17"/><circle cx="12" cy="10" r="5" fill="#fff"/><circle cx="13.4" cy="10" r="4" fill="#E30A17"/><polygon fill="#fff" points="18.5,10 15.7,10.9 17.4,8.6 17.4,11.4 15.7,9.1"/></svg></a><span class="absolute inset-y-0.5 right-0.5 w-9 rounded-full bg-gradient-to-r from-blue-500/40 to-cyan-400/40 ring-1 ring-cyan-400/60"></span><span aria-label="English (active)" title="English" class="relative z-10 flex items-center justify-center w-9 h-8 rounded-full overflow-hidden ring-2 ring-cyan-300 scale-110 shadow-lg shadow-cyan-500/30"><svg viewBox="0 0 60 40" class="w-full h-full" preserveAspectRatio="xMidYMid slice"><rect width="60" height="40" fill="#00247d"/><path d="M0,0 60,40 M60,0 0,40" stroke="#fff" stroke-width="8"/><path d="M0,0 60,40 M60,0 0,40" stroke="#cf142b" stroke-width="3"/><path d="M30,0 30,40 M0,20 60,20" stroke="#fff" stroke-width="13"/><path d="M30,0 30,40 M0,20 60,20" stroke="#cf142b" stroke-width="8"/></svg></span></div>
           </div>
           <div>
             <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Theme</p>
@@ -161,7 +131,7 @@ html.light .shadow-black\/20{box-shadow:0 10px 25px -5px rgba(15,23,42,.08)!impo
           <div x-show="settingsOpen" x-transition x-cloak @click.outside="settingsOpen = false" class="absolute right-0 mt-2 w-fit rounded-md border border-white/10 bg-slate-900/95 backdrop-blur-xl shadow-2xl p-3 flex flex-col gap-3 z-50">
             <div>
               <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Language</p>
-              <div class="relative flex items-center gap-0.5 rounded-full border border-white/20 bg-white/5 p-0.5 w-fit"><a href="../tr/disclaimer.html" aria-label="Türkçe'ye geç" title="Türkçe" class="relative z-10 flex items-center justify-center w-7 h-7 rounded-full overflow-hidden grayscale opacity-35 hover:grayscale-0 hover:opacity-100 transition"><svg viewBox="0 0 30 20" class="w-full h-full" preserveAspectRatio="xMidYMid slice"><rect width="30" height="20" fill="#E30A17"/><circle cx="12" cy="10" r="5" fill="#fff"/><circle cx="13.4" cy="10" r="4" fill="#E30A17"/><polygon fill="#fff" points="18.5,10 15.7,10.9 17.4,8.6 17.4,11.4 15.7,9.1"/></svg></a><span class="absolute inset-y-0.5 right-0.5 w-7 rounded-full bg-gradient-to-r from-blue-500/40 to-cyan-400/40 ring-1 ring-cyan-400/60"></span><span aria-label="English (active)" title="English" class="relative z-10 flex items-center justify-center w-7 h-7 rounded-full overflow-hidden ring-2 ring-cyan-300 scale-110 shadow-lg shadow-cyan-500/30"><svg viewBox="0 0 60 40" class="w-full h-full" preserveAspectRatio="xMidYMid slice"><rect width="60" height="40" fill="#00247d"/><path d="M0,0 60,40 M60,0 0,40" stroke="#fff" stroke-width="8"/><path d="M0,0 60,40 M60,0 0,40" stroke="#cf142b" stroke-width="3"/><path d="M30,0 30,40 M0,20 60,20" stroke="#fff" stroke-width="13"/><path d="M30,0 30,40 M0,20 60,20" stroke="#cf142b" stroke-width="8"/></svg></span></div>
+              <div class="relative flex items-center gap-0.5 rounded-full border border-white/20 bg-white/5 p-0.5 w-fit"><a href="../tr/urun-detay.html" aria-label="Türkçe'ye geç" title="Türkçe" class="relative z-10 flex items-center justify-center w-7 h-7 rounded-full overflow-hidden grayscale opacity-35 hover:grayscale-0 hover:opacity-100 transition"><svg viewBox="0 0 30 20" class="w-full h-full" preserveAspectRatio="xMidYMid slice"><rect width="30" height="20" fill="#E30A17"/><circle cx="12" cy="10" r="5" fill="#fff"/><circle cx="13.4" cy="10" r="4" fill="#E30A17"/><polygon fill="#fff" points="18.5,10 15.7,10.9 17.4,8.6 17.4,11.4 15.7,9.1"/></svg></a><span class="absolute inset-y-0.5 right-0.5 w-7 rounded-full bg-gradient-to-r from-blue-500/40 to-cyan-400/40 ring-1 ring-cyan-400/60"></span><span aria-label="English (active)" title="English" class="relative z-10 flex items-center justify-center w-7 h-7 rounded-full overflow-hidden ring-2 ring-cyan-300 scale-110 shadow-lg shadow-cyan-500/30"><svg viewBox="0 0 60 40" class="w-full h-full" preserveAspectRatio="xMidYMid slice"><rect width="60" height="40" fill="#00247d"/><path d="M0,0 60,40 M60,0 0,40" stroke="#fff" stroke-width="8"/><path d="M0,0 60,40 M60,0 0,40" stroke="#cf142b" stroke-width="3"/><path d="M30,0 30,40 M0,20 60,20" stroke="#fff" stroke-width="13"/><path d="M30,0 30,40 M0,20 60,20" stroke="#cf142b" stroke-width="8"/></svg></span></div>
             </div>
             <div>
               <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Theme</p>
@@ -206,23 +176,28 @@ html.light .shadow-black\/20{box-shadow:0 10px 25px -5px rgba(15,23,42,.08)!impo
 <div class="h-20"></div>
 
 <main>
-<!-- HERO -->
-<section id="hero-1" class="relative overflow-hidden py-12 md:py-16">
-  <div class="pointer-events-none absolute -top-32 -left-32 w-[500px] h-[500px] bg-[#fb923c]/15 rounded-full blur-3xl"></div>
-  <div class="pointer-events-none absolute -bottom-32 -right-32 w-[500px] h-[500px] bg-[#fb923c]/10 rounded-full blur-3xl"></div>
-  <div class="relative max-w-7xl mx-auto px-6 lg:px-8 text-center">
-    <span class="inline-block text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-4 py-1.5 mb-6">Legal</span>
-    <h1 class="text-5xl md:text-6xl font-extrabold text-[#fb923c]" data-section="hero-1" data-field="title">Disclaimer</h1>
+<section class="max-w-7xl mx-auto px-6 lg:px-8 py-14 grid md:grid-cols-2 gap-14 items-start">
+  <div class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-10 flex items-center justify-center">
+    <img :src="product.image" :alt="product.title" class="max-h-80 w-full object-contain" width="400" height="400" loading="lazy">
   </div>
-</section>
-
-<!-- CONTENT -->
-<section id="content-disclaimer" class="max-w-4xl mx-auto px-6 lg:px-8 py-16">
-  <div class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-10 shadow-2xl hover:border-[#fb923c]/40 transition-all duration-300">
-    <h2 class="text-3xl font-bold text-white mb-8" data-section="content-disclaimer" data-field="title">Disclaimer</h2>
-    <div class="space-y-6 text-slate-300 leading-relaxed text-lg" data-section="content-disclaimer" data-field="content">
-      <p>This page is a placeholder for HydroPascal's Disclaimer. The information provided on this website (product specifications, catalogues, and the Cylinder Selection Program results) is for general informational purposes and should be verified with our engineering team before use in production.</p>
-      <p>For clarification, please reach us via our <a href="contact.html" class="text-[#fb923c] font-semibold hover:underline">Contact</a> page.</p>
+  <div>
+    <span class="inline-block mb-4 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-4 py-1.5" x-text="product.categoryLabel"></span>
+    <h1 class="text-4xl md:text-5xl font-extrabold text-white mb-6" x-text="product.title"></h1>
+    <p class="text-slate-300 text-lg leading-relaxed mb-8" x-text="product.description"></p>
+    <div class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-6 mb-8">
+      <h2 class="font-bold text-white mb-4">General Information</h2>
+      <ul class="space-y-3 text-slate-300 text-sm">
+        <li class="flex gap-3"><span class="text-[#fb923c]">✓</span> Manufactured to CE, ISO, and TSE standards</li>
+        <li class="flex gap-3"><span class="text-[#fb923c]">✓</span> Machined with CNC precision, high durability</li>
+        <li class="flex gap-3"><span class="text-[#fb923c]">✓</span> PDF catalog for detailed dimensions and technical specifications</li>
+      </ul>
+    </div>
+    <div class="flex flex-wrap gap-4">
+      <a :href="product.pdf" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 rounded-md border border-white/20 bg-white/5 px-6 py-3 font-semibold hover:bg-white/10 hover:border-white/40 transition">
+        <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v12m0 0 4-4m-4 4-4-4M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>
+        PDF İndir
+      </a>
+      <a href="teklif-al.html" class="inline-block rounded-md bg-[#fb923c] text-slate-950 font-semibold px-6 py-3 hover:brightness-110 hover:shadow-lg hover:shadow-[#fb923c]/30 transition">Get a Quote for This Product</a>
     </div>
   </div>
 </section>
@@ -287,5 +262,38 @@ html.light .shadow-black\/20{box-shadow:0 10px 25px -5px rgba(15,23,42,.08)!impo
   </span>
 </a>
 <!-- WHATSAPP FLOATING BUTTON END -->
+
+<script>
+const PRODUCTS = {
+  "cift-etkili": { title: "Çift Etkili Silindirler", category: "hpl", categoryLabel: "HPL Ürünleri", parent: "hpl-products.html", parentLabel: "HPL Ürünleri", image: "../assets/images/HPL-1.png", pdf: "../assets/documents/HPL-Double-Action.pdf", description: "Çift etkili hidrolik silindirlerimiz, tarım makinelerinde hem itme hem çekme yönünde kontrollü güç aktarımı sağlar. Yüksek basınç dayanımı ve uzun ömürlü conta sistemleriyle üretilir." },
+  "toplinks": { title: "Üst Bağlantı Kolları (TopLinks)", category: "hpl", categoryLabel: "HPL Ürünleri", parent: "hpl-products.html", parentLabel: "HPL Ürünleri", image: "../assets/images/HPL-2.png", pdf: "../assets/documents/TopLinks-HPL-.pdf", description: "Traktör ve tarım ekipmanları arasındaki bağlantıyı sağlayan, yüksek mukavemetli üst bağlantı kollarımız, farklı traktör modelleriyle uyumlu ölçü seçenekleriyle sunulur." },
+  "dikey-ayarlanabilir": { title: "Dikey Ayarlanabilir Silindirler", category: "hpl", categoryLabel: "HPL Ürünleri", parent: "hpl-products.html", parentLabel: "HPL Ürünleri", image: "../assets/images/HPL-3.png", pdf: "../assets/documents/HPL-Vertical-Adjustable-Cylinders-.pdf", description: "Dikey ayarlanabilir silindirlerimiz, ekipman yüksekliğinin hassas şekilde kontrol edilmesi gereken uygulamalar için tasarlanmıştır." },
+  "oem-silindir": { title: "OEM Silindirler", category: "hpl", categoryLabel: "HPL Ürünleri", parent: "hpl-products.html", parentLabel: "HPL Ürünleri", image: "../assets/images/HPL-4.png", pdf: "../assets/documents/OEM-Cylinders-1-1.pdf", description: "Müşteriye özel teknik gereksinimlere göre üretilen OEM hidrolik silindirlerimiz, orijinal ekipman üreticilerinin spesifikasyonlarına birebir uygun olarak imal edilir." },
+  "teleskopik-silindir": { title: "Teleskopik Silindirler", category: "hpl", categoryLabel: "HPL Ürünleri", parent: "hpl-products.html", parentLabel: "HPL Ürünleri", image: "../assets/images/HPL-5.png", pdf: "../assets/documents/Telescopic-Cylinders-1.pdf", description: "Çok kademeli teleskopik silindirlerimiz, kısa gövde boyunda uzun strok mesafesi gerektiren kaldırma uygulamaları için idealdir." },
+  "mekanik-kriko": { title: "Mekanik Krikolar", category: "hpl", categoryLabel: "HPL Ürünleri", parent: "hpl-products.html", parentLabel: "HPL Ürünleri", image: "../assets/images/HPL-6.png", pdf: "../assets/documents/Mechanical-Jacks-1.pdf", description: "Dayanıklı mekanik krikolarımız, tarım ekipmanlarının sabitlenmesi ve dengelenmesi için güvenilir bir çözüm sunar." },
+  "heay-toplink": { title: "Ağır Hizmet Üst Bağlantı Kolları", category: "oem", categoryLabel: "HPL OEM", parent: "oem-parts.html", parentLabel: "HPL OEM", image: "../assets/images/frostwway.com_.tr-6.png", pdf: "../assets/documents/HEAY-TOPLINK.pdf", description: "Ağır hizmet tipi üst bağlantı kollarımız, yüksek yük altında çalışan büyük tarım makineleri için güçlendirilmiş yapıda üretilir." },
+  "leveling-box": { title: "Dengeleme Kutusu", category: "oem", categoryLabel: "HPL OEM", parent: "oem-parts.html", parentLabel: "HPL OEM", image: "../assets/images/HPL-1.png", pdf: "../assets/documents/LEVELING-BOX.pdf", description: "Dengeleme kutularımız, ekipman dengesinin hassas biçimde ayarlanmasını sağlayarak sürüş ve çalışma stabilitesini artırır." },
+  "pimler": { title: "Pimler", category: "oem", categoryLabel: "HPL OEM", parent: "oem-parts.html", parentLabel: "HPL OEM", image: "../assets/images/HPL-2.png", pdf: "../assets/documents/PIMS.pdf", description: "Yüksek dayanımlı çelikten üretilen pimlerimiz, bağlantı noktalarında güvenli ve aşınmaya dayanıklı bir çözüm sunar." },
+  "yan-kol": { title: "Yan Kollar", category: "oem", categoryLabel: "HPL OEM", parent: "oem-parts.html", parentLabel: "HPL OEM", image: "../assets/images/HPL-3.png", pdf: "../assets/documents/SIDE-ARM.pdf", description: "Yan kollarımız, traktör üç nokta askı sisteminin yan stabilitesini sağlayan, dayanıklı ve hassas ölçülerde üretilen parçalardır." },
+  "yedek-parca": { title: "Yedek Parçalar", category: "oem", categoryLabel: "HPL OEM", parent: "oem-parts.html", parentLabel: "HPL OEM", image: "../assets/images/HPL-4.png", pdf: "../assets/documents/SPARE-PARTS.pdf", description: "Geniş yedek parça yelpazemiz, klasik ve modern traktör modelleri için ihtiyaç duyulan çeşitli bileşenleri kapsar." },
+  "stabilizator-zinciri": { title: "Stabilizatör Zinciri", category: "oem", categoryLabel: "HPL OEM", parent: "oem-parts.html", parentLabel: "HPL OEM", image: "../assets/images/HPL-6.png", pdf: "../assets/documents/STABILIZER-CHAIN.pdf", description: "Stabilizatör zincirlerimiz, üç nokta askı sisteminde yanal hareketi sınırlandırarak ekipman stabilitesini artırır." },
+  "teleskopik-zincir": { title: "Teleskopik Zincir", category: "oem", categoryLabel: "HPL OEM", parent: "oem-parts.html", parentLabel: "HPL OEM", image: "../assets/images/HPL-5.png", pdf: "../assets/documents/TELESCOPIC-CHAIN.pdf", description: "Teleskopik zincirlerimiz, değişken mesafeli bağlantı ihtiyaçlarında esnek ve güvenilir bir çözüm sağlar." },
+  "mafsal": { title: "Mafsal", category: "oem", categoryLabel: "HPL OEM", parent: "oem-parts.html", parentLabel: "HPL OEM", image: "../assets/images/HPL-7.png", pdf: "../assets/documents/TOPLINKS-KNUCKLE.pdf", description: "Üst bağlantı mafsallarımız, bağlantı noktalarında serbest hareket açısı sağlayarak ekipmanın rahat manevra yapmasına imkan tanır." },
+  "cekme-kolu": { title: "Çekme Kolu & Yan Kollar", category: "oem", categoryLabel: "HPL OEM", parent: "oem-parts.html", parentLabel: "HPL OEM", image: "../assets/images/HPL-8.png", pdf: "../assets/documents/YOKE-FORK.pdf", description: "Çekme kolu ve yan kol setlerimiz, traktör üç nokta askı sisteminin tam uyumlu ve dayanıklı bağlantı bileşenleridir." }
+};
+
+function productDetail() {
+  return {
+    product: { title: "Ürün", description: "", image: "", pdf: "#", parent: "hpl-products.html", parentLabel: "Ürünler", categoryLabel: "" },
+    init() {
+      const params = new URLSearchParams(window.location.search);
+      const id = params.get('id');
+      const p = PRODUCTS[id] || PRODUCTS['cift-etkili'];
+      this.product = p;
+      document.title = p.title + " | HydroPascal Hidrolik Silindir";
+    }
+  }
+}
+</script>
 </body>
 </html>
