@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <script>
-(function(){try{if(localStorage.getItem('hp-theme')==='light'){document.documentElement.classList.add('light');}}catch(e){}})();
+(function(){try{if(localStorage.getItem('hp-theme')!=='dark'){document.documentElement.classList.add('light');}}catch(e){}})();
 function toggleTheme(){try{var isLight=document.documentElement.classList.toggle('light');localStorage.setItem('hp-theme',isLight?'light':'dark');}catch(e){}}
 function setTheme(mode){try{var isLight=mode==='light';document.documentElement.classList.toggle('light',isLight);localStorage.setItem('hp-theme',isLight?'light':'dark');}catch(e){}}
 </script>

@@ -46,8 +46,8 @@
 <script src="https://cdn.tailwindcss.com"></script>
 <script>
   (function () {
-    var lang = (navigator.language || navigator.userLanguage || "en").toLowerCase();
-    var target = lang.indexOf("tr") === 0 ? "tr/index.html" : "en/index.html";
+    var lang = (navigator.language || navigator.userLanguage || "tr").toLowerCase();
+    var target = lang.indexOf("en") === 0 ? "en/index.html" : "tr/index.html";
     window.location.replace(target);
   })();
 </script>

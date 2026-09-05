@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <script>
-(function(){try{if(localStorage.getItem('hp-theme')==='light'){document.documentElement.classList.add('light');}}catch(e){}})();
+(function(){try{if(localStorage.getItem('hp-theme')!=='dark'){document.documentElement.classList.add('light');}}catch(e){}})();
 function toggleTheme(){try{var isLight=document.documentElement.classList.toggle('light');localStorage.setItem('hp-theme',isLight?'light':'dark');}catch(e){}}
 function setTheme(mode){try{var isLight=mode==='light';document.documentElement.classList.toggle('light',isLight);localStorage.setItem('hp-theme',isLight?'light':'dark');}catch(e){}}
 </script>
@@ -220,25 +220,49 @@ html.light #features-7{background-image:linear-gradient(rgba(255,255,255,.92),rg
 
 <main>
 <!-- HERO SLIDER -->
-<section id="hero-1" class="relative overflow-hidden flex items-center bg-slate-950"
-  x-data="{
-    slide: { src: '../assets/images/global-solutions.jpg', alt: 'HPL HydroPascal hidrolik silindir mili hassas CNC işleme', eyebrow: '2019\'dan beri · Konya, Türkiye', title: 'Hydropascal | Mühendislikte Uzmanlık, Üretimde Hassasiyet', content: 'Mühendislik yaklaşımımız ve sektörel deneyimimiz doğrultusunda; OEM ürünler, döküm ve dövme parçalar ile hidrolik sistemler alanında farklı ihtiyaçlara yönelik çözümler sunuyoruz. Her projede yüksek kalite standartlarını, teknik hassasiyeti ve güvenilirliği ön planda tutarak iş ortaklarımızın beklentilerine değer katıyoruz.' }
-  }"
-  style="height: calc(100vh - 5rem); height: calc(100dvh - 5rem);">
+<section id="hero-1" class="relative overflow-hidden flex items-center bg-slate-950 cursor-default" x-data="{
+    currentSlide: 0,
+    slides: [
+      { src: '../assets/images/global-solutions.jpg', alt: 'HPL HydroPascal küresel çözümler ve dağıtım ağı' },
+      { src: '../assets/images/global-network.jpg', alt: 'HPL HydroPascal küresel lojistik ve dağıtım ağı' }
+    ],
+    next() { this.currentSlide = (this.currentSlide + 1) % this.slides.length },
+    prev() { this.currentSlide = (this.currentSlide - 1 + this.slides.length) % this.slides.length },
+    dragging: false,
+    dragStartX: 0,
+    dragDeltaX: 0,
+    dragStart(x) { this.dragging = true; this.dragStartX = x; this.dragDeltaX = 0 },
+    dragMove(x) { if (this.dragging) this.dragDeltaX = x - this.dragStartX },
+    dragEnd() {
+      if (!this.dragging) return;
+      if (this.dragDeltaX > 50) this.prev();
+      else if (this.dragDeltaX < -50) this.next();
+      this.dragging = false; this.dragDeltaX = 0;
+    }
+  }" x-init="setInterval(() => next(), 5000)" @mousedown="dragStart($event.clientX)" @mousemove.window="dragMove($event.clientX)" @mouseup.window="dragEnd()" @touchstart="dragStart($event.touches[0].clientX)" @touchmove="dragMove($event.touches[0].clientX)" @touchend="dragEnd()" :class="dragging ? 'cursor-grabbing' : 'cursor-default'" style="height: calc(100vh - 5rem); height: calc(100dvh - 5rem); touch-action: pan-y;">
   <div class="absolute inset-0 w-full h-full bg-slate-950 select-none">
-    <img :src="slide.src" :alt="slide.alt" class="absolute inset-0 w-full h-full object-cover object-center opacity-50 pointer-events-none">
+    <template x-for="(img, i) in slides" :key="i">
+      <img :src="img.src" :alt="img.alt" draggable="false" x-show="currentSlide === i" class="absolute inset-0 w-full h-full object-cover object-center opacity-50 transition-opacity duration-500 pointer-events-none">
+    </template>
   </div>
   <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/70 to-slate-950/40"></div>
   <div class="pointer-events-none absolute -top-32 -left-32 w-[500px] h-[500px] bg-[#fb923c]/15 rounded-full blur-3xl"></div>
   <div class="pointer-events-none absolute top-1/3 -right-32 w-[500px] h-[500px] bg-[#fb923c]/10 rounded-full blur-3xl"></div>
   <div class="relative w-full max-w-7xl px-6 sm:px-10 lg:pl-24 lg:pr-16 py-14 sm:py-24 md:py-40">
-    <span class="inline-block mb-4 sm:mb-6 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-md px-4 py-1.5" x-text="slide.eyebrow"></span>
-    <h1 class="text-2xl sm:text-3xl md:text-4xl font-extrabold max-w-3xl leading-tight text-[#fb923c]" data-section="hero-1-0" data-field="title" x-text="slide.title"></h1>
-    <p class="mt-3 sm:mt-6 max-w-2xl text-sm sm:text-lg text-white leading-relaxed" data-section="hero-1-0" data-field="content" x-text="slide.content"></p>
+    <span class="inline-block mb-4 sm:mb-6 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-md px-4 py-1.5">2019'dan beri · Konya, Türkiye</span>
+    <h1 class="text-2xl sm:text-3xl md:text-4xl font-extrabold max-w-3xl leading-tight text-[#fb923c]" data-section="hero-1" data-field="title">Hydropascal | Mühendislikte Uzmanlık, Üretimde Hassasiyet</h1>
+    <p class="mt-3 sm:mt-6 max-w-2xl text-sm sm:text-lg text-white leading-relaxed" data-section="hero-1" data-field="content">Mühendislik yaklaşımımız ve sektörel deneyimimiz doğrultusunda; OEM ürünler, döküm ve dövme parçalar ile hidrolik sistemler alanında farklı ihtiyaçlara yönelik çözümler sunuyoruz. Her projede yüksek kalite standartlarını, teknik hassasiyeti ve güvenilirliği ön planda tutarak iş ortaklarımızın beklentilerine değer katıyoruz.</p>
     <div class="mt-6 sm:mt-10 flex flex-wrap gap-3 sm:gap-4">
       <a href="hpl-products.html" data-section="hero-1" data-field="cta-text" data-field-link="cta-url" class="rounded-md bg-[#fb923c] text-slate-950 font-semibold px-5 py-2.5 text-sm sm:px-7 sm:py-3.5 sm:text-base hover:brightness-110 hover:shadow-lg hover:shadow-[#fb923c]/30 transition">HPL Ürünleri</a>
       <a href="teklif-al.html" data-section="hero-1" data-field="cta-text-2" data-field-link="cta-url-2" class="rounded-md border border-white/20 bg-white/5 backdrop-blur px-5 py-2.5 text-sm sm:px-7 sm:py-3.5 sm:text-base font-semibold hover:bg-white/10 hover:border-white/40 transition">Teklif Al</a>
     </div>
+  </div>
+  <button @click="prev()" aria-label="Önceki slayt" class="hidden sm:flex absolute sm:left-4 sm:top-1/2 sm:-translate-y-1/2 z-20 sm:h-10 sm:w-10 items-center justify-center rounded-full bg-white/10 hover:bg-white/20 active:bg-white/30 border border-white/20 backdrop-blur text-lg sm:text-xl leading-none transition">‹</button>
+  <button @click="next()" aria-label="Sonraki slayt" class="hidden sm:flex absolute sm:right-4 sm:top-1/2 sm:-translate-y-1/2 z-20 sm:h-10 sm:w-10 items-center justify-center rounded-full bg-white/10 hover:bg-white/20 active:bg-white/30 border border-white/20 backdrop-blur text-lg sm:text-xl leading-none transition">›</button>
+  <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-2 z-10">
+    <template x-for="(img, i) in slides" :key="i">
+      <button @click="currentSlide = i" class="w-2.5 h-2.5 rounded-full transition" :class="currentSlide === i ? 'bg-[#fb923c] w-8' : 'bg-white/30'"></button>
+    </template>
   </div>
 </section>
 
