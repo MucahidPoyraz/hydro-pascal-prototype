@@ -21,9 +21,13 @@ function setTheme(mode){try{var isLight=mode==='light';document.documentElement.
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<!-- Hedef tasarım dili (blueprint/paper) fontları + token'lar — GÖREV 4.8 site geneli rollout -->
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/theme.css">
 <script src="https://cdn.tailwindcss.com"></script>
 <script>tailwind.config = { theme: { extend: { fontFamily: { sans: ['Inter','ui-sans-serif','system-ui','sans-serif'] } } } }</script>
 <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+<script defer src="../assets/js/reveal.js"></script>
 <style>
 /* Light theme overrides (default theme stays dark/glassmorphism, unchanged) */
 .icon-sun{display:none}
@@ -300,13 +304,40 @@ html.light .shadow-black\/20{box-shadow:0 10px 25px -5px rgba(15,23,42,.08)!impo
         <li class="flex gap-3"><span class="text-[#fb923c]">✓</span> Detaylı ölçü ve teknik özellikler için PDF katalog</li>
       </ul>
     </div>
-    <div class="flex flex-wrap gap-4">
-      <a :href="product.pdf" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 rounded-md border border-white/20 bg-white/5 px-6 py-3 font-semibold hover:bg-white/10 hover:border-white/40 transition">
-        <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v12m0 0 4-4m-4 4-4-4M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>
-        PDF İndir
-      </a>
-      <a x-show="product.isCylinderTool" x-cloak :href="'calculation-program.html?tip=' + product.calcId" class="inline-flex items-center gap-2 rounded-md border border-white/20 bg-white/5 px-6 py-3 font-semibold hover:bg-white/10 hover:border-[#fb923c]/40 hover:text-[#fb923c] transition">Bu ürün için doğru ölçüyü hesapla →</a>
-      <a :href="'teklif-al.html?urun=' + encodeURIComponent(product.interestValue) + '&urun_adi=' + encodeURIComponent(product.title)" class="inline-block rounded-md bg-[#fb923c] text-slate-950 font-semibold px-6 py-3 hover:brightness-110 hover:shadow-lg hover:shadow-[#fb923c]/30 transition">Bu Ürün İçin Teklif Al</a>
+    <!-- SONRAKI ADIM: 1) Katalog → 2) Doğru Ölçü → 3) Teklif Al (GÖREV 6.0 Bölüm 2) -->
+    <div class="space-y-4">
+      <div class="bg-white/5 border border-white/10 rounded-2xl p-5 flex items-start gap-4">
+        <span class="shrink-0 h-8 w-8 flex items-center justify-center rounded-full bg-white/10 border border-white/20 text-white font-bold text-sm">1</span>
+        <div class="flex-1 min-w-0">
+          <h3 class="font-bold text-white mb-1">Kategori Kataloğunu İnceleyin</h3>
+          <p class="text-sm text-slate-400 mb-3" x-text="'Bu kategorideki (' + product.categoryLabel + ') tüm modellerin teknik detayları için katoloğu inceleyin.'"></p>
+          <a :href="product.pdf" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 rounded-md border border-white/20 bg-white/5 px-5 py-2.5 text-sm font-semibold hover:bg-white/10 hover:border-white/40 transition">
+            <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v12m0 0 4-4m-4 4-4-4M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>
+            PDF Katalog İndir
+          </a>
+        </div>
+      </div>
+
+      <div x-show="product.isCylinderTool" x-cloak class="bg-white/5 border border-[#fb923c]/30 rounded-2xl p-5 flex items-start gap-4">
+        <span class="shrink-0 h-8 w-8 flex items-center justify-center rounded-full bg-[#fb923c] text-slate-950 font-bold text-sm">2</span>
+        <div class="flex-1 min-w-0">
+          <h3 class="font-bold text-white mb-1">Bu Ürün İçin Doğru Ölçüyü mü Arıyorsunuz?</h3>
+          <p class="text-sm text-slate-400 mb-3">Basınç, debi, çap ve strok değerlerinizi girin; Silindir Seçim Programımızla 60 saniyede doğru ölçüyü bulun.</p>
+          <a :href="'calculation-program.html?tip=' + product.calcId" class="inline-flex items-center gap-2 rounded-md border border-[#fb923c]/40 bg-[#fb923c]/10 text-[#fb923c] px-5 py-2.5 text-sm font-semibold hover:bg-[#fb923c]/20 transition">Hesaplayıcıyı Aç →</a>
+        </div>
+      </div>
+
+      <div class="relative rounded-2xl border border-[#fb923c]/40 bg-[#fb923c]/10 p-6 overflow-hidden">
+        <div class="pointer-events-none absolute -top-10 -right-10 w-40 h-40 bg-[#fb923c]/20 rounded-full blur-3xl"></div>
+        <div class="relative flex items-start gap-4">
+          <span class="shrink-0 h-8 w-8 flex items-center justify-center rounded-full bg-[#fb923c] text-slate-950 font-bold text-sm" x-text="product.isCylinderTool ? '3' : '2'"></span>
+          <div class="flex-1 min-w-0">
+            <h3 class="font-extrabold text-white text-lg mb-1">Bu Ürün İçin Özel Teklif Alın</h3>
+            <p class="text-sm text-slate-300 mb-4">Stoktan hızlı teslimat imkanı ve size özel fiyatlandırma için hemen talep oluşturun — uzman ekibimiz en kısa sürede dönüş yapsın.</p>
+            <a :href="'teklif-al.html?urun=' + encodeURIComponent(product.interestValue) + '&urun_adi=' + encodeURIComponent(product.title)" class="inline-block rounded-md bg-[#fb923c] text-slate-950 font-semibold px-7 py-3 hover:brightness-110 hover:shadow-lg hover:shadow-[#fb923c]/30 transition">Hemen Teklif Al →</a>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>

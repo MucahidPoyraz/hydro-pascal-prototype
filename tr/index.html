@@ -66,9 +66,13 @@ function setTheme(mode){try{var isLight=mode==='light';document.documentElement.
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<!-- Hedef tasarım dili (blueprint/paper) fontları — nav+footer pilotunda kullanılıyor, gövdede henüz uygulanmıyor (bkz. assets/css/theme.css) -->
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/theme.css">
 <script src="https://cdn.tailwindcss.com"></script>
 <script>tailwind.config = { theme: { extend: { fontFamily: { sans: ['Inter','ui-sans-serif','system-ui','sans-serif'] } } } }</script>
 <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+<script defer src="../assets/js/reveal.js"></script>
 <style>
 /* Light theme overrides (default theme stays dark/glassmorphism, unchanged) */
 .icon-sun{display:none}
@@ -268,60 +272,64 @@ html.light #features-7{background-image:linear-gradient(rgba(255,255,255,.92),rg
   </div>
 </section>
 
-<!-- PRODUCTS INTRO -->
-<section id="products-2" class="max-w-5xl mx-auto px-6 lg:px-8 py-24 text-center">
-  <h2 class="text-4xl md:text-5xl font-extrabold text-[#fb923c]" data-section="products-2" data-field="title">HPL Ürün Yelpazesi</h2>
-  <p class="mt-6 text-slate-300 text-lg leading-relaxed" data-section="products-2" data-field="content">HPL HydroPascal olarak, 2019 yılındaki kuruluşumuzdan bu yana Hidrolik Silindir Sistemleri üretiyor, tarım makineleri sektörüne tutarlı kalite ve güvenilirlik sağlıyoruz. Temel üretim kapasitemizin yanı sıra, tam entegre döküm ve dövme hatlarımız aracılığıyla küresel müşterilerimize hem dayanıklılık hem de performans açısından yüksek standartlar sunan kapsamlı destek sağlıyoruz.</p>
-</section>
-
-<!-- CYLINDER SOFTWARE BAND -->
-<section class="relative overflow-hidden py-20 border-y border-white/10">
-  <div class="pointer-events-none absolute -top-24 -left-24 w-[400px] h-[400px] bg-[#fb923c]/10 rounded-full blur-3xl"></div>
-  <div class="pointer-events-none absolute -bottom-24 -right-24 w-[400px] h-[400px] bg-[#fb923c]/10 rounded-full blur-3xl"></div>
-  <div class="relative max-w-7xl mx-auto px-6 lg:px-8 grid md:grid-cols-2 gap-12 items-center">
-    <div>
-      <span class="inline-block mb-4 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-4 py-1.5">Mühendislik Aracı</span>
-      <h2 class="text-3xl md:text-4xl font-extrabold text-white mb-4">Doğru Silindiri 60 Saniyede Bulun</h2>
-      <p class="text-slate-300 text-lg leading-relaxed mb-8">Basınç, debi, çap ve strok değerlerinizi girin; size uygun silindiri anında hesaplayalım.</p>
-      <a href="calculation-program.html" class="inline-block rounded-md bg-[#fb923c] text-slate-950 font-semibold px-8 py-4 text-lg hover:brightness-110 hover:shadow-lg hover:shadow-[#fb923c]/30 transition">Hesaplama Aracını Şimdi Deneyin →</a>
-    </div>
-    <div class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-10 flex items-center justify-center">
-      <svg class="h-40 w-40 text-[#fb923c]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.25"><rect x="5" y="2" width="14" height="20" rx="2"/><path stroke-linecap="round" stroke-linejoin="round" d="M9 6h6M8 11h1M11.5 11h1M15 11h1M8 14.5h1M11.5 14.5h1M15 14.5h1M8 18h1M11.5 18h1M15 18h1"/></svg>
-    </div>
+<!-- PRODUCTS INTRO + CATEGORY CARDS (GÖREV 6.0 Bölüm 4.2: başlık artık hemen altındaki
+     kartlarla aynı section'da — "boş başlık" hissi kalmadı) -->
+<section id="products-2" class="max-w-7xl mx-auto px-6 lg:px-8 py-24">
+  <div class="max-w-3xl mx-auto text-center mb-14">
+    <h2 class="text-4xl md:text-5xl font-extrabold text-[#fb923c]" data-section="products-2" data-field="title">HPL Ürün Yelpazesi</h2>
+    <p class="mt-6 text-slate-300 text-lg leading-relaxed" data-section="products-2" data-field="content">2019'dan bu yana hidrolik silindir sistemleri, entegre döküm ve dövme hatlarımızla dört ana alanda hizmet veriyoruz:</p>
   </div>
-</section>
-
-<!-- FASON ÜRETİM BAND -->
-<section class="relative overflow-hidden py-20 bg-gradient-to-br from-[#fb923c]/10 via-slate-950 to-[#fb923c]/5 border-b border-white/10 text-center">
-  <div class="relative max-w-4xl mx-auto px-6 lg:px-8">
-    <span class="inline-block mb-4 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-4 py-1.5">Fason Üretim</span>
-    <h2 class="text-3xl md:text-4xl font-extrabold text-white mb-4">Sizin İçin Üretiyoruz</h2>
-    <p class="text-slate-300 text-lg leading-relaxed mb-8 max-w-2xl mx-auto">Kendi ürün kataloğumuzun ötesinde, dövme ve döküm alanındaki üretim kapasitemizi sizin projeniz için seferber ediyoruz. Çiziminizi veya numunenizi paylaşın; mühendislik, kalıp/model, seri üretim ve kalite kontrol sürecinin tamamını biz yönetelim.</p>
-    <a href="hizmetler.html" class="inline-block rounded-md bg-[#fb923c] text-slate-950 font-semibold px-8 py-4 text-lg hover:brightness-110 hover:shadow-lg hover:shadow-[#fb923c]/30 transition">Üretim Ortağınız Olalım →</a>
-  </div>
-</section>
-
-<!-- PRODUCT CATEGORY CARDS -->
-<section class="max-w-7xl mx-auto px-6 lg:px-8 py-24 grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+  <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
   <div id="content-3" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg p-8 shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col items-center text-center">
-    <img src="../assets/images/Cream-Black-Elegant-Typography-Monogram-Initials-SR-Fashion-Store-Logo-7.png" alt="Hidrolik Çözümler ikonu" width="200" height="200" loading="lazy" class="h-20 object-contain mb-5 bg-white/90 rounded-md p-2" data-section="content-3" data-field="image">
+    <div class="h-14 w-14 flex items-center justify-center rounded-xl bg-[#fb923c] mb-5"><svg class="h-7 w-7 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.25" aria-hidden="true"><rect x="5" y="2" width="14" height="20" rx="2"/><path stroke-linecap="round" stroke-linejoin="round" d="M9 6h6M8 11h1M11.5 11h1M15 11h1M8 14.5h1M11.5 14.5h1M15 14.5h1M8 18h1M11.5 18h1M15 18h1"/></svg></div>
     <h3 class="font-bold text-lg text-white" data-section="content-3" data-field="title">Hidrolik Çözümler</h3>
     <a href="hpl-products.html" data-section="content-3" data-field="cta-text" data-field-link="cta-url" class="mt-5 text-[#fb923c] font-semibold hover:text-[#fb923c] transition">Daha Fazla →</a>
   </div>
   <div id="content-4" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg p-8 shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col items-center text-center">
-    <img src="../assets/images/Cream-Black-Elegant-Typography-Monogram-Initials-SR-Fashion-Store-Logo-13.png" alt="OEM Parçalar ikonu" width="200" height="200" loading="lazy" class="h-20 object-contain mb-5 bg-white/90 rounded-md p-2" data-section="content-4" data-field="image">
+    <div class="h-14 w-14 flex items-center justify-center rounded-xl bg-[#fb923c] mb-5"><svg class="h-7 w-7 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.324.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 0 1 1.37.49l1.296 2.247a1.125 1.125 0 0 1-.26 1.431l-1.003.827c-.293.24-.438.613-.43.992a7.723 7.723 0 0 1 0 .255c-.008.378.137.75.43.991l1.004.827c.424.35.534.955.26 1.43l-1.298 2.247a1.125 1.125 0 0 1-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.47 6.47 0 0 1-.22.128c-.331.183-.581.495-.644.869l-.213 1.281c-.09.543-.56.94-1.11.94h-2.594c-.55 0-1.019-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 0 1-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 0 1-1.369-.49l-1.297-2.247a1.125 1.125 0 0 1 .26-1.431l1.004-.827c.292-.24.437-.613.43-.991a6.932 6.932 0 0 1 0-.255c.007-.38-.138-.751-.43-.992l-1.004-.827a1.125 1.125 0 0 1-.26-1.43l1.297-2.247a1.125 1.125 0 0 1 1.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.086.22-.128.332-.183.582-.495.644-.869l.214-1.28Z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/></svg></div>
     <h3 class="font-bold text-lg text-white" data-section="content-4" data-field="title">OEM Parçalar</h3>
     <a href="oem-parts.html" data-section="content-4" data-field="cta-text" data-field-link="cta-url" class="mt-5 text-[#fb923c] font-semibold hover:text-[#fb923c] transition">Daha Fazla →</a>
   </div>
   <div id="content-5" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg p-8 shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col items-center text-center">
-    <img src="../assets/images/Cream-Black-Elegant-Typography-Monogram-Initials-SR-Fashion-Store-Logo-22.png" alt="Döküm Çözümleri ikonu" width="200" height="200" loading="lazy" class="h-20 object-contain mb-5 bg-white/90 rounded-md p-2" data-section="content-5" data-field="image">
+    <div class="h-14 w-14 flex items-center justify-center rounded-xl bg-[#fb923c] mb-5"><svg class="h-7 w-7 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M15.362 5.214A8.252 8.252 0 0 1 12 21 8.25 8.25 0 0 1 6.038 7.048 8.287 8.287 0 0 0 9 9.6a8.983 8.983 0 0 1 3.361-6.867 8.21 8.21 0 0 0 3 2.48Z"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 18a3.75 3.75 0 0 0 .495-7.468 5.99 5.99 0 0 0-1.925 3.547 5.975 5.975 0 0 1-2.133-1.001A3.75 3.75 0 0 0 12 18Z"/></svg></div>
     <h3 class="font-bold text-lg text-white" data-section="content-5" data-field="title">Döküm Çözümleri</h3>
     <a href="pascalcast.html" data-section="content-5" data-field="cta-text" data-field-link="cta-url" class="mt-5 text-[#fb923c] font-semibold hover:text-[#fb923c] transition">Daha Fazla →</a>
   </div>
   <div id="content-6" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg p-8 shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col items-center text-center">
-    <img src="../assets/images/Cream-Black-Elegant-Typography-Monogram-Initials-SR-Fashion-Store-Logo-23.png" alt="Dövme Çözümleri ikonu" width="200" height="200" loading="lazy" class="h-20 object-contain mb-5 bg-white/90 rounded-md p-2" data-section="content-6" data-field="image">
+    <div class="h-14 w-14 flex items-center justify-center rounded-xl bg-[#fb923c] mb-5"><svg class="h-7 w-7 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M11.42 15.17 17.25 21A2.652 2.652 0 0 0 21 17.25l-5.877-5.877M11.42 15.17l2.496-3.03c.317-.384.74-.626 1.208-.766M11.42 15.17l-4.655 5.653a2.548 2.548 0 1 1-3.586-3.586l6.837-5.63m5.108-.233c.55-.164 1.163-.188 1.743-.14a4.5 4.5 0 0 0 4.486-6.336l-3.276 3.277a3.004 3.004 0 0 1-2.25-2.25l3.276-3.276a4.5 4.5 0 0 0-6.336 4.486c.091 1.076-.071 2.264-.904 2.95l-.102.085m-1.745 1.437 1.745-1.437m6.615 8.206L15.75 15.75M4.867 19.125h.008v.008h-.008v-.008Z"/></svg></div>
     <h3 class="font-bold text-lg text-white" data-section="content-6" data-field="title">Dövme Çözümleri</h3>
     <a href="pascalforge.html" data-section="content-6" data-field="cta-text" data-field-link="cta-url" class="mt-5 text-[#fb923c] font-semibold hover:text-[#fb923c] transition">Daha Fazla →</a>
+  </div>
+  </div>
+</section>
+
+<!-- CYLINDER SOFTWARE BAND (GÖREV 6.0 Bölüm 4.3: büyütüldü, "60" dev rakam vurgusu) -->
+<section class="relative overflow-hidden py-24 border-y border-white/10">
+  <div class="pointer-events-none absolute -top-24 -left-24 w-[400px] h-[400px] bg-[#fb923c]/10 rounded-full blur-3xl"></div>
+  <div class="pointer-events-none absolute -bottom-24 -right-24 w-[400px] h-[400px] bg-[#fb923c]/10 rounded-full blur-3xl"></div>
+  <div class="relative max-w-7xl mx-auto px-6 lg:px-8 grid md:grid-cols-2 gap-12 items-center">
+    <div class="flex items-center gap-6 md:gap-8 justify-center md:justify-start">
+      <span class="shrink-0 font-extrabold text-[#fb923c] leading-none" style="font-family:var(--font-display, inherit); font-size: clamp(5rem, 12vw, 9rem);">60</span>
+      <div>
+        <span class="inline-block mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-4 py-1.5">Mühendislik Aracı</span>
+        <p class="text-white text-2xl font-extrabold leading-tight">saniyede<br>doğru silindiri bulun</p>
+      </div>
+    </div>
+    <div class="text-center md:text-left">
+      <h2 class="text-3xl md:text-4xl font-extrabold text-white mb-4">Doğru Silindiri 60 Saniyede Bulun</h2>
+      <p class="text-slate-300 text-lg leading-relaxed mb-8">Basınç, debi, çap ve strok değerlerinizi girin; Silindir Seçim Programımız size uygun HPL modelini anında hesaplasın — tahmin yürütmeyin, doğru ölçüyü ilk seferde bulun.</p>
+      <a href="calculation-program.html" class="inline-block rounded-md bg-[#fb923c] text-slate-950 font-semibold px-8 py-4 text-lg hover:brightness-110 hover:shadow-lg hover:shadow-[#fb923c]/30 transition">Hesaplama Aracını Şimdi Deneyin →</a>
+    </div>
+  </div>
+</section>
+
+<!-- FASON ÜRETİM BAND (GÖREV 6.0 Bölüm 4.4: mesaj netleştirildi — "Siz Hayal Edin, Biz Üretelim") -->
+<section class="relative overflow-hidden py-20 bg-gradient-to-br from-[#fb923c]/10 via-slate-950 to-[#fb923c]/5 border-b border-white/10 text-center">
+  <div class="relative max-w-4xl mx-auto px-6 lg:px-8">
+    <span class="inline-block mb-4 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-4 py-1.5">Fason Üretim</span>
+    <h2 class="text-3xl md:text-4xl font-extrabold text-white mb-4">Siz Hayal Edin, Biz Üretelim</h2>
+    <p class="text-slate-300 text-lg leading-relaxed mb-8 max-w-2xl mx-auto">Standart kataloğumuzun ötesinde — aklınızdaki HERHANGİ bir metal parçayı (dişli, mafsal, mil, konsol) çiziminizle veya numunenizle bize getirin; PascalForge/PascalCast mühendislik ekibimiz mühendislik, kalıp/model, seri üretim ve kalite kontrolün tamamını üstlenip sizin için üretsin.</p>
+    <a href="hizmetler.html#sample-form" class="inline-block rounded-md bg-[#fb923c] text-slate-950 font-semibold px-8 py-4 text-lg hover:brightness-110 hover:shadow-lg hover:shadow-[#fb923c]/30 transition">Çiziminizi / Numunenizi Gönderin →</a>
   </div>
 </section>
 
@@ -362,7 +370,7 @@ html.light #features-7{background-image:linear-gradient(rgba(255,255,255,.92),rg
 </section>
 
 <!-- STRENGTH BADGES -->
-<section class="max-w-7xl mx-auto px-6 lg:px-8 pb-24 grid sm:grid-cols-3 gap-8 text-center">
+<section class="max-w-7xl mx-auto px-6 lg:px-8 py-24 grid sm:grid-cols-3 gap-8 text-center">
   <div id="content-12" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg p-8 shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300">
     <div class="h-16 w-16 mx-auto mb-4 flex items-center justify-center rounded-md bg-[#fb923c]"><svg class="h-8 w-8 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path stroke-linecap="round" d="M9 1v3M15 1v3M9 20v3M15 20v3M1 9h3M1 15h3M20 9h3M20 15h3"/></svg></div>
     <img src="../assets/images/Cream-Black-Elegant-Typography-Monogram-Initials-SR-Fashion-Store-Logo-25.png" alt="İleri Teknoloji Mühendisliği" width="200" height="200" loading="lazy" class="hidden object-contain" data-section="content-12" data-field="image">
@@ -417,7 +425,7 @@ html.light #features-7{background-image:linear-gradient(rgba(255,255,255,.92),rg
 </section>
 
 <!-- CATALOG PREVIEW -->
-<section id="catalog-preview" class="max-w-7xl mx-auto px-6 lg:px-8 pb-24">
+<section id="catalog-preview" class="max-w-7xl mx-auto px-6 lg:px-8 py-24">
   <div class="text-center mb-12">
     <span class="inline-block mb-4 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-4 py-1.5">Dokümanlar</span>
     <h2 class="text-4xl md:text-5xl font-extrabold text-[#fb923c]">Ürün Kataloglarımız</h2>
@@ -446,7 +454,7 @@ html.light #features-7{background-image:linear-gradient(rgba(255,255,255,.92),rg
 </section>
 
 <!-- GALLERY PREVIEW -->
-<section id="gallery-preview" class="max-w-7xl mx-auto px-6 lg:px-8 pb-24">
+<section id="gallery-preview" class="max-w-7xl mx-auto px-6 lg:px-8 py-24">
   <div class="text-center mb-12">
     <span class="inline-block mb-4 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-4 py-1.5">Galeri</span>
     <h2 class="text-4xl md:text-5xl font-extrabold text-[#fb923c]">Üretim Sahamızdan Kareler</h2>
@@ -480,7 +488,7 @@ html.light #features-7{background-image:linear-gradient(rgba(255,255,255,.92),rg
 </section>
 
 <!-- TEKLIF AL CTA BANNER -->
-<section id="quote-cta" class="max-w-6xl mx-auto px-6 lg:px-8 pb-24">
+<section id="quote-cta" class="max-w-6xl mx-auto px-6 lg:px-8 py-24">
   <div class="relative rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl p-12 text-center shadow-2xl overflow-hidden">
     <div class="pointer-events-none absolute -top-24 -right-24 w-72 h-72 bg-[#fb923c]/20 rounded-full blur-3xl"></div>
     <h2 class="relative text-3xl md:text-4xl font-extrabold text-white mb-4">Özel Teklif Almaya Hazır mısınız?</h2>

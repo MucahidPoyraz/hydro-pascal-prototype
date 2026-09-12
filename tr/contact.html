@@ -39,9 +39,13 @@ function setTheme(mode){try{var isLight=mode==='light';document.documentElement.
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<!-- Hedef tasarım dili (blueprint/paper) fontları + token'lar — GÖREV 4.8 site geneli rollout -->
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/theme.css">
 <script src="https://cdn.tailwindcss.com"></script>
 <script>tailwind.config = { theme: { extend: { fontFamily: { sans: ['Inter','ui-sans-serif','system-ui','sans-serif'] } } } }</script>
 <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+<script defer src="../assets/js/reveal.js"></script>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -282,7 +286,7 @@ html.light .shadow-black\/20{box-shadow:0 10px 25px -5px rgba(15,23,42,.08)!impo
 </section>
 
 <!-- MAP -->
-<section id="contact-map-6" class="max-w-7xl mx-auto px-6 lg:px-8 pb-24">
+<section id="contact-map-6" class="max-w-7xl mx-auto px-6 lg:px-8 py-24">
   <div class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-4 shadow-2xl">
     <iframe
       src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3146.7730739075437!2d32.556440699999996!3d37.935731499999996!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14d091f8848e9837%3A0x65a77557fa40d6ac!2sALD%20Otomotiv!5e0!3m2!1str!2str!4v1786183693817!5m2!1str!2str"

@@ -216,3 +216,91 @@
   font-weight: 600;
   color: #e2e8f0;
 }
+
+/* Teknik veriler → mono (skill kalıbı: fiyat/kod/ölçü mono olur).
+   Font-family rengi etkilemediği için koyu temada da güvenle uygulanır. */
+.hpl-unit,
+.hpl-res-val,
+.hpl-accordion-code,
+.hpl-clean-table {
+  font-family: var(--font-mono, ui-monospace, monospace);
+}
+
+/* ==========================================================================
+   GÖREV 4.8 — açık tema (html.light) override'ları.
+   Bu dosya tamamen koyu temaya göre hardcode edilmişti (rgba(255,255,255,..)
+   beyaz-üzeri-şeffaflık varsayımıyla, cyan sonuç rozetleri, koyu <select>).
+   Hiçbiri Tailwind utility class'ı olmadığı için theme.css'teki main-scoped
+   kurallar bunlara hiç dokunmuyordu — açık modda bu hesaplayıcı alanı
+   (sonuçlar/accordion/tablo) sessizce koyu kalıyordu. Sadece html.light
+   altında override edildi, koyu tema (yukarıdaki kurallar) hiç değişmedi. */
+html.light #hpl-calculator select,
+html.light #hpl-calculator select option {
+  color-scheme: light;
+  background-color: var(--surface);
+  color: var(--ink);
+}
+
+html.light #hpl-calculator .hpl-unit {
+  color: var(--ink-soft);
+}
+
+html.light .hpl-res-item {
+  background: var(--surface-2);
+  border-color: var(--line);
+}
+
+html.light .hpl-res-item span {
+  color: var(--ink);
+}
+
+html.light .hpl-res-val {
+  background: var(--accent-tint);
+  border-color: var(--accent);
+  color: var(--accent-deep);
+}
+
+html.light .hpl-notice-warn {
+  background: var(--warn-tint);
+  border-color: var(--warn);
+  color: var(--warn);
+}
+
+html.light .hpl-accordion {
+  background: var(--surface);
+  border-color: var(--line);
+}
+
+html.light .hpl-accordion-header {
+  background: var(--surface-2);
+  color: var(--ink);
+}
+
+html.light .hpl-accordion-header:hover {
+  background: var(--line);
+}
+
+html.light .hpl-accordion-code,
+html.light .hpl-accordion-icon {
+  color: var(--accent);
+}
+
+html.light .hpl-accordion-content {
+  border-top-color: var(--line);
+}
+
+html.light .hpl-drawing {
+  background: var(--surface-2);
+  border-color: var(--line);
+}
+
+html.light .hpl-clean-table th {
+  background: var(--surface-2);
+  color: var(--ink-soft);
+  border-color: var(--line);
+}
+
+html.light .hpl-clean-table td {
+  color: var(--ink);
+  border-color: var(--line);
+}

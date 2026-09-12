@@ -1,0 +1,737 @@
+/*
+  HydroPascal — Design Tokens: "Engineering Blueprint / Technical Paper"
+  =======================================================================
+  Kaynak: onaylanmış UX analiz sunumu (hydropascal-ux-analiz.html) /
+  HydroPascal Industrial Theme referansı. Bu, sitenin HEDEF tasarım
+  dilidir — eski slate-950 + #fb923c "dark glassmorphism" paleti DEĞİL.
+
+  Durum (GÖREV 4.2 itibarıyla):
+    - Token'lar (bu dosya) → tamamlandı, tüm site için geçerli.
+    - Uygulama → SADECE nav (header) + footer'da pilot olarak yapıldı.
+    - Sayfa gövdeleri (hero, kartlar, formlar, ürün grid'leri) HENÜZ
+      migrate edilmedi — hâlâ eski slate/fb923c Tailwind sınıflarını
+      kullanıyorlar ve bilerek dokunulmadı. Bu ayrı, sonraki görevlerin
+      konusu (sayfa sayfa migrasyon).
+
+  Tema mekanizması: sitenin zaten çalışan bir açık/koyu toggle'ı var
+  (<html class="light"> + toggleTheme()/setTheme() + localStorage
+  ['hp-theme']) — bkz. her sayfanın <head>'i. Yeni bir toggle
+  YARATILMADI (components.md kural 2). Bu yüzden token'lar şöyle kurulu:
+    - html.light   → AÇIK/kağıt tema (bu paletin --paper/--surface/--ink
+                     değerleri; sunumdaki ana palet budur).
+    - html:not(.light) (yani mevcut "koyu" durum) → aynı sunumun koyu
+                     varyantı (antrasit --paper, açık --ink).
+  Yani mevcut toggle'ın "dark" durumu artık eski slate-950 değil, yeni
+  antrasit/blueprint koyu paletini gösteriyor; "light" durumu ise sunumun
+  sıcak kağıt-beyazı paletini gösteriyor. Her iki durumda da nav+footor
+  otomatik doğru tarafa geçer çünkü tüm override'lar var(--token)
+  üzerinden okunuyor.
+*/
+
+/* ---------------------------------------------------------------------- */
+/* Fonts                                                                   */
+/* ---------------------------------------------------------------------- */
+/* Google Fonts <link> etiketleri her sayfanın <head>'ine eklenmelidir:
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+   <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+   theme.css bu linklerin yerine geçmez; sadece font-family token'larını tanımlar. */
+
+:root {
+  /* -- Typography -- */
+  --font-display: "Big Shoulders Display", "Arial Narrow", sans-serif;
+  --font-body: "IBM Plex Sans", -apple-system, "Segoe UI", Arial, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+
+  /* -- Radius scale (blueprint: keskin/modest köşeler, sadece pill'ler yuvarlak) -- */
+  --radius-sm: 3px;
+  --radius-md: 4px;
+  --radius-lg: 6px;
+  --radius-full: 9999px;
+
+  /* -- Colors: açık/"kağıt" tema (varsayılan :root — sunumun ana paleti) -- */
+  --ink: #1c222b;
+  --ink-soft: #4d5560;
+  --paper: #f3f1ea;
+  --surface: #ffffff;
+  --surface-2: #ece8de;
+  --line: #cfc4ab; /* GÖREV 4.4: biraz daha koyu/belirgin — panel ayrışması için (öncesi: #d9d2c1) */
+
+  --accent: #df5f1f;
+  --accent-deep: #a8420f;
+  --accent-tint: #fbe6d6;
+
+  --ok: #2f7d55;
+  --ok-tint: #e3f1e8;
+  --warn: #b3790f;
+  --warn-tint: #f8ecd6;
+  --crit: #b23a2e;
+  --crit-tint: #f7e2df;
+
+  /* GÖREV 4.4: açık temada panel/arka plan ayrışması zayıftı — gölge
+     opaklığı hafif artırıldı (öncesi: rgba(...,.06) / rgba(...,.18)) */
+  --shadow: 0 1px 2px rgba(28, 34, 43, .10), 0 8px 24px -12px rgba(28, 34, 43, .26);
+}
+
+/* -- Colors: koyu/"antrasit" tema —
+   mevcut toggle'ın "dark" durumuna (yani html'de .light class'ı YOKKEN)
+   karşılık gelir. */
+html:not(.light) {
+  --ink: #eae6dc;
+  --ink-soft: #a9a99c;
+  --paper: #171a20;
+  --surface: #1e222a;
+  --surface-2: #262b34;
+  --line: #343b46;
+
+  --accent: #ff8142;
+  --accent-deep: #ffb385;
+  --accent-tint: #3a2519;
+
+  --ok: #6fce9c;
+  --ok-tint: #1d3327;
+  --warn: #e3b354;
+  --warn-tint: #3a3018;
+  --crit: #f0897c;
+  --crit-tint: #3a2220;
+
+  --shadow: 0 1px 2px rgba(0, 0, 0, .4), 0 8px 28px -14px rgba(0, 0, 0, .6);
+}
+
+/* OS tercihine saygı — kullanıcı hiç manuel seçim yapmadıysa (bu durumda
+   zaten html:not(.light) kuralı devrede) bu blok onunla birebir aynı
+   değerleri taşır; no-op, çakışma yok. */
+@media (prefers-color-scheme: dark) {
+  html:not(.light) {
+    --ink: #eae6dc;
+    --ink-soft: #a9a99c;
+    --paper: #171a20;
+    --surface: #1e222a;
+    --surface-2: #262b34;
+    --line: #343b46;
+    --accent: #ff8142;
+    --accent-deep: #ffb385;
+    --accent-tint: #3a2519;
+    --ok: #6fce9c;
+    --ok-tint: #1d3327;
+    --warn: #e3b354;
+    --warn-tint: #3a3018;
+    --crit: #f0897c;
+    --crit-tint: #3a2220;
+    --shadow: 0 1px 2px rgba(0, 0, 0, .4), 0 8px 28px -14px rgba(0, 0, 0, .6);
+  }
+}
+
+/* data-theme="light"/"dark" attribute desteği — ikinci bir toggle
+   YARATILMADI (mevcut html.light korunuyor); bu sadece başka bir
+   entegrasyon data-theme set ederse aynı sonucu versin diye burada
+   tutuluyor, html.light ile çakışmaz. */
+[data-theme="light"] {
+  --ink: #1c222b;
+  --ink-soft: #4d5560;
+  --paper: #f3f1ea;
+  --surface: #ffffff;
+  --surface-2: #ece8de;
+  --line: #cfc4ab;
+  --accent: #df5f1f;
+  --accent-deep: #a8420f;
+  --accent-tint: #fbe6d6;
+  --ok: #2f7d55;
+  --ok-tint: #e3f1e8;
+  --warn: #b3790f;
+  --warn-tint: #f8ecd6;
+  --crit: #b23a2e;
+  --crit-tint: #f7e2df;
+  --shadow: 0 1px 2px rgba(28, 34, 43, .10), 0 8px 24px -12px rgba(28, 34, 43, .26);
+}
+
+[data-theme="dark"] {
+  --ink: #eae6dc;
+  --ink-soft: #a9a99c;
+  --paper: #171a20;
+  --surface: #1e222a;
+  --surface-2: #262b34;
+  --line: #343b46;
+  --accent: #ff8142;
+  --accent-deep: #ffb385;
+  --accent-tint: #3a2519;
+  --ok: #6fce9c;
+  --ok-tint: #1d3327;
+  --warn: #e3b354;
+  --warn-tint: #3a3018;
+  --crit: #f0897c;
+  --crit-tint: #3a2220;
+  --shadow: 0 1px 2px rgba(0, 0, 0, .4), 0 8px 28px -14px rgba(0, 0, 0, .6);
+}
+
+/* ======================================================================
+   PILOT UYGULAMA — SADECE nav (header) + footer
+   Sayfa gövdesine (hero, kartlar, formlar) KASITLI olarak dokunulmadı.
+   Her kural, o an aktif tema durumuna göre yukarıdaki token'lara göre
+   otomatik değişir; ayrı bir açık/koyu blok gerekmez.
+   ====================================================================== */
+
+header, footer {
+  font-family: var(--font-body);
+}
+
+/*
+  NOT — specificity: index.html'in mevcut inline <style> bloğu, aynı
+  Tailwind sınıflarını "html.light .sinif{...!important}" şeklinde override
+  ediyor (özellikleri (0,2,1) specificity). Bu pilot kuralların koyu/varsayılan
+  durumda (html:not(.light)) rakibi olmadığı için düz "header .sinif" şeklinde
+  yazmak yeterli; ama AÇIK (html.light) durumda o eski kurallarla çakışıp
+  kaybetmemesi için her rengi/yüzeyi/gölgeyi ayrıca "html.light header ..."
+  önekiyle de (daha yüksek specificity, (0,2,2)) tekrar tanımlıyoruz. İkisi de
+  var(--token) kullandığı için değer aynı kalır — sadece hangi kuralın
+  kazandığını garanti ediyoruz.
+*/
+
+/* Header/footer yüzey renkleri */
+header.bg-slate-950\/70,
+header.bg-slate-950\/90,
+html.light header.bg-slate-950\/70,
+html.light header.bg-slate-950\/90 {
+  background: var(--surface) !important;
+  border-color: var(--line) !important;
+}
+
+footer.bg-slate-950,
+html.light footer.bg-slate-950 {
+  background: var(--paper) !important;
+  border-color: var(--line) !important;
+}
+
+header .bg-white\/5,
+header .hover\:bg-white\/5:hover,
+header .bg-white\/10,
+header .hover\:bg-white\/10:hover,
+header .bg-slate-900\/95,
+footer .bg-white\/5,
+html.light header .bg-white\/5,
+html.light header .hover\:bg-white\/5:hover,
+html.light header .bg-white\/10,
+html.light header .hover\:bg-white\/10:hover,
+html.light header .bg-slate-900\/95,
+html.light footer .bg-white\/5 {
+  background: var(--surface-2) !important;
+}
+
+/* Kenarlıklar → tek hairline token */
+header.border-white\/10,
+header .border-white\/10,
+header .border-white\/15,
+header .border-white\/20,
+header .hover\:border-white\/30:hover,
+header .hover\:border-white\/40:hover,
+footer.border-white\/10,
+footer .border-white\/10,
+html.light header.border-white\/10,
+html.light header .border-white\/10,
+html.light header .border-white\/15,
+html.light header .border-white\/20,
+html.light header .hover\:border-white\/30:hover,
+html.light header .hover\:border-white\/40:hover,
+html.light footer.border-white\/10,
+html.light footer .border-white\/10 {
+  border-color: var(--line) !important;
+}
+
+/* Metin renkleri */
+header .text-slate-300,
+header .text-white,
+header .hover\:text-white:hover,
+footer .text-white,
+html.light header .text-slate-300,
+html.light header .text-white,
+html.light header .hover\:text-white:hover,
+html.light footer .text-white {
+  color: var(--ink) !important;
+}
+
+footer.text-slate-400,
+footer .text-slate-400,
+footer .text-slate-500,
+html.light footer.text-slate-400,
+html.light footer .text-slate-400,
+html.light footer .text-slate-500 {
+  color: var(--ink-soft) !important;
+}
+
+/* Tek marka vurgusu (turuncu) */
+header .text-\[\#fb923c\],
+header .hover\:text-\[\#fb923c\]:hover,
+footer .text-\[\#fb923c\],
+html.light header .text-\[\#fb923c\],
+html.light header .hover\:text-\[\#fb923c\]:hover,
+html.light footer .text-\[\#fb923c\] {
+  color: var(--accent) !important;
+}
+
+/* CTA buton (ör. "Teklif Al") — canonical CTA pattern: accent fill, mono, radius-sm */
+header a.bg-\[\#fb923c\],
+html.light header a.bg-\[\#fb923c\] {
+  background: var(--accent) !important;
+  color: #fff9f4 !important;
+  font-family: var(--font-mono);
+  letter-spacing: .03em;
+  border-radius: var(--radius-sm) !important;
+}
+header a.bg-\[\#fb923c\]:hover,
+html.light header a.bg-\[\#fb923c\]:hover {
+  background: var(--accent-deep) !important;
+}
+
+/* Sticky header gölgesi → tek shadow token */
+header.shadow-lg.shadow-black\/20,
+html.light header.shadow-lg.shadow-black\/20 {
+  box-shadow: var(--shadow) !important;
+}
+
+/* Kart benzeri panel (ayarlar/dil/tema dropdown'ları) → flat panel pattern */
+header .shadow-2xl,
+html.light header .shadow-2xl {
+  box-shadow: var(--shadow) !important;
+}
+
+/* Radius: büyük/tutarsız değerleri tek ölçeğe indir.
+   rounded-full KASITLI hariç — pill/tag/nav-dot burada kalmaya devam eder
+   (dil bayrağı, tema switch pilli, "Ürünler/Kaynaklar" dropdown tetikleyicisi vb.). */
+header .rounded-lg,
+header .rounded-md,
+header .rounded-xl,
+footer .rounded-lg,
+footer .rounded-xl {
+  border-radius: var(--radius-sm) !important;
+}
+
+/* Footer/nav mikro-etiketler (zaten uppercase+tracking-wider olanlar) → mono */
+footer .uppercase.tracking-wider,
+header .uppercase.tracking-wider {
+  font-family: var(--font-mono);
+}
+
+/* ======================================================================
+   GÖREV 4.3 — main gövde migrasyonu (tr/index.html, SADECE <main> içi)
+   Nav/footer'a dokunulmadı (GÖREV 4.2'de tamamlandı, yukarıdaki blok).
+   Referans: "HydroPascal Industrial Theme" (engineering blueprint /
+   technical paper) — eyebrow, panel/card, chip, CTA buton kalıpları
+   burada da GÖREV 4.1/4.2'de tanımlanan token'larla birebir uygulanıyor.
+
+   #hero-1 İSTİSNASI: hero, bir slayt fotoğrafının üzerine bindirilmiş
+   sabit koyu overlay ile çalışıyor. Proje zaten bunu tema-bağımsız bir
+   istisna olarak ele alıyordu (mevcut kod: "html.light #hero-1
+   .text-white{color:#fff!important}" — ID specificity'si sayesinde hero
+   metni her iki modda da beyaz kalıyor, ben dokunmadan önce de böyleydi).
+   Aynı gerekçeyle hero'nun NÖTR cam-yüzey kontrolleri (ikincil buton,
+   önceki/sonraki ok butonları — bg-white/5, bg-white/10, border-white/20)
+   fotoğraf üzerinde okunur kalması için genel panel token'larına
+   BAĞLANMADI (:not(:where(#hero-1) *) ile hariç tutuldu). Hero'nun accent rengi,
+   fontları, radius'u ve CTA butonu YİNE DE migrate edildi — aşağıdaki
+   genel kurallar bunları zaten kapsıyor.
+   ====================================================================== */
+
+main {
+  font-family: var(--font-body);
+}
+main h1, main h2, main h3 {
+  font-family: var(--font-display);
+}
+
+/* Yüzeyler → flat panel (hero'nun nötr cam-kontrolleri hariç) */
+main .bg-white\/5:not(:where(#hero-1) *),
+html.light main .bg-white\/5:not(:where(#hero-1) *) {
+  background: var(--surface) !important;
+}
+main .bg-white\/10:not(:where(#hero-1) *),
+html.light main .bg-white\/10:not(:where(#hero-1) *) {
+  background: var(--surface-2) !important;
+}
+
+/* Kenarlıklar → tek hairline token */
+main .border-white\/10,
+html.light main .border-white\/10 {
+  border-color: var(--line) !important;
+}
+main .border-white\/20:not(:where(#hero-1) *),
+html.light main .border-white\/20:not(:where(#hero-1) *) {
+  border-color: var(--line) !important;
+}
+main .hover\:border-white\/40:hover,
+html.light main .hover\:border-white\/40:hover {
+  border-color: var(--line) !important;
+}
+main .hover\:border-\[\#fb923c\]\/40:hover,
+html.light main .hover\:border-\[\#fb923c\]\/40:hover {
+  border-color: var(--accent) !important;
+}
+
+/* Metin renkleri (hero'nun kendi ID'li kuralı zaten daha yüksek
+   specificity ile kazanıyor, burada ayrıca hariç tutmaya gerek yok) */
+main .text-slate-300,
+html.light main .text-slate-300 {
+  color: var(--ink) !important;
+}
+main .text-white,
+html.light main .text-white {
+  color: var(--ink) !important;
+}
+main .hover\:text-white:hover,
+html.light main .hover\:text-white:hover {
+  color: var(--ink) !important;
+}
+
+/* Tek marka vurgusu (turuncu) */
+main .text-\[\#fb923c\],
+html.light main .text-\[\#fb923c\] {
+  color: var(--accent) !important;
+}
+main .hover\:text-\[\#fb923c\]:hover,
+html.light main .hover\:text-\[\#fb923c\]:hover {
+  color: var(--accent) !important;
+}
+main .bg-\[\#fb923c\] {
+  background: var(--accent) !important;
+}
+/* text-slate-950 bu sayfada yalnızca bg-[#fb923c] ile birlikte kullanılıyor
+   (CTA butonları, FAQ +/- rozeti) — canonical CTA metin rengine bağlandı */
+main .text-slate-950 {
+  color: #fff9f4 !important;
+}
+
+/* CTA butonlar — canonical pattern: accent fill, mono, radius-sm */
+main a.bg-\[\#fb923c\] {
+  font-family: var(--font-mono);
+  letter-spacing: .03em;
+  border-radius: var(--radius-sm) !important;
+}
+main a.bg-\[\#fb923c\]:hover {
+  background: var(--accent-deep) !important;
+}
+/* İkincil (outline) CTA — panel/hairline kalıbı, hero hariç */
+main a.border-white\/20.bg-white\/5:not(:where(#hero-1) *),
+html.light main a.border-white\/20.bg-white\/5:not(:where(#hero-1) *) {
+  font-family: var(--font-mono);
+  border-radius: var(--radius-sm) !important;
+}
+
+/* Gölgeler → tek shadow token */
+main .shadow-2xl,
+html.light main .shadow-2xl {
+  box-shadow: var(--shadow) !important;
+}
+main .shadow-xl {
+  box-shadow: var(--shadow) !important;
+}
+
+/* Backdrop-blur / glassmorphism kaldırıldı (hero dahil — sadece blur
+   kaldırılıyor, opaklık/renk değişmediği için fotoğraf kontrastı bozulmuyor) */
+main .backdrop-blur-xl,
+main .backdrop-blur {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+/* Dekoratif "aurora glow" blob'ları (accent renkli blur-3xl daireler) —
+   flat/blueprint temada yer almıyor, kaldırıldı (pointer-events-none/
+   absolute oldukları için layout'u etkilemez) */
+main .blur-3xl {
+  display: none !important;
+}
+
+/* Radius: kart/panel/ikon kutuları → tek ölçek (rounded-full KASITLI hariç
+   — pill/tag/nav-dot/FAQ +/- rozeti, dil-bayrağı vb. pill kalmaya devam eder) */
+main .rounded-2xl,
+main .rounded-xl,
+main .rounded-lg,
+main .rounded-md {
+  border-radius: var(--radius-sm) !important;
+}
+
+/* Eyebrow etiketi: pill-badge → accent-bar + mono uppercase micro-label
+   (skill'deki "small uppercase mono label + kısa accent çizgi" kalıbı).
+   Bu sayfada tracking-widest+uppercase kombinasyonu SADECE eyebrow
+   rozetlerinde kullanılıyor, başka bir yerde çakışma yok.
+   GÖREV 4.7 DÜZELTMESİ: bu kural, açık modda hem eski inline
+   "html.light .bg-white\/5{...}" kuralıyla (0,2,1) HEM DE kendi
+   "html.light main .bg-white\/5:not(:where(#hero-1) *)" panel kuralımızla
+   (0,2,2) aynı specificity yarışına giriyordu ve SADECE (0,2,1)
+   specificity'ye sahip olduğu için ikisine de kaybediyordu — rozetler
+   (hero'daki "2019'dan beri" dahil, tonlu bantlardaki "Fason Üretim" /
+   "Referanslar" dahil) sessizce eski beyaz/cam arka planda kalıyordu.
+   Çözüm: html.light-prefixli, daha yüksek specificity'li (0,3,2) bir
+   ikiz kuralla kesin galibiyet sağlandı. */
+main .uppercase.tracking-widest,
+html.light main .uppercase.tracking-widest {
+  font-family: var(--font-mono) !important;
+  background: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+  padding: 0 0 0 30px !important;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+main .uppercase.tracking-widest::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 22px;
+  height: 2px;
+  background: var(--accent);
+}
+
+/* ======================================================================
+   GÖREV 4.4 — Kalan gradient arka planlar + açık tema kontrast/doku
+   Sadece CSS; HTML'e dokunulmadı. Koyu tema (html:not(.light)) kuralları
+   bu bölümde HİÇ değiştirilmedi — sadece html.light altında override var.
+   ====================================================================== */
+
+/* --- Bölüm 1: kalan bg-gradient-to-br from-[#fb923c]/X via-slate-950
+   to-[#fb923c]/Y section'ları → token'lara bağlandı. Koyu modda eski
+   Tailwind gradient'i (zaten doğru göründüğü için) aynen kalıyor; sadece
+   html.light için via-slate-950 → var(--paper), turuncu uçlar →
+   color-mix ile düşük opasiteli accent tonlarına çevrildi. */
+
+/* GÖREV 4.6 notu: kontrast bilerek hafifletildi (10/5 → 6/3, 15/10 → 9/6)
+   ve üst/alt kenarlara ince var(--line) ayraç eklendi — komşu section'dan
+   "yapıştırılmış kutu" gibi değil, yumuşak bir vurgu gibi ayrılsın diye. */
+
+/* Section ~298: "Sizin İçin Üretiyoruz" (fason üretim bandı) — from/6 via to/3 */
+html.light main section.bg-gradient-to-br.border-b {
+  background: linear-gradient(
+    to bottom right,
+    color-mix(in srgb, var(--accent) 6%, transparent),
+    var(--paper),
+    color-mix(in srgb, var(--accent) 3%, transparent)
+  ) !important;
+  border-top: 1px solid var(--line) !important;
+}
+
+/* #references-preview — from/6 via to/3 */
+html.light main #references-preview.bg-gradient-to-br {
+  background: linear-gradient(
+    to bottom right,
+    color-mix(in srgb, var(--accent) 6%, transparent),
+    var(--paper),
+    color-mix(in srgb, var(--accent) 3%, transparent)
+  ) !important;
+  border-top: 1px solid var(--line) !important;
+  border-bottom: 1px solid var(--line) !important;
+}
+
+/* #content-18 "Türkiye'den Dünyaya" — from/9 via to/6 */
+html.light main #content-18.bg-gradient-to-br {
+  background: linear-gradient(
+    to bottom right,
+    color-mix(in srgb, var(--accent) 9%, transparent),
+    var(--paper),
+    color-mix(in srgb, var(--accent) 6%, transparent)
+  ) !important;
+  border-top: 1px solid var(--line) !important;
+  border-bottom: 1px solid var(--line) !important;
+}
+
+/* --- Bölüm 2: açık tema kontrast + doku --- */
+
+/* Body: saf beyaz değil, sıcak --paper tonu (eski kural: html.light
+   body{background:#fff...} — burada "body.bg-gradient-to-b" ile bir
+   sınıf daha ekleyip specificity'yi kasıtlı yükseltiyoruz ki eski kural
+   yerine bu kazansın). Hafif blueprint noktalı doku da buraya eklendi. */
+html.light body.bg-gradient-to-b {
+  background-color: var(--paper) !important;
+  background-image: radial-gradient(color-mix(in srgb, var(--line) 45%, transparent) 1px, transparent 1px) !important;
+  background-size: 24px 24px !important;
+  color: var(--ink) !important;
+}
+
+/* GÖREV 4.6 düzeltmesi — Sorun 1: bu section'ların çoğu Tailwind'de
+   `max-w-5xl/7xl mx-auto` sınıfını DOĞRUDAN <section> etiketinin
+   üzerinde taşıyor (içeride ayrı bir "dar container" yok). Yani
+   background-color'ı doğrudan section'a vermek, arka planı da o dar
+   kutuyla sınırlıyordu — "ortada yamalı kutu" görüntüsünün sebebi buydu.
+   Çözüm: section'ın kendi arka planını TRANSPARAN bırakıp, tam
+   viewport genişliğinde bir ::before ile "full-bleed" arka plan/doku
+   ekliyoruz (section max-w'sinden bağımsız, her zaman 100vw). */
+html.light main > section:not(#hero-1):not(#features-7):not(#references-preview):not(#content-18):not(.bg-gradient-to-br) {
+  position: relative;
+  z-index: 0;
+  background-color: transparent !important;
+}
+html.light main > section:not(#hero-1):not(#features-7):not(#references-preview):not(#content-18):not(.bg-gradient-to-br)::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 100vw;
+  transform: translateX(-50%);
+  z-index: -1;
+  background-size: 24px 24px;
+}
+html.light main > section:not(#hero-1):not(#features-7):not(#references-preview):not(#content-18):not(.bg-gradient-to-br):nth-of-type(odd)::before {
+  background-color: var(--paper);
+  background-image: radial-gradient(color-mix(in srgb, var(--line) 40%, transparent) 1px, transparent 1px);
+}
+html.light main > section:not(#hero-1):not(#features-7):not(#references-preview):not(#content-18):not(.bg-gradient-to-br):nth-of-type(even)::before {
+  background-color: var(--surface-2);
+  background-image: radial-gradient(color-mix(in srgb, var(--line) 55%, transparent) 1px, transparent 1px);
+}
+/* vw tabanlı full-bleed teknik, dikey scrollbar payı yüzünden ~15-17px'lik
+   bir yatay taşma riski taşır — güvenlik payı olarak main'e clip ekliyoruz
+   (görsel bir değişiklik değil, sadece olası taşmayı kırpar). */
+main {
+  overflow-x: hidden;
+}
+
+/* Kartların (--surface, beyaz) zemin ritminden gerçekten ayrışması:
+   --line ve --shadow zaten yukarıda güçlendirildi (bkz. :root); burada
+   ayrıca panel border'ı biraz daha belirgin bir tona sabitleniyor. */
+html.light main .bg-white\/5:not(:where(#hero-1) *) {
+  border-color: var(--line) !important;
+  box-shadow: var(--shadow) !important;
+}
+
+/* Accent'in sayfa genelinde daha görünür olması: section başlıklarının
+   altına ince bir accent ayraç çizgisi (skill'deki "ince ayraç" kalıbı) —
+   sadece açık modda, koyu modda zaten yeterince belirgindi. */
+html.light main h2 {
+  display: inline-block;
+  padding-bottom: 12px;
+  border-bottom: 2px solid color-mix(in srgb, var(--accent) 35%, transparent);
+}
+
+/* ======================================================================
+   GÖREV 4.8 — Site geneli rollout (tüm sayfalar, sadece <main> içi)
+   Yukarıdaki main-scoped kurallar zaten class-tabanlı ve index.html'e özel
+   değil (hero-1/features-7/references-preview/content-18 hariç tutmaları
+   sadece index.html'de var, diğer sayfalarda o ID'ler hiç bulunmadığı için
+   :not() koşulları her zaman "true" olup zararsız kalıyor). Bu yüzden
+   theme.css + fontlar herhangi bir sayfaya linklendiğinde yukarıdaki
+   renk/radius/backdrop-blur/eyebrow/CTA/section-ritmi/full-bleed kuralları
+   otomatik uygulanıyor. Burada sadece index.html'de eksik kalmış birkaç
+   token eşlemesi + diğer sayfalara özgü genel bir gradient-bant fallback'i
+   ekleniyor. */
+
+/* Eksik kalmış metin/kenarlık token eşlemeleri (urun-detay.html tablo
+   başlıkları text-slate-500 kullanıyor, zebra satırlar border-white/5) */
+main .text-slate-400,
+main .text-slate-500,
+html.light main .text-slate-400,
+html.light main .text-slate-500 {
+  color: var(--ink-soft) !important;
+}
+main .border-white\/5,
+html.light main .border-white\/5 {
+  border-color: var(--line) !important;
+}
+
+/* Genel gradient-bant fallback: about-us.html, pascalcast.html,
+   pascalforge.html, referanslar.html içinde index.html'deki 3 bant ile
+   AYNI kalıpta (from-[#fb923c]/10 via-slate-950 to-[#fb923c]/5 border-y)
+   birer bant var, ama kendilerine özgü bir ID'leri yok. index.html'in
+   ID'ye bağlı özel kuralları (daha yüksek specificity) sadece index.html'de
+   devrede; burada ID'siz genel bir fallback tanımlanıyor — GÖREV 4.6'daki
+   ders tekrarlanıyor: kontrast yumuşatılmış + ince var(--line) ayraç. */
+html.light main section.bg-gradient-to-br {
+  background: linear-gradient(
+    to bottom right,
+    color-mix(in srgb, var(--accent) 6%, transparent),
+    var(--paper),
+    color-mix(in srgb, var(--accent) 3%, transparent)
+  ) !important;
+  border-top: 1px solid var(--line) !important;
+  border-bottom: 1px solid var(--line) !important;
+}
+
+/* Ürün detay / teknik tablolar (urun-detay.html) → panel kalıbı: mono
+   rakamlar, ince hairline satır ayraçları (border rengi zaten yukarıdaki
+   border-white/5|10 kurallarıyla token'a bağlandı). */
+main table {
+  font-family: var(--font-mono);
+}
+
+/* ======================================================================
+   GÖREV 5.0 Bölüm 3 — Section reveal-on-scroll
+   Class'lar assets/js/reveal.js tarafından eklenir; bu dosya sadece CSS
+   tarafını tanımlar. .hp-reveal HİÇBİR ZAMAN JS'siz sayfada oluşmaz (class
+   sadece script tarafından eklendiği için), yani JS kapalıyken/hata
+   verdiğinde içerik her zaman normal (opacity:1) render olur — FOUC/
+   erişilebilirlik riski yok. */
+main > section.hp-reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity .3s ease-out, transform .3s ease-out;
+}
+main > section.hp-reveal.hp-reveal-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  main > section.hp-reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* ======================================================================
+   GÖREV 5.1 — "Yüzen panel" regresyonu düzeltmesi (HER İKİ TEMADA)
+   =======================================================================
+   GÖREV 4.3'teki "main .rounded-2xl/xl/lg/md → var(--radius-sm)" ve
+   backdrop-blur/blur-3xl kaldırma kuralları html.light'a bağlı DEĞİLDİ —
+   yani koyu modda da uygulanıyordu. Bu, eskiden yumuşak blur + büyük
+   radius ile "yüzen cam kart" gibi görünen büyük panel/CTA kartlarını
+   (border + bg-white/5|10 + rounded-2xl/xl kombinasyonu taşıyan HER
+   panel — CTA banner'ları, formlar, FAQ accordion'ları, ürün/özellik
+   kartları, görsel kapları) her iki modda da köşesiz, düz, arka planla
+   neredeyse aynı renkte bir "kutu" haline getirdi.
+
+   BİLİNÇLİ İSTİSNA: bu kural artık html.light'a bağlı DEĞİL — kullanıcı
+   bunun koyu modda da gerçek bir hata olduğunu, sadece açık temaya özgü
+   olmadığını doğruladı (index.html #quote-cta, about-us.html benzer CTA
+   kartı). Bu yüzden aşağıdaki kural her iki temada da geçerli.
+
+   Kapsam: aynı border-white/10 + bg-white/5|10 + rounded-2xl|xl class
+   kombinasyonunu taşıyan HER öğe (site genelinde ~110+ örnek: CTA
+   banner'ları, formlar, FAQ accordion'ları, ürün/özellik kartları, görsel
+   kapları — hepsi aynı "panel" bileşen kalıbını paylaşıyor, tek bir class
+   tabanlı kuralla otomatik kapsanıyor). Küçük chip/etiket/pill/buton'lar
+   bu class üçlüsünü taşımadığı için (genelde rounded-full veya sadece
+   bg-white/5 tek başına) ETKİLENMİYOR, radius-sm'de kalmaya devam ediyor.
+
+   Specificity notu: main(1 tip)+3 sınıf = (0,3,1) — GÖREV 4.3'teki genel
+   "main .rounded-2xl{radius-sm}" kuralından (main+1 sınıf, (0,1,1)) daha
+   yüksek, bu yüzden panel'ler radius-sm'e değil radius-lg'ye düşer;
+   :not()/:where() tuzağı burada yok, ekstra önlem gerekmiyor. */
+main .border-white\/10.bg-white\/5.rounded-2xl,
+main .border-white\/10.bg-white\/5.rounded-xl,
+main .border-white\/10.bg-white\/10.rounded-2xl,
+main .border-white\/10.bg-white\/10.rounded-xl,
+main form.border-white\/10.bg-white\/5.rounded-2xl,
+main form.border-white\/10.bg-white\/10.rounded-2xl {
+  border-radius: var(--radius-lg) !important;
+  background: var(--surface) !important;
+  box-shadow: var(--shadow) !important;
+}
+
+/* ======================================================================
+   GÖREV 6.0 Bölüm 4.1 — Scroll-snap section geçişi
+   Sadece masaüstü/tablet'te (≥768px) aktif; mobilde momentum-scroll ve
+   sanal klavye ile çakışma riski olduğu için KASITLI olarak kapalı
+   (görev talimatı: "gerekirse mobilde snap'i kapat"). "proximity" —
+   "mandatory" değil — kullanıcı doğal scroll hissini kaybetmesin, sadece
+   section sınırlarına yaklaşınca hafifçe yerine otursun. GÖREV 5.0'daki
+   reveal-on-scroll animasyonuyla birlikte çalışır, site genelinde main >
+   section kalıbını kullanan her sayfada otomatik aktif olur. */
+@media (min-width: 768px) {
+  html {
+    scroll-snap-type: y proximity;
+  }
+  main > section {
+    scroll-snap-align: start;
+  }
+}
