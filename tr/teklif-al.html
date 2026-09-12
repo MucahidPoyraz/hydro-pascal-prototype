@@ -108,6 +108,7 @@ html.light .shadow-black\/20{box-shadow:0 10px 25px -5px rgba(15,23,42,.08)!impo
           </div>
         </div>
         <a href="calculation-program.html" class="text-slate-300 hover:text-white hover:bg-white/5 px-4 py-2 rounded-full transition">Silindir Yazılımı</a>
+        <a href="hizmetler.html" class="text-slate-300 hover:text-white hover:bg-white/5 px-4 py-2 rounded-full transition">Hizmetler</a>
         <div class="relative" @click.outside="resourcesOpen = false">
           <button @click="resourcesOpen = !resourcesOpen" :aria-expanded="resourcesOpen" class="flex items-center gap-1 text-slate-300 hover:text-white hover:bg-white/5 px-4 py-2 rounded-full transition">
             Kaynaklar
@@ -181,6 +182,7 @@ html.light .shadow-black\/20{box-shadow:0 10px 25px -5px rgba(15,23,42,.08)!impo
       <a href="pascalforge.html" class="px-4 py-2 pl-7 rounded-lg text-slate-300 hover:bg-white/5 hover:text-white transition text-sm">PascalForge</a>
       <a href="pascalcast.html" class="px-4 py-2 pl-7 rounded-lg text-slate-300 hover:bg-white/5 hover:text-white transition text-sm">PascalCast</a>
       <a href="calculation-program.html" class="px-4 py-2 rounded-lg text-slate-300 hover:bg-white/5 hover:text-white transition">Silindir Yazılımı</a>
+      <a href="hizmetler.html" class="px-4 py-2 rounded-lg text-slate-300 hover:bg-white/5 hover:text-white transition">Hizmetler</a>
       <p class="px-4 pt-2 text-xs font-semibold text-slate-500 uppercase tracking-wider">Kaynaklar</p>
       <a href="kataloglar.html" class="px-4 py-2 pl-7 rounded-lg text-slate-300 hover:bg-white/5 hover:text-white transition text-sm">Kataloglar</a>
       <a href="media.html" class="px-4 py-2 pl-7 rounded-lg text-slate-300 hover:bg-white/5 hover:text-white transition text-sm">Medya</a>
@@ -250,6 +252,13 @@ html.light .shadow-black\/20{box-shadow:0 10px 25px -5px rgba(15,23,42,.08)!impo
     <div class="relative">
       <label class="block text-sm font-semibold text-slate-200 mb-2" for="q-message">Teknik Detaylar / Notlarınız</label>
       <textarea id="q-message" name="message" rows="5" placeholder="Silindir çapı, strok uzunluğu, çalışma basıncı gibi teknik detayları belirtebilirsiniz." class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-slate-400 focus:border-[#fb923c] focus:ring-2 focus:ring-[#fb923c]/30 focus:outline-none transition"></textarea>
+    </div>
+    <div class="relative">
+      <label class="block text-sm font-semibold text-slate-200 mb-2" for="q-files">Dosya / Teknik Resim Ekle (opsiyonel)</label>
+      <p class="text-xs text-slate-500 mb-2">Ölçülü çizim veya numune fotoğrafı eklerseniz teklif süresi kısalır.</p>
+      <input type="file" id="q-files" multiple accept=".pdf,.dwg,.step,.stp,.jpg,.jpeg,.png" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:bg-[#fb923c] file:text-slate-950 file:font-semibold file:cursor-pointer hover:file:brightness-110 focus:border-[#fb923c] focus:ring-2 focus:ring-[#fb923c]/30 focus:outline-none transition cursor-pointer">
+      <ul id="q-files-list" class="mt-3 space-y-2"></ul>
+      <p id="q-files-warning" class="mt-2 text-sm font-semibold text-[#fb923c] hidden"></p>
     </div>
     <button type="submit" id="quote-form-submit" class="relative w-full bg-[#fb923c] text-slate-950 font-semibold text-lg py-4 rounded-md shadow-2xl hover:brightness-110 hover:shadow-lg hover:shadow-[#fb923c]/30 transition disabled:opacity-60 disabled:cursor-not-allowed">Teklif Talebi Gönder</button>
     <p id="quote-form-status" class="relative text-sm text-center min-h-[1.25rem]" role="status" aria-live="polite"></p>
@@ -333,12 +342,102 @@ html.light .shadow-black\/20{box-shadow:0 10px 25px -5px rgba(15,23,42,.08)!impo
   var btn = document.getElementById('quote-form-submit');
   var status = document.getElementById('quote-form-status');
 
+  // ---- Ön-seçim: ürün detay sayfasından ?urun=... & ?urun_adi=... ----
+  (function applyIncomingProduct(){
+    var params = new URLSearchParams(window.location.search);
+    var urun = params.get('urun');
+    var urunAdi = params.get('urun_adi');
+    var interestSelect = document.getElementById('q-interest');
+    var messageField = document.getElementById('q-message');
+
+    if (urun && interestSelect && interestSelect.querySelector('option[value="' + urun + '"]')) {
+      interestSelect.value = urun;
+    }
+    if (urunAdi && messageField && !messageField.value) {
+      messageField.value = 'Ürün: ' + urunAdi;
+    }
+  })();
+
+  // ---- Dosya / Teknik Resim ekleme (opsiyonel, backend/CRM entegrasyonu bu görevin kapsamı değil) ----
+  var MAX_FILES = 5;
+  var MAX_TOTAL_BYTES = 10 * 1024 * 1024; // 10 MB
+  var selectedFiles = [];
+  var fileInput = document.getElementById('q-files');
+  var fileList = document.getElementById('q-files-list');
+  var fileWarning = document.getElementById('q-files-warning');
+
+  function formatSize(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / (1024 * 1024)).toFixed(2) + ' MB';
+  }
+
+  function totalSize() {
+    return selectedFiles.reduce(function(sum, f){ return sum + f.size; }, 0);
+  }
+
+  function showFileWarning(msg) {
+    fileWarning.textContent = msg;
+    fileWarning.classList.remove('hidden');
+  }
+
+  function hideFileWarning() {
+    fileWarning.classList.add('hidden');
+    fileWarning.textContent = '';
+  }
+
+  function renderFileList() {
+    fileList.innerHTML = '';
+    selectedFiles.forEach(function(file, index){
+      var li = document.createElement('li');
+      li.className = 'flex items-center justify-between gap-3 bg-white/5 border border-white/10 rounded-lg px-4 py-2 text-sm text-slate-300';
+
+      var label = document.createElement('span');
+      label.className = 'truncate';
+      label.textContent = file.name + ' (' + formatSize(file.size) + ')';
+
+      var removeBtn = document.createElement('button');
+      removeBtn.type = 'button';
+      removeBtn.setAttribute('aria-label', 'Dosyayı kaldır: ' + file.name);
+      removeBtn.className = 'shrink-0 text-slate-400 hover:text-[#fb923c] transition';
+      removeBtn.textContent = '✕';
+      removeBtn.addEventListener('click', function(){
+        selectedFiles.splice(index, 1);
+        renderFileList();
+      });
+
+      li.appendChild(label);
+      li.appendChild(removeBtn);
+      fileList.appendChild(li);
+    });
+
+    if (totalSize() > MAX_TOTAL_BYTES) {
+      showFileWarning("Toplam dosya boyutu 10 MB'ı aşıyor. Lütfen bazı dosyaları kaldırın.");
+    } else if (selectedFiles.length > MAX_FILES) {
+      showFileWarning('En fazla ' + MAX_FILES + ' dosya ekleyebilirsiniz.');
+    } else {
+      hideFileWarning();
+    }
+  }
+
+  if (fileInput) {
+    fileInput.addEventListener('change', function(){
+      selectedFiles = selectedFiles.concat(Array.prototype.slice.call(fileInput.files));
+      fileInput.value = ''; // aynı dosyayı tekrar seçebilmek için input'u sıfırla
+      renderFileList();
+    });
+  }
+
   if (form) {
     form.addEventListener('submit', function(e){
       e.preventDefault();
 
       // Basit bot koruması: gizli alan doluysa sessizce yut.
       if (form.botcheck && form.botcheck.value) { return; }
+
+      if (selectedFiles.length) {
+        console.log('Teklif formu ekleri:', selectedFiles.map(function(f){ return f.name; }));
+      }
 
       var interestSelect = form.querySelector('#q-interest');
       var titleField = form.querySelector('#q-title');

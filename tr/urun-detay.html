@@ -85,6 +85,7 @@ html.light .shadow-black\/20{box-shadow:0 10px 25px -5px rgba(15,23,42,.08)!impo
           </div>
         </div>
         <a href="calculation-program.html" class="text-slate-300 hover:text-white hover:bg-white/5 px-4 py-2 rounded-full transition">Silindir Yazılımı</a>
+        <a href="hizmetler.html" class="text-slate-300 hover:text-white hover:bg-white/5 px-4 py-2 rounded-full transition">Hizmetler</a>
         <div class="relative" @click.outside="resourcesOpen = false">
           <button @click="resourcesOpen = !resourcesOpen" :aria-expanded="resourcesOpen" class="flex items-center gap-1 text-slate-300 hover:text-white hover:bg-white/5 px-4 py-2 rounded-full transition">
             Kaynaklar
@@ -158,6 +159,7 @@ html.light .shadow-black\/20{box-shadow:0 10px 25px -5px rgba(15,23,42,.08)!impo
       <a href="pascalforge.html" class="px-4 py-2 pl-7 rounded-lg text-slate-300 hover:bg-white/5 hover:text-white transition text-sm">PascalForge</a>
       <a href="pascalcast.html" class="px-4 py-2 pl-7 rounded-lg text-slate-300 hover:bg-white/5 hover:text-white transition text-sm">PascalCast</a>
       <a href="calculation-program.html" class="px-4 py-2 rounded-lg text-slate-300 hover:bg-white/5 hover:text-white transition">Silindir Yazılımı</a>
+      <a href="hizmetler.html" class="px-4 py-2 rounded-lg text-slate-300 hover:bg-white/5 hover:text-white transition">Hizmetler</a>
       <p class="px-4 pt-2 text-xs font-semibold text-slate-500 uppercase tracking-wider">Kaynaklar</p>
       <a href="kataloglar.html" class="px-4 py-2 pl-7 rounded-lg text-slate-300 hover:bg-white/5 hover:text-white transition text-sm">Kataloglar</a>
       <a href="media.html" class="px-4 py-2 pl-7 rounded-lg text-slate-300 hover:bg-white/5 hover:text-white transition text-sm">Medya</a>
@@ -172,15 +174,125 @@ html.light .shadow-black\/20{box-shadow:0 10px 25px -5px rgba(15,23,42,.08)!impo
 <div class="h-20"></div>
 
 <main>
+<!-- BREADCRUMB -->
+<nav aria-label="Breadcrumb" class="max-w-7xl mx-auto px-6 lg:px-8 pt-6 text-sm text-slate-400">
+  <ol class="flex flex-wrap items-center gap-2">
+    <li><a href="index.html" class="hover:text-[#fb923c] transition">Ana Sayfa</a></li>
+    <li aria-hidden="true">/</li>
+    <li><a :href="product.parent" class="hover:text-[#fb923c] transition" x-text="product.breadcrumbLabel"></a></li>
+    <li aria-hidden="true">/</li>
+    <li class="text-slate-200" aria-current="page" x-text="product.title"></li>
+  </ol>
+</nav>
+
 <section class="max-w-7xl mx-auto px-6 lg:px-8 py-14 grid md:grid-cols-2 gap-14 items-start">
   <div class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-10 flex items-center justify-center">
     <img :src="product.image" :alt="product.title" class="max-h-80 w-full object-contain" width="400" height="400" loading="lazy">
   </div>
-  <div>
+  <div class="min-w-0">
     <span class="inline-block mb-4 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-4 py-1.5" x-text="product.categoryLabel"></span>
     <h1 class="text-4xl md:text-5xl font-extrabold text-white mb-6" x-text="product.title"></h1>
+    <p x-show="product.category === 'oem'" x-cloak class="font-mono text-sm text-slate-300 bg-white/5 border border-white/10 rounded-lg px-4 py-2 mb-6 inline-block">
+      HPL Seri Kodu: <span class="text-[#fb923c] font-semibold" x-text="product.oemCode"></span>
+    </p>
     <p class="text-slate-300 text-lg leading-relaxed mb-8" x-text="product.description"></p>
-    <div class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-6 mb-8">
+
+    <!-- OEM ürünlerinde sekmeli bilgi kartı: Teknik Ölçüler / Uyumlu Marka-Model / Genel Bilgiler -->
+    <div x-show="product.category === 'oem'" x-cloak x-data="{ activeTab: 'teknik' }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-6 mb-8">
+      <div class="flex gap-2 overflow-x-auto mb-6 border-b border-white/10">
+        <button type="button" @click="activeTab = 'teknik'" :class="activeTab === 'teknik' ? 'border-[#fb923c] text-[#fb923c]' : 'border-transparent text-slate-400 hover:text-slate-200'" class="shrink-0 whitespace-nowrap px-4 py-2 text-sm font-semibold border-b-2 transition">Teknik Ölçüler</button>
+        <button type="button" @click="activeTab = 'marka'" :class="activeTab === 'marka' ? 'border-[#fb923c] text-[#fb923c]' : 'border-transparent text-slate-400 hover:text-slate-200'" class="shrink-0 whitespace-nowrap px-4 py-2 text-sm font-semibold border-b-2 transition">Uyumlu Marka / Model</button>
+        <button type="button" @click="activeTab = 'genel'" :class="activeTab === 'genel' ? 'border-[#fb923c] text-[#fb923c]' : 'border-transparent text-slate-400 hover:text-slate-200'" class="shrink-0 whitespace-nowrap px-4 py-2 text-sm font-semibold border-b-2 transition">Genel Bilgiler</button>
+      </div>
+
+      <!-- Teknik Ölçüler -->
+      <div x-show="activeTab === 'teknik'">
+        <template x-if="product.dimensionRows">
+          <div class="overflow-x-auto mb-3">
+            <table class="w-full text-left text-sm text-slate-300 min-w-[280px]">
+              <thead>
+                <tr class="border-b border-white/10 text-xs uppercase tracking-wider text-slate-500">
+                  <th class="pb-2 pr-4 font-semibold">Ölçü</th>
+                  <th class="pb-2 font-semibold">Değer</th>
+                </tr>
+              </thead>
+              <tbody>
+                <template x-for="(row, index) in product.dimensionRows" :key="index">
+                  <tr :class="index % 2 === 1 ? 'bg-white/5' : ''" class="border-b border-white/5 last:border-0">
+                    <td class="py-2 pr-4 text-white font-medium whitespace-nowrap" x-text="row.label"></td>
+                    <td class="py-2 text-slate-300" x-text="row.value"></td>
+                  </tr>
+                </template>
+              </tbody>
+            </table>
+          </div>
+        </template>
+
+        <template x-if="product.dimensionGroups">
+          <div class="space-y-4 mb-3">
+            <template x-for="(group, gIndex) in product.dimensionGroups" :key="gIndex">
+              <div>
+                <h3 class="text-sm font-semibold text-white mb-2" x-text="group.title"></h3>
+                <div class="overflow-x-auto">
+                  <table class="w-full text-left text-sm text-slate-300 min-w-[280px]">
+                    <tbody>
+                      <template x-for="(row, rIndex) in group.rows" :key="rIndex">
+                        <tr :class="rIndex % 2 === 1 ? 'bg-white/5' : ''" class="border-b border-white/5 last:border-0">
+                          <td class="py-2 pr-4 text-white font-medium whitespace-nowrap w-1/3" x-text="row.label"></td>
+                          <td class="py-2 text-slate-300" x-text="row.value"></td>
+                        </tr>
+                      </template>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </template>
+          </div>
+        </template>
+
+        <p x-show="!product.dimensionRows && !product.dimensionGroups" class="text-slate-300 text-sm mb-3" x-text="product.dimensionNote"></p>
+
+        <p class="text-xs text-slate-500">Kaynak: <span x-text="(product.pdf || '').split('/').pop()"></span> teknik kataloğu</p>
+      </div>
+
+      <!-- Uyumlu Marka / Model -->
+      <div x-show="activeTab === 'marka'">
+        <div x-show="(product.compatibleBrands || []).length > 0">
+          <div class="overflow-x-auto mb-4">
+            <table class="w-full text-left text-sm text-slate-300 min-w-[320px]">
+              <thead>
+                <tr class="border-b border-white/10 text-xs uppercase tracking-wider text-slate-500">
+                  <th class="pb-2 pr-4 font-semibold">Marka</th>
+                  <th class="pb-2 font-semibold">Model</th>
+                </tr>
+              </thead>
+              <tbody>
+                <template x-for="(row, index) in (product.compatibleBrands || [])" :key="index">
+                  <tr :class="index % 2 === 1 ? 'bg-white/5' : ''" class="border-b border-white/5 last:border-0">
+                    <td class="py-2 pr-4 text-white font-medium whitespace-nowrap" x-text="row.brand"></td>
+                    <td class="py-2 text-slate-300" x-text="row.model"></td>
+                  </tr>
+                </template>
+              </tbody>
+            </table>
+          </div>
+          <p class="text-xs text-slate-500">Tam ölçü ve OEM kod tablosu için aşağıdaki "PDF İndir" butonundan teknik kataloğu inceleyebilirsiniz.</p>
+        </div>
+        <p x-show="(product.compatibleBrands || []).length === 0" class="text-slate-300 text-sm">Bu parça standart ölçüde üretilir, marka bağımsız kullanılabilir.</p>
+      </div>
+
+      <!-- Genel Bilgiler -->
+      <div x-show="activeTab === 'genel'">
+        <ul class="space-y-3 text-slate-300 text-sm">
+          <li class="flex gap-3"><span class="text-[#fb923c]">✓</span> CE, ISO ve TSE standartlarına uygun üretim</li>
+          <li class="flex gap-3"><span class="text-[#fb923c]">✓</span> CNC hassasiyetinde işlenmiş, yüksek dayanıklılık</li>
+          <li class="flex gap-3"><span class="text-[#fb923c]">✓</span> Detaylı ölçü ve teknik özellikler için PDF katalog</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- HPL silindir ürünlerinde: tek düz Genel Bilgiler kartı (sekme yok) -->
+    <div x-show="product.category !== 'oem'" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-6 mb-8">
       <h2 class="font-bold text-white mb-4">Genel Bilgiler</h2>
       <ul class="space-y-3 text-slate-300 text-sm">
         <li class="flex gap-3"><span class="text-[#fb923c]">✓</span> CE, ISO ve TSE standartlarına uygun üretim</li>
@@ -193,7 +305,8 @@ html.light .shadow-black\/20{box-shadow:0 10px 25px -5px rgba(15,23,42,.08)!impo
         <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v12m0 0 4-4m-4 4-4-4M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>
         PDF İndir
       </a>
-      <a href="teklif-al.html" class="inline-block rounded-md bg-[#fb923c] text-slate-950 font-semibold px-6 py-3 hover:brightness-110 hover:shadow-lg hover:shadow-[#fb923c]/30 transition">Bu Ürün İçin Teklif Al</a>
+      <a x-show="product.isCylinderTool" x-cloak :href="'calculation-program.html?tip=' + product.calcId" class="inline-flex items-center gap-2 rounded-md border border-white/20 bg-white/5 px-6 py-3 font-semibold hover:bg-white/10 hover:border-[#fb923c]/40 hover:text-[#fb923c] transition">Bu ürün için doğru ölçüyü hesapla →</a>
+      <a :href="'teklif-al.html?urun=' + encodeURIComponent(product.interestValue) + '&urun_adi=' + encodeURIComponent(product.title)" class="inline-block rounded-md bg-[#fb923c] text-slate-950 font-semibold px-6 py-3 hover:brightness-110 hover:shadow-lg hover:shadow-[#fb923c]/30 transition">Bu Ürün İçin Teklif Al</a>
     </div>
   </div>
 </section>
@@ -260,31 +373,143 @@ html.light .shadow-black\/20{box-shadow:0 10px 25px -5px rgba(15,23,42,.08)!impo
 <!-- WHATSAPP FLOATING BUTTON END -->
 
 <script>
+// OEM ürünlerindeki oemCode (HPL seri kodu) ve compatibleBrands (uyumlu marka) alanları
+// HPL HydroPascal'ın gerçek PDF kataloglarından (assets/documents/) alınmıştır. Model/yıl
+// bazlı tam varyasyon tablosu ürün ailesi başına tek değer olmadığından siteye konmamıştır;
+// detaylı ölçü ve OEM NO eşleşmesi için ilgili PDF katalog referans alınmalıdır.
 const PRODUCTS = {
-  "cift-etkili": { title: "Çift Etkili Silindirler", category: "hpl", categoryLabel: "HPL Ürünleri", parent: "hpl-products.html", parentLabel: "HPL Ürünleri", image: "../assets/images/HPL-1.png", pdf: "../assets/documents/HPL-Double-Action.pdf", description: "Çift etkili hidrolik silindirlerimiz, tarım makinelerinde hem itme hem çekme yönünde kontrollü güç aktarımı sağlar. Yüksek basınç dayanımı ve uzun ömürlü conta sistemleriyle üretilir." },
-  "toplinks": { title: "Üst Bağlantı Kolları (TopLinks)", category: "hpl", categoryLabel: "HPL Ürünleri", parent: "hpl-products.html", parentLabel: "HPL Ürünleri", image: "../assets/images/HPL-2.png", pdf: "../assets/documents/TopLinks-HPL-.pdf", description: "Traktör ve tarım ekipmanları arasındaki bağlantıyı sağlayan, yüksek mukavemetli üst bağlantı kollarımız, farklı traktör modelleriyle uyumlu ölçü seçenekleriyle sunulur." },
-  "dikey-ayarlanabilir": { title: "Dikey Ayarlanabilir Silindirler", category: "hpl", categoryLabel: "HPL Ürünleri", parent: "hpl-products.html", parentLabel: "HPL Ürünleri", image: "../assets/images/HPL-3.png", pdf: "../assets/documents/HPL-Vertical-Adjustable-Cylinders-.pdf", description: "Dikey ayarlanabilir silindirlerimiz, ekipman yüksekliğinin hassas şekilde kontrol edilmesi gereken uygulamalar için tasarlanmıştır." },
+  "cift-etkili": { title: "Çift Etkili Silindirler", category: "hpl", categoryLabel: "HPL Ürünleri", parent: "hpl-products.html", parentLabel: "HPL Ürünleri", image: "../assets/images/HPL-1.png", pdf: "../assets/documents/HPL-Double-Action.pdf", description: "Çift etkili hidrolik silindirlerimiz, tarım makinelerinde hem itme hem çekme yönünde kontrollü güç aktarımı sağlar. Yüksek basınç dayanımı ve uzun ömürlü conta sistemleriyle üretilir.", isCylinderTool: true, calcId: "cift-etkili" },
+  "toplinks": { title: "Üst Bağlantı Kolları (TopLinks)", category: "hpl", categoryLabel: "HPL Ürünleri", parent: "hpl-products.html", parentLabel: "HPL Ürünleri", image: "../assets/images/HPL-2.png", pdf: "../assets/documents/TopLinks-HPL-.pdf", description: "Traktör ve tarım ekipmanları arasındaki bağlantıyı sağlayan, yüksek mukavemetli üst bağlantı kollarımız, farklı traktör modelleriyle uyumlu ölçü seçenekleriyle sunulur.", isCylinderTool: true, calcId: "toplinks" },
+  "dikey-ayarlanabilir": { title: "Dikey Ayarlanabilir Silindirler", category: "hpl", categoryLabel: "HPL Ürünleri", parent: "hpl-products.html", parentLabel: "HPL Ürünleri", image: "../assets/images/HPL-3.png", pdf: "../assets/documents/HPL-Vertical-Adjustable-Cylinders-.pdf", description: "Dikey ayarlanabilir silindirlerimiz, ekipman yüksekliğinin hassas şekilde kontrol edilmesi gereken uygulamalar için tasarlanmıştır.", isCylinderTool: true, calcId: "dikey-ayarlanabilir" },
   "oem-silindir": { title: "OEM Silindirler", category: "hpl", categoryLabel: "HPL Ürünleri", parent: "hpl-products.html", parentLabel: "HPL Ürünleri", image: "../assets/images/HPL-4.png", pdf: "../assets/documents/OEM-Cylinders-1-1.pdf", description: "Müşteriye özel teknik gereksinimlere göre üretilen OEM hidrolik silindirlerimiz, orijinal ekipman üreticilerinin spesifikasyonlarına birebir uygun olarak imal edilir." },
-  "teleskopik-silindir": { title: "Teleskopik Silindirler", category: "hpl", categoryLabel: "HPL Ürünleri", parent: "hpl-products.html", parentLabel: "HPL Ürünleri", image: "../assets/images/HPL-5.png", pdf: "../assets/documents/Telescopic-Cylinders-1.pdf", description: "Çok kademeli teleskopik silindirlerimiz, kısa gövde boyunda uzun strok mesafesi gerektiren kaldırma uygulamaları için idealdir." },
-  "mekanik-kriko": { title: "Mekanik Krikolar", category: "hpl", categoryLabel: "HPL Ürünleri", parent: "hpl-products.html", parentLabel: "HPL Ürünleri", image: "../assets/images/HPL-6.png", pdf: "../assets/documents/Mechanical-Jacks-1.pdf", description: "Dayanıklı mekanik krikolarımız, tarım ekipmanlarının sabitlenmesi ve dengelenmesi için güvenilir bir çözüm sunar." },
-  "heay-toplink": { title: "Ağır Hizmet Üst Bağlantı Kolları", category: "oem", categoryLabel: "HPL OEM", parent: "oem-parts.html", parentLabel: "HPL OEM", image: "../assets/images/frostwway.com_.tr-6.png", pdf: "../assets/documents/HEAY-TOPLINK.pdf", description: "Ağır hizmet tipi üst bağlantı kollarımız, yüksek yük altında çalışan büyük tarım makineleri için güçlendirilmiş yapıda üretilir." },
-  "leveling-box": { title: "Dengeleme Kutusu", category: "oem", categoryLabel: "HPL OEM", parent: "oem-parts.html", parentLabel: "HPL OEM", image: "../assets/images/HPL-1.png", pdf: "../assets/documents/LEVELING-BOX.pdf", description: "Dengeleme kutularımız, ekipman dengesinin hassas biçimde ayarlanmasını sağlayarak sürüş ve çalışma stabilitesini artırır." },
-  "pimler": { title: "Pimler", category: "oem", categoryLabel: "HPL OEM", parent: "oem-parts.html", parentLabel: "HPL OEM", image: "../assets/images/HPL-2.png", pdf: "../assets/documents/PIMS.pdf", description: "Yüksek dayanımlı çelikten üretilen pimlerimiz, bağlantı noktalarında güvenli ve aşınmaya dayanıklı bir çözüm sunar." },
-  "yan-kol": { title: "Yan Kollar", category: "oem", categoryLabel: "HPL OEM", parent: "oem-parts.html", parentLabel: "HPL OEM", image: "../assets/images/HPL-3.png", pdf: "../assets/documents/SIDE-ARM.pdf", description: "Yan kollarımız, traktör üç nokta askı sisteminin yan stabilitesini sağlayan, dayanıklı ve hassas ölçülerde üretilen parçalardır." },
-  "yedek-parca": { title: "Yedek Parçalar", category: "oem", categoryLabel: "HPL OEM", parent: "oem-parts.html", parentLabel: "HPL OEM", image: "../assets/images/HPL-4.png", pdf: "../assets/documents/SPARE-PARTS.pdf", description: "Geniş yedek parça yelpazemiz, klasik ve modern traktör modelleri için ihtiyaç duyulan çeşitli bileşenleri kapsar." },
-  "stabilizator-zinciri": { title: "Stabilizatör Zinciri", category: "oem", categoryLabel: "HPL OEM", parent: "oem-parts.html", parentLabel: "HPL OEM", image: "../assets/images/HPL-6.png", pdf: "../assets/documents/STABILIZER-CHAIN.pdf", description: "Stabilizatör zincirlerimiz, üç nokta askı sisteminde yanal hareketi sınırlandırarak ekipman stabilitesini artırır." },
-  "teleskopik-zincir": { title: "Teleskopik Zincir", category: "oem", categoryLabel: "HPL OEM", parent: "oem-parts.html", parentLabel: "HPL OEM", image: "../assets/images/HPL-5.png", pdf: "../assets/documents/TELESCOPIC-CHAIN.pdf", description: "Teleskopik zincirlerimiz, değişken mesafeli bağlantı ihtiyaçlarında esnek ve güvenilir bir çözüm sağlar." },
-  "mafsal": { title: "Mafsal", category: "oem", categoryLabel: "HPL OEM", parent: "oem-parts.html", parentLabel: "HPL OEM", image: "../assets/images/HPL-7.png", pdf: "../assets/documents/TOPLINKS-KNUCKLE.pdf", description: "Üst bağlantı mafsallarımız, bağlantı noktalarında serbest hareket açısı sağlayarak ekipmanın rahat manevra yapmasına imkan tanır." },
-  "cekme-kolu": { title: "Çekme Kolu & Yan Kollar", category: "oem", categoryLabel: "HPL OEM", parent: "oem-parts.html", parentLabel: "HPL OEM", image: "../assets/images/HPL-8.png", pdf: "../assets/documents/YOKE-FORK.pdf", description: "Çekme kolu ve yan kol setlerimiz, traktör üç nokta askı sisteminin tam uyumlu ve dayanıklı bağlantı bileşenleridir." }
+  "teleskopik-silindir": { title: "Teleskopik Silindirler", category: "hpl", categoryLabel: "HPL Ürünleri", parent: "hpl-products.html", parentLabel: "HPL Ürünleri", image: "../assets/images/HPL-5.png", pdf: "../assets/documents/Telescopic-Cylinders-1.pdf", description: "Çok kademeli teleskopik silindirlerimiz, kısa gövde boyunda uzun strok mesafesi gerektiren kaldırma uygulamaları için idealdir.", isCylinderTool: true, calcId: "teleskopik-silindir" },
+  "mekanik-kriko": { title: "Mekanik Krikolar", category: "hpl", categoryLabel: "HPL Ürünleri", parent: "hpl-products.html", parentLabel: "HPL Ürünleri", image: "../assets/images/HPL-6.png", pdf: "../assets/documents/Mechanical-Jacks-1.pdf", description: "Dayanıklı mekanik krikolarımız, tarım ekipmanlarının sabitlenmesi ve dengelenmesi için güvenilir bir çözüm sunar.", isCylinderTool: true, calcId: "mekanik-kriko" },
+  "heay-toplink": { title: "Ağır Hizmet Üst Bağlantı Kolları", category: "oem", categoryLabel: "HPL OEM", parent: "oem-parts.html", parentLabel: "HPL OEM", image: "../assets/images/frostwway.com_.tr-6.png", pdf: "../assets/documents/HEAY-TOPLINK.pdf", description: "Ağır hizmet tipi üst bağlantı kollarımız, yüksek yük altında çalışan büyük tarım makineleri için güçlendirilmiş yapıda üretilir.", oemCode: "T06xx serisi", compatibleBrands: [
+    { brand: "Massey Ferguson", model: "285" },
+    { brand: "Massey Ferguson", model: "398" },
+    { brand: "Massey Ferguson", model: "6445-6460" },
+    { brand: "Fiat", model: "780" },
+    { brand: "Fiat", model: "70/56" },
+    { brand: "Fiat", model: "80/66" },
+    { brand: "Ford", model: "5000" },
+    { brand: "Ford", model: "6600" },
+    { brand: "Deutz", model: "77" },
+    { brand: "Deutz", model: "90" },
+    { brand: "Deutz", model: "100" },
+    { brand: "Steyr", model: "8073" },
+    { brand: "Steyr", model: "768" },
+    { brand: "New Holland", model: "TD-85D" },
+    { brand: "New Holland", model: "TL-90-100" },
+    { brand: "John Deere", model: "5303" },
+    { brand: "John Deere", model: "6220" },
+    { brand: "Class", model: "436-RA" },
+    { brand: "Class", model: "436-RC" }
+  ], dimensionRows: [
+    { label: "Boy (L)", value: "455 - 965 mm (modele göre)" },
+    { label: "Bağlantı Çapı (C)", value: "19,5 - 32 mm" }
+  ] },
+  "leveling-box": { title: "Dengeleme Kutusu", category: "oem", categoryLabel: "HPL OEM", parent: "oem-parts.html", parentLabel: "HPL OEM", image: "../assets/images/HPL-1.png", pdf: "../assets/documents/LEVELING-BOX.pdf", description: "Dengeleme kutularımız, ekipman dengesinin hassas biçimde ayarlanmasını sağlayarak sürüş ve çalışma stabilitesini artırır.", oemCode: "LB01xx serisi", compatibleBrands: [
+    { brand: "Massey Ferguson", model: "135-240" },
+    { brand: "Massey Ferguson", model: "165" },
+    { brand: "Massey Ferguson", model: "275-285" },
+    { brand: "Massey Ferguson", model: "398" },
+    { brand: "Massey Ferguson", model: "5400 serisi" },
+    { brand: "Fiat", model: "480" },
+    { brand: "Fiat", model: "640" },
+    { brand: "Fiat", model: "70/56" },
+    { brand: "Fiat", model: "G170" },
+    { brand: "Ford", model: "3000" },
+    { brand: "Ford", model: "5000-6600" },
+    { brand: "Ford", model: "6640-7740" },
+    { brand: "Ford", model: "4000" },
+    { brand: "Ford", model: "6610-7610" }
+  ], dimensionNote: "Ölçüler markaya ve modele göre değişir — teknik detaylar için aşağıdaki PDF kataloğunu inceleyebilirsiniz." },
+  "pimler": { title: "Pimler", category: "oem", categoryLabel: "HPL OEM", parent: "oem-parts.html", parentLabel: "HPL OEM", image: "../assets/images/HPL-2.png", pdf: "../assets/documents/PIMS.pdf", description: "Yüksek dayanımlı çelikten üretilen pimlerimiz, bağlantı noktalarında güvenli ve aşınmaya dayanıklı bir çözüm sunar.", oemCode: "RFS serisi", compatibleBrands: [
+    { brand: "Massey Ferguson", model: "285 (Drawbar Pin Long)" },
+    { brand: "Fiat", model: "İnce/Kalın Askı Kol Pimi" },
+    { brand: "Evrensel / Marka Bağımsız", model: "Top Link Pin, Trailer Pin ve diğer genel ölçü pimleri" }
+  ], dimensionRows: [
+    { label: "Çap", value: "12 - 36 mm" },
+    { label: "Boy", value: "40 - 435 mm (pim tipine göre)" }
+  ] },
+  "yan-kol": { title: "Yan Kollar", category: "oem", categoryLabel: "HPL OEM", parent: "oem-parts.html", parentLabel: "HPL OEM", image: "../assets/images/HPL-3.png", pdf: "../assets/documents/SIDE-ARM.pdf", description: "Yan kollarımız, traktör üç nokta askı sisteminin yan stabilitesini sağlayan, dayanıklı ve hassas ölçülerde üretilen parçalardır.", oemCode: "OSP01xx serisi", compatibleBrands: [
+    { brand: "Massey Ferguson", model: "285" },
+    { brand: "Fiat", model: "480-445" },
+    { brand: "Fiat", model: "640-70/56" },
+    { brand: "UTB", model: "650" },
+    { brand: "Ford", model: "5000-6600" },
+    { brand: "New Holland", model: "TS90" }
+  ], dimensionNote: "Ölçüler markaya ve modele göre değişir — teknik detaylar için aşağıdaki PDF kataloğunu inceleyebilirsiniz." },
+  "yedek-parca": { title: "Yedek Parçalar", category: "oem", categoryLabel: "HPL OEM", parent: "oem-parts.html", parentLabel: "HPL OEM", image: "../assets/images/HPL-4.png", pdf: "../assets/documents/SPARE-PARTS.pdf", description: "Geniş yedek parça yelpazemiz, klasik ve modern traktör modelleri için ihtiyaç duyulan çeşitli bileşenleri kapsar.", oemCode: "EXP9xxx serisi", compatibleBrands: [
+    { brand: "John Deere", model: "7000-8000" }
+  ], dimensionNote: "Ölçüler markaya ve modele göre değişir — teknik detaylar için aşağıdaki PDF kataloğunu inceleyebilirsiniz." },
+  "stabilizator-zinciri": { title: "Stabilizatör Zinciri", category: "oem", categoryLabel: "HPL OEM", parent: "oem-parts.html", parentLabel: "HPL OEM", image: "../assets/images/HPL-6.png", pdf: "../assets/documents/STABILIZER-CHAIN.pdf", description: "Stabilizatör zincirlerimiz, üç nokta askı sisteminde yanal hareketi sınırlandırarak ekipman stabilitesini artırır.", oemCode: "SC01xx serisi", compatibleBrands: [
+    { brand: "Massey Ferguson", model: "135" },
+    { brand: "Massey Ferguson", model: "240" },
+    { brand: "Massey Ferguson", model: "285" },
+    { brand: "Massey Ferguson", model: "398" },
+    { brand: "Fiat", model: "480" },
+    { brand: "Fiat", model: "640" },
+    { brand: "Fiat", model: "70/56" },
+    { brand: "Fiat", model: "780" },
+    { brand: "Fiat", model: "80/66" },
+    { brand: "Fiat", model: "G170" },
+    { brand: "New Holland", model: "çeşitli modeller" }
+  ], dimensionNote: "Ölçüler markaya ve modele göre değişir — teknik detaylar için aşağıdaki PDF kataloğunu inceleyebilirsiniz." },
+  "teleskopik-zincir": { title: "Teleskopik Zincir", category: "oem", categoryLabel: "HPL OEM", parent: "oem-parts.html", parentLabel: "HPL OEM", image: "../assets/images/HPL-5.png", pdf: "../assets/documents/TELESCOPIC-CHAIN.pdf", description: "Teleskopik zincirlerimiz, değişken mesafeli bağlantı ihtiyaçlarında esnek ve güvenilir bir çözüm sağlar.", oemCode: "SC serisi", compatibleBrands: [
+    { brand: "Massey Ferguson", model: "240-266" },
+    { brand: "Massey Ferguson", model: "276-286" },
+    { brand: "Massey Ferguson", model: "3075-3105" },
+    { brand: "Massey Ferguson", model: "5400-5600 serisi" },
+    { brand: "Massey Ferguson", model: "3000-8100 serisi" },
+    { brand: "Renault", model: "tarım serisi" },
+    { brand: "Landini", model: "Maythos" },
+    { brand: "Landini", model: "Automatic" },
+    { brand: "Erkunt", model: "65-90" },
+    { brand: "Erkunt", model: "100-110" },
+    { brand: "New Holland", model: "T7510" },
+    { brand: "New Holland", model: "T4-5-6" },
+    { brand: "New Holland", model: "TS100" },
+    { brand: "John Deere", model: "5000 serisi" },
+    { brand: "John Deere", model: "6000 serisi" },
+    { brand: "John Deere", model: "8000 serisi" },
+    { brand: "John Deere", model: "6300-7300" }
+  ], dimensionNote: "Ölçüler markaya ve modele göre değişir — teknik detaylar için aşağıdaki PDF kataloğunu inceleyebilirsiniz." },
+  "mafsal": { title: "Mafsal", category: "oem", categoryLabel: "HPL OEM", parent: "oem-parts.html", parentLabel: "HPL OEM", image: "../assets/images/HPL-7.png", pdf: "../assets/documents/TOPLINKS-KNUCKLE.pdf", description: "Üst bağlantı mafsallarımız, bağlantı noktalarında serbest hareket açısı sağlayarak ekipmanın rahat manevra yapmasına imkan tanır.", oemCode: "M0xxx / K0xxx serisi", compatibleBrands: [], dimensionGroups: [
+    { title: "Çatal Tip", rows: [
+      { label: "A", value: "40 - 50 mm" },
+      { label: "L", value: "60 - 100 mm" }
+    ] },
+    { title: "Rot Tip", rows: [
+      { label: "L", value: "225 mm (sabit)" },
+      { label: "Diş (H)", value: "M27x3 - M34x3,5" }
+    ] }
+  ] },
+  "cekme-kolu": { title: "Çekme Kolu & Yan Kollar", category: "oem", categoryLabel: "HPL OEM", parent: "oem-parts.html", parentLabel: "HPL OEM", image: "../assets/images/HPL-8.png", pdf: "../assets/documents/YOKE-FORK.pdf", description: "Çekme kolu ve yan kol setlerimiz, traktör üç nokta askı sisteminin tam uyumlu ve dayanıklı bağlantı bileşenleridir.", oemCode: "YF0xxx serisi", compatibleBrands: [
+    { brand: "Massey Ferguson", model: "135-240" },
+    { brand: "Massey Ferguson", model: "165" },
+    { brand: "Massey Ferguson", model: "285" },
+    { brand: "Massey Ferguson", model: "398" },
+    { brand: "Fiat", model: "480" },
+    { brand: "Fiat", model: "640" },
+    { brand: "Fiat", model: "70/56" },
+    { brand: "Fiat", model: "780-980" },
+    { brand: "Fiat", model: "110-90" },
+    { brand: "Fiat", model: "80/66" }
+  ], dimensionNote: "Ölçüler markaya ve modele göre değişir — teknik detaylar için aşağıdaki PDF kataloğunu inceleyebilirsiniz." }
 };
 
 function productDetail() {
   return {
-    product: { title: "Ürün", description: "", image: "", pdf: "#", parent: "hpl-products.html", parentLabel: "Ürünler", categoryLabel: "" },
+    product: { title: "Ürün", description: "", image: "", pdf: "#", parent: "hpl-products.html", parentLabel: "Ürünler", categoryLabel: "", isCylinderTool: false, calcId: "", interestValue: "hpl-hydraulic", breadcrumbLabel: "HPL Ürünleri" },
     init() {
       const params = new URLSearchParams(window.location.search);
       const id = params.get('id');
       const p = PRODUCTS[id] || PRODUCTS['cift-etkili'];
+      // teklif-al.html'deki "İlgilendiğiniz Ürün/Hizmet" seçeneğiyle eşleştir
+      p.interestValue = p.category === 'oem' ? 'oem-parts' : 'hpl-hydraulic';
+      // Breadcrumb'daki orta seviye etiketi (oem-parts.html / hpl-products.html başlıklarıyla birebir)
+      p.breadcrumbLabel = p.category === 'oem' ? 'OEM Parça' : 'HPL Ürünleri';
       this.product = p;
       document.title = p.title + " | HydroPascal Hidrolik Silindir";
     }

@@ -127,6 +127,7 @@ html.light .shadow-black\/20{box-shadow:0 10px 25px -5px rgba(15,23,42,.08)!impo
           </div>
         </div>
         <a href="calculation-program.html" class="text-slate-300 hover:text-white hover:bg-white/5 px-4 py-2 rounded-full transition">Silindir Yazılımı</a>
+        <a href="hizmetler.html" class="text-slate-300 hover:text-white hover:bg-white/5 px-4 py-2 rounded-full transition">Hizmetler</a>
         <div class="relative" @click.outside="resourcesOpen = false">
           <button @click="resourcesOpen = !resourcesOpen" :aria-expanded="resourcesOpen" class="flex items-center gap-1 text-slate-300 hover:text-white hover:bg-white/5 px-4 py-2 rounded-full transition">
             Kaynaklar
@@ -200,6 +201,7 @@ html.light .shadow-black\/20{box-shadow:0 10px 25px -5px rgba(15,23,42,.08)!impo
       <a href="pascalforge.html" class="px-4 py-2 pl-7 rounded-lg text-slate-300 hover:bg-white/5 hover:text-white transition text-sm">PascalForge</a>
       <a href="pascalcast.html" class="px-4 py-2 pl-7 rounded-lg text-slate-300 hover:bg-white/5 hover:text-white transition text-sm">PascalCast</a>
       <a href="calculation-program.html" class="px-4 py-2 rounded-lg text-slate-300 hover:bg-white/5 hover:text-white transition">Silindir Yazılımı</a>
+      <a href="hizmetler.html" class="px-4 py-2 rounded-lg text-slate-300 hover:bg-white/5 hover:text-white transition">Hizmetler</a>
       <p class="px-4 pt-2 text-xs font-semibold text-slate-500 uppercase tracking-wider">Kaynaklar</p>
       <a href="kataloglar.html" class="px-4 py-2 pl-7 rounded-lg text-slate-300 hover:bg-white/5 hover:text-white transition text-sm">Kataloglar</a>
       <a href="media.html" class="px-4 py-2 pl-7 rounded-lg text-slate-300 hover:bg-white/5 hover:text-white transition text-sm">Medya</a>
@@ -234,6 +236,7 @@ html.light .shadow-black\/20{box-shadow:0 10px 25px -5px rgba(15,23,42,.08)!impo
   </div>
 
   <div id="hpl-calculator">
+    <div id="hpl-source-notice" class="hpl-notice hpl-notice-warn mb-6 hidden"></div>
     <form id="hpl-calc-form" class="relative bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-10 shadow-2xl grid sm:grid-cols-2 gap-6">
       <div class="pointer-events-none absolute -top-24 -right-24 w-72 h-72 bg-[#fb923c]/15 rounded-full blur-3xl"></div>
 
@@ -296,6 +299,9 @@ html.light .shadow-black\/20{box-shadow:0 10px 25px -5px rgba(15,23,42,.08)!impo
       <div>
         <h3 class="text-2xl font-bold text-white text-center mb-6">Eşleşen Ürünler</h3>
         <div id="hpl-matching-products"></div>
+      </div>
+      <div class="text-center">
+        <a id="hpl-quote-cta" href="teklif-al.html" class="inline-block rounded-md bg-[#fb923c] text-slate-950 font-semibold px-6 py-3 hover:brightness-110 hover:shadow-lg hover:shadow-[#fb923c]/30 transition">Bu ölçüde teklif iste</a>
       </div>
     </div>
   </div>

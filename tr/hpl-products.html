@@ -117,6 +117,7 @@ html.light .shadow-black\/20{box-shadow:0 10px 25px -5px rgba(15,23,42,.08)!impo
           </div>
         </div>
         <a href="calculation-program.html" class="text-slate-300 hover:text-white hover:bg-white/5 px-4 py-2 rounded-full transition">Silindir Yazılımı</a>
+        <a href="hizmetler.html" class="text-slate-300 hover:text-white hover:bg-white/5 px-4 py-2 rounded-full transition">Hizmetler</a>
         <div class="relative" @click.outside="resourcesOpen = false">
           <button @click="resourcesOpen = !resourcesOpen" :aria-expanded="resourcesOpen" class="flex items-center gap-1 text-slate-300 hover:text-white hover:bg-white/5 px-4 py-2 rounded-full transition">
             Kaynaklar
@@ -190,6 +191,7 @@ html.light .shadow-black\/20{box-shadow:0 10px 25px -5px rgba(15,23,42,.08)!impo
       <a href="pascalforge.html" class="px-4 py-2 pl-7 rounded-lg text-slate-300 hover:bg-white/5 hover:text-white transition text-sm">PascalForge</a>
       <a href="pascalcast.html" class="px-4 py-2 pl-7 rounded-lg text-slate-300 hover:bg-white/5 hover:text-white transition text-sm">PascalCast</a>
       <a href="calculation-program.html" class="px-4 py-2 rounded-lg text-slate-300 hover:bg-white/5 hover:text-white transition">Silindir Yazılımı</a>
+      <a href="hizmetler.html" class="px-4 py-2 rounded-lg text-slate-300 hover:bg-white/5 hover:text-white transition">Hizmetler</a>
       <p class="px-4 pt-2 text-xs font-semibold text-slate-500 uppercase tracking-wider">Kaynaklar</p>
       <a href="kataloglar.html" class="px-4 py-2 pl-7 rounded-lg text-slate-300 hover:bg-white/5 hover:text-white transition text-sm">Kataloglar</a>
       <a href="media.html" class="px-4 py-2 pl-7 rounded-lg text-slate-300 hover:bg-white/5 hover:text-white transition text-sm">Medya</a>
@@ -204,6 +206,15 @@ html.light .shadow-black\/20{box-shadow:0 10px 25px -5px rgba(15,23,42,.08)!impo
 <div class="h-20"></div>
 
 <main>
+<!-- BREADCRUMB -->
+<nav aria-label="Breadcrumb" class="max-w-7xl mx-auto px-6 lg:px-8 pt-6 text-sm text-slate-400">
+  <ol class="flex flex-wrap items-center gap-2">
+    <li><a href="index.html" class="hover:text-[#fb923c] transition">Ana Sayfa</a></li>
+    <li aria-hidden="true">/</li>
+    <li class="text-slate-200" aria-current="page">HPL Ürünleri</li>
+  </ol>
+</nav>
+
 <!-- HERO -->
 <section id="hero-1" class="relative overflow-hidden py-14">
   <img src="../assets/images/loho-yeni-1.jpg" alt="HPL hidrolik silindir ürünleri kataloğu banner" width="1920" height="700" class="absolute inset-0 w-full h-full object-cover opacity-10">
@@ -222,7 +233,14 @@ html.light .shadow-black\/20{box-shadow:0 10px 25px -5px rgba(15,23,42,.08)!impo
 </section>
 
 <!-- CATEGORY FILTER -->
-<section class="max-w-7xl mx-auto px-6 lg:px-8 pb-8" x-data="{ filter: 'all' }">
+<section class="max-w-7xl mx-auto px-6 lg:px-8 pb-8" x-data="{
+    filter: 'all',
+    search: '',
+    matches(title) { return this.search === '' || title.toLowerCase().includes(this.search.toLowerCase()); }
+  }">
+  <div class="max-w-md mx-auto mb-8">
+    <input type="text" x-model="search" placeholder="Ürün adı ara..." class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white placeholder-slate-400 focus:border-[#fb923c] focus:ring-2 focus:ring-[#fb923c]/30 focus:outline-none transition">
+  </div>
   <div class="flex flex-wrap gap-3 justify-center mb-12">
     <button type="button" @click="filter = 'all'" :class="filter === 'all' ? 'bg-[#fb923c] text-slate-950' : 'bg-white/5 text-slate-300 hover:bg-white/10'" class="px-5 py-2 rounded-full text-sm font-semibold border border-white/10 transition">Tümü</button>
     <button type="button" @click="filter = 'silindir'" :class="filter === 'silindir' ? 'bg-[#fb923c] text-slate-950' : 'bg-white/5 text-slate-300 hover:bg-white/10'" class="px-5 py-2 rounded-full text-sm font-semibold border border-white/10 transition">Silindirler</button>
@@ -232,36 +250,47 @@ html.light .shadow-black\/20{box-shadow:0 10px 25px -5px rgba(15,23,42,.08)!impo
 
   <!-- PRODUCT CARDS -->
   <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-  <div x-show="filter === 'all' || filter === 'silindir'" id="content-3" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8 shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col items-center text-center">
+  <div x-show="(filter === 'all' || filter === 'silindir') && matches('Çift Etkili')" id="content-3" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8 shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col items-center text-center">
     <img src="../assets/images/HPL-1.png" alt="HPL çift etkili hidrolik silindir" width="96" height="96" loading="lazy" class="h-24 object-contain mb-5 bg-white/90 rounded-xl p-2" data-section="content-3" data-field="image">
     <h3 class="font-bold text-lg mb-4 text-white" data-section="content-3" data-field="title">Çift Etkili</h3>
     <a href="urun-detay.html?id=cift-etkili" class="mt-auto rounded-full bg-[#fb923c] text-slate-950 text-sm font-semibold px-5 py-2.5 hover:brightness-110 hover:shadow-lg hover:shadow-[#fb923c]/30 transition">Detayları Gör</a>
   </div>
-  <div x-show="filter === 'all' || filter === 'baglanti'" id="content-4" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8 shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col items-center text-center">
+  <div x-show="(filter === 'all' || filter === 'baglanti') && matches('Üst Bağlantı Kolları (TopLinks)')" id="content-4" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8 shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col items-center text-center">
     <img src="../assets/images/HPL-2.png" alt="HPL üst bağlantı kolları (TopLinks)" width="96" height="96" loading="lazy" class="h-24 object-contain mb-5 bg-white/90 rounded-xl p-2" data-section="content-4" data-field="image">
     <h3 class="font-bold text-lg mb-4 text-white" data-section="content-4" data-field="title">Üst Bağlantı Kolları (TopLinks)</h3>
     <a href="urun-detay.html?id=toplinks" class="mt-auto rounded-full bg-[#fb923c] text-slate-950 text-sm font-semibold px-5 py-2.5 hover:brightness-110 hover:shadow-lg hover:shadow-[#fb923c]/30 transition">Detayları Gör</a>
   </div>
-  <div x-show="filter === 'all' || filter === 'silindir'" id="content-5" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8 shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col items-center text-center">
+  <div x-show="(filter === 'all' || filter === 'silindir') && matches('Dikey Ayarlanabilir')" id="content-5" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8 shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col items-center text-center">
     <img src="../assets/images/HPL-3.png" alt="HPL dikey ayarlanabilir hidrolik silindir" width="96" height="96" loading="lazy" class="h-24 object-contain mb-5 bg-white/90 rounded-xl p-2" data-section="content-5" data-field="image">
     <h3 class="font-bold text-lg mb-4 text-white" data-section="content-5" data-field="title">Dikey Ayarlanabilir</h3>
     <a href="urun-detay.html?id=dikey-ayarlanabilir" class="mt-auto rounded-full bg-[#fb923c] text-slate-950 text-sm font-semibold px-5 py-2.5 hover:brightness-110 hover:shadow-lg hover:shadow-[#fb923c]/30 transition">Detayları Gör</a>
   </div>
-  <div x-show="filter === 'all' || filter === 'silindir'" id="content-6" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8 shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col items-center text-center">
+  <div x-show="(filter === 'all' || filter === 'silindir') && matches('OEM')" id="content-6" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8 shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col items-center text-center">
     <img src="../assets/images/HPL-4.png" alt="HPL OEM hidrolik silindir yedek parça" width="96" height="96" loading="lazy" class="h-24 object-contain mb-5 bg-white/90 rounded-xl p-2" data-section="content-6" data-field="image">
     <h3 class="font-bold text-lg mb-4 text-white" data-section="content-6" data-field="title">OEM</h3>
     <a href="urun-detay.html?id=oem-silindir" class="mt-auto rounded-full bg-[#fb923c] text-slate-950 text-sm font-semibold px-5 py-2.5 hover:brightness-110 hover:shadow-lg hover:shadow-[#fb923c]/30 transition">Detayları Gör</a>
   </div>
-  <div x-show="filter === 'all' || filter === 'silindir'" id="content-7" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8 shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col items-center text-center">
+  <div x-show="(filter === 'all' || filter === 'silindir') && matches('Teleskopik Silindirler')" id="content-7" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8 shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col items-center text-center">
     <img src="../assets/images/HPL-5.png" alt="HPL teleskopik hidrolik silindir" width="96" height="96" loading="lazy" class="h-24 object-contain mb-5 bg-white/90 rounded-xl p-2" data-section="content-7" data-field="image">
     <h3 class="font-bold text-lg mb-4 text-white" data-section="content-7" data-field="title">Teleskopik Silindirler</h3>
     <a href="urun-detay.html?id=teleskopik-silindir" class="mt-auto rounded-full bg-[#fb923c] text-slate-950 text-sm font-semibold px-5 py-2.5 hover:brightness-110 hover:shadow-lg hover:shadow-[#fb923c]/30 transition">Detayları Gör</a>
   </div>
-  <div x-show="filter === 'all' || filter === 'diger'" id="content-8" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8 shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col items-center text-center">
+  <div x-show="(filter === 'all' || filter === 'diger') && matches('Mekanik Krikolar')" id="content-8" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8 shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col items-center text-center">
     <img src="../assets/images/HPL-6.png" alt="HPL mekanik kriko" width="96" height="96" loading="lazy" class="h-24 object-contain mb-5 bg-white/90 rounded-xl p-2" data-section="content-8" data-field="image">
     <h3 class="font-bold text-lg mb-4 text-white" data-section="content-8" data-field="title">Mekanik Krikolar</h3>
     <a href="urun-detay.html?id=mekanik-kriko" class="mt-auto rounded-full bg-[#fb923c] text-slate-950 text-sm font-semibold px-5 py-2.5 hover:brightness-110 hover:shadow-lg hover:shadow-[#fb923c]/30 transition">Detayları Gör</a>
   </div>
+  </div>
+
+  <div x-show="!(
+      ((filter === 'all' || filter === 'silindir') && matches('Çift Etkili')) ||
+      ((filter === 'all' || filter === 'baglanti') && matches('Üst Bağlantı Kolları (TopLinks)')) ||
+      ((filter === 'all' || filter === 'silindir') && matches('Dikey Ayarlanabilir')) ||
+      ((filter === 'all' || filter === 'silindir') && matches('OEM')) ||
+      ((filter === 'all' || filter === 'silindir') && matches('Teleskopik Silindirler')) ||
+      ((filter === 'all' || filter === 'diger') && matches('Mekanik Krikolar'))
+    )" x-cloak class="text-center text-slate-400 py-16">
+    Sonuç bulunamadı.
   </div>
 </section>
 </main>

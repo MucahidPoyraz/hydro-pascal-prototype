@@ -38,6 +38,15 @@
 
   var catalog = null; // JSON yüklendikten sonra dolar
 
+  // Ürün detay sayfasından (?tip=...) gelen HPL silindir tipi etiketleri
+  var PRODUCT_TYPE_LABELS = {
+    'cift-etkili': 'Çift Etkili Silindirler',
+    'toplinks': 'Üst Bağlantı Kolları (TopLinks)',
+    'dikey-ayarlanabilir': 'Dikey Ayarlanabilir Silindirler',
+    'teleskopik-silindir': 'Teleskopik Silindirler',
+    'mekanik-kriko': 'Mekanik Krikolar'
+  };
+
   document.addEventListener('DOMContentLoaded', init);
 
   function init() {
@@ -47,11 +56,23 @@
     populatePressureSelect();
     populateBoreSelect();
     populateStrokeSelect();
+    applySourceProductType();
 
     document.getElementById('c_diam').addEventListener('change', onBoreChange);
     form.addEventListener('submit', onSubmit);
 
     loadCatalog();
+  }
+
+  function applySourceProductType() {
+    var params = new URLSearchParams(window.location.search);
+    var tip = params.get('tip');
+    var notice = document.getElementById('hpl-source-notice');
+    if (!tip || !notice) return;
+
+    var label = PRODUCT_TYPE_LABELS[tip] || tip;
+    notice.textContent = 'Seçtiğiniz ürün: ' + label + '. Aşağıdaki değerleri girerek bu ürün için uygun ölçüyü hesaplayabilirsiniz.';
+    notice.classList.remove('hidden');
   }
 
   function loadCatalog() {
@@ -171,9 +192,31 @@
     });
 
     renderMatchingProducts(cDiam, rDiam, stroke);
+    updateQuoteCta({ cDiam: cDiam, rDiam: rDiam, stroke: stroke, pPress: pPress });
 
     document.getElementById('hpl-results-section').classList.remove('hidden');
     document.getElementById('hpl-results-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function updateQuoteCta(vals) {
+    var cta = document.getElementById('hpl-quote-cta');
+    if (!cta) return;
+
+    var note = 'Hesaplama aracı sonucu: İç çap Ø' + vals.cDiam + 'mm, Mil çapı Ø' + vals.rDiam +
+      'mm, Strok ' + vals.stroke + 'mm, Basınç ' + vals.pPress + ' bar için teklif istiyorum.';
+
+    try {
+      sessionStorage.setItem('hpl-calc-note', note);
+    } catch (e) { /* sessionStorage kullanılamıyorsa link parametreleri yeterli */ }
+
+    var params = new URLSearchParams({
+      ic_cap: vals.cDiam,
+      mil_capi: vals.rDiam,
+      strok: vals.stroke,
+      basinc: vals.pPress,
+      not: note
+    });
+    cta.href = 'teklif-al.html?' + params.toString();
   }
 
   function showFormNotice(msg) {
