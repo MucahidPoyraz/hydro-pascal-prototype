@@ -79,7 +79,7 @@ function setTheme(mode){try{var isLight=mode==='light';document.documentElement.
 html.light .icon-sun{display:inline-block}
 html.light .icon-moon{display:none}
 html.light body{background:linear-gradient(to bottom,#ffffff,#f8fafc,#ffffff)!important;color:#475569!important}
-html.light .bg-slate-950{background-color:#ffffff!important}
+html.light .bg-slate-950:not(#hero-1):not(#hero-1 *){background-color:#ffffff!important}
 html.light .bg-slate-950\/70{background-color:rgba(255,255,255,.75)!important}
 html.light .bg-slate-950\/90{background-color:rgba(255,255,255,.92)!important}
 html.light .bg-slate-900\/90{background-color:rgba(255,255,255,.92)!important}
@@ -231,8 +231,10 @@ html.light #features-7{background-image:linear-gradient(rgba(255,255,255,.92),rg
 <section id="hero-1" class="relative overflow-hidden flex items-center bg-slate-950 cursor-default" x-data="{
     currentSlide: 0,
     slides: [
-      { src: '../assets/images/global-solutions.jpg', alt: 'HPL HydroPascal küresel çözümler ve dağıtım ağı' },
-      { src: '../assets/images/global-network.jpg', alt: 'HPL HydroPascal küresel lojistik ve dağıtım ağı' }
+      { src: '../assets/images/hero-hydraulic-cylinder.jpg', alt: 'Yüksek mukavemetli hidrolik silindir yakın çekim' },
+      { src: '../assets/images/hero-tractor-field.jpg', alt: 'Tarım makinesi / traktör sahada çalışırken' },
+      { src: '../assets/images/hero-cnc-workshop.jpg', alt: 'CNC torna atölyesinde hassas işleme' },
+      { src: '../assets/images/hero-factory-production-line.jpg', alt: 'Fabrika üretim hattı' }
     ],
     next() { this.currentSlide = (this.currentSlide + 1) % this.slides.length },
     prev() { this.currentSlide = (this.currentSlide - 1 + this.slides.length) % this.slides.length },
@@ -327,6 +329,8 @@ html.light #features-7{background-image:linear-gradient(rgba(255,255,255,.92),rg
 
 <!-- FASON ÜRETİM BAND (GÖREV 6.0 Bölüm 4.4: mesaj netleştirildi — "Siz Hayal Edin, Biz Üretelim") -->
 <section class="relative overflow-hidden py-20 bg-gradient-to-br from-[#fb923c]/10 via-slate-950 to-[#fb923c]/5 border-b border-white/10 text-center">
+  <img src="../assets/images/cnc-machining-closeup.jpg" alt="CNC hassas işleme / talaşlı imalat" loading="lazy" class="pointer-events-none absolute inset-0 w-full h-full object-cover opacity-10">
+  <div class="pointer-events-none absolute inset-0 bg-slate-950/90"></div>
   <div class="relative max-w-4xl mx-auto px-6 lg:px-8">
     <span class="inline-block mb-4 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-4 py-1.5">Fason Üretim</span>
     <h2 class="text-3xl md:text-4xl font-extrabold text-white mb-4">Siz Hayal Edin, Biz Üretelim</h2>
@@ -526,14 +530,14 @@ html.light #features-7{background-image:linear-gradient(rgba(255,255,255,.92),rg
   <div class="relative max-w-6xl mx-auto px-6 lg:px-8 text-center">
     <span class="inline-block mb-4 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-4 py-1.5">Referanslar</span>
     <h2 class="text-4xl md:text-5xl font-extrabold mb-10 text-[#fb923c]">Uyumlu Olduğumuz Markalar</h2>
-    <div class="flex flex-wrap items-center justify-center gap-4 mb-10">
-      <span class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/10 pl-3 pr-6 py-2.5 text-sm font-semibold text-white hover:border-[#fb923c]/40 hover:bg-white/15 transition"><svg class="h-4 w-4 text-[#fb923c] shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><circle cx="6" cy="17" r="3"/><circle cx="17" cy="17" r="2"/><path stroke-linecap="round" stroke-linejoin="round" d="M9 17h4V9h3l3 4v4h-1M9 9H5v4"/></svg>Massey Ferguson</span>
-      <span class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/10 pl-3 pr-6 py-2.5 text-sm font-semibold text-white hover:border-[#fb923c]/40 hover:bg-white/15 transition"><svg class="h-4 w-4 text-[#fb923c] shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><circle cx="6" cy="17" r="3"/><circle cx="17" cy="17" r="2"/><path stroke-linecap="round" stroke-linejoin="round" d="M9 17h4V9h3l3 4v4h-1M9 9H5v4"/></svg>Ford</span>
-      <span class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/10 pl-3 pr-6 py-2.5 text-sm font-semibold text-white hover:border-[#fb923c]/40 hover:bg-white/15 transition"><svg class="h-4 w-4 text-[#fb923c] shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><circle cx="6" cy="17" r="3"/><circle cx="17" cy="17" r="2"/><path stroke-linecap="round" stroke-linejoin="round" d="M9 17h4V9h3l3 4v4h-1M9 9H5v4"/></svg>New Holland</span>
-      <span class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/10 pl-3 pr-6 py-2.5 text-sm font-semibold text-white hover:border-[#fb923c]/40 hover:bg-white/15 transition"><svg class="h-4 w-4 text-[#fb923c] shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><circle cx="6" cy="17" r="3"/><circle cx="17" cy="17" r="2"/><path stroke-linecap="round" stroke-linejoin="round" d="M9 17h4V9h3l3 4v4h-1M9 9H5v4"/></svg>John Deere</span>
-      <span class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/10 pl-3 pr-6 py-2.5 text-sm font-semibold text-white hover:border-[#fb923c]/40 hover:bg-white/15 transition"><svg class="h-4 w-4 text-[#fb923c] shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><circle cx="6" cy="17" r="3"/><circle cx="17" cy="17" r="2"/><path stroke-linecap="round" stroke-linejoin="round" d="M9 17h4V9h3l3 4v4h-1M9 9H5v4"/></svg>Case</span>
-      <span class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/10 pl-3 pr-6 py-2.5 text-sm font-semibold text-white hover:border-[#fb923c]/40 hover:bg-white/15 transition"><svg class="h-4 w-4 text-[#fb923c] shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><circle cx="6" cy="17" r="3"/><circle cx="17" cy="17" r="2"/><path stroke-linecap="round" stroke-linejoin="round" d="M9 17h4V9h3l3 4v4h-1M9 9H5v4"/></svg>Fendt</span>
-      <span class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/10 pl-3 pr-6 py-2.5 text-sm font-semibold text-white hover:border-[#fb923c]/40 hover:bg-white/15 transition"><svg class="h-4 w-4 text-[#fb923c] shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><circle cx="6" cy="17" r="3"/><circle cx="17" cy="17" r="2"/><path stroke-linecap="round" stroke-linejoin="round" d="M9 17h4V9h3l3 4v4h-1M9 9H5v4"/></svg>Deutz</span>
+    <div class="flex flex-wrap items-center justify-center gap-3 mb-10">
+      <span class="inline-flex items-center rounded-md border border-white/10 bg-white/5 px-6 py-2.5 text-sm font-semibold text-slate-200 hover:border-[#fb923c]/40 hover:bg-white/10 hover:text-white transition">Massey Ferguson</span>
+      <span class="inline-flex items-center rounded-md border border-white/10 bg-white/5 px-6 py-2.5 text-sm font-semibold text-slate-200 hover:border-[#fb923c]/40 hover:bg-white/10 hover:text-white transition">Ford</span>
+      <span class="inline-flex items-center rounded-md border border-white/10 bg-white/5 px-6 py-2.5 text-sm font-semibold text-slate-200 hover:border-[#fb923c]/40 hover:bg-white/10 hover:text-white transition">New Holland</span>
+      <span class="inline-flex items-center rounded-md border border-white/10 bg-white/5 px-6 py-2.5 text-sm font-semibold text-slate-200 hover:border-[#fb923c]/40 hover:bg-white/10 hover:text-white transition">John Deere</span>
+      <span class="inline-flex items-center rounded-md border border-white/10 bg-white/5 px-6 py-2.5 text-sm font-semibold text-slate-200 hover:border-[#fb923c]/40 hover:bg-white/10 hover:text-white transition">Case</span>
+      <span class="inline-flex items-center rounded-md border border-white/10 bg-white/5 px-6 py-2.5 text-sm font-semibold text-slate-200 hover:border-[#fb923c]/40 hover:bg-white/10 hover:text-white transition">Fendt</span>
+      <span class="inline-flex items-center rounded-md border border-white/10 bg-white/5 px-6 py-2.5 text-sm font-semibold text-slate-200 hover:border-[#fb923c]/40 hover:bg-white/10 hover:text-white transition">Deutz</span>
     </div>
     <a href="referanslar.html" class="inline-block rounded-md bg-[#fb923c] text-slate-950 font-semibold px-8 py-3.5 hover:brightness-110 hover:shadow-lg hover:shadow-[#fb923c]/30 transition">Tüm Referansları İncele</a>
   </div>

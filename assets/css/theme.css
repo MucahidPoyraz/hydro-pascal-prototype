@@ -534,6 +534,25 @@ html.light main #content-18.bg-gradient-to-br {
   border-bottom: 1px solid var(--line) !important;
 }
 
+/* GÖREV 9.3 — Alt sayfa hero bandı (about-us, hpl-products, kataloglar,
+   oem-parts, referanslar, teklif-al × tr/en, 12 dosya): logo görseli
+   (opacity-10) + üstten-alta koyu gradient overlay
+   ("bg-gradient-to-b from-slate-950/40 via-slate-950/80 to-slate-950")
+   kullanıyor. Bu gradyan yönü ("to-b", ana sayfanın hero'sundaki "to-t"
+   ile karışmasın) hiçbir yerde açık tema için override edilmemişti —
+   sayfanın geri kalanı krem/açık olsa bile bu bant koyu lacivert kalıp
+   "ters" duruyordu. Ana sayfanın kendi hero-1'ine (fotoğraflı slider,
+   bilerek her zaman koyu kalıyor) DOKUNULMUYOR — o farklı bir gradyan
+   yönü/oranı kullandığı için bu seçiciyle hiç eşleşmiyor. */
+html.light main .bg-gradient-to-b.from-slate-950\/40 {
+  background: linear-gradient(
+    to bottom,
+    color-mix(in srgb, var(--accent) 5%, transparent),
+    color-mix(in srgb, var(--paper) 96%, transparent) 55%,
+    var(--paper)
+  ) !important;
+}
+
 /* --- Bölüm 2: açık tema kontrast + doku --- */
 
 /* Body: saf beyaz değil, sıcak --paper tonu (eski kural: html.light
@@ -596,11 +615,24 @@ html.light main .bg-white\/5:not(:where(#hero-1) *) {
 
 /* Accent'in sayfa genelinde daha görünür olması: section başlıklarının
    altına ince bir accent ayraç çizgisi (skill'deki "ince ayraç" kalıbı) —
-   sadece açık modda, koyu modda zaten yeterince belirgindi. */
+   sadece açık modda, koyu modda zaten yeterince belirgindi.
+   DÜZELTME (GÖREV 9.1): "display: inline-block" h2'yi kendinden önceki
+   inline-block eyebrow span'ının (ör. "REFERANSLAR" etiketi) YANINA
+   oturtuyordu — koyu modda h2 normal block olduğu için alt alta duran
+   eyebrow+başlık ikilisi, sadece açık modda yan yana görünüyordu. h2'yi
+   block bırakıp (kendi satırına düşer, koyu modla birebir aynı dizilim)
+   alt çizgiyi yalnızca metin genişliğinde tutmak için width: fit-content
+   kullanılıyor; text-center section'larda ortalamak için de ayrıca
+   margin: auto ekleniyor (aşağıdaki kural). */
 html.light main h2 {
-  display: inline-block;
+  display: block;
+  width: fit-content;
   padding-bottom: 12px;
   border-bottom: 2px solid color-mix(in srgb, var(--accent) 35%, transparent);
+}
+html.light main .text-center h2 {
+  margin-left: auto;
+  margin-right: auto;
 }
 
 /* ======================================================================
@@ -734,4 +766,76 @@ main form.border-white\/10.bg-white\/10.rounded-2xl {
   main > section {
     scroll-snap-align: start;
   }
+}
+
+/* ======================================================================
+   GÖREV 9.2 — Eyebrow etiketleri: "rozet" görünümü kaldırıldı
+   Site genelinde (38 sayfa, ~92 yer) her section'ın büyük başlığının
+   üstünde duran küçük etiket ("REFERANSLAR", "ÜRÜN YELPAZESİ" vb.)
+   kendi arka planına (bg-white/5), kenarlığına (border-white/10) ve
+   -açık modda- ayrıca kendi gölgesine sahip bir "rozet/pill" olarak
+   tasarlanmıştı. İstenen: bu etiket kendi arka planını/gölgesini
+   TAŞIMASIN, sadece onu saran section/div'in arka planı görünsün —
+   düz metin gibi dursun. Tüm bu etiketler aynı imzayı paylaşıyor
+   (tracking-widest + uppercase + bg-white/5 + border-white/10), bu
+   yüzden tek bir kuralla hepsi aynı anda düzeliyor; başka hiçbir yerde
+   (buton, filtre çipi, kart vb.) bu dört class birlikte kullanılmıyor,
+   dolayısıyla seçici sadece eyebrow etiketlerini hedefliyor. Hem açık
+   hem koyu modda geçerli, cascade'de en sonda olduğu için önceki
+   .bg-white\/5 / box-shadow kurallarını (satır ~592) ezer.
+   NOT: padding'e DOKUNMUYORUZ — üstteki "main .uppercase.tracking-widest"
+   kuralı (GÖREV 4.7) zaten solundaki 22px'lik accent çizgiye yer açmak
+   için "padding: 0 0 0 30px" veriyor; burada padding'i sıfırlarsak o
+   çizgi (::before, left:0 width:22px) metnin ilk harflerinin ÜSTÜNE
+   biner (üstü çizili gibi görünür). Sadece arka plan/kenarlık/gölgeyi
+   şeffaflaştırmak yeterli. */
+.tracking-widest.uppercase.bg-white\/5.border-white\/10,
+html.light .tracking-widest.uppercase.bg-white\/5.border-white\/10 {
+  background-color: transparent !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+}
+
+/* ======================================================================
+   GÖREV 9.4 — Üst navigasyon: dolgu/rozet hover yerine sadece alt çizgi
+   Header markup'ı 42 sayfada birebir aynı olduğu için buradaki kurallar
+   hepsini otomatik kapsıyor, hiçbir HTML dosyasına dokunulmadı.
+   - Hover'da eski "arka plan dolgusu" (hover:bg-white/5 → var(--surface-2))
+     kaldırıldı, yerine ince bir accent alt çizgi (::after) geldi.
+   - O an açık olan sayfanın linki/dropdown butonu aynı çizgiyi KALICI
+     gösterir — tespiti assets/js/reveal.js'teki ikinci script yapıyor,
+     eşleşen elemana ".nav-active" class'ı ekliyor.
+   - CTA butonu ("Teklif Al", dolgun turuncu buton — .bg-\[#fb923c\]) ve
+     ayarlar (dil/tema) ikonu (wrapper'ı .ml-3) bilerek hariç: onlar zaten
+     kendi görsel diline sahip, alt çizgi eklemek gürültü olurdu. */
+header nav > a:not(.bg-\[\#fb923c\]),
+header nav > div:not(.ml-3) > button {
+  position: relative;
+}
+
+header nav > a:not(.bg-\[\#fb923c\]).hover\:bg-white\/5:hover,
+header nav > div:not(.ml-3) > button.hover\:bg-white\/5:hover,
+html.light header nav > a:not(.bg-\[\#fb923c\]).hover\:bg-white\/5:hover,
+html.light header nav > div:not(.ml-3) > button.hover\:bg-white\/5:hover {
+  background: transparent !important;
+}
+
+header nav > a:not(.bg-\[\#fb923c\])::after,
+header nav > div:not(.ml-3) > button::after {
+  content: "";
+  position: absolute;
+  left: 1rem;
+  right: 1rem;
+  bottom: 3px;
+  height: 2px;
+  border-radius: 1px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transition: transform .2s ease;
+}
+header nav > a:not(.bg-\[\#fb923c\]):hover::after,
+header nav > div:not(.ml-3) > button:hover::after,
+header nav > a.nav-active::after,
+header nav > div:not(.ml-3) > button.nav-active::after {
+  transform: scaleX(1);
 }
