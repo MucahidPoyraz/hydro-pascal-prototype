@@ -45,3 +45,62 @@
     });
   });
 })();
+
+/*
+  HydroPascal — Üst navigasyonda aktif sayfa vurgusu (GÖREV 9.4)
+  ================================================================
+  Header markup'ı 42 sayfada birebir aynı (statik HTML, ortak include
+  yok) olduğu için "hangi sayfadaysam onun linki hep vurgulu olsun"
+  isteği HTML'e değil, buraya (tek noktadan tüm sayfaları kapsayan
+  paylaşılan script) yazıldı. O an açık olan sayfanın dosya adını
+  bulur, üst nav'daki <a>'lardan/dropdown panellerindeki linklerden
+  hangisi eşleşiyorsa ona ".nav-active" class'ı ekler — görsel stil
+  (accent alt çizgi) theme.css'te tanımlı.
+*/
+(function () {
+  document.addEventListener('DOMContentLoaded', function () {
+    var nav = document.querySelector('header nav');
+    if (!nav) return;
+
+    // DÜZELTME: sadece dosya adına (basename) bakmak yanlış eşleşme
+    // yaratıyordu — ör. "/tr/index.html" (Ana Sayfa) ile
+    // "/tr/blog/index.html" (Blog) aynı basename'i ("index.html")
+    // paylaştığı için ikisi de aynı anda aktif görünüyordu. Tam,
+    // normalize edilmiş path karşılaştırması kullanılıyor.
+    function normalizedPath(href) {
+      if (!href) return '';
+      try {
+        var u = new URL(href, window.location.href);
+        var p = u.pathname.toLowerCase();
+        if (p.endsWith('/')) p += 'index.html';
+        return p;
+      } catch (e) {
+        return '';
+      }
+    }
+
+    var currentPath = normalizedPath(window.location.pathname);
+
+    Array.prototype.forEach.call(nav.children, function (child) {
+      if (child.tagName === 'A') {
+        // CTA ("Teklif Al") gibi dolgun butonlar theme.css'te zaten hariç
+        // tutuluyor (.bg-[#fb923c]) — burada class eklense de görsel
+        // etkisi olmuyor, o yüzden ekstra kontrol gerekmiyor.
+        if (normalizedPath(child.getAttribute('href')) === currentPath) {
+          child.classList.add('nav-active');
+        }
+      } else if (child.tagName === 'DIV') {
+        // Ayarlar (dil/tema) kutusu — wrapper'ı .ml-3, içinde sayfa
+        // linki değil dil/tema kontrolleri var; atla.
+        if (child.classList.contains('ml-3')) return;
+        var toggleBtn = child.querySelector(':scope > button');
+        var links = child.querySelectorAll('a[href]');
+        if (!toggleBtn || !links.length) return;
+        var hasActiveChild = Array.prototype.some.call(links, function (a) {
+          return normalizedPath(a.getAttribute('href')) === currentPath;
+        });
+        if (hasActiveChild) toggleBtn.classList.add('nav-active');
+      }
+    });
+  });
+})();

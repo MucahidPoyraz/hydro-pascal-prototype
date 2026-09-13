@@ -118,7 +118,7 @@ html.light .shadow-black\/20{box-shadow:0 10px 25px -5px rgba(15,23,42,.08)!impo
           </div>
         </div>
         <a href="calculation-program.html" class="text-slate-300 hover:text-white hover:bg-white/5 px-4 py-2 rounded-full transition">Silindir Yazılımı</a>
-        <a href="hizmetler.html" class="text-white bg-white/5 px-4 py-2 rounded-full transition">Hizmetler</a>
+        <a href="hizmetler.html" class="text-slate-300 hover:text-white hover:bg-white/5 px-4 py-2 rounded-full transition">Hizmetler</a>
         <a href="blog/index.html" class="text-slate-300 hover:text-white hover:bg-white/5 px-4 py-2 rounded-full transition">Blog</a>
         <div class="relative" @click.outside="resourcesOpen = false">
           <button @click="resourcesOpen = !resourcesOpen" :aria-expanded="resourcesOpen" class="flex items-center gap-1 text-slate-300 hover:text-white hover:bg-white/5 px-4 py-2 rounded-full transition">
@@ -209,14 +209,6 @@ html.light .shadow-black\/20{box-shadow:0 10px 25px -5px rgba(15,23,42,.08)!impo
 <div class="h-20"></div>
 
 <main>
-<!-- BREADCRUMB -->
-<nav aria-label="Breadcrumb" class="max-w-7xl mx-auto px-6 lg:px-8 pt-6 text-sm text-slate-400">
-  <ol class="flex flex-wrap items-center gap-2">
-    <li><a href="index.html" class="hover:text-[#fb923c] transition">Ana Sayfa</a></li>
-    <li aria-hidden="true">/</li>
-    <li class="text-slate-200" aria-current="page">Hizmetler</li>
-  </ol>
-</nav>
 
 <!-- HERO -->
 <section id="hero-1" class="relative overflow-hidden py-14">
@@ -300,20 +292,27 @@ html.light .shadow-black\/20{box-shadow:0 10px 25px -5px rgba(15,23,42,.08)!impo
   </div>
 </section>
 
-<!-- TRUST BADGES -->
-<section class="max-w-5xl mx-auto px-6 lg:px-8 py-16">
-  <div class="flex flex-wrap items-center justify-center gap-6 text-center">
-    <div class="flex items-center gap-3 bg-white/5 border border-white/10 rounded-full px-5 py-2.5">
-      <span class="h-8 w-8 flex items-center justify-center rounded-full bg-[#fb923c] font-extrabold text-slate-950 text-xs">CE</span>
-      <span class="text-sm text-slate-300 font-medium">CE Uygunluk</span>
+<!-- CERTIFICATIONS (about-us.html'deki "Güvence / Kalite Sertifikalarımız" bloğuyla birebir aynı — eski küçük "TRUST BADGES" pill satırının yerine geçti) -->
+<section id="content-20" class="max-w-6xl mx-auto px-6 lg:px-8 py-24">
+  <div class="text-center mb-14">
+    <span class="inline-block mb-4 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-4 py-1.5">Güvence</span>
+    <h2 class="text-4xl md:text-5xl font-extrabold text-[#fb923c]">Kalite Sertifikalarımız</h2>
+  </div>
+  <div class="grid sm:grid-cols-3 gap-8">
+    <div class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8 shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 text-center">
+      <div class="h-16 w-16 mx-auto flex items-center justify-center rounded-xl bg-[#fb923c] mb-5 font-extrabold text-slate-950 text-xl">CE</div>
+      <h3 class="font-bold text-lg text-white mb-2">CE Uygunluk</h3>
+      <p class="text-slate-400 text-sm leading-relaxed">Ürünlerimiz Avrupa Birliği güvenlik, sağlık ve çevre koruma standartlarına uygundur.</p>
     </div>
-    <div class="flex items-center gap-3 bg-white/5 border border-white/10 rounded-full px-5 py-2.5">
-      <span class="h-8 w-8 flex items-center justify-center rounded-full bg-[#fb923c] font-extrabold text-slate-950 text-xs">ISO</span>
-      <span class="text-sm text-slate-300 font-medium">ISO Kalite Yönetimi</span>
+    <div class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8 shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 text-center">
+      <div class="h-16 w-16 mx-auto flex items-center justify-center rounded-xl bg-[#fb923c] mb-5 font-extrabold text-slate-950 text-xl">ISO</div>
+      <h3 class="font-bold text-lg text-white mb-2">ISO Kalite Yönetimi</h3>
+      <p class="text-slate-400 text-sm leading-relaxed">Üretim süreçlerimiz uluslararası kabul görmüş kalite yönetim sistemi standartlarıyla yürütülür.</p>
     </div>
-    <div class="flex items-center gap-3 bg-white/5 border border-white/10 rounded-full px-5 py-2.5">
-      <span class="h-8 w-8 flex items-center justify-center rounded-full bg-[#fb923c] font-extrabold text-slate-950 text-xs">TSE</span>
-      <span class="text-sm text-slate-300 font-medium">TSE Belgeli Üretim</span>
+    <div class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8 shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 text-center">
+      <div class="h-16 w-16 mx-auto flex items-center justify-center rounded-xl bg-[#fb923c] mb-5 font-extrabold text-slate-950 text-xl">TSE</div>
+      <h3 class="font-bold text-lg text-white mb-2">TSE Belgeli Üretim</h3>
+      <p class="text-slate-400 text-sm leading-relaxed">Türk Standartları Enstitüsü kriterlerine uygun, denetlenmiş üretim süreçleri.</p>
     </div>
   </div>
 </section>
