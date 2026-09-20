@@ -353,20 +353,60 @@ html.light .shadow-black\/20{box-shadow:0 10px 25px -5px rgba(15,23,42,.08)!impo
   var btn = document.getElementById('quote-form-submit');
   var status = document.getElementById('quote-form-status');
 
-  // ---- Ön-seçim: ürün detay sayfasından ?urun=... & ?urun_adi=... ----
+  // ---- Ön-seçim: ürün detay sayfasından VE hesaplayıcıdan gelen değerler ----
+  // GÖREV 10.5: Önceden yalnızca ?urun / ?urun_adi okunuyordu. Hesaplayıcının
+  // (calculation-program.js → updateQuoteCta) yolladığı ic_cap / mil_capi /
+  // strok / basinc / not parametreleri ve sessionStorage'daki 'hpl-calc-note'
+  // hiç okunmuyordu; müşteri hesaplama yapıp "Teklif Al"a bastığında form BOŞ
+  // açılıyordu — sitenin en değerli dönüşüm akışı veri kaybediyordu.
   (function applyIncomingProduct(){
     var params = new URLSearchParams(window.location.search);
-    var urun = params.get('urun');
-    var urunAdi = params.get('urun_adi');
     var interestSelect = document.getElementById('q-interest');
     var messageField = document.getElementById('q-message');
 
+    // 1) Ürün detay sayfasından gelen ön-seçim
+    var urun = params.get('urun');
+    var urunAdi = params.get('urun_adi');
     if (urun && interestSelect && interestSelect.querySelector('option[value="' + urun + '"]')) {
       interestSelect.value = urun;
     }
-    if (urunAdi && messageField && !messageField.value) {
-      messageField.value = 'Ürün: ' + urunAdi;
+
+    // 2) Hesaplayıcıdan gelen ölçüler
+    var icCap   = params.get('ic_cap');
+    var milCapi = params.get('mil_capi');
+    var strok   = params.get('strok');
+    var basinc  = params.get('basinc');
+    var hasCalc = !!(icCap || milCapi || strok || basinc);
+
+    if (hasCalc && interestSelect && !interestSelect.value &&
+        interestSelect.querySelector('option[value="hpl-hydraulic"]')) {
+      interestSelect.value = 'hpl-hydraulic';
     }
+
+    // 3) Mesaj alanı: URL parametresi → sessionStorage → ölçülerden üret
+    if (!messageField || messageField.value) { return; }
+
+    var lines = [];
+    if (urunAdi) { lines.push('Ürün: ' + urunAdi); }
+
+    var note = params.get('not');
+    if (!note) {
+      try { note = sessionStorage.getItem('hpl-calc-note') || ''; } catch (e) { note = ''; }
+    }
+
+    if (hasCalc) {
+      var specs = [];
+      if (icCap)   { specs.push('İç çap: Ø' + icCap + ' mm'); }
+      if (milCapi) { specs.push('Mil çapı: Ø' + milCapi + ' mm'); }
+      if (strok)   { specs.push('Strok: ' + strok + ' mm'); }
+      if (basinc)  { specs.push('Çalışma basıncı: ' + basinc + ' bar'); }
+      lines.push('Hesaplama aracı sonucu:');
+      lines.push(specs.join('  /  '));
+    } else if (note) {
+      lines.push(note);
+    }
+
+    if (lines.length) { messageField.value = lines.join('\n'); }
   })();
 
   // ---- Dosya / Teknik Resim ekleme (opsiyonel, backend/CRM entegrasyonu bu görevin kapsamı değil) ----

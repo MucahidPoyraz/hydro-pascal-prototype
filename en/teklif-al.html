@@ -324,6 +324,61 @@ html.light input::placeholder,html.light textarea::placeholder{color:#94a3b8!imp
   var btn = document.getElementById('quote-form-submit');
   var status = document.getElementById('quote-form-status');
 
+  // ---- Pre-fill from the product detail page AND from the calculator ----
+  // TASK 10.5: the EN quote form had no pre-fill at all (the TR one read
+  // ?urun / ?urun_adi). Values sent by the calculator (ic_cap / mil_capi /
+  // strok / basinc / not) and 'hpl-calc-note' in sessionStorage were ignored
+  // in both languages, so the form opened EMPTY after a calculation.
+  (function applyIncomingProduct(){
+    var params = new URLSearchParams(window.location.search);
+    var interestSelect = document.getElementById('q-interest');
+    var messageField = document.getElementById('q-message');
+
+    // 1) Pre-selection coming from a product detail page
+    var product = params.get('urun');
+    var productName = params.get('urun_adi');
+    if (product && interestSelect && interestSelect.querySelector('option[value="' + product + '"]')) {
+      interestSelect.value = product;
+    }
+
+    // 2) Dimensions coming from the calculator
+    var bore    = params.get('ic_cap');
+    var rod     = params.get('mil_capi');
+    var stroke  = params.get('strok');
+    var press   = params.get('basinc');
+    var hasCalc = !!(bore || rod || stroke || press);
+
+    if (hasCalc && interestSelect && !interestSelect.value &&
+        interestSelect.querySelector('option[value="hpl-hydraulic"]')) {
+      interestSelect.value = 'hpl-hydraulic';
+    }
+
+    // 3) Message field: URL param -> sessionStorage -> built from dimensions
+    if (!messageField || messageField.value) { return; }
+
+    var lines = [];
+    if (productName) { lines.push('Product: ' + productName); }
+
+    var note = params.get('not');
+    if (!note) {
+      try { note = sessionStorage.getItem('hpl-calc-note') || ''; } catch (e) { note = ''; }
+    }
+
+    if (hasCalc) {
+      var specs = [];
+      if (bore)   { specs.push('Bore: Ø' + bore + ' mm'); }
+      if (rod)    { specs.push('Rod: Ø' + rod + ' mm'); }
+      if (stroke) { specs.push('Stroke: ' + stroke + ' mm'); }
+      if (press)  { specs.push('Working pressure: ' + press + ' bar'); }
+      lines.push('Result from the cylinder calculator:');
+      lines.push(specs.join('  /  '));
+    } else if (note) {
+      lines.push(note);
+    }
+
+    if (lines.length) { messageField.value = lines.join('\n'); }
+  })();
+
   if (form) {
     form.addEventListener('submit', function(e){
       e.preventDefault();

@@ -37,6 +37,18 @@
 
   var catalog = null; // filled after the JSON loads
 
+  // TASK 10.5 — these two features existed only in the Turkish build
+  // (calculation-program.js). The English calculator had neither the
+  // "?tip=" source-product notice nor a quote CTA, so an English visitor
+  // got results and then had no way forward. Kept in sync with the TR file.
+  var PRODUCT_TYPE_LABELS = {
+    'cift-etkili': 'Double Acting Cylinders',
+    'toplinks': 'Top Links',
+    'dikey-ayarlanabilir': 'Vertical Adjustable Cylinders',
+    'teleskopik-silindir': 'Telescopic Cylinders',
+    'mekanik-kriko': 'Mechanical Jacks'
+  };
+
   document.addEventListener('DOMContentLoaded', init);
 
   function init() {
@@ -46,11 +58,46 @@
     populatePressureSelect();
     populateBoreSelect();
     populateStrokeSelect();
+    applySourceProductType();
 
     document.getElementById('c_diam').addEventListener('change', onBoreChange);
     form.addEventListener('submit', onSubmit);
 
     loadCatalog();
+  }
+
+  function applySourceProductType() {
+    var params = new URLSearchParams(window.location.search);
+    var tip = params.get('tip');
+    var notice = document.getElementById('hpl-source-notice');
+    if (!tip || !notice) return;
+
+    var label = PRODUCT_TYPE_LABELS[tip] || tip;
+    notice.textContent = 'Selected product: ' + label +
+      '. Enter the values below to calculate the right size for this product.';
+    notice.classList.remove('hidden');
+  }
+
+  function updateQuoteCta(vals) {
+    var cta = document.getElementById('hpl-quote-cta');
+    if (!cta) return;
+
+    var note = 'Result from the cylinder calculator: Bore Ø' + vals.cDiam +
+      'mm, Rod Ø' + vals.rDiam + 'mm, Stroke ' + vals.stroke + 'mm, Pressure ' +
+      vals.pPress + ' bar. I would like a quote for these dimensions.';
+
+    try {
+      sessionStorage.setItem('hpl-calc-note', note);
+    } catch (e) { /* sessionStorage unavailable -> URL params are enough */ }
+
+    var params = new URLSearchParams({
+      ic_cap: vals.cDiam,
+      mil_capi: vals.rDiam,
+      strok: vals.stroke,
+      basinc: vals.pPress,
+      not: note
+    });
+    cta.href = 'teklif-al.html?' + params.toString();
   }
 
   function loadCatalog() {
@@ -170,6 +217,7 @@
     });
 
     renderMatchingProducts(cDiam, rDiam, stroke);
+    updateQuoteCta({ cDiam: cDiam, rDiam: rDiam, stroke: stroke, pPress: pPress });
 
     document.getElementById('hpl-results-section').classList.remove('hidden');
     document.getElementById('hpl-results-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
