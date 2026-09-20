@@ -294,7 +294,7 @@ html.light input::placeholder,html.light textarea::placeholder{color:#94a3b8!imp
     <h2 class="text-4xl md:text-5xl font-extrabold text-white mb-6">Send a Sample / Drawing</h2>
     <p class="text-slate-300 text-lg leading-relaxed max-w-2xl mx-auto">Fill out the form below to get a feasibility assessment and quote for your project.</p>
   </div>
-  <form id="sample-form-el" action="#" method="POST" class="relative bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-10 shadow-2xl space-y-6">
+  <form data-hpl-form="sample" id="sample-form-el" class="relative bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-10 shadow-2xl space-y-6">
     <div class="pointer-events-none absolute -top-24 -right-24 w-72 h-72 bg-[#fb923c]/15 rounded-full blur-3xl"></div>
     <input type="text" name="botcheck" class="hidden" tabindex="-1" autocomplete="off" aria-hidden="true">
     <div class="relative grid sm:grid-cols-2 gap-6">
@@ -336,12 +336,12 @@ html.light input::placeholder,html.light textarea::placeholder{color:#94a3b8!imp
     <div class="relative">
       <label class="block text-sm font-semibold text-slate-200 mb-2" for="s-files">Attach File / Technical Drawing (optional)</label>
       <p class="text-xs text-slate-500 mb-2">Attaching a dimensioned drawing or sample photo will speed up your quote.</p>
-      <input type="file" id="s-files" multiple accept=".pdf,.dwg,.step,.stp,.jpg,.jpeg,.png" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:bg-[#fb923c] file:text-slate-950 file:font-semibold file:cursor-pointer hover:file:brightness-110 focus:border-[#fb923c] focus:ring-2 focus:ring-[#fb923c]/30 focus:outline-none transition cursor-pointer">
-      <ul id="s-files-list" class="mt-3 space-y-2"></ul>
-      <p id="s-files-warning" class="mt-2 text-sm font-semibold text-[#fb923c] hidden"></p>
+      <input type="file" id="s-files" data-hpl-file-input multiple accept=".pdf,.dwg,.step,.stp,.jpg,.jpeg,.png" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:bg-[#fb923c] file:text-slate-950 file:font-semibold file:cursor-pointer hover:file:brightness-110 focus:border-[#fb923c] focus:ring-2 focus:ring-[#fb923c]/30 focus:outline-none transition cursor-pointer">
+      <ul id="s-files-list" data-hpl-file-list class="mt-3 space-y-2"></ul>
+      <p id="s-files-warning" data-hpl-file-warning class="mt-2 text-sm font-semibold text-[#fb923c] hidden"></p>
     </div>
     <button type="submit" id="sample-form-submit" class="relative w-full bg-[#fb923c] text-slate-950 font-semibold text-lg py-4 rounded-md shadow-2xl hover:brightness-110 hover:shadow-lg hover:shadow-[#fb923c]/30 transition disabled:opacity-60 disabled:cursor-not-allowed">Send Sample / Drawing</button>
-    <p id="sample-form-status" class="relative text-sm text-center min-h-[1.25rem]" role="status" aria-live="polite"></p>
+    <p id="sample-form-status" data-hpl-status class="relative text-sm text-center min-h-[1.25rem]" role="status" aria-live="polite"></p>
     <p class="relative text-xs text-slate-500 text-center">* Fields marked with an asterisk are required. Your request will be forwarded to our expert team, who will get back to you shortly.</p>
   </form>
 </section>
@@ -413,119 +413,6 @@ html.light input::placeholder,html.light textarea::placeholder{color:#94a3b8!imp
 <!-- WHATSAPP FLOATING BUTTON END -->
 
 <!-- SAMPLE FORM SCRIPT -->
-<script>
-(function(){
-  var form = document.getElementById('sample-form-el');
-  var btn = document.getElementById('sample-form-submit');
-  var status = document.getElementById('sample-form-status');
-
-  // ---- File / technical drawing attachment (identical logic to teklif-al.html) ----
-  var MAX_FILES = 5;
-  var MAX_TOTAL_BYTES = 10 * 1024 * 1024; // 10 MB
-  var selectedFiles = [];
-  var fileInput = document.getElementById('s-files');
-  var fileList = document.getElementById('s-files-list');
-  var fileWarning = document.getElementById('s-files-warning');
-
-  function formatSize(bytes) {
-    if (bytes < 1024) return bytes + ' B';
-    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
-    return (bytes / (1024 * 1024)).toFixed(2) + ' MB';
-  }
-
-  function totalSize() {
-    return selectedFiles.reduce(function(sum, f){ return sum + f.size; }, 0);
-  }
-
-  function showFileWarning(msg) {
-    fileWarning.textContent = msg;
-    fileWarning.classList.remove('hidden');
-  }
-
-  function hideFileWarning() {
-    fileWarning.classList.add('hidden');
-    fileWarning.textContent = '';
-  }
-
-  function renderFileList() {
-    fileList.innerHTML = '';
-    selectedFiles.forEach(function(file, index){
-      var li = document.createElement('li');
-      li.className = 'flex items-center justify-between gap-3 bg-white/5 border border-white/10 rounded-lg px-4 py-2 text-sm text-slate-300';
-
-      var label = document.createElement('span');
-      label.className = 'truncate';
-      label.textContent = file.name + ' (' + formatSize(file.size) + ')';
-
-      var removeBtn = document.createElement('button');
-      removeBtn.type = 'button';
-      removeBtn.setAttribute('aria-label', 'Remove file: ' + file.name);
-      removeBtn.className = 'shrink-0 text-slate-400 hover:text-[#fb923c] transition';
-      removeBtn.textContent = '✕';
-      removeBtn.addEventListener('click', function(){
-        selectedFiles.splice(index, 1);
-        renderFileList();
-      });
-
-      li.appendChild(label);
-      li.appendChild(removeBtn);
-      fileList.appendChild(li);
-    });
-
-    if (totalSize() > MAX_TOTAL_BYTES) {
-      showFileWarning('Total file size exceeds 10 MB. Please remove some files.');
-    } else if (selectedFiles.length > MAX_FILES) {
-      showFileWarning('You can attach up to ' + MAX_FILES + ' files.');
-    } else {
-      hideFileWarning();
-    }
-  }
-
-  if (fileInput) {
-    fileInput.addEventListener('change', function(){
-      selectedFiles = selectedFiles.concat(Array.prototype.slice.call(fileInput.files));
-      fileInput.value = ''; // reset input so the same file can be re-selected
-      renderFileList();
-    });
-  }
-
-  // ---- Submission: no real backend/CRM integration in this static prototype.
-  // TODO: real submission (email/API) integration to be handled as a separate task.
-  if (form) {
-    form.addEventListener('submit', function(e){
-      e.preventDefault();
-
-      // Simple bot protection: silently ignore if the hidden field is filled.
-      if (form.botcheck && form.botcheck.value) { return; }
-
-      console.log('Sample/drawing form submission:', {
-        name: form.name.value,
-        company: form.company.value,
-        email: form.email.value,
-        phone: form.phone.value,
-        type: form.type.value,
-        quantity: form.quantity.value,
-        message: form.message.value,
-        files: selectedFiles.map(function(f){ return f.name; })
-      });
-
-      btn.disabled = true;
-      var originalLabel = btn.textContent;
-      btn.textContent = 'Sending...';
-      status.textContent = '';
-
-      setTimeout(function(){
-        status.textContent = 'Your request has been received. We will get back to you shortly.';
-        status.className = 'relative text-sm text-center min-h-[1.25rem] text-cyan-400';
-        form.reset();
-        selectedFiles = [];
-        renderFileList();
-        btn.disabled = false;
-        btn.textContent = originalLabel;
-      }, 600);
-    });
-  }
-})();
-</script>
+<script defer src="../assets/js/form-submit.js"></script>
 </body>
 </html>

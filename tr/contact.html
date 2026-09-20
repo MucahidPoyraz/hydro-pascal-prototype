@@ -265,7 +265,8 @@ html.light .shadow-black\/20{box-shadow:0 10px 25px -5px rgba(15,23,42,.08)!impo
     </ul>
   </div>
 
-  <form action="#" method="POST" class="relative bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-10 shadow-2xl space-y-6 h-fit">
+  <form data-hpl-form="contact" class="relative bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-10 shadow-2xl space-y-6 h-fit">
+    <input type="text" name="botcheck" class="hidden" tabindex="-1" autocomplete="off" aria-hidden="true">
     <div class="pointer-events-none absolute -top-24 -right-24 w-72 h-72 bg-[#fb923c]/15 rounded-full blur-3xl"></div>
     <div class="relative">
       <label class="block text-sm font-semibold text-slate-200 mb-2" for="name">Ad Soyad</label>
@@ -284,6 +285,7 @@ html.light .shadow-black\/20{box-shadow:0 10px 25px -5px rgba(15,23,42,.08)!impo
       <textarea id="message" name="message" rows="5" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-slate-400 focus:border-[#fb923c] focus:ring-2 focus:ring-[#fb923c]/30 focus:outline-none transition"></textarea>
     </div>
     <button type="submit" class="relative w-full bg-[#fb923c] text-slate-950 font-semibold text-lg py-4 rounded-md shadow-2xl hover:brightness-110 hover:shadow-lg hover:shadow-[#fb923c]/30 transition">Mesaj Gönder</button>
+    <p data-hpl-status class="relative text-sm text-center min-h-[1.25rem]" role="status" aria-live="polite"></p>
   </form>
 </section>
 
@@ -367,5 +369,6 @@ html.light .shadow-black\/20{box-shadow:0 10px 25px -5px rgba(15,23,42,.08)!impo
   </span>
 </a>
 <!-- WHATSAPP FLOATING BUTTON END -->
+<script defer src="../assets/js/form-submit.js"></script>
 </body>
 </html>

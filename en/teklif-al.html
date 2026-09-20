@@ -196,7 +196,7 @@ html.light input::placeholder,html.light textarea::placeholder{color:#94a3b8!imp
 
 <!-- QUOTE FORM -->
 <section id="quote-form-2" class="max-w-5xl mx-auto px-6 lg:px-8 py-24">
-  <form id="quote-form" action="#" method="POST" class="relative bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-10 shadow-2xl space-y-6">
+  <form data-hpl-form="quote" id="quote-form" class="relative bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-10 shadow-2xl space-y-6">
     <div class="pointer-events-none absolute -top-24 -right-24 w-72 h-72 bg-[#fb923c]/15 rounded-full blur-3xl"></div>
     <input type="text" name="botcheck" class="hidden" tabindex="-1" autocomplete="off" aria-hidden="true">
     <input type="hidden" name="title" id="q-title" value="Quote Request">
@@ -237,8 +237,15 @@ html.light input::placeholder,html.light textarea::placeholder{color:#94a3b8!imp
       <label class="block text-sm font-semibold text-slate-200 mb-2" for="q-message">Technical Details / Notes</label>
       <textarea id="q-message" name="message" rows="5" placeholder="You can specify technical details such as bore diameter, stroke length, and working pressure." class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-slate-400 focus:border-[#fb923c] focus:ring-2 focus:ring-[#fb923c]/30 focus:outline-none transition"></textarea>
     </div>
+    <div class="relative">
+      <label class="block text-sm font-semibold text-slate-200 mb-2" for="q-files">Attach File / Technical Drawing (optional)</label>
+      <p class="text-xs text-slate-500 mb-2">Attaching a dimensioned drawing or a photo of the sample shortens the quotation time.</p>
+      <input type="file" id="q-files" data-hpl-file-input multiple accept=".pdf,.dwg,.step,.stp,.jpg,.jpeg,.png" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:bg-[#fb923c] file:text-slate-950 file:font-semibold file:cursor-pointer hover:file:brightness-110 focus:border-[#fb923c] focus:ring-2 focus:ring-[#fb923c]/30 focus:outline-none transition cursor-pointer">
+      <ul id="q-files-list" data-hpl-file-list class="mt-3 space-y-2"></ul>
+      <p id="q-files-warning" data-hpl-file-warning class="mt-2 text-sm font-semibold text-[#fb923c] hidden"></p>
+    </div>
     <button type="submit" id="quote-form-submit" class="relative w-full bg-[#fb923c] text-slate-950 font-semibold text-lg py-4 rounded-md shadow-2xl hover:brightness-110 hover:shadow-lg hover:shadow-[#fb923c]/30 transition disabled:opacity-60 disabled:cursor-not-allowed">Submit Quote Request</button>
-    <p id="quote-form-status" class="relative text-sm text-center min-h-[1.25rem]" role="status" aria-live="polite"></p>
+    <p id="quote-form-status" data-hpl-status class="relative text-sm text-center min-h-[1.25rem]" role="status" aria-live="polite"></p>
     <p class="relative text-xs text-slate-500 text-center">* indicates required fields. Your request will be sent to our expert team and we will get back to you shortly.</p>
   </form>
 </section>
@@ -309,21 +316,9 @@ html.light input::placeholder,html.light textarea::placeholder{color:#94a3b8!imp
 </a>
 <!-- WHATSAPP FLOATING BUTTON END -->
 
-<!-- EMAILJS QUOTE FORM -->
-<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<!-- QUOTE FORM: on-doldurma (GOREV 10.5). Gonderim assets/js/form-submit.js -->
 <script>
 (function(){
-  // TODO: fill these in once the HydroPascal EmailJS account is set up.
-  var EMAILJS_PUBLIC_KEY  = "3lP1tSFTFmK7z8gQr";
-  var EMAILJS_SERVICE_ID  = "service_0qw7ywo";
-  var EMAILJS_TEMPLATE_ID = "template_g0dr6wh";
-
-  if (window.emailjs) { emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY }); }
-
-  var form = document.getElementById('quote-form');
-  var btn = document.getElementById('quote-form-submit');
-  var status = document.getElementById('quote-form-status');
-
   // ---- Pre-fill from the product detail page AND from the calculator ----
   // TASK 10.5: the EN quote form had no pre-fill at all (the TR one read
   // ?urun / ?urun_adi). Values sent by the calculator (ic_cap / mil_capi /
@@ -378,49 +373,8 @@ html.light input::placeholder,html.light textarea::placeholder{color:#94a3b8!imp
 
     if (lines.length) { messageField.value = lines.join('\n'); }
   })();
-
-  if (form) {
-    form.addEventListener('submit', function(e){
-      e.preventDefault();
-
-      // Basic bot protection: if the honeypot field is filled, silently drop it.
-      if (form.botcheck && form.botcheck.value) { return; }
-
-      var interestSelect = form.querySelector('#q-interest');
-      var titleField = form.querySelector('#q-title');
-      if (interestSelect && titleField && interestSelect.selectedIndex > 0) {
-        titleField.value = 'Quote Request - ' + interestSelect.options[interestSelect.selectedIndex].text;
-      }
-
-      if (!EMAILJS_PUBLIC_KEY || EMAILJS_PUBLIC_KEY === 'YOUR_PUBLIC_KEY') {
-        status.textContent = 'This form is being configured, please try again later.';
-        status.className = 'relative text-sm text-center min-h-[1.25rem] text-[#fb923c]';
-        return;
-      }
-
-      btn.disabled = true;
-      var originalLabel = btn.textContent;
-      btn.textContent = 'Sending...';
-      status.textContent = '';
-
-      emailjs.sendForm(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, form).then(
-        function(){
-          status.textContent = 'Your quote request has been received. We will get back to you shortly.';
-          status.className = 'relative text-sm text-center min-h-[1.25rem] text-cyan-400';
-          form.reset();
-          btn.disabled = false;
-          btn.textContent = originalLabel;
-        },
-        function(){
-          status.textContent = 'Something went wrong while sending. Please try again or contact us directly.';
-          status.className = 'relative text-sm text-center min-h-[1.25rem] text-[#fb923c]';
-          btn.disabled = false;
-          btn.textContent = originalLabel;
-        }
-      );
-    });
-  }
 })();
 </script>
+<script defer src="../assets/js/form-submit.js"></script>
 </body>
 </html>
