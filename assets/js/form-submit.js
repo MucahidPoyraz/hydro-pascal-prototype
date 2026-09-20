@@ -1,7 +1,7 @@
 /*
   HydroPascal — Ortak form gönderim modülü
   =========================================
-  GÖREV 10.1 / 10.2 / 10.3 / 10.4
+  GÖREV 10.1 / 10.2 / 10.3 / 10.4  (+ 10.9 kısmî: açık rıza kapısı)
 
   NEDEN VAR:
   Denetimde üç formun da gerçekte hiçbir yere veri göndermediği tespit edildi:
@@ -9,44 +9,59 @@
                         yenileniyor, veri kayboluyor, geri bildirim yok.
     - hizmetler.html  → console.log yapıp 600ms sonra ekrana
                         "Talebiniz alındı" yazıyordu. SAHTE BAŞARI MESAJI.
-                        Fason üretim talebi gönderen müşteri haftalarca
-                        cevap bekliyordu. Denetimin en ciddi bulgusu.
-    - teklif-al.html  → EmailJS ile gönderiyordu ama EmailJS sendForm()
-                        DOSYA EKİ GÖNDERMEZ; seçilen dosyalar yalnızca
-                        console.log'lanıyordu. Müşteri teknik çizimini
-                        yüklediğini sanıyordu.
+    - teklif-al.html  → EmailJS sendForm() DOSYA EKİ GÖNDERMEZ; seçilen
+                        dosyalar yalnızca console.log'lanıyordu.
 
   Ayrıca dosya seçim/listeleme kodu hizmetler.html ve teklif-al.html içinde
   BİREBİR aynı şekilde iki kez yazılmıştı (bkz. .claude/rules/components.md
   kural 2: aynı işi yapan ikinci bir bileşen yaratma). Burada tek kopya var.
 
-  ⚠️ YAPILANDIRMA GEREKLİ — GÖREV 10.1
-  Aşağıdaki CONFIG.endpoint boş olduğu sürece modül HİÇBİR KOŞULDA başarı
-  mesajı göstermez. Bunun yerine dürüst bir uyarı + doğrudan iletişim
-  kanalları gösterir ve kullanıcının girdiğini SİLMEZ. Bu bilinçli bir
-  tercihtir: yanlış "gönderildi" mesajı vermektense hiç vermemek yeğdir.
+  SAĞLAYICI: FormSubmit.co  (K1 kararı — 2026-09-20)
+  ---------------------------------------------------
+  Backend yok. FormSubmit iki uç nokta sunar:
+    - https://formsubmit.co/ajax/<eposta>  → JSON döner, sayfa yenilenmez,
+      ANCAK dosya eklerini İLETMEZ.
+    - https://formsubmit.co/<eposta>       → klasik multipart POST, ekleri
+      taşır, ama sayfa yenilenir (_next adresine gider).
 
-  Endpoint seçildiğinde (Web3Forms / Formspree / kendi backend'iniz),
-  yalnızca CONFIG bloğunu doldurmanız yeterlidir; başka hiçbir dosyaya
-  dokunmanız gerekmez.
+  Bu yüzden modül şöyle davranır:
+    - Dosya seçilmemişse -> AJAX (tercih edilen yol)
+    - Dosya seçilmişse   -> klasik POST'a düşer, ek kaybolmaz
+  Canlı testte AJAX'ın ek taşıdığı doğrulanırsa CONFIG.ajaxSupportsFiles = true
+  yapmak yeterlidir.
+
+  İLK KULLANIM: FormSubmit bir adrese ilk gönderim yapılana kadar hiçbir posta
+  iletmez. İlk gönderimden sonra adrese bir aktivasyon maili gelir; oradaki
+  bağlantıya tıklanmadan form çalışmaz. Ayrıntı: prototip-formlar/README.md §3.
+
+  GÜVENLİK: Buradaki doğrulamaların tamamı UX içindir, GÜVENLİK DEĞİLDİR.
+  Zorunlu alan, dosya boyutu, uzantı, rıza kutusu ve honeypot — hepsi tarayıcıda
+  devre dışı bırakılabilir. Gerçek doğrulama sunucu tarafında yapılmalıdır ve
+  ASP.NET Core geçişinde eklenecektir.
 */
 (function () {
   'use strict';
 
   /* ==================================================================== */
-  /*  YAPILANDIRMA — GÖREV 10.1 (tek değiştirilecek yer)                  */
+  /*  YAPILANDIRMA — tek değiştirilecek yer                               */
   /* ==================================================================== */
   var CONFIG = {
-    // Formun POST edileceği adres. Örnekler:
-    //   Web3Forms : 'https://api.web3forms.com/submit'
-    //   Formspree : 'https://formspree.io/f/XXXXXXXX'
-    //   Kendi API : '/api/form'
-    endpoint: '',
+    // FormSubmit hedefi. E-postayı kaynak kodda açıkta bırakmamak için
+    // aktivasyon sonrası verilen hash'li uç noktaya geçilmesi ÖNERİLİR:
+    //   target: 'el/xxxxxxx'
+    target: 'info@hydropascal.com.tr',
 
-    // Yalnızca Web3Forms için gerekli (access key). Diğerlerinde boş bırakın.
-    accessKey: '',
+    ajaxBase: 'https://formsubmit.co/ajax/',
+    postBase: 'https://formsubmit.co/',
 
-    // Gönderim yapılandırılana kadar gösterilecek doğrudan iletişim kanalları
+    // Canlı testte AJAX'ın dosya eki taşıdığı doğrulanırsa true yapın.
+    ajaxSupportsFiles: false,
+
+    // Klasik POST (dosya ekli gönderim) sonrası yönlenilecek MUTLAK adres.
+    // Boş bırakılırsa FormSubmit kendi teşekkür sayfasını gösterir.
+    nextUrl: '',
+
+    // Doğrudan iletişim kanalları (hata durumunda gösterilir)
     email: 'info@hydropascal.com.tr',
     phoneHref: 'tel:+905553848229',
     phoneText: '(+90) 555-384-82-29',
@@ -65,11 +80,14 @@
       sending: 'Gönderiliyor...',
       success: 'Talebiniz alındı. En kısa sürede size dönüş yapılacaktır.',
       error: 'Gönderim sırasında bir sorun oluştu. Lütfen tekrar deneyin veya bize doğrudan ulaşın.',
+      network: 'Sunucuya ulaşılamadı. İnternet bağlantınızı kontrol edip tekrar deneyin.',
       notConfigured: 'Çevrimiçi form gönderimi henüz etkinleştirilmedi. Talebinizi kaybetmemek için lütfen doğrudan bize ulaşın:',
+      consent: 'Devam etmek için kişisel verilerin işlenmesine onay vermelisiniz.',
       whatsappLabel: 'WhatsApp',
       tooManyFiles: 'En fazla ' + CONFIG.maxFiles + ' dosya ekleyebilirsiniz.',
       tooLarge: "Toplam dosya boyutu 10 MB'ı aşıyor. Lütfen bazı dosyaları kaldırın.",
       removeFile: 'Dosyayı kaldır: ',
+      autoresponse: 'Talebiniz için teşekkür ederiz. HydroPascal ekibi en kısa sürede size dönüş yapacaktır.',
       subject: {
         quote: 'Teklif Talebi',
         sample: 'Numune / Çizim Talebi',
@@ -80,11 +98,14 @@
       sending: 'Sending...',
       success: 'Your request has been received. We will get back to you shortly.',
       error: 'Something went wrong while sending. Please try again or contact us directly.',
+      network: 'Could not reach the server. Please check your connection and try again.',
       notConfigured: 'Online form submission is not enabled yet. So that your request is not lost, please contact us directly:',
+      consent: 'You must consent to the processing of your personal data to continue.',
       whatsappLabel: 'WhatsApp',
       tooManyFiles: 'You can attach at most ' + CONFIG.maxFiles + ' files.',
       tooLarge: 'Total file size exceeds 10 MB. Please remove some files.',
       removeFile: 'Remove file: ',
+      autoresponse: 'Thank you for your request. The HydroPascal team will get back to you shortly.',
       subject: {
         quote: 'Quote Request',
         sample: 'Sample / Drawing Request',
@@ -114,6 +135,15 @@
     return String(str).replace(/[&<>"']/g, function (c) {
       return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
     });
+  }
+
+  function hiddenInput(form, name, value) {
+    if (form.querySelector('input[name="' + name + '"]')) { return; }
+    var el = document.createElement('input');
+    el.type = 'hidden';
+    el.name = name;
+    el.value = value;
+    form.appendChild(el);
   }
 
   /* ==================================================================== */
@@ -186,7 +216,9 @@
     });
 
     return {
+      input: input,
       files: function () { return selected; },
+      count: function () { return selected.length; },
       valid: function () {
         return selected.length <= CONFIG.maxFiles && totalSize() <= CONFIG.maxTotalBytes;
       },
@@ -219,62 +251,106 @@
     var status = form.querySelector('[data-hpl-status]');
     var btn = form.querySelector('button[type="submit"]');
     var files = createFileManager(form);
+    var consent = form.querySelector('[data-hpl-consent]');
 
     if (!status || !btn) { return; }
+
+    // --- FormSubmit yapılandırma alanları (HTML'e elle yazmak yerine burada) ---
+    var subject = T.subject[kind] + ' — HydroPascal (' + LANG.toUpperCase() + ')';
+    hiddenInput(form, '_subject', subject);
+    hiddenInput(form, '_template', 'table');
+    hiddenInput(form, '_captcha', 'false');
+    hiddenInput(form, '_autoresponse', T.autoresponse);
+    if (CONFIG.nextUrl) { hiddenInput(form, '_next', CONFIG.nextUrl); }
+
+    // --- Açık rıza kapısı: onay verilmeden buton aktif olmasın ---
+    if (consent) {
+      var syncConsent = function () { btn.disabled = !consent.checked; };
+      consent.addEventListener('change', syncConsent);
+      syncConsent();
+    }
 
     form.addEventListener('submit', function (e) {
       e.preventDefault();
 
       // Bot koruması: gizli alan doluysa sessizce yut.
-      // NOT: eski kod form.botcheck (adlandırılmış özellik erişimi) kullanıyordu.
-      // Tarayıcıda çalışır ama kırılgan bir kalıptır ve test ortamlarında
-      // (jsdom) undefined döner — yani koruma sessizce devre dışı kalabilir.
-      // Açık querySelector her yerde aynı davranır.
-      var honeypot = form.querySelector('[name="botcheck"]');
+      // FormSubmit'in kendi honeypot alanı "_honey"dir; eski "botcheck" adı da
+      // geriye dönük destekleniyor.
+      var honeypot = form.querySelector('[name="_honey"], [name="botcheck"]');
       if (honeypot && honeypot.value) { return; }
+
+      if (consent && !consent.checked) {
+        status.className = STATUS_WARN;
+        status.textContent = T.consent;
+        consent.focus();
+        return;
+      }
 
       // Dosya limiti aşıldıysa gönderme
       if (files && !files.valid()) {
         status.className = STATUS_WARN;
-        status.textContent = files.files().length > CONFIG.maxFiles ? T.tooManyFiles : T.tooLarge;
+        status.textContent = files.count() > CONFIG.maxFiles ? T.tooManyFiles : T.tooLarge;
         return;
       }
 
-      // GÖREV 10.1 yapılandırılmadıysa: ASLA başarı gösterme, veriyi de silme
-      if (!CONFIG.endpoint) {
+      if (!CONFIG.target) {
         renderNotConfigured(status);
         return;
       }
 
+      var originalLabel = btn.textContent;
+      var hasFile = files && files.count() > 0;
+
+      // --- Dosya ekli gönderim: AJAX ek taşımadığı için klasik POST'a düş ---
+      if (hasFile && !CONFIG.ajaxSupportsFiles) {
+        btn.disabled = true;
+        btn.textContent = T.sending;
+        form.setAttribute('action', CONFIG.postBase + CONFIG.target);
+        form.setAttribute('method', 'POST');
+        form.setAttribute('enctype', 'multipart/form-data');
+        HTMLFormElement.prototype.submit.call(form);
+        return; // sayfa yönlenecek
+      }
+
+      // --- Dosyasız: AJAX ---
       var data = new FormData(form);
       data.delete('botcheck');
-      data.set('_subject', T.subject[kind] + ' — HydroPascal (' + LANG.toUpperCase() + ')');
+      data.delete('_honey');
       data.set('_page', window.location.href);
-      if (CONFIG.accessKey) { data.set('access_key', CONFIG.accessKey); }
       if (files) {
         files.files().forEach(function (f, i) { data.append('attachment_' + (i + 1), f, f.name); });
       }
 
-      var originalLabel = btn.textContent;
       btn.disabled = true;
       btn.textContent = T.sending;
       status.className = STATUS_BASE + 'text-slate-400';
       status.textContent = T.sending;
 
-      fetch(CONFIG.endpoint, { method: 'POST', body: data })
+      fetch(CONFIG.ajaxBase + CONFIG.target, {
+        method: 'POST',
+        body: data,
+        headers: { 'Accept': 'application/json' }
+      })
         .then(function (res) {
-          if (!res.ok) { throw new Error('HTTP ' + res.status); }
+          return res.json().catch(function () { return { success: res.ok ? 'true' : 'false' }; });
+        })
+        .then(function (json) {
+          var ok = json && (json.success === true || json.success === 'true');
+          if (!ok) { throw new Error('FormSubmit hata döndürdü'); }
+
           status.className = STATUS_OK;
           status.textContent = T.success;
           form.reset();
           if (files) { files.clear(); }
+          // rıza sıfırlandığı için buton yeniden kilitlenir
+          btn.disabled = consent ? !consent.checked : false;
         })
-        .catch(function () {
+        .catch(function (err) {
           status.className = STATUS_WARN;
-          status.textContent = T.error;
+          status.textContent = (err && err.name === 'TypeError') ? T.network : T.error;
+          btn.disabled = false;
         })
         .then(function () {
-          btn.disabled = false;
           btn.textContent = originalLabel;
         });
     });

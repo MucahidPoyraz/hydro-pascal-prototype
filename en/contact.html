@@ -244,7 +244,7 @@ html.light input::placeholder,html.light textarea::placeholder{color:#94a3b8!imp
   </div>
 
   <form data-hpl-form="contact" class="relative bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-10 shadow-2xl space-y-6 h-fit">
-    <input type="text" name="botcheck" class="hidden" tabindex="-1" autocomplete="off" aria-hidden="true">
+    <input type="text" name="_honey" class="hidden" tabindex="-1" autocomplete="off" aria-hidden="true">
     <div class="pointer-events-none absolute -top-24 -right-24 w-72 h-72 bg-[#fb923c]/15 rounded-full blur-3xl"></div>
     <div class="relative">
       <label class="block text-sm font-semibold text-slate-200 mb-2" for="name">Name</label>
@@ -261,6 +261,10 @@ html.light input::placeholder,html.light textarea::placeholder{color:#94a3b8!imp
     <div class="relative">
       <label class="block text-sm font-semibold text-slate-200 mb-2" for="message">Message</label>
       <textarea id="message" name="message" rows="5" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-slate-400 focus:border-[#fb923c] focus:ring-2 focus:ring-[#fb923c]/30 focus:outline-none transition"></textarea>
+    </div>
+    <div class="relative flex items-start gap-3 bg-white/5 border border-white/10 rounded-lg p-4">
+      <input type="checkbox" id="consent-contact" name="Consent" value="Granted" required data-hpl-consent class="mt-1 shrink-0 h-4 w-4 accent-[#fb923c]" aria-required="true">
+      <label for="consent-contact" class="text-xs text-slate-400 leading-relaxed">I consent to the processing of my personal data for the purpose of evaluating my request and contacting me, via <strong class="text-slate-300">FormSubmit.co (US-based)</strong>, which is used as the form backend, and to its transmission to info@hydropascal.com.tr. I have read the <a href="privacy-policy.html" class="text-[#fb923c] hover:underline">Privacy Policy</a>.</label>
     </div>
     <button type="submit" class="relative w-full bg-[#fb923c] text-slate-950 font-semibold text-lg py-4 rounded-md shadow-2xl hover:brightness-110 hover:shadow-lg hover:shadow-[#fb923c]/30 transition">Send Message</button>
     <p data-hpl-status class="relative text-sm text-center min-h-[1.25rem]" role="status" aria-live="polite"></p>

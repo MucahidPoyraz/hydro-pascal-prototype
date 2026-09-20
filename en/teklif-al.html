@@ -198,7 +198,7 @@ html.light input::placeholder,html.light textarea::placeholder{color:#94a3b8!imp
 <section id="quote-form-2" class="max-w-5xl mx-auto px-6 lg:px-8 py-24">
   <form data-hpl-form="quote" id="quote-form" class="relative bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-10 shadow-2xl space-y-6">
     <div class="pointer-events-none absolute -top-24 -right-24 w-72 h-72 bg-[#fb923c]/15 rounded-full blur-3xl"></div>
-    <input type="text" name="botcheck" class="hidden" tabindex="-1" autocomplete="off" aria-hidden="true">
+    <input type="text" name="_honey" class="hidden" tabindex="-1" autocomplete="off" aria-hidden="true">
     <input type="hidden" name="title" id="q-title" value="Quote Request">
     <div class="relative grid sm:grid-cols-2 gap-6">
       <div>
@@ -243,6 +243,10 @@ html.light input::placeholder,html.light textarea::placeholder{color:#94a3b8!imp
       <input type="file" id="q-files" data-hpl-file-input multiple accept=".pdf,.dwg,.step,.stp,.jpg,.jpeg,.png" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:bg-[#fb923c] file:text-slate-950 file:font-semibold file:cursor-pointer hover:file:brightness-110 focus:border-[#fb923c] focus:ring-2 focus:ring-[#fb923c]/30 focus:outline-none transition cursor-pointer">
       <ul id="q-files-list" data-hpl-file-list class="mt-3 space-y-2"></ul>
       <p id="q-files-warning" data-hpl-file-warning class="mt-2 text-sm font-semibold text-[#fb923c] hidden"></p>
+    </div>
+    <div class="relative flex items-start gap-3 bg-white/5 border border-white/10 rounded-lg p-4">
+      <input type="checkbox" id="consent-quote" name="Consent" value="Granted" required data-hpl-consent class="mt-1 shrink-0 h-4 w-4 accent-[#fb923c]" aria-required="true">
+      <label for="consent-quote" class="text-xs text-slate-400 leading-relaxed">I consent to the processing of my personal data for the purpose of evaluating my request and contacting me, via <strong class="text-slate-300">FormSubmit.co (US-based)</strong>, which is used as the form backend, and to its transmission to info@hydropascal.com.tr. I have read the <a href="privacy-policy.html" class="text-[#fb923c] hover:underline">Privacy Policy</a>.</label>
     </div>
     <button type="submit" id="quote-form-submit" class="relative w-full bg-[#fb923c] text-slate-950 font-semibold text-lg py-4 rounded-md shadow-2xl hover:brightness-110 hover:shadow-lg hover:shadow-[#fb923c]/30 transition disabled:opacity-60 disabled:cursor-not-allowed">Submit Quote Request</button>
     <p id="quote-form-status" data-hpl-status class="relative text-sm text-center min-h-[1.25rem]" role="status" aria-live="polite"></p>
