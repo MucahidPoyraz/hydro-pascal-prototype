@@ -68,6 +68,7 @@ function setTheme(mode){try{var isLight=mode==='light';document.documentElement.
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <!-- Hedef tasarım dili (blueprint/paper) fontları — nav+footer pilotunda kullanılıyor, gövdede henüz uygulanmıyor (bkz. assets/css/theme.css) -->
 <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="preload" as="image" href="../assets/images/hero-hydraulic-cylinder.webp" fetchpriority="high">
 <link rel="stylesheet" href="../assets/css/theme.css">
 <script src="https://cdn.tailwindcss.com"></script>
 <script>tailwind.config = { theme: { extend: { fontFamily: { sans: ['Inter','ui-sans-serif','system-ui','sans-serif'] } } } }</script>
@@ -108,7 +109,7 @@ html.light .hover\:text-\[\#fb923c\]:hover{color:#c2610a!important}
 html.light .hover\:border-\[\#fb923c\]\/40:hover{border-color:#fb923c!important}
 html.light .shadow-2xl{box-shadow:0 25px 50px -12px rgba(15,23,42,.12)!important}
 html.light .shadow-black\/20{box-shadow:0 10px 25px -5px rgba(15,23,42,.08)!important}
-html.light #features-7{background-image:linear-gradient(rgba(255,255,255,.92),rgba(255,255,255,.92)),url('../assets/images/fabrika.jpg')!important}
+html.light #features-7{background-image:linear-gradient(rgba(255,255,255,.92),rgba(255,255,255,.92)),url('../assets/images/fabrika.webp')!important}
 </style>
 </head>
 <body class="bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 text-slate-300 antialiased">
@@ -231,10 +232,10 @@ html.light #features-7{background-image:linear-gradient(rgba(255,255,255,.92),rg
 <section id="hero-1" class="relative overflow-hidden flex items-center bg-slate-950 cursor-default" x-data="{
     currentSlide: 0,
     slides: [
-      { src: '../assets/images/hero-hydraulic-cylinder.jpg', alt: 'Yüksek mukavemetli hidrolik silindir yakın çekim' },
-      { src: '../assets/images/hero-tractor-field.jpg', alt: 'Tarım makinesi / traktör sahada çalışırken' },
-      { src: '../assets/images/hero-cnc-workshop.jpg', alt: 'CNC torna atölyesinde hassas işleme' },
-      { src: '../assets/images/hero-factory-production-line.jpg', alt: 'Fabrika üretim hattı' }
+      { src: '../assets/images/hero-hydraulic-cylinder.webp', alt: 'Yüksek mukavemetli hidrolik silindir yakın çekim' },
+      { src: '../assets/images/hero-tractor-field.webp', alt: 'Tarım makinesi / traktör sahada çalışırken' },
+      { src: '../assets/images/hero-cnc-workshop.webp', alt: 'CNC torna atölyesinde hassas işleme' },
+      { src: '../assets/images/hero-factory-production-line.webp', alt: 'Fabrika üretim hattı' }
     ],
     next() { this.currentSlide = (this.currentSlide + 1) % this.slides.length },
     prev() { this.currentSlide = (this.currentSlide - 1 + this.slides.length) % this.slides.length },
@@ -252,7 +253,10 @@ html.light #features-7{background-image:linear-gradient(rgba(255,255,255,.92),rg
   }" x-init="setInterval(() => next(), 5000)" @mousedown="dragStart($event.clientX)" @mousemove.window="dragMove($event.clientX)" @mouseup.window="dragEnd()" @touchstart="dragStart($event.touches[0].clientX)" @touchmove="dragMove($event.touches[0].clientX)" @touchend="dragEnd()" :class="dragging ? 'cursor-grabbing' : 'cursor-default'" style="height: calc(100vh - 5rem); height: calc(100dvh - 5rem); touch-action: pan-y;">
   <div class="absolute inset-0 w-full h-full bg-slate-950 select-none">
     <template x-for="(img, i) in slides" :key="i">
-      <img :src="img.src" :alt="img.alt" draggable="false" x-show="currentSlide === i" class="absolute inset-0 w-full h-full object-cover object-center opacity-50 transition-opacity duration-500 pointer-events-none">
+      <!-- GOREV 10.11: 4 slaytin 4u de eager yukleniyordu (~2.6 MB). Artik yalnizca
+           ilk slayt oncelikli; digerleri lazy — x-show zaten display:none verdigi
+           icin tarayici onlari gecikmeli indirir. -->
+      <img :src="img.src" :alt="img.alt" draggable="false" x-show="currentSlide === i" :loading="i === 0 ? 'eager' : 'lazy'" :fetchpriority="i === 0 ? 'high' : 'auto'" width="1600" height="900" class="absolute inset-0 w-full h-full object-cover object-center opacity-50 transition-opacity duration-500 pointer-events-none">
     </template>
   </div>
   <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/70 to-slate-950/40"></div>
@@ -329,7 +333,7 @@ html.light #features-7{background-image:linear-gradient(rgba(255,255,255,.92),rg
 
 <!-- FASON ÜRETİM BAND (GÖREV 6.0 Bölüm 4.4: mesaj netleştirildi — "Siz Hayal Edin, Biz Üretelim") -->
 <section class="relative overflow-hidden py-20 bg-gradient-to-br from-[#fb923c]/10 via-slate-950 to-[#fb923c]/5 border-b border-white/10 text-center">
-  <img src="../assets/images/cnc-machining-closeup.jpg" alt="CNC hassas işleme / talaşlı imalat" loading="lazy" class="pointer-events-none absolute inset-0 w-full h-full object-cover opacity-10">
+  <img src="../assets/images/cnc-machining-closeup.webp" alt="CNC hassas işleme / talaşlı imalat" loading="lazy" class="pointer-events-none absolute inset-0 w-full h-full object-cover opacity-10">
   <div class="pointer-events-none absolute inset-0 bg-slate-950/90"></div>
   <div class="relative max-w-4xl mx-auto px-6 lg:px-8">
     <span class="inline-block mb-4 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-4 py-1.5">Fason Üretim</span>
@@ -340,7 +344,7 @@ html.light #features-7{background-image:linear-gradient(rgba(255,255,255,.92),rg
 </section>
 
 <!-- FEATURES / WHAT WE OFFER -->
-<section id="features-7" class="relative py-28 overflow-hidden" style="background-image:linear-gradient(rgba(2,6,23,.92),rgba(2,6,23,.92)),url('../assets/images/fabrika.jpg');background-size:cover;background-position:center;">
+<section id="features-7" class="relative py-28 overflow-hidden" style="background-image:linear-gradient(rgba(2,6,23,.92),rgba(2,6,23,.92)),url('../assets/images/fabrika.webp');background-size:cover;background-position:center;">
   <div class="pointer-events-none absolute top-0 left-1/4 w-[500px] h-[500px] bg-[#fb923c]/10 rounded-full blur-3xl"></div>
   <div class="relative max-w-7xl mx-auto px-6 lg:px-8">
     <h2 class="text-4xl md:text-5xl font-extrabold text-center mb-16 text-[#fb923c]" data-section="features-7" data-field="title">HPL HydroPascal Olarak Size Sunduklarımız</h2>
@@ -359,7 +363,7 @@ html.light #features-7{background-image:linear-gradient(rgba(255,255,255,.92),rg
       </div>
       <div id="content-10" class="bg-white/5 backdrop-blur-xl rounded-lg p-8 border border-white/10 shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300">
         <div class="h-14 w-14 flex items-center justify-center rounded-md bg-[#fb923c] mb-5"><svg class="h-7 w-7 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/><path stroke-linecap="round" stroke-linejoin="round" d="m9 12 2 2 4-4"/></svg></div>
-        <img src="../assets/images/Gemini_Generated_Image_egq5b7egq5b7egq5-scaled.png" alt="Uzun Vadeli Ortaklık" width="64" height="64" loading="lazy" class="hidden object-contain" data-section="content-10" data-field="image">
+        <img src="../assets/images/ikon-uzun-vadeli-ortaklik.webp" alt="Uzun Vadeli Ortaklık" width="64" height="64" loading="lazy" class="hidden object-contain" data-section="content-10" data-field="image">
         <h3 class="font-bold text-xl mb-2 text-white" data-section="content-10" data-field="title">Uzun Vadeli Ortaklık</h3>
         <p class="text-slate-300 text-sm leading-relaxed" data-section="content-10" data-field="content">HPL Hydropascal olarak yalnızca ürün sunmuyor, kalıcı ilişkiler kuruyoruz. Her projeyi uzun vadeli başarınıza yönelik bir taahhüt olarak görüyor, işletmeniz geliştikçe sürekli teknik destek ve uyarlanabilir çözümler sağlıyoruz. Bizi tercih ederek, sürdürülebilir büyüme, güvenilirlik ve karşılıklı güvene odaklanan özverili bir mühendislik ortağı kazanırsınız.</p>
       </div>
@@ -379,17 +383,17 @@ html.light #features-7{background-image:linear-gradient(rgba(255,255,255,.92),rg
 <section class="max-w-7xl mx-auto px-6 lg:px-8 py-24 grid sm:grid-cols-3 gap-8 text-center">
   <div id="content-12" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg p-8 shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300">
     <div class="h-16 w-16 mx-auto mb-4 flex items-center justify-center rounded-md bg-[#fb923c]"><svg class="h-8 w-8 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path stroke-linecap="round" d="M9 1v3M15 1v3M9 20v3M15 20v3M1 9h3M1 15h3M20 9h3M20 15h3"/></svg></div>
-    <img src="../assets/images/Cream-Black-Elegant-Typography-Monogram-Initials-SR-Fashion-Store-Logo-25.png" alt="İleri Teknoloji Mühendisliği" width="200" height="200" loading="lazy" class="hidden object-contain" data-section="content-12" data-field="image">
+    <img src="../assets/images/ikon-ileri-teknoloji-muhendisligi.webp" alt="İleri Teknoloji Mühendisliği" width="200" height="200" loading="lazy" class="hidden object-contain" data-section="content-12" data-field="image">
     <h3 class="font-bold text-white" data-section="content-12" data-field="title">İleri Teknoloji Mühendisliği</h3>
   </div>
   <div id="content-13" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg p-8 shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300">
     <div class="h-16 w-16 mx-auto mb-4 flex items-center justify-center rounded-md bg-[#fb923c]"><svg class="h-8 w-8 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="m12 2 2.9 6.26 6.9.6-5.2 4.6 1.6 6.79L12 16.9l-6.2 3.35 1.6-6.79-5.2-4.6 6.9-.6L12 2Z"/></svg></div>
-    <img src="../assets/images/Cream-Black-Elegant-Typography-Monogram-Initials-SR-Fashion-Store-Logo-24.png" alt="Yüksek Kalite" width="200" height="200" loading="lazy" class="hidden object-contain" data-section="content-13" data-field="image">
+    <img src="../assets/images/ikon-yuksek-kalite.webp" alt="Yüksek Kalite" width="200" height="200" loading="lazy" class="hidden object-contain" data-section="content-13" data-field="image">
     <h3 class="font-bold text-white" data-section="content-13" data-field="title">Yüksek Kalite</h3>
   </div>
   <div id="content-14" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg p-8 shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300">
     <div class="h-16 w-16 mx-auto mb-4 flex items-center justify-center rounded-md bg-[#fb923c]"><svg class="h-8 w-8 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M13 2 3 14h9l-1 8 10-12h-9l1-8Z"/></svg></div>
-    <img src="../assets/images/Cream-Black-Elegant-Typography-Monogram-Initials-SR-Fashion-Store-Logo-28.png" alt="Hızlı Teslimat Süresi" width="200" height="200" loading="lazy" class="hidden object-contain" data-section="content-14" data-field="image">
+    <img src="../assets/images/ikon-hizli-teslimat.webp" alt="Hızlı Teslimat Süresi" width="200" height="200" loading="lazy" class="hidden object-contain" data-section="content-14" data-field="image">
     <h3 class="font-bold text-white" data-section="content-14" data-field="title">Hızlı Teslimat Süresi</h3>
   </div>
 </section>
@@ -398,7 +402,7 @@ html.light #features-7{background-image:linear-gradient(rgba(255,255,255,.92),rg
 <section id="content-15" class="relative py-24 overflow-hidden">
   <div class="pointer-events-none absolute bottom-0 right-0 w-[500px] h-[500px] bg-[#fb923c]/10 rounded-full blur-3xl"></div>
   <div class="relative max-w-7xl mx-auto px-6 lg:px-8 grid md:grid-cols-2 gap-12 items-center">
-    <img src="../assets/images/Sari-Surrealizm-Sanat-Akimi-Instragram-Gonderisi-31-1024x1024.png" alt="Güç İçin İnşa Edildi - HPL hidrolik silindir" width="1024" height="1024" loading="lazy" class="rounded-lg shadow-2xl w-full object-cover border border-white/10" data-section="content-15" data-field="image">
+    <img src="../assets/images/hpl-guc-icin-insa-edildi.webp" alt="Güç İçin İnşa Edildi - HPL hidrolik silindir" width="1024" height="1024" loading="lazy" class="rounded-lg shadow-2xl w-full object-cover border border-white/10" data-section="content-15" data-field="image">
     <div>
       <span class="inline-block mb-4 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-4 py-1.5">Kalite Standardımız</span>
       <h2 class="text-4xl font-extrabold text-white" data-section="content-15" data-field="title">HPL: Güç İçin İnşa Edildi, Kalite İçin Üretildi</h2>
@@ -416,13 +420,13 @@ html.light #features-7{background-image:linear-gradient(rgba(255,255,255,.92),rg
   </div>
   <div class="grid md:grid-cols-2 gap-10">
   <div id="content-16" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg p-6 shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col">
-    <img src="../assets/images/forgings-4-1024x683.jpg" alt="PascalForge dövme üretim hattı" width="1024" height="683" loading="lazy" class="rounded-md w-full h-64 object-cover mb-6" data-section="content-16" data-field="image">
+    <img src="../assets/images/forgings-4-1024x683.webp" alt="PascalForge dövme üretim hattı" width="1024" height="683" loading="lazy" class="rounded-md w-full h-64 object-cover mb-6" data-section="content-16" data-field="image">
     <h3 class="text-2xl font-bold text-white mb-3" data-section="content-16" data-field="title">PascalForge</h3>
     <p class="text-slate-300 leading-relaxed" data-section="content-16" data-field="content">PascalForge, dünyanın en zorlu sektörleri için eşsiz yüksek kapasiteli dövme çözümleri sunarak endüstriyel üretimin ön saflarında yer alır. Tesisimiz, ham metali üstün termal ve mekanik süreçlerle yüksek mukavemetli bileşenlere dönüştürerek yoğun iş yüklerini karşılayacak donanıma sahiptir.</p>
     <a href="pascalforge.html" class="mt-5 inline-block text-[#fb923c] font-semibold hover:brightness-110 transition">PascalForge'u Keşfet →</a>
   </div>
   <div id="content-17" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg p-6 shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col">
-    <img src="../assets/images/molten-metal-pouring-from-a-hot-ladle-in-a-steel-foundry-industrial-casting-process-photo.jpeg" alt="PascalCast döküm süreci" width="1024" height="683" loading="lazy" class="rounded-md w-full h-64 object-cover mb-6" data-section="content-17" data-field="image">
+    <img src="../assets/images/pascalcast-ergitme-potasi.webp" alt="PascalCast döküm süreci" width="1024" height="683" loading="lazy" class="rounded-md w-full h-64 object-cover mb-6" data-section="content-17" data-field="image">
     <h3 class="text-2xl font-bold text-white mb-3" data-section="content-17" data-field="title">PascalCast</h3>
     <p class="text-slate-300 leading-relaxed" data-section="content-17" data-field="content">PascalCast, dünyanın en zorlu sektörleri için yüksek kapasiteli üretim çözümleri sunarak endüstriyel dökümün ön saflarında yer alır. Tesisimiz, ham metali gelişmiş termal ve metalurjik süreçlerle yüksek mukavemetli döküm bileşenlere dönüştürerek büyük ölçekli iş yüklerini yönetecek donanıma sahiptir.</p>
     <a href="pascalcast.html" class="mt-5 inline-block text-[#fb923c] font-semibold hover:brightness-110 transition">PascalCast'i Keşfet →</a>
@@ -466,9 +470,9 @@ html.light #features-7{background-image:linear-gradient(rgba(255,255,255,.92),rg
     <h2 class="text-4xl md:text-5xl font-extrabold text-[#fb923c]">Üretim Sahamızdan Kareler</h2>
   </div>
   <div class="grid sm:grid-cols-3 gap-6">
-    <img src="../assets/images/fabrika.jpg" alt="HydroPascal fabrikası" width="600" height="400" loading="lazy" class="rounded-lg w-full h-56 object-cover border border-white/10 shadow-xl hover:-translate-y-1 hover:border-[#fb923c]/40 transition-all duration-300">
-    <img src="../assets/images/forgings-4-1024x683.jpg" alt="PascalForge üretimi" width="600" height="400" loading="lazy" class="rounded-lg w-full h-56 object-cover border border-white/10 shadow-xl hover:-translate-y-1 hover:border-[#fb923c]/40 transition-all duration-300">
-    <img src="../assets/images/molten-metal-pouring-from-a-hot-ladle-in-a-steel-foundry-industrial-casting-process-photo.jpeg" alt="PascalCast üretimi" width="600" height="400" loading="lazy" class="rounded-lg w-full h-56 object-cover border border-white/10 shadow-xl hover:-translate-y-1 hover:border-[#fb923c]/40 transition-all duration-300">
+    <img src="../assets/images/fabrika.webp" alt="HydroPascal fabrikası" width="600" height="400" loading="lazy" class="rounded-lg w-full h-56 object-cover border border-white/10 shadow-xl hover:-translate-y-1 hover:border-[#fb923c]/40 transition-all duration-300">
+    <img src="../assets/images/forgings-4-1024x683.webp" alt="PascalForge üretimi" width="600" height="400" loading="lazy" class="rounded-lg w-full h-56 object-cover border border-white/10 shadow-xl hover:-translate-y-1 hover:border-[#fb923c]/40 transition-all duration-300">
+    <img src="../assets/images/pascalcast-ergitme-potasi.webp" alt="PascalCast üretimi" width="600" height="400" loading="lazy" class="rounded-lg w-full h-56 object-cover border border-white/10 shadow-xl hover:-translate-y-1 hover:border-[#fb923c]/40 transition-all duration-300">
   </div>
   <div class="text-center mt-10">
     <a href="media.html" class="inline-block rounded-md bg-[#fb923c] text-slate-950 px-8 py-3.5 font-semibold hover:brightness-110 hover:shadow-lg hover:shadow-[#fb923c]/30 transition">Tüm Galeriyi Keşfet</a>
