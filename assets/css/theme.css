@@ -839,3 +839,24 @@ header nav > a.nav-active::after,
 header nav > div:not(.ml-3) > button.nav-active::after {
   transform: scaleX(1);
 }
+
+/* ---------------------------------------------------------------------- */
+/* LOGO — tema duyarlı varyant değişimi                                    */
+/* ---------------------------------------------------------------------- */
+/*
+  Yeni HPL marka logosu (HPL_LOGO kitinden) SVG olarak kullanılıyor.
+  Logonun "HYDROPASCAL" kelime markası tek renk olduğu için tek bir dosya
+  hem kağıt hem antrasit zeminde çalışmaz:
+    - hpl-logo-yatay.svg       → kelime markası #262626  (açık/kağıt tema)
+    - hpl-logo-yatay-dark.svg  → kelime markası #eae6dc  (koyu/antrasit tema)
+  Turuncu HPL amblemi (#f76c06) her iki varyantta da aynı kalır.
+
+  Değişim CSS ile yapılıyor (JS yok): tema sınıfı <head>'de senkron
+  eklendiği için FOUC oluşmaz. Her iki <img> de alt metni taşır; gizli
+  olan display:none olduğundan ekran okuyucuya iki kez okunmaz.
+*/
+.hpl-logo-light { display: block; }
+.hpl-logo-dark  { display: none; }
+
+html:not(.light) .hpl-logo-light { display: none; }
+html:not(.light) .hpl-logo-dark  { display: block; }
