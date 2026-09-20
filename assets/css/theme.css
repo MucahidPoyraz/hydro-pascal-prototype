@@ -29,6 +29,36 @@
 */
 
 /* ---------------------------------------------------------------------- */
+/* Alpine.js — x-cloak                                                     */
+/* ---------------------------------------------------------------------- */
+/*
+  GÖREV 10.7 — Sitede 271 yerde x-cloak kullanılıyor ama bu kural hiçbir
+  yerde tanımlı değildi. Alpine <script defer> ile yüklendiği için, Alpine
+  devreye girene kadar x-show="false" olan her öğe (dropdown menüler, mobil
+  menü paneli, ürün detay sekmeleri, "Sonuç bulunamadı" mesajı) bir an
+  görünüp kayboluyordu — her sayfa açılışında görülen flaş buydu.
+
+  Tailwind bu kuralı sağlamaz; Alpine de enjekte etmez, dokümantasyonu
+  projenin kendisinin tanımlamasını söyler. Dosyanın en üstünde durması
+  gerekir ki hiçbir utility sınıfı onu geçmesin.
+*/
+[x-cloak] { display: none !important; }
+
+/* ---------------------------------------------------------------------- */
+/* Sabit header için kaydırma payı                                         */
+/* ---------------------------------------------------------------------- */
+/*
+  GÖREV 10.16 — Header `fixed` ve h-20 (5rem). scroll-padding-top hiçbir
+  yerde tanımlı olmadığı için:
+    - "hizmetler.html#sample-form" gibi çapa linkleri hedefi header'ın
+      ALTINA kaydırıyordu (başlık görünmüyordu),
+    - hesaplayıcının scrollIntoView({block:'start'}) çağrısı da aynı
+      şekilde sonuç başlığını header'ın arkasına sokuyordu.
+  Tek bir kural her iki durumu da çözer (JS'e dokunmaya gerek yok).
+*/
+html { scroll-padding-top: 5rem; }
+
+/* ---------------------------------------------------------------------- */
 /* Fonts                                                                   */
 /* ---------------------------------------------------------------------- */
 /* Google Fonts <link> etiketleri her sayfanın <head>'ine eklenmelidir:
