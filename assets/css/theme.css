@@ -378,6 +378,32 @@ html.light main .bg-white\/10:not(:where(#hero-1) *) {
   background: var(--surface-2) !important;
 }
 
+/*
+  HATA DÜZELTMESİ — "Custom Manufacturing / You Imagine It, We'll Build It"
+  bandı açık temada İngilizce sayfada okunmuyordu.
+
+  Sebep: theme.css, bg-slate-950* eşlemesini yalnızca header ve footer için
+  yapıyordu, <main> için yapmıyordu. TR sayfaları bu eksiği kendi sayfa içi
+  <style> bloğunda yamalıyordu; EN sayfalarında o yama YOK (TR 35 satır /
+  28 !important, EN 9 satır / 2 !important). Buna karşılık theme.css her iki
+  dilde de "main .text-white → var(--ink)" uyguluyordu.
+  Sonuç: EN açık temada KOYU metin + KOYU overlay = okunmaz.
+
+  Çözüm sayfa içi <style>'a değil buraya yazıldı; böylece TR ve EN tek
+  kuraldan beslenir ve aradaki sapma kapanır (GÖREV 12.2'nin yönü).
+  Token tabanlı olduğu için koyu temada --paper antrasit kalır, açık temada
+  kağıt beyazına döner — iki modda da metinle kontrast korunur.
+
+  #hero-1 HARİÇ: hero, fotoğraf üzerine bindirilmiş sabit koyu overlay ile
+  çalışıyor ve bilinçli olarak her iki modda da koyu kalıyor.
+*/
+main .bg-slate-950\/90:not(#hero-1):not(:where(#hero-1) *),
+main .bg-slate-950\/70:not(#hero-1):not(:where(#hero-1) *),
+html.light main .bg-slate-950\/90:not(#hero-1):not(:where(#hero-1) *),
+html.light main .bg-slate-950\/70:not(#hero-1):not(:where(#hero-1) *) {
+  background-color: color-mix(in srgb, var(--paper) 92%, transparent) !important;
+}
+
 /* Kenarlıklar → tek hairline token */
 main .border-white\/10,
 html.light main .border-white\/10 {
@@ -404,6 +430,19 @@ html.light main .text-slate-300 {
 }
 main .text-white,
 html.light main .text-white {
+  color: var(--ink) !important;
+}
+/*
+  HATA DÜZELTMESİ — text-slate-200 hiçbir yerde token'a bağlı değildi.
+  TR sayfaları bunu kendi <style> bloğunda yamalıyordu
+  (html.light .text-slate-200{color:#1e293b}), EN sayfalarında yama YOK.
+  Bu sınıf EN'de 7 sayfada, çoğunlukla FORM ETİKETLERİNDE kullanılıyor
+  ("block text-sm font-semibold text-slate-200 mb-2") — yani açık temada
+  İngilizce formların alan etiketleri neredeyse beyaz kalıyordu.
+  Kural buraya yazıldı; TR ve EN artık tek kaynaktan besleniyor.
+*/
+main .text-slate-200,
+html.light main .text-slate-200 {
   color: var(--ink) !important;
 }
 main .hover\:text-white:hover,
