@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Hızlı İletişim — Prototip | HydroPascal</title>
+<link rel="stylesheet" href="assets/forms.css">
+</head>
+<body style="margin:0;background:#eef1f6">
+<!-- PROTOTİP: Bu form ileride React/Next.js veya ASP.NET backend'e taşınacaktır. FormSubmit geçici çözümdür. -->
+<div class="fs-wrap fs-wrap--narrow">
+  <header class="fs-head">
+    <h1>Hızlı İletişim</h1>
+    <p>Kısa sorularınız için — 1 dakikada gönderin.</p>
+  </header>
+  <form data-fs-form="hizli-iletisim" class="fs-form fs-compact" action="https://formsubmit.co/info@sitename.com.tr" method="POST" novalidate>
+
+    <input type="hidden" name="_subject" value="Hızlı İletişim - Yeni Mesaj">
+    <input type="hidden" name="_template" value="table">
+    <input type="hidden" name="_captcha" value="false">
+    <input type="hidden" name="_next" value="https://sitename.com.tr/tesekkurler.html">
+    <input type="hidden" name="_cc" value="info@sitename.com.tr">
+    <input type="hidden" name="_autoresponse" value="Mesajınız için teşekkür ederiz. En kısa sürede size dönüş yapacağız.">
+
+    <input type="text" name="_honey" class="fs-honey fs-honey-input" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+    <div class="fs-field">
+      <label class="fs-label" for="f-email">E-posta<span class="fs-req" aria-hidden="true">*</span></label>
+      <input class="fs-input" type="email" id="f-email" name="email" required aria-required="true" aria-describedby="f-email-err" autocomplete="email" inputmode="email" placeholder="ornek@firma.com">
+      <p class="fs-error" id="f-email-err" role="alert"></p>
+    </div>
+
+    <div class="fs-field">
+      <label class="fs-label" for="f-message">Kısa Mesaj<span class="fs-req" aria-hidden="true">*</span></label>
+      <textarea class="fs-textarea" id="f-message" name="Mesaj" required aria-required="true" minlength="10" aria-describedby="f-message-err" placeholder="Nasıl yardımcı olabiliriz?"></textarea>
+      <p class="fs-error" id="f-message-err" role="alert"></p>
+    </div>
+
+    <div class="fs-consent">
+      <input type="checkbox" id="f-kvkk" name="KVKK Onayı" value="Onaylandı" required aria-required="true">
+      <label for="f-kvkk">Kişisel verilerimin, talebimin değerlendirilmesi ve tarafımla iletişime geçilmesi amacıyla; form altyapısı için kullanılan FormSubmit.co (ABD merkezli) üzerinden işlenmesine ve info@sitename.com.tr adresine iletilmesine onay veriyorum. <a href="/kvkk.html">KVKK Aydınlatma Metni</a>'ni okudum.</label>
+    </div>
+
+    <button type="submit" class="fs-btn fs-btn--block" data-fs-submit>Gönder</button>
+
+    <div class="fs-alert fs-alert--success" role="status" aria-live="polite">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span data-fs-alert-text></span>
+    </div>
+    <div class="fs-alert fs-alert--error" role="alert" aria-live="assertive">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v6M12 16.5v.5" stroke-linecap="round"/></svg>
+      <span data-fs-alert-text></span>
+    </div>
+  </form>
+</div>
+<script src="assets/forms.js"></script>
+</body>
+</html>

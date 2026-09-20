@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Numune / Broşür Talebi — Prototip | HydroPascal</title>
+<link rel="stylesheet" href="assets/forms.css">
+</head>
+<body style="margin:0;background:#eef1f6">
+<!-- PROTOTİP: Bu form ileride React/Next.js veya ASP.NET backend'e taşınacaktır. FormSubmit geçici çözümdür. -->
+<div class="fs-wrap">
+  <header class="fs-head">
+    <h1>Numune / Broşür Talebi</h1>
+    <p>Ürün kataloğumuzu ve/veya fiziksel numune talebinizi iletin.</p>
+  </header>
+  <form data-fs-form="numune" class="fs-form" action="https://formsubmit.co/info@sitename.com.tr" method="POST" novalidate>
+
+    <input type="hidden" name="_subject" value="Numune-Broşür Talebi - Yeni Talep">
+    <input type="hidden" name="_template" value="table">
+    <input type="hidden" name="_captcha" value="false">
+    <input type="hidden" name="_next" value="https://sitename.com.tr/tesekkurler.html">
+    <input type="hidden" name="_cc" value="info@sitename.com.tr">
+    <input type="hidden" name="_autoresponse" value="Talebiniz için teşekkür ederiz. En kısa sürede size dönüş yapacağız.">
+
+    <input type="text" name="_honey" class="fs-honey fs-honey-input" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+    <div class="fs-grid">
+      <div class="fs-field">
+        <label class="fs-label" for="s-name">Ad Soyad<span class="fs-req" aria-hidden="true">*</span></label>
+        <input class="fs-input" type="text" id="s-name" name="Ad Soyad" required aria-required="true" aria-describedby="s-name-err" autocomplete="name">
+        <p class="fs-error" id="s-name-err" role="alert"></p>
+      </div>
+
+      <div class="fs-field">
+        <label class="fs-label" for="s-company">Firma<span class="fs-req" aria-hidden="true">*</span></label>
+        <input class="fs-input" type="text" id="s-company" name="Firma" required aria-required="true" aria-describedby="s-company-err" autocomplete="organization">
+        <p class="fs-error" id="s-company-err" role="alert"></p>
+      </div>
+
+      <div class="fs-field">
+        <label class="fs-label" for="s-email">E-posta<span class="fs-req" aria-hidden="true">*</span></label>
+        <input class="fs-input" type="email" id="s-email" name="email" required aria-required="true" aria-describedby="s-email-err" autocomplete="email" inputmode="email">
+        <p class="fs-error" id="s-email-err" role="alert"></p>
+      </div>
+
+      <div class="fs-field">
+        <label class="fs-label" for="s-phone">Telefon<span class="fs-req" aria-hidden="true">*</span></label>
+        <input class="fs-input" type="tel" id="s-phone" name="Telefon" required aria-required="true" aria-describedby="s-phone-err" pattern="[0-9+\s()\-]{10,20}" autocomplete="tel" inputmode="tel" placeholder="+90 555 000 00 00">
+        <p class="fs-error" id="s-phone-err" role="alert"></p>
+      </div>
+
+      <div class="fs-field fs-span-2">
+        <label class="fs-label" for="s-address">Teslimat Adresi<span class="fs-req" aria-hidden="true">*</span></label>
+        <textarea class="fs-textarea" id="s-address" name="Teslimat Adresi" required aria-required="true" minlength="10" aria-describedby="s-address-err" placeholder="Kargo gönderimi için açık adres, ilçe/il ve posta kodu." autocomplete="street-address"></textarea>
+        <p class="fs-error" id="s-address-err" role="alert"></p>
+      </div>
+    </div>
+
+    <fieldset class="fs-field" style="border:0;padding:0;margin:18px 0 0">
+      <legend class="fs-label" style="padding:0">Talep Türü<span class="fs-req" aria-hidden="true">*</span></legend>
+      <div class="fs-radios" role="radiogroup" aria-required="true" aria-describedby="s-type-err">
+        <label class="fs-radio"><input type="radio" name="Talep Türü" value="Katalog" required> Katalog</label>
+        <label class="fs-radio"><input type="radio" name="Talep Türü" value="Numune" required> Numune</label>
+        <label class="fs-radio"><input type="radio" name="Talep Türü" value="Her ikisi" required> Her ikisi</label>
+      </div>
+      <p class="fs-error" id="s-type-err" role="alert"></p>
+    </fieldset>
+
+    <div class="fs-consent" style="margin-top:18px">
+      <input type="checkbox" id="s-kvkk" name="KVKK Onayı" value="Onaylandı" required aria-required="true">
+      <label for="s-kvkk">Kişisel verilerimin, talebimin değerlendirilmesi ve tarafımla iletişime geçilmesi amacıyla; form altyapısı için kullanılan FormSubmit.co (ABD merkezli) üzerinden işlenmesine ve info@sitename.com.tr adresine iletilmesine onay veriyorum. <a href="/kvkk.html">KVKK Aydınlatma Metni</a>'ni okudum.</label>
+    </div>
+
+    <button type="submit" class="fs-btn fs-btn--block" data-fs-submit>Talebi Gönder</button>
+
+    <div class="fs-alert fs-alert--success" role="status" aria-live="polite">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span data-fs-alert-text></span>
+    </div>
+    <div class="fs-alert fs-alert--error" role="alert" aria-live="assertive">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v6M12 16.5v.5" stroke-linecap="round"/></svg>
+      <span data-fs-alert-text></span>
+    </div>
+  </form>
+</div>
+<script src="assets/forms.js"></script>
+</body>
+</html>

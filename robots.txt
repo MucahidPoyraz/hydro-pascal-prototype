@@ -1,4 +1,7 @@
 User-agent: *
 Allow: /
 
+# Prototip form denemeleri - canliya cikmadan once klasor kaldirilacak
+Disallow: /prototip-formlar/
+
 Sitemap: https://www.hydropascal.com.tr/sitemap.xml

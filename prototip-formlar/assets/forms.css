@@ -1,0 +1,235 @@
+/* =========================================================================
+   PROTOTİP: Bu form ileride React/Next.js veya ASP.NET backend'e taşınacaktır.
+   FormSubmit geçici çözümdür.
+   =========================================================================
+   HydroPascal — FormSubmit prototip form stilleri
+   Harici kütüphane yok, CDN yok, ikon fontu yok. Saf CSS.
+   Palet: koyu lacivert #1a2b4a + turuncu vurgu #e85d04
+   ========================================================================= */
+
+:root {
+  --fs-navy: #1a2b4a;
+  --fs-navy-700: #24395f;
+  --fs-navy-300: #5b6b87;
+  --fs-orange: #e85d04;
+  --fs-orange-dark: #c64e03;
+  --fs-orange-tint: #fdf1e8;
+
+  --fs-ink: #1f2733;
+  --fs-ink-soft: #5b6b87;
+  --fs-paper: #ffffff;
+  --fs-surface: #f6f8fb;
+  --fs-line: #d5dce6;
+
+  --fs-error: #c0392b;
+  --fs-error-tint: #fdecea;
+  --fs-success: #1e7a46;
+  --fs-success-tint: #e8f5ee;
+
+  --fs-radius: 4px;
+  --fs-gap: 18px;
+  --fs-font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+/* ---------- Kabuk ---------- */
+.fs-wrap {
+  font-family: var(--fs-font);
+  color: var(--fs-ink);
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 32px 20px 56px;
+  line-height: 1.55;
+  -webkit-text-size-adjust: 100%;
+}
+
+.fs-wrap--narrow { max-width: 460px; }
+
+.fs-head { border-bottom: 3px solid var(--fs-orange); padding-bottom: 14px; margin-bottom: 26px; }
+.fs-head h1 { font-size: 1.6rem; line-height: 1.25; margin: 0 0 6px; color: var(--fs-navy); font-weight: 700; }
+.fs-head p { margin: 0; color: var(--fs-ink-soft); font-size: .93rem; }
+
+.fs-form {
+  background: var(--fs-paper);
+  border: 1px solid var(--fs-line);
+  border-radius: var(--fs-radius);
+  padding: 26px;
+}
+
+/* ---------- Izgara ---------- */
+.fs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--fs-gap); }
+.fs-grid--3 { grid-template-columns: repeat(3, 1fr); }
+.fs-span-2 { grid-column: 1 / -1; }
+
+@media (max-width: 640px) {
+  .fs-grid, .fs-grid--3 { grid-template-columns: 1fr; }
+  .fs-span-2 { grid-column: auto; }
+  .fs-form { padding: 18px; }
+  .fs-wrap { padding: 20px 14px 40px; }
+}
+
+/* ---------- Alanlar ---------- */
+.fs-field { display: flex; flex-direction: column; margin-bottom: var(--fs-gap); }
+.fs-grid .fs-field { margin-bottom: 0; }
+
+.fs-label {
+  font-size: .82rem;
+  font-weight: 600;
+  letter-spacing: .02em;
+  color: var(--fs-navy);
+  margin-bottom: 6px;
+}
+.fs-req { color: var(--fs-orange); margin-left: 2px; }
+
+.fs-input, .fs-select, .fs-textarea {
+  font: inherit;
+  font-size: .95rem;
+  color: var(--fs-ink);
+  background: var(--fs-paper);
+  border: 1px solid var(--fs-line);
+  border-radius: var(--fs-radius);
+  padding: 10px 12px;
+  width: 100%;
+  box-sizing: border-box;
+  transition: border-color .15s ease, box-shadow .15s ease;
+}
+.fs-textarea { resize: vertical; min-height: 110px; }
+.fs-select { appearance: none; background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'><path d='M1 1l5 5 5-5' fill='none' stroke='%235b6b87' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/></svg>"); background-repeat: no-repeat; background-position: right 12px center; padding-right: 34px; }
+
+.fs-input:focus, .fs-select:focus, .fs-textarea:focus {
+  outline: none;
+  border-color: var(--fs-orange);
+  box-shadow: 0 0 0 3px rgba(232, 93, 4, .18);
+}
+
+.fs-input[aria-invalid="true"], .fs-select[aria-invalid="true"], .fs-textarea[aria-invalid="true"] {
+  border-color: var(--fs-error);
+  background: var(--fs-error-tint);
+}
+
+/* ---------- Hata metni ---------- */
+.fs-error {
+  display: none;
+  color: var(--fs-error);
+  font-size: .78rem;
+  margin-top: 5px;
+}
+.fs-error.is-visible { display: block; }
+
+/* ---------- Radyo grubu ---------- */
+.fs-radios { display: flex; flex-wrap: wrap; gap: 10px; }
+.fs-radio {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid var(--fs-line);
+  border-radius: var(--fs-radius);
+  padding: 9px 14px;
+  font-size: .9rem;
+  cursor: pointer;
+  background: var(--fs-surface);
+}
+.fs-radio input { accent-color: var(--fs-orange); margin: 0; }
+.fs-radio:has(input:checked) { border-color: var(--fs-orange); background: var(--fs-orange-tint); }
+
+/* ---------- Dosya ---------- */
+.fs-file-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.fs-file-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font: inherit;
+  font-size: .88rem;
+  font-weight: 600;
+  color: var(--fs-navy);
+  background: var(--fs-surface);
+  border: 1px solid var(--fs-line);
+  border-radius: var(--fs-radius);
+  padding: 9px 14px;
+  cursor: pointer;
+}
+.fs-file-btn:hover { border-color: var(--fs-orange); color: var(--fs-orange); }
+.fs-file-btn svg { width: 15px; height: 15px; flex: none; }
+.fs-file-input { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+
+.fs-file-info { font-size: .82rem; color: var(--fs-ink-soft); }
+.fs-file-info strong { color: var(--fs-ink); font-weight: 600; word-break: break-all; }
+.fs-file-clear {
+  font: inherit; font-size: .82rem; color: var(--fs-error);
+  background: none; border: none; cursor: pointer; padding: 2px 4px; text-decoration: underline;
+}
+
+/* ---------- KVKK onayı ---------- */
+.fs-consent {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  background: var(--fs-surface);
+  border: 1px solid var(--fs-line);
+  border-radius: var(--fs-radius);
+  padding: 13px 15px;
+  margin: 4px 0 var(--fs-gap);
+}
+.fs-consent input { margin: 3px 0 0; accent-color: var(--fs-orange); flex: none; width: 16px; height: 16px; }
+.fs-consent label { font-size: .8rem; color: var(--fs-ink-soft); line-height: 1.5; }
+.fs-consent a { color: var(--fs-orange); }
+
+/* ---------- Butonlar ---------- */
+.fs-btn {
+  font: inherit;
+  font-size: .97rem;
+  font-weight: 700;
+  letter-spacing: .01em;
+  color: #fff;
+  background: var(--fs-orange);
+  border: none;
+  border-radius: var(--fs-radius);
+  padding: 13px 26px;
+  cursor: pointer;
+  transition: background .15s ease;
+}
+.fs-btn:hover:not(:disabled) { background: var(--fs-orange-dark); }
+.fs-btn:focus-visible { outline: 3px solid rgba(232, 93, 4, .35); outline-offset: 2px; }
+.fs-btn:disabled { background: var(--fs-navy-300); cursor: not-allowed; opacity: .75; }
+.fs-btn--block { width: 100%; }
+
+/* ---------- Bildirim kutuları ---------- */
+.fs-alert {
+  display: none;
+  border-radius: var(--fs-radius);
+  padding: 13px 16px;
+  font-size: .9rem;
+  margin-top: 16px;
+  border: 1px solid transparent;
+}
+.fs-alert.is-visible { display: flex; gap: 10px; align-items: flex-start; }
+.fs-alert svg { width: 17px; height: 17px; flex: none; margin-top: 2px; }
+.fs-alert--success { background: var(--fs-success-tint); border-color: var(--fs-success); color: var(--fs-success); }
+.fs-alert--error { background: var(--fs-error-tint); border-color: var(--fs-error); color: var(--fs-error); }
+
+/* ---------- Notlar ---------- */
+.fs-note {
+  font-size: .78rem;
+  color: var(--fs-ink-soft);
+  border-left: 3px solid var(--fs-line);
+  padding: 2px 0 2px 11px;
+  margin-top: 14px;
+}
+.fs-note--accent { border-left-color: var(--fs-orange); }
+.fs-note a { color: var(--fs-orange); }
+
+/* ---------- Honeypot (görünmez olmalı) ---------- */
+.fs-honey { display: none !important; }
+
+/* ---------- Footer varyantı (Form 4) ---------- */
+.fs-compact { background: var(--fs-navy); border-color: var(--fs-navy-700); }
+.fs-compact .fs-label { color: #e8edf5; }
+.fs-compact .fs-input, .fs-compact .fs-textarea { background: #16243d; border-color: var(--fs-navy-700); color: #eef2f8; }
+.fs-compact .fs-input::placeholder, .fs-compact .fs-textarea::placeholder { color: #7f8ea9; }
+.fs-compact .fs-consent { background: #16243d; border-color: var(--fs-navy-700); }
+.fs-compact .fs-consent label { color: #b9c5d8; }
+.fs-compact .fs-note { color: #9aa9c2; border-left-color: var(--fs-navy-700); }
+.fs-compact .fs-textarea { min-height: 84px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .fs-input, .fs-select, .fs-textarea, .fs-btn { transition: none; }
+}

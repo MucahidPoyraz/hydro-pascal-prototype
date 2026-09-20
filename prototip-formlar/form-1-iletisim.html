@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>İletişim Formu — Prototip | HydroPascal</title>
+<link rel="stylesheet" href="assets/forms.css">
+</head>
+<body style="margin:0;background:#eef1f6">
+<!-- PROTOTİP: Bu form ileride React/Next.js veya ASP.NET backend'e taşınacaktır. FormSubmit geçici çözümdür. -->
+<div class="fs-wrap">
+  <header class="fs-head">
+    <h1>İletişim Formu</h1>
+    <p>Sorularınız, teknik destek talepleriniz ve iş birliği önerileriniz için.</p>
+  </header>
+  <form data-fs-form="iletisim" class="fs-form" action="https://formsubmit.co/info@sitename.com.tr" method="POST" enctype="multipart/form-data" novalidate>
+
+    <!-- FormSubmit yapılandırması -->
+    <input type="hidden" name="_subject" value="İletişim Formu - Yeni Mesaj">
+    <input type="hidden" name="_template" value="table">
+    <input type="hidden" name="_captcha" value="false">
+    <input type="hidden" name="_next" value="https://sitename.com.tr/tesekkurler.html">
+    <input type="hidden" name="_cc" value="info@sitename.com.tr">
+    <input type="hidden" name="_autoresponse" value="Mesajınız için teşekkür ederiz. En kısa sürede size dönüş yapacağız.">
+
+    <!-- Honeypot: dosya alanından ÖNCE. Gerçek kullanıcı bunu göremez/dolduramaz. -->
+    <input type="text" name="_honey" class="fs-honey fs-honey-input" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+    <div class="fs-grid">
+      <div class="fs-field">
+        <label class="fs-label" for="c-name">Ad Soyad<span class="fs-req" aria-hidden="true">*</span></label>
+        <input class="fs-input" type="text" id="c-name" name="Ad Soyad" required aria-required="true" aria-describedby="c-name-err" autocomplete="name">
+        <p class="fs-error" id="c-name-err" role="alert"></p>
+      </div>
+
+      <div class="fs-field">
+        <label class="fs-label" for="c-company">Firma Adı<span class="fs-req" aria-hidden="true">*</span></label>
+        <input class="fs-input" type="text" id="c-company" name="Firma" required aria-required="true" aria-describedby="c-company-err" autocomplete="organization">
+        <p class="fs-error" id="c-company-err" role="alert"></p>
+      </div>
+
+      <div class="fs-field">
+        <label class="fs-label" for="c-email">E-posta<span class="fs-req" aria-hidden="true">*</span></label>
+        <input class="fs-input" type="email" id="c-email" name="email" required aria-required="true" aria-describedby="c-email-err" autocomplete="email" inputmode="email">
+        <p class="fs-error" id="c-email-err" role="alert"></p>
+      </div>
+
+      <div class="fs-field">
+        <label class="fs-label" for="c-phone">Telefon<span class="fs-req" aria-hidden="true">*</span></label>
+        <input class="fs-input" type="tel" id="c-phone" name="Telefon" required aria-required="true" aria-describedby="c-phone-err" pattern="[0-9+\s()\-]{10,20}" autocomplete="tel" inputmode="tel" placeholder="+90 555 000 00 00">
+        <p class="fs-error" id="c-phone-err" role="alert"></p>
+      </div>
+
+      <div class="fs-field">
+        <label class="fs-label" for="c-country">Ülke</label>
+        <select class="fs-select" id="c-country" name="Ülke" aria-describedby="c-country-err" autocomplete="country-name">
+          <option value="">Seçiniz (opsiyonel)</option>
+          <option>Türkiye</option>
+          <option>Almanya</option>
+          <option>Fransa</option>
+          <option>İtalya</option>
+          <option>İspanya</option>
+          <option>Polonya</option>
+          <option>Romanya</option>
+          <option>Birleşik Krallık</option>
+          <option>Hollanda</option>
+          <option>Rusya</option>
+          <option>Ukrayna</option>
+          <option>Azerbaycan</option>
+          <option>İran</option>
+          <option>Irak</option>
+          <option>Mısır</option>
+          <option>Fas</option>
+          <option>Cezayir</option>
+          <option>Hindistan</option>
+          <option>ABD</option>
+          <option>Diğer</option>
+        </select>
+        <p class="fs-error" id="c-country-err" role="alert"></p>
+      </div>
+
+      <div class="fs-field">
+        <label class="fs-label" for="c-subject">Konu<span class="fs-req" aria-hidden="true">*</span></label>
+        <select class="fs-select" id="c-subject" name="Konu" required aria-required="true" aria-describedby="c-subject-err">
+          <option value="">Seçiniz</option>
+          <option>Teklif Talebi</option>
+          <option>Teknik Destek</option>
+          <option>İş Birliği</option>
+          <option>Diğer</option>
+        </select>
+        <p class="fs-error" id="c-subject-err" role="alert"></p>
+      </div>
+
+      <div class="fs-field fs-span-2">
+        <label class="fs-label" for="c-message">Mesaj<span class="fs-req" aria-hidden="true">*</span></label>
+        <textarea class="fs-textarea" id="c-message" name="Mesaj" required aria-required="true" minlength="10" aria-describedby="c-message-err" placeholder="Talebinizi kısaca açıklayın (en az 10 karakter)."></textarea>
+        <p class="fs-error" id="c-message-err" role="alert"></p>
+      </div>
+
+      <div class="fs-field fs-span-2">
+        <label class="fs-label" for="c-file">Teknik Çizim / PDF Eki <span style="font-weight:400;color:#5b6b87">(opsiyonel)</span></label>
+        <div class="fs-file-row">
+          <input class="fs-file-input" type="file" id="c-file" name="attachment" accept=".pdf,.dwg,.dxf,.step,.stp,.igs,.zip,.rar,.jpg,.jpeg,.png" aria-describedby="c-file-err c-file-hint">
+          <button type="button" class="fs-file-btn" data-fs-file-trigger>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M21.44 11.05l-8.49 8.49a5.5 5.5 0 1 1-7.78-7.78l8.49-8.49a3.5 3.5 0 1 1 4.95 4.95l-8.49 8.49a1.5 1.5 0 1 1-2.12-2.12l7.78-7.78" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Dosya Seç
+          </button>
+          <span class="fs-file-info" data-fs-file-info></span>
+          <button type="button" class="fs-file-clear" data-fs-file-clear hidden>kaldır</button>
+        </div>
+        <p class="fs-error" id="c-file-err" role="alert"></p>
+        <p class="fs-note" id="c-file-hint">İzin verilen türler: PDF, DWG, DXF, STEP, STP, IGS, ZIP, RAR, JPG, PNG — en fazla 10 MB.</p>
+      </div>
+    </div>
+
+    <!-- KVKK -->
+    <div class="fs-consent">
+      <input type="checkbox" id="c-kvkk" name="KVKK Onayı" value="Onaylandı" required aria-required="true">
+      <label for="c-kvkk">Kişisel verilerimin, talebimin değerlendirilmesi ve tarafımla iletişime geçilmesi amacıyla; form altyapısı için kullanılan FormSubmit.co (ABD merkezli) üzerinden işlenmesine ve info@sitename.com.tr adresine iletilmesine onay veriyorum. <a href="/kvkk.html">KVKK Aydınlatma Metni</a>'ni okudum.</label>
+    </div>
+
+    <button type="submit" class="fs-btn fs-btn--block" data-fs-submit>Mesajı Gönder</button>
+
+    <div class="fs-alert fs-alert--success" role="status" aria-live="polite">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span data-fs-alert-text></span>
+    </div>
+    <div class="fs-alert fs-alert--error" role="alert" aria-live="assertive">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v6M12 16.5v.5" stroke-linecap="round"/></svg>
+      <span data-fs-alert-text></span>
+    </div>
+
+    <p class="fs-note fs-note--accent">Not: 10 MB üzeri teknik çizimler için lütfen doğrudan <a href="mailto:info@sitename.com.tr">info@sitename.com.tr</a> adresine e-posta gönderin.</p>
+  </form>
+</div>
+<script src="assets/forms.js"></script>
+</body>
+</html>
