@@ -212,11 +212,14 @@ html.light input::placeholder,html.light textarea::placeholder{color:#94a3b8!imp
 </section>
 
 <!-- ABOUT CONTENT -->
-<section id="content-2" class="max-w-7xl mx-auto px-6 lg:px-8 py-24 grid md:grid-cols-2 gap-14 items-center">
-  <div>
-    <img src="../assets/images/fabrika.webp" alt="HPL HydroPascal hydraulic cylinder manufacturing factory" class="rounded-2xl shadow-2xl w-full h-96 object-cover border border-white/10" data-section="content-2" data-field="image" width="800" height="384" loading="lazy">
-  </div>
-  <div class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8 shadow-2xl">
+<section id="content-2" class="max-w-7xl mx-auto px-6 lg:px-8 py-24">
+  <!-- Fabrika fotografi ARKA PLAN olarak (kullanici istegi 2026-09-21). Kalip: ana sayfadaki
+       "Fason Uretim" bandi — gorsel + overlay. Overlay theme.css'te token'a bagli, iki temada da
+       metin kontrasti korunur. data-field="image" CMS kancasi korundu. -->
+  <div class="relative overflow-hidden bg-white/5 border border-white/10 rounded-2xl p-8 md:p-12 shadow-2xl">
+    <img src="../assets/images/fabrika.webp" alt="HPL HydroPascal hydraulic cylinder manufacturing factory" class="pointer-events-none absolute inset-0 w-full h-full object-cover" data-section="content-2" data-field="image" width="1024" height="768" loading="lazy">
+    <div class="pointer-events-none absolute inset-0 bg-slate-950/70"></div>
+    <div class="relative max-w-4xl">
     <h2 class="text-4xl font-extrabold text-white mb-6" data-section="content-2" data-field="title">HPL HydroPascal</h2>
     <div class="space-y-4 text-slate-300 leading-relaxed" data-section="content-2" data-field="content">
       <p>HydroPascal was established in 2019 with the aim of manufacturing hydraulic agricultural lifts, top links, and telescopic lifts. Since its foundation, the company has rapidly grown into a reliable and innovative brand within the industry, focusing on delivering high-performance solutions with a strong emphasis on quality, durability, and engineering excellence.</p>
@@ -225,6 +228,7 @@ html.light input::placeholder,html.light textarea::placeholder{color:#94a3b8!imp
       <p>Every stage of our production processes is secured by internationally recognized quality certifications such as CE, ISO, and TSE. Through our customer-oriented approach, flexible manufacturing capabilities, and innovative infrastructure, we deliver tailored, efficient, and effective solutions for every project.</p>
       <p>HydroPascal was established in 2019 with the mission of serving the agricultural machinery spare parts industry. The company specializes in the production of high-quality spare parts for a wide range of both classic and modern tractors, including brands such as Massey Ferguson, Ford, New Holland, John Deere, Case, Renault, Zetor, Landini, Fendt, Deutz, Same.</p>
       <p>In addition to its manufacturing capabilities, HydroPascal has developed strategic partnerships that enable it to provide casting and forging supply solutions under the PascalForge and PascalCast brands. Through this integrated approach, the company delivers reliable, durable, and performance-driven components to meet the evolving demands of the agricultural sector.</p>
+    </div>
     </div>
   </div>
 </section>

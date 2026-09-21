@@ -235,8 +235,6 @@ Bu klasör **canlı temadan bağımsızdır**:
 
 İkisi **çakışmaz** ve prototip canlı sayfaların hiçbirini değiştirmez.
 
-FormSubmit canlı sitede de kullanılacaksa, canlı `assets/js/form-submit.js`
-dosyasındaki `CONFIG` bloğunu doldurmak yeterlidir — ancak **canlı teklif ve numune
-formlarında dosya eki var**, dolayısıyla oraya da bu klasördeki "ek varsa klasik
-POST'a düş" mantığının taşınması gerekir. Bkz. `docs/gorev-plani/faz-1-yayin-oncesi.md`
-→ `GÖREV 10.1`.
+Canlı site de FormSubmit'e bağlandı (`assets/js/form-submit.js`, 2026-09-20) ve bu klasördeki
+"ek varsa klasik POST'a düş" mantığı oraya taşındı. İki modül bilinçli olarak ayrı: bu klasör
+geçicidir ve canlıya çıkmadan silinecek.

@@ -202,63 +202,168 @@ html.light input::placeholder,html.light textarea::placeholder{color:#94a3b8!imp
 </section>
 
 <!-- CATEGORY FILTER -->
-<section class="max-w-7xl mx-auto px-6 lg:px-8 py-8" x-data="{ filter: 'all' }">
-  <div class="flex justify-center mb-12">
+<section class="max-w-7xl mx-auto px-6 lg:px-8 py-8" x-data="{
+    filter: 'all',
+    brand: 'all',
+    search: '',
+    matches(title, oemCode) { return this.search === '' || title.toLowerCase().includes(this.search.toLowerCase()) || oemCode.toLowerCase().includes(this.search.toLowerCase()); },
+    // Used only to compute the 'No results found' message — each card's own x-show is defined separately above.
+    items: [
+      { title: 'Heavy Toplinks', oemCode: 'T06xx series', cat: 'baglanti', brands: ['Massey Ferguson','Fiat','Ford','Deutz','Steyr','New Holland','John Deere','Class'] },
+      { title: 'Leveling Box', oemCode: 'LB01xx series', cat: 'diger', brands: ['Massey Ferguson','Fiat','Ford'] },
+      { title: 'Pins', oemCode: 'RFS series', cat: 'diger', brands: ['Massey Ferguson','John Deere','Fiat'] },
+      { title: 'Side Arms', oemCode: 'OSP01xx series', cat: 'baglanti', brands: ['Massey Ferguson','Fiat','UTB','Ford','New Holland'] },
+      { title: 'Spare Parts', oemCode: 'EXP9xxx series', cat: 'diger', brands: ['John Deere'] },
+      { title: 'Stabilizer Chain', oemCode: 'SC01xx series', cat: 'zincir', brands: ['Massey Ferguson','Fiat','New Holland'] },
+      { title: 'Telescopic Chain', oemCode: 'SC series', cat: 'zincir', brands: ['Massey Ferguson','Renault','Same','Landini','Erkunt','New Holland','John Deere'] },
+      { title: 'Knuckle', oemCode: 'M0xxx / K0xxx series', cat: 'baglanti', brands: [] },
+      { title: 'Traction Bar & Side Arms', oemCode: 'YF0xxx series', cat: 'baglanti', brands: ['Massey Ferguson','Fiat'] }
+    ],
+    hasResults() {
+      return this.items.some(item =>
+        (this.filter === 'all' || this.filter === item.cat) &&
+        (this.brand === 'all' || item.brands.includes(this.brand)) &&
+        this.matches(item.title, item.oemCode)
+      );
+    }
+  }">
+  <div class="max-w-md mx-auto mb-8">
+    <input type="text" x-model="search" placeholder="Search by product name or OEM code..." class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white placeholder-slate-400 focus:border-[#fb923c] focus:ring-2 focus:ring-[#fb923c]/30 focus:outline-none transition">
+  </div>
+  <div class="flex justify-center mb-6">
     <div class="inline-flex flex-wrap items-center gap-1 p-1 rounded-md border border-[var(--line)] bg-[var(--surface)]">
       <button type="button" @click="filter = 'all'" :class="filter === 'all' ? 'bg-[var(--accent)] text-[#fff9f4]' : 'text-[var(--ink-soft)] hover:text-[var(--ink)] hover:bg-[var(--surface-2)]'" class="px-4 py-2 rounded-md text-xs font-mono uppercase tracking-wider font-semibold transition-all duration-200">All</button>
-      <button type="button" @click="filter = 'link'" :class="filter === 'link' ? 'bg-[var(--accent)] text-[#fff9f4]' : 'text-[var(--ink-soft)] hover:text-[var(--ink)] hover:bg-[var(--surface-2)]'" class="px-4 py-2 rounded-md text-xs font-mono uppercase tracking-wider font-semibold transition-all duration-200">Connectors</button>
-      <button type="button" @click="filter = 'chain'" :class="filter === 'chain' ? 'bg-[var(--accent)] text-[#fff9f4]' : 'text-[var(--ink-soft)] hover:text-[var(--ink)] hover:bg-[var(--surface-2)]'" class="px-4 py-2 rounded-md text-xs font-mono uppercase tracking-wider font-semibold transition-all duration-200">Chains</button>
-      <button type="button" @click="filter = 'other'" :class="filter === 'other' ? 'bg-[var(--accent)] text-[#fff9f4]' : 'text-[var(--ink-soft)] hover:text-[var(--ink)] hover:bg-[var(--surface-2)]'" class="px-4 py-2 rounded-md text-xs font-mono uppercase tracking-wider font-semibold transition-all duration-200">Other</button>
+      <button type="button" @click="filter = 'baglanti'" :class="filter === 'baglanti' ? 'bg-[var(--accent)] text-[#fff9f4]' : 'text-[var(--ink-soft)] hover:text-[var(--ink)] hover:bg-[var(--surface-2)]'" class="px-4 py-2 rounded-md text-xs font-mono uppercase tracking-wider font-semibold transition-all duration-200">Connectors</button>
+      <button type="button" @click="filter = 'zincir'" :class="filter === 'zincir' ? 'bg-[var(--accent)] text-[#fff9f4]' : 'text-[var(--ink-soft)] hover:text-[var(--ink)] hover:bg-[var(--surface-2)]'" class="px-4 py-2 rounded-md text-xs font-mono uppercase tracking-wider font-semibold transition-all duration-200">Chains</button>
+      <button type="button" @click="filter = 'diger'" :class="filter === 'diger' ? 'bg-[var(--accent)] text-[#fff9f4]' : 'text-[var(--ink-soft)] hover:text-[var(--ink)] hover:bg-[var(--surface-2)]'" class="px-4 py-2 rounded-md text-xs font-mono uppercase tracking-wider font-semibold transition-all duration-200">Other</button>
     </div>
+  </div>
+  <div class="flex flex-wrap items-center justify-center gap-3 mb-12">
+    <label for="brand-filter" class="text-sm font-semibold text-slate-300">Compatible Brand:</label>
+    <select id="brand-filter" x-model="brand" class="bg-white/5 border border-white/10 rounded-xl px-4 py-2 text-sm text-white focus:border-[#fb923c] focus:ring-2 focus:ring-[#fb923c]/30 focus:outline-none transition">
+      <option value="all" class="bg-slate-900">All Brands</option>
+      <option value="Massey Ferguson" class="bg-slate-900">Massey Ferguson</option>
+      <option value="Fiat" class="bg-slate-900">Fiat</option>
+      <option value="Ford" class="bg-slate-900">Ford</option>
+      <option value="Deutz" class="bg-slate-900">Deutz</option>
+      <option value="Steyr" class="bg-slate-900">Steyr</option>
+      <option value="New Holland" class="bg-slate-900">New Holland</option>
+      <option value="John Deere" class="bg-slate-900">John Deere</option>
+      <option value="Class" class="bg-slate-900">Class</option>
+      <option value="UTB" class="bg-slate-900">UTB</option>
+      <option value="Renault" class="bg-slate-900">Renault</option>
+      <option value="Same" class="bg-slate-900">Same</option>
+      <option value="Landini" class="bg-slate-900">Landini</option>
+      <option value="Erkunt" class="bg-slate-900">Erkunt</option>
+    </select>
+  </div>
+
+  <!-- FASON ÜRETİM — kısa hatırlatma (liste ortası, GÖREV 6.0 Bölüm 3) -->
+  <div class="flex items-center justify-center gap-3 flex-wrap text-center bg-[#fb923c]/10 border border-[#fb923c]/30 rounded-xl px-6 py-4 mb-12">
+    <span class="text-sm text-slate-200">Can't find the part you need? <strong class="text-white">We can manufacture it for you.</strong></span>
+    <a href="hizmetler.html#sample-form" class="text-sm font-semibold text-[#fb923c] hover:underline whitespace-nowrap">Send a Sample / Drawing →</a>
   </div>
 
   <!-- PRODUCT CARDS -->
   <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-  <div x-show="filter === 'all' || filter === 'link'" id="content-3" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8 shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col items-center text-center">
+  <div x-show="(filter === 'all' || filter === 'baglanti') && (brand === 'all' || ['Massey Ferguson','Fiat','Ford','Deutz','Steyr','New Holland','John Deere','Class'].includes(brand)) && matches('Heavy Toplinks', 'T06xx series')" id="content-3" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8 shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col items-center text-center">
     <img src="../assets/images/oem-agir-hizmet-ust-baglanti-kolu.webp" alt="Heavy Toplinks" loading="lazy" width="96" height="96" class="h-24 object-contain mb-5 bg-white/90 rounded-xl p-2" data-section="content-3" data-field="image">
-    <h3 class="font-bold text-lg mb-4 text-white" data-section="content-3" data-field="title">Heavy Toplinks</h3>
-    <a href="urun-detay.html?id=heay-toplink" class="mt-auto rounded-full bg-[#fb923c] text-slate-950 text-sm font-semibold px-5 py-2.5 hover:brightness-110 hover:shadow-lg hover:shadow-[#fb923c]/30 transition">See More</a>
+    <h3 class="font-bold text-lg mb-1 text-white" data-section="content-3" data-field="title">Heavy Toplinks</h3>
+    <p class="font-mono text-xs text-slate-400 mb-2">HPL: T06xx series</p>
+    <div class="flex flex-wrap gap-1.5 justify-center mb-4">
+      <span class="text-xs font-medium text-slate-300 bg-white/5 border border-white/10 rounded-full px-2 py-0.5">Massey Ferguson</span>
+      <span class="text-xs font-medium text-slate-300 bg-white/5 border border-white/10 rounded-full px-2 py-0.5">Fiat</span>
+      <span class="text-xs font-medium text-slate-400 bg-white/5 border border-white/10 rounded-full px-2 py-0.5">+6</span>
+    </div>
+    <a href="urun-detay.html?id=heay-toplink" class="mt-auto rounded-full bg-[#fb923c] text-slate-950 text-sm font-semibold px-5 py-2.5 hover:brightness-110 hover:shadow-lg hover:shadow-[#fb923c]/30 transition">View Details</a>
   </div>
-  <div x-show="filter === 'all' || filter === 'other'" id="content-4" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8 shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col items-center text-center">
+  <div x-show="(filter === 'all' || filter === 'diger') && (brand === 'all' || ['Massey Ferguson','Fiat','Ford'].includes(brand)) && matches('Leveling Box', 'LB01xx series')" id="content-4" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8 shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col items-center text-center">
     <img src="../assets/images/HPL-1.webp" alt="Leveling Box" loading="lazy" width="96" height="96" class="h-24 object-contain mb-5 bg-white/90 rounded-xl p-2" data-section="content-4" data-field="image">
-    <h3 class="font-bold text-lg mb-4 text-white" data-section="content-4" data-field="title">Leveling Box</h3>
-    <a href="urun-detay.html?id=leveling-box" class="mt-auto rounded-full bg-[#fb923c] text-slate-950 text-sm font-semibold px-5 py-2.5 hover:brightness-110 hover:shadow-lg hover:shadow-[#fb923c]/30 transition">See More</a>
+    <h3 class="font-bold text-lg mb-1 text-white" data-section="content-4" data-field="title">Leveling Box</h3>
+    <p class="font-mono text-xs text-slate-400 mb-2">HPL: LB01xx series</p>
+    <div class="flex flex-wrap gap-1.5 justify-center mb-4">
+      <span class="text-xs font-medium text-slate-300 bg-white/5 border border-white/10 rounded-full px-2 py-0.5">Massey Ferguson</span>
+      <span class="text-xs font-medium text-slate-300 bg-white/5 border border-white/10 rounded-full px-2 py-0.5">Fiat</span>
+      <span class="text-xs font-medium text-slate-300 bg-white/5 border border-white/10 rounded-full px-2 py-0.5">Ford</span>
+    </div>
+    <a href="urun-detay.html?id=leveling-box" class="mt-auto rounded-full bg-[#fb923c] text-slate-950 text-sm font-semibold px-5 py-2.5 hover:brightness-110 hover:shadow-lg hover:shadow-[#fb923c]/30 transition">View Details</a>
   </div>
-  <div x-show="filter === 'all' || filter === 'other'" id="content-5" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8 shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col items-center text-center">
+  <div x-show="(filter === 'all' || filter === 'diger') && (brand === 'all' || ['Massey Ferguson','John Deere','Fiat'].includes(brand)) && matches('Pins', 'RFS series')" id="content-5" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8 shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col items-center text-center">
     <img src="../assets/images/HPL-2.webp" alt="Pins" loading="lazy" width="96" height="96" class="h-24 object-contain mb-5 bg-white/90 rounded-xl p-2" data-section="content-5" data-field="image">
-    <h3 class="font-bold text-lg mb-4 text-white" data-section="content-5" data-field="title">Pins</h3>
-    <a href="urun-detay.html?id=pimler" class="mt-auto rounded-full bg-[#fb923c] text-slate-950 text-sm font-semibold px-5 py-2.5 hover:brightness-110 hover:shadow-lg hover:shadow-[#fb923c]/30 transition">See More</a>
+    <h3 class="font-bold text-lg mb-1 text-white" data-section="content-5" data-field="title">Pins</h3>
+    <p class="font-mono text-xs text-slate-400 mb-2">HPL: RFS series</p>
+    <div class="flex flex-wrap gap-1.5 justify-center mb-4">
+      <span class="text-xs font-medium text-slate-300 bg-white/5 border border-white/10 rounded-full px-2 py-0.5">Massey Ferguson</span>
+      <span class="text-xs font-medium text-slate-300 bg-white/5 border border-white/10 rounded-full px-2 py-0.5">John Deere</span>
+      <span class="text-xs font-medium text-slate-300 bg-white/5 border border-white/10 rounded-full px-2 py-0.5">Fiat</span>
+    </div>
+    <a href="urun-detay.html?id=pimler" class="mt-auto rounded-full bg-[#fb923c] text-slate-950 text-sm font-semibold px-5 py-2.5 hover:brightness-110 hover:shadow-lg hover:shadow-[#fb923c]/30 transition">View Details</a>
   </div>
-  <div x-show="filter === 'all' || filter === 'link'" id="content-6" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8 shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col items-center text-center">
+  <div x-show="(filter === 'all' || filter === 'baglanti') && (brand === 'all' || ['Massey Ferguson','Fiat','UTB','Ford','New Holland'].includes(brand)) && matches('Side Arms', 'OSP01xx series')" id="content-6" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8 shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col items-center text-center">
     <img src="../assets/images/HPL-3.webp" alt="Side Arms" loading="lazy" width="96" height="96" class="h-24 object-contain mb-5 bg-white/90 rounded-xl p-2" data-section="content-6" data-field="image">
-    <h3 class="font-bold text-lg mb-4 text-white" data-section="content-6" data-field="title">Side Arms</h3>
-    <a href="urun-detay.html?id=yan-kol" class="mt-auto rounded-full bg-[#fb923c] text-slate-950 text-sm font-semibold px-5 py-2.5 hover:brightness-110 hover:shadow-lg hover:shadow-[#fb923c]/30 transition">See More</a>
+    <h3 class="font-bold text-lg mb-1 text-white" data-section="content-6" data-field="title">Side Arms</h3>
+    <p class="font-mono text-xs text-slate-400 mb-2">HPL: OSP01xx series</p>
+    <div class="flex flex-wrap gap-1.5 justify-center mb-4">
+      <span class="text-xs font-medium text-slate-300 bg-white/5 border border-white/10 rounded-full px-2 py-0.5">Massey Ferguson</span>
+      <span class="text-xs font-medium text-slate-300 bg-white/5 border border-white/10 rounded-full px-2 py-0.5">Fiat</span>
+      <span class="text-xs font-medium text-slate-400 bg-white/5 border border-white/10 rounded-full px-2 py-0.5">+3</span>
+    </div>
+    <a href="urun-detay.html?id=yan-kol" class="mt-auto rounded-full bg-[#fb923c] text-slate-950 text-sm font-semibold px-5 py-2.5 hover:brightness-110 hover:shadow-lg hover:shadow-[#fb923c]/30 transition">View Details</a>
   </div>
-  <div x-show="filter === 'all' || filter === 'other'" id="content-7" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8 shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col items-center text-center">
+  <div x-show="(filter === 'all' || filter === 'diger') && (brand === 'all' || ['John Deere'].includes(brand)) && matches('Spare Parts', 'EXP9xxx series')" id="content-7" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8 shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col items-center text-center">
     <img src="../assets/images/HPL-4.webp" alt="Spare Parts" loading="lazy" width="96" height="96" class="h-24 object-contain mb-5 bg-white/90 rounded-xl p-2" data-section="content-7" data-field="image">
-    <h3 class="font-bold text-lg mb-4 text-white" data-section="content-7" data-field="title">Spare Parts</h3>
-    <a href="urun-detay.html?id=yedek-parca" class="mt-auto rounded-full bg-[#fb923c] text-slate-950 text-sm font-semibold px-5 py-2.5 hover:brightness-110 hover:shadow-lg hover:shadow-[#fb923c]/30 transition">See More</a>
+    <h3 class="font-bold text-lg mb-1 text-white" data-section="content-7" data-field="title">Spare Parts</h3>
+    <p class="font-mono text-xs text-slate-400 mb-2">HPL: EXP9xxx series</p>
+    <div class="flex flex-wrap gap-1.5 justify-center mb-4">
+      <span class="text-xs font-medium text-slate-300 bg-white/5 border border-white/10 rounded-full px-2 py-0.5">John Deere</span>
+    </div>
+    <a href="urun-detay.html?id=yedek-parca" class="mt-auto rounded-full bg-[#fb923c] text-slate-950 text-sm font-semibold px-5 py-2.5 hover:brightness-110 hover:shadow-lg hover:shadow-[#fb923c]/30 transition">View Details</a>
   </div>
-  <div x-show="filter === 'all' || filter === 'chain'" id="content-8" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8 shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col items-center text-center">
+  <div x-show="(filter === 'all' || filter === 'zincir') && (brand === 'all' || ['Massey Ferguson','Fiat','New Holland'].includes(brand)) && matches('Stabilizer Chain', 'SC01xx series')" id="content-8" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8 shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col items-center text-center">
     <img src="../assets/images/HPL-6.webp" alt="Stabilizer Chain" loading="lazy" width="96" height="96" class="h-24 object-contain mb-5 bg-white/90 rounded-xl p-2" data-section="content-8" data-field="image">
-    <h3 class="font-bold text-lg mb-4 text-white" data-section="content-8" data-field="title">Stabilizer Chain</h3>
-    <a href="urun-detay.html?id=stabilizator-zinciri" class="mt-auto rounded-full bg-[#fb923c] text-slate-950 text-sm font-semibold px-5 py-2.5 hover:brightness-110 hover:shadow-lg hover:shadow-[#fb923c]/30 transition">See More</a>
+    <h3 class="font-bold text-lg mb-1 text-white" data-section="content-8" data-field="title">Stabilizer Chain</h3>
+    <p class="font-mono text-xs text-slate-400 mb-2">HPL: SC01xx series</p>
+    <div class="flex flex-wrap gap-1.5 justify-center mb-4">
+      <span class="text-xs font-medium text-slate-300 bg-white/5 border border-white/10 rounded-full px-2 py-0.5">Massey Ferguson</span>
+      <span class="text-xs font-medium text-slate-300 bg-white/5 border border-white/10 rounded-full px-2 py-0.5">Fiat</span>
+      <span class="text-xs font-medium text-slate-300 bg-white/5 border border-white/10 rounded-full px-2 py-0.5">New Holland</span>
+    </div>
+    <a href="urun-detay.html?id=stabilizator-zinciri" class="mt-auto rounded-full bg-[#fb923c] text-slate-950 text-sm font-semibold px-5 py-2.5 hover:brightness-110 hover:shadow-lg hover:shadow-[#fb923c]/30 transition">View Details</a>
   </div>
-  <div x-show="filter === 'all' || filter === 'chain'" id="content-9" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8 shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col items-center text-center">
+  <div x-show="(filter === 'all' || filter === 'zincir') && (brand === 'all' || ['Massey Ferguson','Renault','Same','Landini','Erkunt','New Holland','John Deere'].includes(brand)) && matches('Telescopic Chain', 'SC series')" id="content-9" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8 shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col items-center text-center">
     <img src="../assets/images/HPL-5.webp" alt="Telescopic Chain" loading="lazy" width="96" height="96" class="h-24 object-contain mb-5 bg-white/90 rounded-xl p-2" data-section="content-9" data-field="image">
-    <h3 class="font-bold text-lg mb-4 text-white" data-section="content-9" data-field="title">Telescopic Chain</h3>
-    <a href="urun-detay.html?id=teleskopik-zincir" class="mt-auto rounded-full bg-[#fb923c] text-slate-950 text-sm font-semibold px-5 py-2.5 hover:brightness-110 hover:shadow-lg hover:shadow-[#fb923c]/30 transition">See More</a>
+    <h3 class="font-bold text-lg mb-1 text-white" data-section="content-9" data-field="title">Telescopic Chain</h3>
+    <p class="font-mono text-xs text-slate-400 mb-2">HPL: SC series</p>
+    <div class="flex flex-wrap gap-1.5 justify-center mb-4">
+      <span class="text-xs font-medium text-slate-300 bg-white/5 border border-white/10 rounded-full px-2 py-0.5">Massey Ferguson</span>
+      <span class="text-xs font-medium text-slate-300 bg-white/5 border border-white/10 rounded-full px-2 py-0.5">Renault</span>
+      <span class="text-xs font-medium text-slate-400 bg-white/5 border border-white/10 rounded-full px-2 py-0.5">+5</span>
+    </div>
+    <a href="urun-detay.html?id=teleskopik-zincir" class="mt-auto rounded-full bg-[#fb923c] text-slate-950 text-sm font-semibold px-5 py-2.5 hover:brightness-110 hover:shadow-lg hover:shadow-[#fb923c]/30 transition">View Details</a>
   </div>
-  <div x-show="filter === 'all' || filter === 'link'" id="content-10" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8 shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col items-center text-center">
+  <div x-show="(filter === 'all' || filter === 'baglanti') && brand === 'all' && matches('Knuckle', 'M0xxx / K0xxx series')" id="content-10" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8 shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col items-center text-center">
     <img src="../assets/images/HPL-7.webp" alt="Knuckle" loading="lazy" width="96" height="96" class="h-24 object-contain mb-5 bg-white/90 rounded-xl p-2" data-section="content-10" data-field="image">
-    <h3 class="font-bold text-lg mb-4 text-white" data-section="content-10" data-field="title">Knuckle</h3>
-    <a href="urun-detay.html?id=mafsal" class="mt-auto rounded-full bg-[#fb923c] text-slate-950 text-sm font-semibold px-5 py-2.5 hover:brightness-110 hover:shadow-lg hover:shadow-[#fb923c]/30 transition">See More</a>
+    <h3 class="font-bold text-lg mb-1 text-white" data-section="content-10" data-field="title">Knuckle</h3>
+    <p class="font-mono text-xs text-slate-400 mb-2">HPL: M0xxx / K0xxx series</p>
+    <div class="flex flex-wrap gap-1.5 justify-center mb-4">
+      <span class="text-xs font-medium text-slate-300 bg-white/5 border border-white/10 rounded-full px-2 py-0.5">Brand Independent</span>
+    </div>
+    <a href="urun-detay.html?id=mafsal" class="mt-auto rounded-full bg-[#fb923c] text-slate-950 text-sm font-semibold px-5 py-2.5 hover:brightness-110 hover:shadow-lg hover:shadow-[#fb923c]/30 transition">View Details</a>
   </div>
-  <div x-show="filter === 'all' || filter === 'link'" id="content-11" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8 shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col items-center text-center">
+  <div x-show="(filter === 'all' || filter === 'baglanti') && (brand === 'all' || ['Massey Ferguson','Fiat'].includes(brand)) && matches('Traction Bar & Side Arms', 'YF0xxx series')" id="content-11" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8 shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col items-center text-center">
     <img src="../assets/images/HPL-8.webp" alt="Traction Bar and Side Arms" loading="lazy" width="96" height="96" class="h-24 object-contain mb-5 bg-white/90 rounded-xl p-2" data-section="content-11" data-field="image">
-    <h3 class="font-bold text-lg mb-4 text-white" data-section="content-11" data-field="title">Traction Bar &amp; Side Arms</h3>
-    <a href="urun-detay.html?id=cekme-kolu" class="mt-auto rounded-full bg-[#fb923c] text-slate-950 text-sm font-semibold px-5 py-2.5 hover:brightness-110 hover:shadow-lg hover:shadow-[#fb923c]/30 transition">See More</a>
+    <h3 class="font-bold text-lg mb-1 text-white" data-section="content-11" data-field="title">Traction Bar &amp; Side Arms</h3>
+    <p class="font-mono text-xs text-slate-400 mb-2">HPL: YF0xxx series</p>
+    <div class="flex flex-wrap gap-1.5 justify-center mb-4">
+      <span class="text-xs font-medium text-slate-300 bg-white/5 border border-white/10 rounded-full px-2 py-0.5">Massey Ferguson</span>
+      <span class="text-xs font-medium text-slate-300 bg-white/5 border border-white/10 rounded-full px-2 py-0.5">Fiat</span>
+    </div>
+    <a href="urun-detay.html?id=cekme-kolu" class="mt-auto rounded-full bg-[#fb923c] text-slate-950 text-sm font-semibold px-5 py-2.5 hover:brightness-110 hover:shadow-lg hover:shadow-[#fb923c]/30 transition">View Details</a>
   </div>
+  </div>
+
+  <div x-show="!hasResults()" x-cloak class="text-center text-slate-400 py-16">
+    No results found.
   </div>
 </section>
 

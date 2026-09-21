@@ -377,6 +377,13 @@ main .bg-white\/10:not(:where(#hero-1) *),
 html.light main .bg-white\/10:not(:where(#hero-1) *) {
   background: var(--surface-2) !important;
 }
+/* Hover karşılığı — TR bunu sayfa içi <style>'da yamalıyordu, EN'de yama yoktu;
+   açık temada EN'deki ikincil butonların hover vurgusu görünmüyordu.
+   (tests/tema-tutarliligi.test.js ile yakalandı, 2026-09-21) */
+main .hover\:bg-white\/10:hover:not(:where(#hero-1) *),
+html.light main .hover\:bg-white\/10:hover:not(:where(#hero-1) *) {
+  background: var(--surface-2) !important;
+}
 
 /*
   HATA DÜZELTMESİ — "Custom Manufacturing / You Imagine It, We'll Build It"
@@ -398,10 +405,15 @@ html.light main .bg-white\/10:not(:where(#hero-1) *) {
   çalışıyor ve bilinçli olarak her iki modda da koyu kalıyor.
 */
 main .bg-slate-950\/90:not(#hero-1):not(:where(#hero-1) *),
-main .bg-slate-950\/70:not(#hero-1):not(:where(#hero-1) *),
-html.light main .bg-slate-950\/90:not(#hero-1):not(:where(#hero-1) *),
-html.light main .bg-slate-950\/70:not(#hero-1):not(:where(#hero-1) *) {
+html.light main .bg-slate-950\/90:not(#hero-1):not(:where(#hero-1) *) {
   background-color: color-mix(in srgb, var(--paper) 92%, transparent) !important;
+}
+/* /70 = "fotograf gorunsun, metin okunsun" overlay'i (Hakkimizda arka plan
+   fotografi, 2026-09-21). %80 kagit/antrasit: fotograf secilir, --ink ile
+   kontrast iki temada da korunur. */
+main .bg-slate-950\/70:not(#hero-1):not(:where(#hero-1) *),
+html.light main .bg-slate-950\/70:not(#hero-1):not(:where(#hero-1) *) {
+  background-color: color-mix(in srgb, var(--paper) 80%, transparent) !important;
 }
 
 /* Kenarlıklar → tek hairline token */

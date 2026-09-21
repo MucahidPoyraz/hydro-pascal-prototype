@@ -206,48 +206,72 @@ html.light input::placeholder,html.light textarea::placeholder{color:#94a3b8!imp
 </section>
 
 <!-- CATEGORY FILTER -->
-<section class="max-w-7xl mx-auto px-6 lg:px-8 py-8" x-data="{ filter: 'all' }">
+<section class="max-w-7xl mx-auto px-6 lg:px-8 py-8" x-data="{
+    filter: 'all',
+    search: '',
+    matches(title) { return this.search === '' || title.toLowerCase().includes(this.search.toLowerCase()); }
+  }">
+  <div class="max-w-md mx-auto mb-8">
+    <input type="text" x-model="search" placeholder="Search by product name..." class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white placeholder-slate-400 focus:border-[#fb923c] focus:ring-2 focus:ring-[#fb923c]/30 focus:outline-none transition">
+  </div>
   <div class="flex justify-center mb-12">
     <div class="inline-flex flex-wrap items-center gap-1 p-1 rounded-md border border-[var(--line)] bg-[var(--surface)]">
       <button type="button" @click="filter = 'all'" :class="filter === 'all' ? 'bg-[var(--accent)] text-[#fff9f4]' : 'text-[var(--ink-soft)] hover:text-[var(--ink)] hover:bg-[var(--surface-2)]'" class="px-4 py-2 rounded-md text-xs font-mono uppercase tracking-wider font-semibold transition-all duration-200">All</button>
-      <button type="button" @click="filter = 'cylinder'" :class="filter === 'cylinder' ? 'bg-[var(--accent)] text-[#fff9f4]' : 'text-[var(--ink-soft)] hover:text-[var(--ink)] hover:bg-[var(--surface-2)]'" class="px-4 py-2 rounded-md text-xs font-mono uppercase tracking-wider font-semibold transition-all duration-200">Cylinders</button>
-      <button type="button" @click="filter = 'link'" :class="filter === 'link' ? 'bg-[var(--accent)] text-[#fff9f4]' : 'text-[var(--ink-soft)] hover:text-[var(--ink)] hover:bg-[var(--surface-2)]'" class="px-4 py-2 rounded-md text-xs font-mono uppercase tracking-wider font-semibold transition-all duration-200">Connectors</button>
-      <button type="button" @click="filter = 'other'" :class="filter === 'other' ? 'bg-[var(--accent)] text-[#fff9f4]' : 'text-[var(--ink-soft)] hover:text-[var(--ink)] hover:bg-[var(--surface-2)]'" class="px-4 py-2 rounded-md text-xs font-mono uppercase tracking-wider font-semibold transition-all duration-200">Other</button>
+      <button type="button" @click="filter = 'silindir'" :class="filter === 'silindir' ? 'bg-[var(--accent)] text-[#fff9f4]' : 'text-[var(--ink-soft)] hover:text-[var(--ink)] hover:bg-[var(--surface-2)]'" class="px-4 py-2 rounded-md text-xs font-mono uppercase tracking-wider font-semibold transition-all duration-200">Cylinders</button>
+      <button type="button" @click="filter = 'baglanti'" :class="filter === 'baglanti' ? 'bg-[var(--accent)] text-[#fff9f4]' : 'text-[var(--ink-soft)] hover:text-[var(--ink)] hover:bg-[var(--surface-2)]'" class="px-4 py-2 rounded-md text-xs font-mono uppercase tracking-wider font-semibold transition-all duration-200">Connectors</button>
+      <button type="button" @click="filter = 'diger'" :class="filter === 'diger' ? 'bg-[var(--accent)] text-[#fff9f4]' : 'text-[var(--ink-soft)] hover:text-[var(--ink)] hover:bg-[var(--surface-2)]'" class="px-4 py-2 rounded-md text-xs font-mono uppercase tracking-wider font-semibold transition-all duration-200">Other</button>
     </div>
+  </div>
+
+  <!-- FASON ÜRETİM — kısa hatırlatma (liste ortası, GÖREV 6.0 Bölüm 3) -->
+  <div class="flex items-center justify-center gap-3 flex-wrap text-center bg-[#fb923c]/10 border border-[#fb923c]/30 rounded-xl px-6 py-4 mb-12">
+    <span class="text-sm text-slate-200">Can't find the cylinder you need? <strong class="text-white">We can manufacture it for you.</strong></span>
+    <a href="hizmetler.html#sample-form" class="text-sm font-semibold text-[#fb923c] hover:underline whitespace-nowrap">Send a Sample / Drawing →</a>
   </div>
 
   <!-- PRODUCT CARDS -->
   <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-  <div x-show="filter === 'all' || filter === 'cylinder'" id="content-3" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8 shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col items-center text-center">
-    <img src="../assets/images/HPL-1.webp" alt="HPL double action hydraulic cylinder" width="96" height="96" loading="lazy" class="h-24 object-contain mb-5 bg-white/90 rounded-xl p-2" data-section="content-3" data-field="image">
+  <div x-show="(filter === 'all' || filter === 'silindir') && matches('Double Action')" id="content-3" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8 shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col items-center text-center">
+    <img src="../assets/images/HPL-1.webp" alt="HPL double-acting hydraulic cylinder" width="96" height="96" loading="lazy" class="h-24 object-contain mb-5 bg-white/90 rounded-xl p-2" data-section="content-3" data-field="image">
     <h3 class="font-bold text-lg mb-4 text-white" data-section="content-3" data-field="title">Double Action</h3>
-    <a href="urun-detay.html?id=cift-etkili" class="mt-auto rounded-full bg-[#fb923c] text-slate-950 text-sm font-semibold px-5 py-2.5 hover:brightness-110 hover:shadow-lg hover:shadow-[#fb923c]/30 transition">See More</a>
+    <a href="urun-detay.html?id=cift-etkili" class="mt-auto rounded-full bg-[#fb923c] text-slate-950 text-sm font-semibold px-5 py-2.5 hover:brightness-110 hover:shadow-lg hover:shadow-[#fb923c]/30 transition">View Details</a>
   </div>
-  <div x-show="filter === 'all' || filter === 'link'" id="content-4" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8 shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col items-center text-center">
-    <img src="../assets/images/HPL-2.webp" alt="HPL TopLinks hydraulic cylinder" width="96" height="96" loading="lazy" class="h-24 object-contain mb-5 bg-white/90 rounded-xl p-2" data-section="content-4" data-field="image">
+  <div x-show="(filter === 'all' || filter === 'baglanti') && matches('TopLinks')" id="content-4" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8 shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col items-center text-center">
+    <img src="../assets/images/HPL-2.webp" alt="HPL top links (TopLinks)" width="96" height="96" loading="lazy" class="h-24 object-contain mb-5 bg-white/90 rounded-xl p-2" data-section="content-4" data-field="image">
     <h3 class="font-bold text-lg mb-4 text-white" data-section="content-4" data-field="title">TopLinks</h3>
-    <a href="urun-detay.html?id=toplinks" class="mt-auto rounded-full bg-[#fb923c] text-slate-950 text-sm font-semibold px-5 py-2.5 hover:brightness-110 hover:shadow-lg hover:shadow-[#fb923c]/30 transition">See More</a>
+    <a href="urun-detay.html?id=toplinks" class="mt-auto rounded-full bg-[#fb923c] text-slate-950 text-sm font-semibold px-5 py-2.5 hover:brightness-110 hover:shadow-lg hover:shadow-[#fb923c]/30 transition">View Details</a>
   </div>
-  <div x-show="filter === 'all' || filter === 'cylinder'" id="content-5" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8 shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col items-center text-center">
+  <div x-show="(filter === 'all' || filter === 'silindir') && matches('Vertical Adjustable')" id="content-5" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8 shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col items-center text-center">
     <img src="../assets/images/HPL-3.webp" alt="HPL vertical adjustable hydraulic cylinder" width="96" height="96" loading="lazy" class="h-24 object-contain mb-5 bg-white/90 rounded-xl p-2" data-section="content-5" data-field="image">
     <h3 class="font-bold text-lg mb-4 text-white" data-section="content-5" data-field="title">Vertical Adjustable</h3>
-    <a href="urun-detay.html?id=dikey-ayarlanabilir" class="mt-auto rounded-full bg-[#fb923c] text-slate-950 text-sm font-semibold px-5 py-2.5 hover:brightness-110 hover:shadow-lg hover:shadow-[#fb923c]/30 transition">See More</a>
+    <a href="urun-detay.html?id=dikey-ayarlanabilir" class="mt-auto rounded-full bg-[#fb923c] text-slate-950 text-sm font-semibold px-5 py-2.5 hover:brightness-110 hover:shadow-lg hover:shadow-[#fb923c]/30 transition">View Details</a>
   </div>
-  <div x-show="filter === 'all' || filter === 'cylinder'" id="content-6" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8 shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col items-center text-center">
-    <img src="../assets/images/HPL-4.webp" alt="HPL OEM hydraulic cylinder spare parts" width="96" height="96" loading="lazy" class="h-24 object-contain mb-5 bg-white/90 rounded-xl p-2" data-section="content-6" data-field="image">
+  <div x-show="(filter === 'all' || filter === 'silindir') && matches('OEM')" id="content-6" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8 shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col items-center text-center">
+    <img src="../assets/images/HPL-4.webp" alt="HPL OEM hydraulic cylinder spare part" width="96" height="96" loading="lazy" class="h-24 object-contain mb-5 bg-white/90 rounded-xl p-2" data-section="content-6" data-field="image">
     <h3 class="font-bold text-lg mb-4 text-white" data-section="content-6" data-field="title">OEM</h3>
-    <a href="urun-detay.html?id=oem-silindir" class="mt-auto rounded-full bg-[#fb923c] text-slate-950 text-sm font-semibold px-5 py-2.5 hover:brightness-110 hover:shadow-lg hover:shadow-[#fb923c]/30 transition">See More</a>
+    <a href="urun-detay.html?id=oem-silindir" class="mt-auto rounded-full bg-[#fb923c] text-slate-950 text-sm font-semibold px-5 py-2.5 hover:brightness-110 hover:shadow-lg hover:shadow-[#fb923c]/30 transition">View Details</a>
   </div>
-  <div x-show="filter === 'all' || filter === 'cylinder'" id="content-7" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8 shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col items-center text-center">
+  <div x-show="(filter === 'all' || filter === 'silindir') && matches('Telescopic Cylinders')" id="content-7" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8 shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col items-center text-center">
     <img src="../assets/images/HPL-5.webp" alt="HPL telescopic hydraulic cylinder" width="96" height="96" loading="lazy" class="h-24 object-contain mb-5 bg-white/90 rounded-xl p-2" data-section="content-7" data-field="image">
     <h3 class="font-bold text-lg mb-4 text-white" data-section="content-7" data-field="title">Telescopic Cylinders</h3>
-    <a href="urun-detay.html?id=teleskopik-silindir" class="mt-auto rounded-full bg-[#fb923c] text-slate-950 text-sm font-semibold px-5 py-2.5 hover:brightness-110 hover:shadow-lg hover:shadow-[#fb923c]/30 transition">See More</a>
+    <a href="urun-detay.html?id=teleskopik-silindir" class="mt-auto rounded-full bg-[#fb923c] text-slate-950 text-sm font-semibold px-5 py-2.5 hover:brightness-110 hover:shadow-lg hover:shadow-[#fb923c]/30 transition">View Details</a>
   </div>
-  <div x-show="filter === 'all' || filter === 'other'" id="content-8" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8 shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col items-center text-center">
+  <div x-show="(filter === 'all' || filter === 'diger') && matches('Mechanical Jacks')" id="content-8" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8 shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col items-center text-center">
     <img src="../assets/images/HPL-6.webp" alt="HPL mechanical jack" width="96" height="96" loading="lazy" class="h-24 object-contain mb-5 bg-white/90 rounded-xl p-2" data-section="content-8" data-field="image">
     <h3 class="font-bold text-lg mb-4 text-white" data-section="content-8" data-field="title">Mechanical Jacks</h3>
-    <a href="urun-detay.html?id=mekanik-kriko" class="mt-auto rounded-full bg-[#fb923c] text-slate-950 text-sm font-semibold px-5 py-2.5 hover:brightness-110 hover:shadow-lg hover:shadow-[#fb923c]/30 transition">See More</a>
+    <a href="urun-detay.html?id=mekanik-kriko" class="mt-auto rounded-full bg-[#fb923c] text-slate-950 text-sm font-semibold px-5 py-2.5 hover:brightness-110 hover:shadow-lg hover:shadow-[#fb923c]/30 transition">View Details</a>
   </div>
+  </div>
+
+  <div x-show="!(
+      ((filter === 'all' || filter === 'silindir') && matches('Double Action')) ||
+      ((filter === 'all' || filter === 'baglanti') && matches('TopLinks')) ||
+      ((filter === 'all' || filter === 'silindir') && matches('Vertical Adjustable')) ||
+      ((filter === 'all' || filter === 'silindir') && matches('OEM')) ||
+      ((filter === 'all' || filter === 'silindir') && matches('Telescopic Cylinders')) ||
+      ((filter === 'all' || filter === 'diger') && matches('Mechanical Jacks'))
+    )" x-cloak class="text-center text-slate-400 py-16">
+    No results found.
   </div>
 </section>
 

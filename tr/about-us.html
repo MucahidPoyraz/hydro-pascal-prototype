@@ -235,7 +235,13 @@ html.light .shadow-black\/20{box-shadow:0 10px 25px -5px rgba(15,23,42,.08)!impo
 
 <!-- ABOUT CONTENT -->
 <section id="content-2" class="max-w-7xl mx-auto px-6 lg:px-8 py-24">
-  <div class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8 shadow-2xl">
+  <!-- Fabrika fotografi ARKA PLAN olarak (kullanici istegi 2026-09-21). Kalip: ana sayfadaki
+       "Fason Uretim" bandi — gorsel + overlay. Overlay theme.css'te token'a bagli, iki temada da
+       metin kontrasti korunur. data-field="image" CMS kancasi korundu. -->
+  <div class="relative overflow-hidden bg-white/5 border border-white/10 rounded-2xl p-8 md:p-12 shadow-2xl">
+    <img src="../assets/images/fabrika.webp" alt="HPL HydroPascal hidrolik silindir üretim fabrikası" class="pointer-events-none absolute inset-0 w-full h-full object-cover" data-section="content-2" data-field="image" width="1024" height="768" loading="lazy">
+    <div class="pointer-events-none absolute inset-0 bg-slate-950/70"></div>
+    <div class="relative max-w-4xl">
     <h2 class="text-4xl font-extrabold text-white mb-6" data-section="content-2" data-field="title">HPL HydroPascal</h2>
     <div class="space-y-4 text-slate-300 leading-relaxed" data-section="content-2" data-field="content">
       <p>HydroPascal, hidrolik tarımsal kaldırıcılar, üst bağlantı kolları (top link) ve teleskopik kaldırıcılar üretmek amacıyla 2019 yılında kurulmuştur. Kuruluşundan bu yana şirket, kalite, dayanıklılık ve mühendislik mükemmelliğine güçlü bir vurgu yaparak yüksek performanslı çözümler sunan, sektörde güvenilir ve yenilikçi bir marka olarak hızla büyümüştür.</p>
@@ -244,6 +250,7 @@ html.light .shadow-black\/20{box-shadow:0 10px 25px -5px rgba(15,23,42,.08)!impo
       <p>Üretim süreçlerimizin her aşaması CE, ISO ve TSE gibi uluslararası kabul görmüş kalite sertifikalarıyla güvence altındadır. Müşteri odaklı yaklaşımımız, esnek üretim kapasitemiz ve yenilikçi altyapımız sayesinde her proje için özel, verimli ve etkili çözümler sunuyoruz.</p>
       <p>HydroPascal, tarım makineleri yedek parça sektörüne hizmet vermek misyonuyla 2019 yılında kurulmuştur. Şirket, Massey Ferguson, Ford, New Holland, John Deere, Case, Renault, Zetor, Landini, Fendt, Deutz, Same gibi markalar dahil olmak üzere hem klasik hem de modern traktörler için geniş bir yelpazede yüksek kaliteli yedek parça üretiminde uzmanlaşmıştır.</p>
       <p>HydroPascal, üretim kapasitesinin yanı sıra, PascalForge ve PascalCast markaları altında döküm ve dövme tedarik çözümleri sunmasını sağlayan stratejik iş birlikleri geliştirmiştir. Bu entegre yaklaşım sayesinde şirket, tarım sektörünün gelişen taleplerini karşılamak için güvenilir, dayanıklı ve performans odaklı bileşenler sunmaktadır.</p>
+    </div>
     </div>
   </div>
 </section>
