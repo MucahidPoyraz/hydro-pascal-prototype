@@ -194,46 +194,852 @@ html.light input::placeholder,html.light textarea::placeholder{color:#94a3b8!imp
   </div>
 </section>
 
-<!-- BLOG POST GRID -->
-<section class="max-w-7xl mx-auto px-6 lg:px-8 py-24 grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+<!-- BLOG LIST START — tools/blog/build.js tarafından üretilir, elle düzenlemeyin -->
+<section class="max-w-7xl mx-auto px-6 lg:px-8 pt-8 pb-24" x-data="{
+    q: '',
+    tag: 'all',
+    sort: 'new',
+    posts: [
+      { s: 'massey-ferguson-hidrolik-silindir-secim-rehberi', t: 'Massey Ferguson Traktörler İçin Hidrolik Silindir Seçim Rehberi', x: 'Massey Ferguson traktörlerde çap, strok ve bağlantı tipi uyumsuzluğu en sık görülen silindir hatalarının kaynağı. Doğru seçim için bakmanız gereken beş kriter.', g: 'marka-uyum', d: '2026-09-18' },
+      { s: 'fiat-traktor-ust-baglanti-kolu-toplink-degisimi', t: 'Fiat Traktör Üst Bağlantı Kolu (TopLink) Nasıl Değiştirilir?', x: 'Oynama, gürültü ve dengesiz kaldırma çoğu zaman yorulmuş bir üst bağlantı kolunun işareti. Değişim öncesi hangi ölçüleri almanız gerektiğini anlatıyoruz.', g: 'marka-uyum', d: '2026-09-14' },
+      { s: 'new-holland-oem-hidrolik-parca-uyumluluk-rehberi', t: 'New Holland Traktörler İçin OEM Hidrolik Parça Uyumluluk Rehberi', x: 'OEM kod eşleştirmesi, New Holland için doğru parçayı bulmanın en kısa yolu. Orijinal, OEM muadil ve kalitesiz kopya arasındaki farkı netleştiriyoruz.', g: 'marka-uyum', d: '2026-09-10' },
+      { s: 'john-deere-dengeleme-kutusu-arizalari-ve-cozumleri', t: 'John Deere Traktörlerde Dengeleme Kutusu (Leveling Box) Arızaları ve Çözümleri', x: 'Dengeleme kutusu zor çevriliyorsa, ekipman bir yana yatıyorsa sorun çoğu zaman vida mekanizmasındadır. Teşhis adımları ve karar kriterleri.', g: 'marka-uyum', d: '2026-09-06' },
+      { s: 'ford-traktor-yan-kol-degisimi-adim-adim', t: 'Ford Traktör Yan Kol (Side Arm) Değişimi: Adım Adım Kılavuz', x: 'Yan kol değişimi zor bir işlem değil ama sıralaması ve güvenlik önlemleri var. Sökmeden önce bilinmesi gerekenler ve montaj sonrası kontroller.', g: 'marka-uyum', d: '2026-09-02' },
+      { s: 'case-traktor-icin-dogru-hidrolik-silindir-secimi', t: 'Case Traktörler İçin Doğru Silindir Nasıl Seçilir?', x: 'Basınç sınıfı ve strok uyumu, Case traktörlerde silindir seçiminin iki kritik değişkeni. Yanlış seçim önce contayı, sonra pompayı yorar.', g: 'marka-uyum', d: '2026-08-29' },
+      { s: 'deutz-traktor-pim-asinmasi-belirtileri-ve-degisim-zamani', t: 'Deutz Traktörlerde Pim (Pin) Aşınması: Belirtileri ve Değişim Zamanı', x: 'Aşınmış bir pim sadece kendini değil, oturduğu kovanı ve deliği de bozar. Belirtileri erken yakalamak parça sayısını tek kalemde tutar.', g: 'marka-uyum', d: '2026-08-25' },
+      { s: 'zetor-landini-fendt-uyumlu-yedek-parca-bulma-rehberi', t: 'Zetor / Landini / Fendt Uyumlu Yedek Parça Bulma Rehberi', x: 'Az yaygın markalarda parça beklemek uzun sürer. OEM kod ile arama ve fason üretim, bu bekleyişi kısaltan iki pratik yol.', g: 'marka-uyum', d: '2026-08-21' },
+      { s: '8-ve-9-disli-ozel-disli-uretimi', t: '8 ve 9 Dişli Özel Dişli Üretimi: Nasıl Çalışır, Kimler Talep Eder?', x: 'Standart dışı diş sayıları çoğu zaman nadir ya da eski ekipmanlardan doğar. Özel dişli üretiminde hangi parametreleri önceden bildirmeniz gerekir?', g: 'fason-uretim', d: '2026-08-17' },
+      { s: 'ozel-olcu-mil-saft-imalati-fason-uretim-sureci', t: 'Özel Ölçü Mil (Şaft) İmalatı: Fason Üretimde Süreç Nasıl İşler?', x: 'Standart mil bulunamadığında özel imalat en hızlı çözüm olabiliyor. Malzeme, tolerans ve yüzey işlemi kararlarının süreçteki yeri.', g: 'fason-uretim', d: '2026-08-13' },
+      { s: 'ozel-konsol-ve-braket-imalati-tarim-makineleri', t: 'Özel Konsol ve Braket İmalatı: Tarım Makineleri İçin Örnekler', x: 'Standart braketler her ekipmana uymaz. Özel konsol imalatında tasarım, kesim, kaynak ve kalınlık seçiminin nasıl birleştiğini anlatıyoruz.', g: 'fason-uretim', d: '2026-08-09' },
+      { s: 'fason-uretim-nedir-kucuk-seri-metal-parca-imalati', t: 'Fason Üretim Nedir? Küçük Seri Metal Parça İmalatında Bilmeniz Gerekenler', x: 'Fason üretim, kendi tesisini kurmadan üretim yapmanın yolu. Seri üretimden farkı, avantajları ve süreçte nelere dikkat edilmesi gerektiği.', g: 'fason-uretim', d: '2026-08-05' },
+      { s: 'numune-parcadan-seri-uretime-fason-uretim-sureci', t: 'Numune Parçadan Seri Üretime: HydroPascal’da Fason Üretim Süreci', x: 'Elinizde sadece kırık bir parça varsa süreç yine de başlayabilir. Ölçümden seri üretime kadar beş adımın nasıl işlediğini anlatıyoruz.', g: 'fason-uretim', d: '2026-08-01' },
+      { s: 'standart-disi-hidrolik-parca-ozel-imalat-rehberi', t: 'Standart Dışı Hidrolik Parça İhtiyacınız mı Var? Özel İmalat Rehberi', x: 'Özel flanş, adaptör veya gövde gerektiğinde hassasiyet pazarlık konusu değildir. Basınç altında çalışan parçalarda nelere dikkat edilir?', g: 'fason-uretim', d: '2026-07-28' },
+      { s: 'cnc-isleme-ile-hassas-parca-uretimi-toleranslar', t: 'CNC İşleme ile Hassas Parça Üretimi: Toleranslar ve Kalite Kontrolü', x: 'Tolerans, bir ölçünün ne kadar sapabileceğini tanımlar. Çok dar tolerans da çok geniş tolerans kadar sorunludur — nedenini açıklıyoruz.', g: 'fason-uretim', d: '2026-07-24' },
+      { s: 'dokum-mu-dovme-mi-hangi-uretim-yontemi-uygun', t: 'Döküm mü Dövme mi? Parçanıza Hangi Üretim Yöntemi Uygun?', x: 'Döküm karmaşık geometride, dövme mukavemette öne çıkar. İki yöntem arasındaki farkı ve hangi parçada hangisinin tercih edildiğini anlatıyoruz.', g: 'dokum-dovme', d: '2026-07-20' },
+      { s: 'pascalcast-ile-dokum-parca-tedariki-surec-ve-malzeme', t: 'PascalCast ile Döküm Parça Tedariki: Süreç ve Malzeme Seçenekleri', x: 'Kalıp hazırlığından son işlemeye, döküm parça tedarikinin adımları ve gri döküm, sfero ile çelik döküm arasındaki temel farklar.', g: 'dokum-dovme', d: '2026-07-16' },
+      { s: 'pascalforge-ile-dovme-parca-uretimi-dayaniklilik', t: 'PascalForge ile Dövme Parça Üretimi: Dayanıklılık Neden Önemli?', x: 'Dövme, metalin iç yapısını sıkıştırarak mukavemet kazandırır. Mil ve bağlantı kolu gibi parçalarda neden tercih edildiğini açıklıyoruz.', g: 'dokum-dovme', d: '2026-07-12' },
+      { s: 'tarim-makineleri-icin-dokum-parca-kalite-kriterleri', t: 'Tarım Makineleri İçin Döküm Parça Kalite Kriterleri Nelerdir?', x: 'Döküm parçada kalite üç başlıkta toplanır: iç sağlamlık, ölçü doğruluğu ve yüzey kalitesi. Her birinin sahadaki karşılığı farklıdır.', g: 'dokum-dovme', d: '2026-07-08' },
+      { s: 'dovme-parcalarda-malzeme-secimi-hangi-celik', t: 'Dövme Parçalarda Malzeme Seçimi: Hangi Çelik Hangi Uygulamaya Uygun?', x: 'Karbon çeliği mi, alaşımlı çelik mi? Seçimi belirleyen şey yük, ortam ve ısıl işlem beklentisi. Yanlış seçimin sonucu erken yorulma.', g: 'dokum-dovme', d: '2026-07-04' },
+      { s: 'simulasyon-destekli-dovme-hata-payini-azaltan-teknoloji', t: 'Simülasyon Destekli Dövme: Hata Payını Azaltan Teknoloji', x: 'Dövmede kalıp tasarımı sonucu belirler. Simülasyon, metalin nasıl akacağını üretimden önce göstererek deneme sayısını azaltır.', g: 'dokum-dovme', d: '2026-06-30' },
+      { s: 'hidrolik-silindir-capi-ve-strok-nasil-hesaplanir', t: 'Hidrolik Silindir Çapı ve Strok Nasıl Hesaplanır? (Adım Adım)', x: 'Kuvvet, basınç ve alanın çarpımıdır — hesap buradan başlar. Çap ve strok belirlemenin adım adım mantığını anlatıyoruz.', g: 'silindir', d: '2026-06-26' },
+      { s: 'yanlis-silindir-seciminin-maliyeti-5-hata', t: 'Yanlış Silindir Seçiminin Maliyeti: Sık Yapılan 5 Hata', x: 'Beş yaygın seçim hatası ve her birinin sahadaki somut karşılığı: erken arıza, sızıntı, performans kaybı ve gereksiz maliyet.', g: 'silindir', d: '2026-06-22' },
+      { s: 'silindir-secim-programi-ile-dogru-silindiri-bulun', t: 'Silindir Seçim Programımızla Doğru Silindiri Bulun', x: 'Beş değer girerek üretilen kuvveti ve eşleşen ürünleri görebilirsiniz. Programın ne yaptığını ve çıktısının nasıl okunacağını anlatıyoruz.', g: 'silindir', d: '2026-06-18' },
+      { s: 'cift-etkili-vs-tek-etkili-silindir-farki', t: 'Çift Etkili vs Tek Etkili Silindir: Hangi Uygulamada Hangisi?', x: 'Tek etkili silindir tek yönde iter, geri dönüş yerçekimi veya yayla olur. Çift etkilide her iki yön de kontrollüdür. Hangisi nerede kullanılır?', g: 'silindir', d: '2026-06-14' },
+      { s: 'pompa-basinci-ve-silindir-performansi-iliskisi', t: 'Pompa Basıncı ve Silindir Performansı Arasındaki İlişki', x: 'Pompa basıncı kuvveti, pompa debisi hızı belirler. İkisinin silindirle nasıl eşleştirileceğini ve uyumsuzluğun sonuçlarını anlatıyoruz.', g: 'silindir', d: '2026-06-10' },
+      { s: 'hidrolik-silindirde-sizinti-nedenleri-ve-cozumleri', t: 'Hidrolik Silindirde Sızıntı: Nedenleri ve Çözüm Yolları', x: 'Sızıntının üç ana kaynağı var ve her biri farklı bir müdahale gerektiriyor. Nereden geldiğini ayırt etmenin pratik yolları.', g: 'bakim', d: '2026-06-06' },
+      { s: 'conta-seal-degisimi-ne-zaman-gerekir', t: 'Conta (Seal) Değişimi Ne Zaman Gerekir? Belirtiler ve Bakım Takvimi', x: 'Conta aşınması güç kaybı ve sızıntı olarak görülür. Değişim zamanını nasıl belirleyeceğinizi ve komple değişim kararını anlatıyoruz.', g: 'bakim', d: '2026-06-02' },
+      { s: 'hidrolik-silindir-omrunu-uzatan-7-bakim-aliskanligi', t: 'Hidrolik Silindir Ömrünü Uzatan 7 Bakım Alışkanlığı', x: 'Yedi basit alışkanlık, silindir ömrünü belirgin şekilde uzatıyor. Her birinin neden işe yaradığını kısaca açıklıyoruz.', g: 'bakim', d: '2026-05-29' },
+      { s: 'silindir-pistonunda-cizik-asinma-onarim-mi-degisim-mi', t: 'Silindir Pistonunda Çizik/Aşınma: Onarım mı Değişim mi?', x: 'Her çizik parça değişimi gerektirmez. Onarımın mümkün olduğu durumlarla doğrudan değişim gerektiren hasarı ayırt etmenin yolları.', g: 'bakim', d: '2026-05-25' },
+      { s: 'kisin-hidrolik-ekipman-bakimi', t: 'Kışın Hidrolik Ekipman Bakımı: Soğuk Havada Dikkat Edilmesi Gerekenler', x: 'Soğuk, hidrolik yağı koyulaştırır ve contaları sertleştirir. Kış öncesi kontrol listesi ve depolama önerileri.', g: 'bakim', d: '2026-05-21' },
+      { s: 'oem-mi-muadil-mi-yedek-parca-secimi', t: 'OEM mi Muadil mi? Yedek Parça Seçerken Bilmeniz Gerekenler', x: 'Muadil her zaman düşük kalite demek değil. Farkı belirleyen malzeme, tolerans ve tedarikçi şeffaflığı — bunları nasıl değerlendirirsiniz?', g: 'bakim', d: '2026-05-17' },
+      { s: 'hydropascal-hikayesi-2019dan-bugune', t: 'HydroPascal’ın Hikayesi: 2019’dan Bugüne Tarım Makineleri Yedek Parça Üretimi', x: 'Konya’da 2019’da kurulan HydroPascal, 2021’de PascalForge ve PascalCast ile dövme ve döküme genişledi. Hikayenin ana hatları.', g: 'kurumsal', d: '2026-05-13' },
+      { s: 'turkiyeden-dunyaya-ihracat-sureci-ve-kalite-standartlari', t: 'Türkiye’den Dünyaya: İhracat Sürecimiz ve Kalite Standartlarımız', x: 'Uluslararası müşterilerle çalışmanın gerektirdiği şey belge kadar süreç netliği. Kalite standartlarımız ve iletişim akışımız.', g: 'kurumsal', d: '2026-05-09' },
+      { s: 'tarim-makineleri-yedek-parca-tedarik-zinciri', t: 'Tarım Makineleri Sektöründe Yedek Parça Tedarik Zinciri Nasıl İşler?', x: 'Parçanın üreticiden kullanıcıya ulaşana kadar geçtiği halkalar ve bu zincirdeki gecikmelerin nedenleri.', g: 'kurumsal', d: '2026-05-05' },
+      { s: 'klasik-ve-modern-traktorler-icin-yedek-parca-bulmak', t: 'Klasik ve Modern Traktörler İçin Yedek Parça Bulmak Neden Zorlaşıyor?', x: 'Orijinal parça üretimi bir noktada durur; ama traktörler çalışmaya devam eder. Bu boşluğun nasıl doldurulduğunu anlatıyoruz.', g: 'kurumsal', d: '2026-05-01' },
+      { s: 'dogru-tedarikci-secimi-hidrolik-parca-alirken', t: 'Doğru Tedarikçi Seçimi: Hidrolik Parça Alırken Nelere Dikkat Edilmeli?', x: 'Tedarikçi seçimi tek seferlik bir karar değil, tekrarlayan bir ilişkinin başlangıcı. Değerlendirmede bakılacak beş başlık.', g: 'kurumsal', d: '2026-04-27' },
+      { s: 'sifirdan-teklife-ozel-parca-siparisi-nasil-verilir', t: 'Sıfırdan Teklife: HydroPascal ile Özel Parça Siparişi Nasıl Verilir?', x: 'İlk temastan teklife kadar beş adım. Her aşamada sizden ne bekleniyor ve süreç ne kadar sürüyor?', g: 'kurumsal', d: '2026-04-23' },
+      { s: 'toplu-alim-b2b-musterileri-icin-surec-rehberi', t: 'Toplu Alım (B2B) Müşterileri İçin Süreç Rehberi', x: 'Toplu alımda belirleyici olan fiyat değil planlama. Teslim takvimi, kalite kontrolü ve uzun vadeli ilişkinin getirdikleri.', g: 'kurumsal', d: '2026-04-19' },
+      { s: 'tarim-makineleri-yedek-parca-trendleri', t: 'Tarım Makineleri Yedek Parça Sektöründe Öne Çıkan Eğilimler', x: 'Dijital araçlar, fason üretime yönelim ve kısalan teslim beklentisi. Sektörde gözlemlenen üç eğilim ve HydroPascal’ın yaklaşımı.', g: 'kurumsal', d: '2026-04-15' },
+      { s: 'ust-baglanti-kolu-toplink-nedir-ne-ise-yarar', t: 'Üst Bağlantı Kolu (TopLink) Nedir, Ne İşe Yarar?', x: 'TopLink, ekipmanın çalışma açısını belirleyen elemandır. Tipleri, ölçü seçimi ve yanlış boyun ekipmana etkisi.', g: 'urun-rehberi', d: '2026-04-11' },
+      { s: 'dengeleme-kutusu-leveling-box-nasil-calisir', t: 'Dengeleme Kutusu (Leveling Box) Nasıl Çalışır?', x: 'Dengeleme kutusu, sağ alt kolun boyunu değiştirerek ekipmanın yatay dengesini kurar. Çalışma prensibi ve bakım belirtileri.', g: 'urun-rehberi', d: '2026-04-07' },
+      { s: 'pimler-ve-baglanti-elemanlari-secim-kriterleri', t: 'Pimler (Pin) ve Bağlantı Elemanları: Doğru Seçim Kriterleri', x: 'Pim küçük bir parça ama yükün tamamı üzerinden geçer. Çap, boy, emniyet tipi ve sertlik seçiminin mantığı.', g: 'urun-rehberi', d: '2026-04-03' },
+      { s: 'yan-kollar-side-arms-uygulama-ve-secim-rehberi', t: 'Yan Kollar (Side Arms): Uygulama Alanları ve Seçim Rehberi', x: 'Yan kollar ekipmanın ağırlığını taşıyan elemanlardır. Sabit ve teleskopik tipler arasındaki fark ve seçim mantığı.', g: 'urun-rehberi', d: '2026-03-30' },
+      { s: 'stabilizator-zinciri-ne-ise-yarar', t: 'Stabilizatör Zinciri Ne İşe Yarar, Ne Zaman Değiştirilmeli?', x: 'Stabilizatör zinciri, ekipmanın yanal salınımını sınırlar. Gevşeyen bir zincir, tüm bağlantı noktalarını yorar.', g: 'urun-rehberi', d: '2026-03-26' },
+      { s: 'hidrolik-silindirde-basinc-sinifi-nedir', t: 'Hidrolik Silindirde Basınç Sınıfı (Pressure Rating) Nedir?', x: 'Çalışma basıncı, test basıncı ve patlama basıncı farklı şeylerdir. Basınç sınıfının ne anlattığını ve nerede bulunacağını açıklıyoruz.', g: 'silindir', d: '2026-03-22' },
+      { s: 'hidrolik-yag-secimi-silindir-performansina-etkisi', t: 'Hidrolik Yağ Seçimi: Silindir Performansına Etkisi', x: 'Hidrolik yağ sadece kuvvet iletmez; yağlar, soğutur ve contalarla temas eder. Seçimi belirleyen özellikler.', g: 'bakim', d: '2026-03-18' },
+      { s: 'hidrolik-sistemde-hava-bosaltma-bleeding', t: 'Hidrolik Sistemde Hava Boşaltma (Bleeding) Nasıl Yapılır?', x: 'Sistemde kalan hava sarsıntılı hareket ve güç kaybı yaratır. Genel hava boşaltma adımları ve dikkat edilecekler.', g: 'bakim', d: '2026-03-14' },
+      { s: 'silindir-montajinda-sik-yapilan-hatalar', t: 'Silindir Montajında Sık Yapılan Hatalar ve Nasıl Önlenir?', x: 'Montaj hatalarının çoğu ilk gün fark edilmez; birkaç ay sonra sızıntı olarak geri döner. En yaygın beş hata.', g: 'bakim', d: '2026-03-10' },
+      { s: 'traktor-uc-nokta-aski-sistemi-nasil-calisir', t: 'Traktör Üç Nokta Askı Sistemi (3-Point Hitch) Nasıl Çalışır?', x: 'Üç nokta askı, ekipmanı taşır, konumlandırır ve çeker. Bileşenlerin her birinin görevi ve HPL ürün karşılıkları.', g: 'urun-rehberi', d: '2026-03-06' },
+      { s: 'oem-kod-ile-dogru-parcayi-nasil-bulursunuz', t: 'OEM Kod ile Doğru Parçayı Nasıl Bulursunuz?', x: 'Marka ve model üzerinden arama çoğu zaman yetersiz kalır. OEM kod, parçanın teknik kimliğidir — nerede bulunur, nasıl kullanılır?', g: 'urun-rehberi', d: '2026-03-02' },
+      { s: 'hidrolik-silindir-kurulum-oncesi-kontrol-listesi', t: 'Hidrolik Silindir Kurulumundan Önce Kontrol Edilmesi Gerekenler', x: 'Montaja başlamadan önce yapılacak on dakikalık kontrol, günler sürebilecek sorunları önler. Kontrol listesi ve gerekçeleri.', g: 'bakim', d: '2026-02-26' },
+      { s: 'hidrolik-sistem-bakim-takvimi-nasil-olusturulur', t: 'Tarım Ekipmanlarında Hidrolik Sistem Bakım Takvimi Nasıl Oluşturulur?', x: 'İyi bir bakım takvimi karmaşık değil, sürdürülebilir olandır. Günlük, haftalık ve mevsimsel kategorilerin kurulması.', g: 'bakim', d: '2026-02-22' },
+      { s: 'hidrolik-silindir-onarimi-mi-yeni-silindir-mi', t: 'Hidrolik Silindir Onarımı mı Yeni Silindir Alımı mı Daha Mantıklı?', x: 'Karar, hasarın nerede olduğuna bağlı. Onarımın anlamlı olduğu durumlarla değişim gerektiren durumları ayırıyoruz.', g: 'bakim', d: '2026-02-18' },
+      { s: 'fason-uretimde-teknik-cizim-nasil-hazirlanir', t: 'Fason Üretimde Çizim (Teknik Resim) Nasıl Hazırlanır?', x: 'Teknik çizim, üretimin ortak dilidir. İçinde ne bulunmalı ve çiziminiz yoksa nasıl ilerlersiniz?', g: 'fason-uretim', d: '2026-02-14' },
+      { s: 'kucuk-isletmeler-icin-dusuk-adetli-fason-uretim', t: 'Küçük İşletmeler İçin Fason Üretimde Minimum Sipariş Adedi Neden Önemli Değil?', x: 'Yüksek minimum adet, küçük işletmeler için gerçek bir engel. Esnek üretimin bunu nasıl aştığını anlatıyoruz.', g: 'fason-uretim', d: '2026-02-10' },
+      { s: 'hidrolik-silindirlerde-krom-kaplama-neden-onemli', t: 'Hidrolik Silindirlerde Krom Kaplama Neden Önemlidir?', x: 'Krom kaplama, piston kolunu hem korozyondan hem aşınmadan korur. Kaplama bozulduğunda ne olur ve nasıl fark edilir?', g: 'silindir', d: '2026-02-06' },
+      { s: 'traktor-atasmanlari-icin-dogru-hidrolik-baglanti', t: 'Traktör Ataşmanları İçin Doğru Hidrolik Bağlantı Nasıl Seçilir?', x: 'Her ataşman aynı hidrolik bağlantıyı istemez. Debi, basınç, çıkış sayısı ve bağlantı tipinin nasıl eşleştirileceği.', g: 'urun-rehberi', d: '2026-02-02' },
+      { s: 'hidrolik-silindir-satin-alirken-sik-sorulan-sorular', t: 'Sık Sorulan Sorular: Hidrolik Silindir Satın Alırken Merak Edilenler', x: 'Teslim süresi, özel ölçü, uyumluluk ve sipariş süreci hakkında en sık gelen soruların net cevapları.', g: 'sss', d: '2026-01-29' },
+      { s: 'silindir-secim-programi-sik-sorulan-teknik-sorular', t: 'HydroPascal Silindir Seçim Programı: Sık Sorulan Teknik Sorular', x: 'Hangi değeri nereden bulacaksınız, sonucu nasıl okuyacaksınız ve aracın sınırları neler? Soru-cevap formatında.', g: 'sss', d: '2026-01-25' }
+    ],
+    norm(v) { return String(v).toLocaleLowerCase('tr'); },
+    matches(p) {
+      const q = this.q.trim();
+      if (q === '') return true;
+      return this.norm(p.t + ' ' + p.x).includes(this.norm(q));
+    },
+    get found() { return this.posts.filter(p =&gt; (this.tag === 'all' || p.g === this.tag) &amp;&amp; this.matches(p)); },
+    get ordered() {
+      const list = this.found.slice();
+      if (this.sort === 'old') return list.sort((a, b) =&gt; a.d.localeCompare(b.d));
+      if (this.sort === 'az') return list.sort((a, b) =&gt; a.t.localeCompare(b.t, 'tr'));
+      return list.sort((a, b) =&gt; b.d.localeCompare(a.d));
+    },
+    get count() { return this.found.length; },
+    show(slug) { return this.found.some(p =&gt; p.s === slug); },
+    ord(slug) { const i = this.ordered.findIndex(p =&gt; p.s === slug); return i === -1 ? 999 : i; },
+    reset() { this.q = ''; this.tag = 'all'; this.sort = 'new'; }
+  }">
 
-  <article id="post-1" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
-    <div class="h-48 w-full bg-white/10 flex items-center justify-center border-b border-white/10" data-section="post-1" data-field="image">
-      <svg class="h-12 w-12 text-slate-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.25" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16.5 8.5 12a2 2 0 0 1 2.8 0l4.7 4.5M14.5 14 16 12.5a2 2 0 0 1 2.8 0L21 14.7M4 6h16M4 3h16M4 9v10.5A1.5 1.5 0 0 0 5.5 21h13a1.5 1.5 0 0 0 1.5-1.5V9"/></svg>
+  <div class="max-w-md mx-auto mb-8">
+    <label for="blog-search" class="sr-only">Yazı başlığı veya konu ara…</label>
+    <input id="blog-search" type="search" x-model="q" placeholder="Yazı başlığı veya konu ara…" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white placeholder-slate-400 focus:border-[#fb923c] focus:ring-2 focus:ring-[#fb923c]/30 focus:outline-none transition">
+  </div>
+
+  <div class="flex justify-center mb-6">
+    <div class="inline-flex flex-wrap items-center justify-center gap-1 p-1 rounded-md border border-[var(--line)] bg-[var(--surface)]" role="group" aria-label="Blog kategorisi filtresi">
+        <button type="button" @click="tag = 'all'" :class="tag === 'all' ? 'bg-[var(--accent)] text-[#fff9f4]' : 'text-[var(--ink-soft)] hover:text-[var(--ink)] hover:bg-[var(--surface-2)]'" class="px-4 py-2 rounded-md text-xs font-mono uppercase tracking-wider font-semibold transition-all duration-200">Tümü</button>
+        <button type="button" @click="tag = 'marka-uyum'" :class="tag === 'marka-uyum' ? 'bg-[var(--accent)] text-[#fff9f4]' : 'text-[var(--ink-soft)] hover:text-[var(--ink)] hover:bg-[var(--surface-2)]'" class="px-4 py-2 rounded-md text-xs font-mono uppercase tracking-wider font-semibold transition-all duration-200">Marka Uyumluluğu</button>
+        <button type="button" @click="tag = 'fason-uretim'" :class="tag === 'fason-uretim' ? 'bg-[var(--accent)] text-[#fff9f4]' : 'text-[var(--ink-soft)] hover:text-[var(--ink)] hover:bg-[var(--surface-2)]'" class="px-4 py-2 rounded-md text-xs font-mono uppercase tracking-wider font-semibold transition-all duration-200">Fason Üretim</button>
+        <button type="button" @click="tag = 'dokum-dovme'" :class="tag === 'dokum-dovme' ? 'bg-[var(--accent)] text-[#fff9f4]' : 'text-[var(--ink-soft)] hover:text-[var(--ink)] hover:bg-[var(--surface-2)]'" class="px-4 py-2 rounded-md text-xs font-mono uppercase tracking-wider font-semibold transition-all duration-200">Döküm &amp; Dövme</button>
+        <button type="button" @click="tag = 'silindir'" :class="tag === 'silindir' ? 'bg-[var(--accent)] text-[#fff9f4]' : 'text-[var(--ink-soft)] hover:text-[var(--ink)] hover:bg-[var(--surface-2)]'" class="px-4 py-2 rounded-md text-xs font-mono uppercase tracking-wider font-semibold transition-all duration-200">Silindir Hesaplama</button>
+        <button type="button" @click="tag = 'bakim'" :class="tag === 'bakim' ? 'bg-[var(--accent)] text-[#fff9f4]' : 'text-[var(--ink-soft)] hover:text-[var(--ink)] hover:bg-[var(--surface-2)]'" class="px-4 py-2 rounded-md text-xs font-mono uppercase tracking-wider font-semibold transition-all duration-200">Bakım</button>
+        <button type="button" @click="tag = 'kurumsal'" :class="tag === 'kurumsal' ? 'bg-[var(--accent)] text-[#fff9f4]' : 'text-[var(--ink-soft)] hover:text-[var(--ink)] hover:bg-[var(--surface-2)]'" class="px-4 py-2 rounded-md text-xs font-mono uppercase tracking-wider font-semibold transition-all duration-200">Kurumsal</button>
+        <button type="button" @click="tag = 'urun-rehberi'" :class="tag === 'urun-rehberi' ? 'bg-[var(--accent)] text-[#fff9f4]' : 'text-[var(--ink-soft)] hover:text-[var(--ink)] hover:bg-[var(--surface-2)]'" class="px-4 py-2 rounded-md text-xs font-mono uppercase tracking-wider font-semibold transition-all duration-200">Ürün Rehberi</button>
+        <button type="button" @click="tag = 'sss'" :class="tag === 'sss' ? 'bg-[var(--accent)] text-[#fff9f4]' : 'text-[var(--ink-soft)] hover:text-[var(--ink)] hover:bg-[var(--surface-2)]'" class="px-4 py-2 rounded-md text-xs font-mono uppercase tracking-wider font-semibold transition-all duration-200">SSS</button>
     </div>
+  </div>
+
+  <div class="flex flex-wrap items-center justify-center gap-3 mb-12">
+    <label for="blog-sort" class="text-sm font-semibold text-slate-300">Sıralama:</label>
+    <select id="blog-sort" x-model="sort" class="bg-white/5 border border-white/10 rounded-xl px-4 py-2 text-sm text-white focus:border-[#fb923c] focus:ring-2 focus:ring-[#fb923c]/30 focus:outline-none transition">
+      <option value="new" class="bg-slate-900">En Yeni</option>
+      <option value="old" class="bg-slate-900">En Eski</option>
+      <option value="az" class="bg-slate-900">Alfabetik (A-Z)</option>
+    </select>
+    <span class="font-mono text-xs uppercase tracking-wider text-slate-400" aria-live="polite"><span x-text="count">60</span> yazı bulundu</span>
+  </div>
+
+  <div x-show="count === 0" x-cloak class="flex items-center justify-center gap-3 flex-wrap text-center bg-[#fb923c]/10 border border-[#fb923c]/30 rounded-xl px-6 py-4 mb-12">
+    <span class="text-sm text-slate-200">Aradığınız konuyu bulamadınız mı? <strong class="text-white">Sorunuzu doğrudan bize iletin.</strong></span>
+    <button type="button" @click="reset()" class="text-sm font-semibold text-[#fb923c] hover:underline whitespace-nowrap">Filtreleri Temizle</button>
+    <a href="../teklif-al.html" class="text-sm font-semibold text-[#fb923c] hover:underline whitespace-nowrap">Teklif / Soru Gönder →</a>
+  </div>
+
+  <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+  <article id="post-1" data-tag="marka-uyum" x-show="show('massey-ferguson-hidrolik-silindir-secim-rehberi')" :style="{ order: ord('massey-ferguson-hidrolik-silindir-secim-rehberi') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="massey-ferguson-hidrolik-silindir-secim-rehberi.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-1" data-field="image">
+      <img src="../../assets/images/hero-tractor-field.webp" alt="Massey Ferguson Traktörler İçin Hidrolik Silindir Seçim Rehberi" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
     <div class="p-6 flex flex-col flex-1">
-      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-1" data-field="date">[TARİH BURAYA]</p>
-      <h2 class="font-bold text-lg text-white mb-2" data-section="post-1" data-field="title">[YAZI BAŞLIĞI BURAYA]</h2>
-      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-1" data-field="excerpt">[YAZI ÖZETİ BURAYA — bu yazının kısa bir tanıtımı, 1-2 cümle.]</p>
-      <a href="blog-post-template.html" data-section="post-1" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Devamını Oku →</a>
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-1" data-field="date"><time datetime="2026-09-18">18 EYLÜL 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-1" data-field="category">Marka Uyumluluğu</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-1" data-field="title"><a href="massey-ferguson-hidrolik-silindir-secim-rehberi.html" class="hover:text-[#fb923c] transition">Massey Ferguson Traktörler İçin Hidrolik Silindir Seçim Rehberi</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-1" data-field="excerpt">Massey Ferguson traktörlerde çap, strok ve bağlantı tipi uyumsuzluğu en sık görülen silindir hatalarının kaynağı. Doğru seçim için bakmanız gereken beş kriter.</p>
+      <a href="massey-ferguson-hidrolik-silindir-secim-rehberi.html" data-section="post-1" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Devamını Oku →</a>
     </div>
   </article>
-
-  <article id="post-2" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
-    <div class="h-48 w-full bg-white/10 flex items-center justify-center border-b border-white/10" data-section="post-2" data-field="image">
-      <svg class="h-12 w-12 text-slate-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.25" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16.5 8.5 12a2 2 0 0 1 2.8 0l4.7 4.5M14.5 14 16 12.5a2 2 0 0 1 2.8 0L21 14.7M4 6h16M4 3h16M4 9v10.5A1.5 1.5 0 0 0 5.5 21h13a1.5 1.5 0 0 0 1.5-1.5V9"/></svg>
-    </div>
+  <article id="post-2" data-tag="marka-uyum" x-show="show('fiat-traktor-ust-baglanti-kolu-toplink-degisimi')" :style="{ order: ord('fiat-traktor-ust-baglanti-kolu-toplink-degisimi') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="fiat-traktor-ust-baglanti-kolu-toplink-degisimi.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-2" data-field="image">
+      <img src="../../assets/images/oem-agir-hizmet-ust-baglanti-kolu.webp" alt="Fiat Traktör Üst Bağlantı Kolu (TopLink) Nasıl Değiştirilir?" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
     <div class="p-6 flex flex-col flex-1">
-      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-2" data-field="date">[TARİH BURAYA]</p>
-      <h2 class="font-bold text-lg text-white mb-2" data-section="post-2" data-field="title">[YAZI BAŞLIĞI BURAYA]</h2>
-      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-2" data-field="excerpt">[YAZI ÖZETİ BURAYA — bu yazının kısa bir tanıtımı, 1-2 cümle.]</p>
-      <a href="blog-post-template.html" data-section="post-2" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Devamını Oku →</a>
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-2" data-field="date"><time datetime="2026-09-14">14 EYLÜL 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-2" data-field="category">Marka Uyumluluğu</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-2" data-field="title"><a href="fiat-traktor-ust-baglanti-kolu-toplink-degisimi.html" class="hover:text-[#fb923c] transition">Fiat Traktör Üst Bağlantı Kolu (TopLink) Nasıl Değiştirilir?</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-2" data-field="excerpt">Oynama, gürültü ve dengesiz kaldırma çoğu zaman yorulmuş bir üst bağlantı kolunun işareti. Değişim öncesi hangi ölçüleri almanız gerektiğini anlatıyoruz.</p>
+      <a href="fiat-traktor-ust-baglanti-kolu-toplink-degisimi.html" data-section="post-2" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Devamını Oku →</a>
     </div>
   </article>
-
-  <article id="post-3" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
-    <div class="h-48 w-full bg-white/10 flex items-center justify-center border-b border-white/10" data-section="post-3" data-field="image">
-      <svg class="h-12 w-12 text-slate-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.25" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16.5 8.5 12a2 2 0 0 1 2.8 0l4.7 4.5M14.5 14 16 12.5a2 2 0 0 1 2.8 0L21 14.7M4 6h16M4 3h16M4 9v10.5A1.5 1.5 0 0 0 5.5 21h13a1.5 1.5 0 0 0 1.5-1.5V9"/></svg>
-    </div>
+  <article id="post-3" data-tag="marka-uyum" x-show="show('new-holland-oem-hidrolik-parca-uyumluluk-rehberi')" :style="{ order: ord('new-holland-oem-hidrolik-parca-uyumluluk-rehberi') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="new-holland-oem-hidrolik-parca-uyumluluk-rehberi.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-3" data-field="image">
+      <img src="../../assets/images/HPL-2.webp" alt="New Holland Traktörler İçin OEM Hidrolik Parça Uyumluluk Rehberi" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
     <div class="p-6 flex flex-col flex-1">
-      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-3" data-field="date">[TARİH BURAYA]</p>
-      <h2 class="font-bold text-lg text-white mb-2" data-section="post-3" data-field="title">[YAZI BAŞLIĞI BURAYA]</h2>
-      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-3" data-field="excerpt">[YAZI ÖZETİ BURAYA — bu yazının kısa bir tanıtımı, 1-2 cümle.]</p>
-      <a href="blog-post-template.html" data-section="post-3" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Devamını Oku →</a>
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-3" data-field="date"><time datetime="2026-09-10">10 EYLÜL 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-3" data-field="category">Marka Uyumluluğu</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-3" data-field="title"><a href="new-holland-oem-hidrolik-parca-uyumluluk-rehberi.html" class="hover:text-[#fb923c] transition">New Holland Traktörler İçin OEM Hidrolik Parça Uyumluluk Rehberi</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-3" data-field="excerpt">OEM kod eşleştirmesi, New Holland için doğru parçayı bulmanın en kısa yolu. Orijinal, OEM muadil ve kalitesiz kopya arasındaki farkı netleştiriyoruz.</p>
+      <a href="new-holland-oem-hidrolik-parca-uyumluluk-rehberi.html" data-section="post-3" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Devamını Oku →</a>
     </div>
   </article>
+  <article id="post-4" data-tag="marka-uyum" x-show="show('john-deere-dengeleme-kutusu-arizalari-ve-cozumleri')" :style="{ order: ord('john-deere-dengeleme-kutusu-arizalari-ve-cozumleri') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="john-deere-dengeleme-kutusu-arizalari-ve-cozumleri.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-4" data-field="image">
+      <img src="../../assets/images/HPL-1.webp" alt="John Deere Traktörlerde Dengeleme Kutusu (Leveling Box) Arızaları ve Çözümleri" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
+    <div class="p-6 flex flex-col flex-1">
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-4" data-field="date"><time datetime="2026-09-06">06 EYLÜL 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-4" data-field="category">Marka Uyumluluğu</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-4" data-field="title"><a href="john-deere-dengeleme-kutusu-arizalari-ve-cozumleri.html" class="hover:text-[#fb923c] transition">John Deere Traktörlerde Dengeleme Kutusu (Leveling Box) Arızaları ve Çözümleri</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-4" data-field="excerpt">Dengeleme kutusu zor çevriliyorsa, ekipman bir yana yatıyorsa sorun çoğu zaman vida mekanizmasındadır. Teşhis adımları ve karar kriterleri.</p>
+      <a href="john-deere-dengeleme-kutusu-arizalari-ve-cozumleri.html" data-section="post-4" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Devamını Oku →</a>
+    </div>
+  </article>
+  <article id="post-5" data-tag="marka-uyum" x-show="show('ford-traktor-yan-kol-degisimi-adim-adim')" :style="{ order: ord('ford-traktor-yan-kol-degisimi-adim-adim') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="ford-traktor-yan-kol-degisimi-adim-adim.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-5" data-field="image">
+      <img src="../../assets/images/HPL-3.webp" alt="Ford Traktör Yan Kol (Side Arm) Değişimi: Adım Adım Kılavuz" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
+    <div class="p-6 flex flex-col flex-1">
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-5" data-field="date"><time datetime="2026-09-02">02 EYLÜL 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-5" data-field="category">Marka Uyumluluğu</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-5" data-field="title"><a href="ford-traktor-yan-kol-degisimi-adim-adim.html" class="hover:text-[#fb923c] transition">Ford Traktör Yan Kol (Side Arm) Değişimi: Adım Adım Kılavuz</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-5" data-field="excerpt">Yan kol değişimi zor bir işlem değil ama sıralaması ve güvenlik önlemleri var. Sökmeden önce bilinmesi gerekenler ve montaj sonrası kontroller.</p>
+      <a href="ford-traktor-yan-kol-degisimi-adim-adim.html" data-section="post-5" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Devamını Oku →</a>
+    </div>
+  </article>
+  <article id="post-6" data-tag="marka-uyum" x-show="show('case-traktor-icin-dogru-hidrolik-silindir-secimi')" :style="{ order: ord('case-traktor-icin-dogru-hidrolik-silindir-secimi') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="case-traktor-icin-dogru-hidrolik-silindir-secimi.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-6" data-field="image">
+      <img src="../../assets/images/hero-hydraulic-cylinder.webp" alt="Case Traktörler İçin Doğru Silindir Nasıl Seçilir?" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
+    <div class="p-6 flex flex-col flex-1">
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-6" data-field="date"><time datetime="2026-08-29">29 AĞUSTOS 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-6" data-field="category">Marka Uyumluluğu</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-6" data-field="title"><a href="case-traktor-icin-dogru-hidrolik-silindir-secimi.html" class="hover:text-[#fb923c] transition">Case Traktörler İçin Doğru Silindir Nasıl Seçilir?</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-6" data-field="excerpt">Basınç sınıfı ve strok uyumu, Case traktörlerde silindir seçiminin iki kritik değişkeni. Yanlış seçim önce contayı, sonra pompayı yorar.</p>
+      <a href="case-traktor-icin-dogru-hidrolik-silindir-secimi.html" data-section="post-6" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Devamını Oku →</a>
+    </div>
+  </article>
+  <article id="post-7" data-tag="marka-uyum" x-show="show('deutz-traktor-pim-asinmasi-belirtileri-ve-degisim-zamani')" :style="{ order: ord('deutz-traktor-pim-asinmasi-belirtileri-ve-degisim-zamani') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="deutz-traktor-pim-asinmasi-belirtileri-ve-degisim-zamani.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-7" data-field="image">
+      <img src="../../assets/images/HPL-2.webp" alt="Deutz Traktörlerde Pim (Pin) Aşınması: Belirtileri ve Değişim Zamanı" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
+    <div class="p-6 flex flex-col flex-1">
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-7" data-field="date"><time datetime="2026-08-25">25 AĞUSTOS 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-7" data-field="category">Marka Uyumluluğu</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-7" data-field="title"><a href="deutz-traktor-pim-asinmasi-belirtileri-ve-degisim-zamani.html" class="hover:text-[#fb923c] transition">Deutz Traktörlerde Pim (Pin) Aşınması: Belirtileri ve Değişim Zamanı</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-7" data-field="excerpt">Aşınmış bir pim sadece kendini değil, oturduğu kovanı ve deliği de bozar. Belirtileri erken yakalamak parça sayısını tek kalemde tutar.</p>
+      <a href="deutz-traktor-pim-asinmasi-belirtileri-ve-degisim-zamani.html" data-section="post-7" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Devamını Oku →</a>
+    </div>
+  </article>
+  <article id="post-8" data-tag="marka-uyum" x-show="show('zetor-landini-fendt-uyumlu-yedek-parca-bulma-rehberi')" :style="{ order: ord('zetor-landini-fendt-uyumlu-yedek-parca-bulma-rehberi') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="zetor-landini-fendt-uyumlu-yedek-parca-bulma-rehberi.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-8" data-field="image">
+      <img src="../../assets/images/fabrika.webp" alt="Zetor / Landini / Fendt Uyumlu Yedek Parça Bulma Rehberi" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
+    <div class="p-6 flex flex-col flex-1">
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-8" data-field="date"><time datetime="2026-08-21">21 AĞUSTOS 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-8" data-field="category">Marka Uyumluluğu</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-8" data-field="title"><a href="zetor-landini-fendt-uyumlu-yedek-parca-bulma-rehberi.html" class="hover:text-[#fb923c] transition">Zetor / Landini / Fendt Uyumlu Yedek Parça Bulma Rehberi</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-8" data-field="excerpt">Az yaygın markalarda parça beklemek uzun sürer. OEM kod ile arama ve fason üretim, bu bekleyişi kısaltan iki pratik yol.</p>
+      <a href="zetor-landini-fendt-uyumlu-yedek-parca-bulma-rehberi.html" data-section="post-8" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Devamını Oku →</a>
+    </div>
+  </article>
+  <article id="post-9" data-tag="fason-uretim" x-show="show('8-ve-9-disli-ozel-disli-uretimi')" :style="{ order: ord('8-ve-9-disli-ozel-disli-uretimi') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="8-ve-9-disli-ozel-disli-uretimi.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-9" data-field="image">
+      <img src="../../assets/images/cnc-machining-closeup.webp" alt="8 ve 9 Dişli Özel Dişli Üretimi: Nasıl Çalışır, Kimler Talep Eder?" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
+    <div class="p-6 flex flex-col flex-1">
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-9" data-field="date"><time datetime="2026-08-17">17 AĞUSTOS 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-9" data-field="category">Fason Üretim</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-9" data-field="title"><a href="8-ve-9-disli-ozel-disli-uretimi.html" class="hover:text-[#fb923c] transition">8 ve 9 Dişli Özel Dişli Üretimi: Nasıl Çalışır, Kimler Talep Eder?</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-9" data-field="excerpt">Standart dışı diş sayıları çoğu zaman nadir ya da eski ekipmanlardan doğar. Özel dişli üretiminde hangi parametreleri önceden bildirmeniz gerekir?</p>
+      <a href="8-ve-9-disli-ozel-disli-uretimi.html" data-section="post-9" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Devamını Oku →</a>
+    </div>
+  </article>
+  <article id="post-10" data-tag="fason-uretim" x-show="show('ozel-olcu-mil-saft-imalati-fason-uretim-sureci')" :style="{ order: ord('ozel-olcu-mil-saft-imalati-fason-uretim-sureci') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="ozel-olcu-mil-saft-imalati-fason-uretim-sureci.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-10" data-field="image">
+      <img src="../../assets/images/pascalforge-machine-parts.webp" alt="Özel Ölçü Mil (Şaft) İmalatı: Fason Üretimde Süreç Nasıl İşler?" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
+    <div class="p-6 flex flex-col flex-1">
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-10" data-field="date"><time datetime="2026-08-13">13 AĞUSTOS 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-10" data-field="category">Fason Üretim</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-10" data-field="title"><a href="ozel-olcu-mil-saft-imalati-fason-uretim-sureci.html" class="hover:text-[#fb923c] transition">Özel Ölçü Mil (Şaft) İmalatı: Fason Üretimde Süreç Nasıl İşler?</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-10" data-field="excerpt">Standart mil bulunamadığında özel imalat en hızlı çözüm olabiliyor. Malzeme, tolerans ve yüzey işlemi kararlarının süreçteki yeri.</p>
+      <a href="ozel-olcu-mil-saft-imalati-fason-uretim-sureci.html" data-section="post-10" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Devamını Oku →</a>
+    </div>
+  </article>
+  <article id="post-11" data-tag="fason-uretim" x-show="show('ozel-konsol-ve-braket-imalati-tarim-makineleri')" :style="{ order: ord('ozel-konsol-ve-braket-imalati-tarim-makineleri') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="ozel-konsol-ve-braket-imalati-tarim-makineleri.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-11" data-field="image">
+      <img src="../../assets/images/pascalforge-spare-parts.webp" alt="Özel Konsol ve Braket İmalatı: Tarım Makineleri İçin Örnekler" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
+    <div class="p-6 flex flex-col flex-1">
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-11" data-field="date"><time datetime="2026-08-09">09 AĞUSTOS 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-11" data-field="category">Fason Üretim</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-11" data-field="title"><a href="ozel-konsol-ve-braket-imalati-tarim-makineleri.html" class="hover:text-[#fb923c] transition">Özel Konsol ve Braket İmalatı: Tarım Makineleri İçin Örnekler</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-11" data-field="excerpt">Standart braketler her ekipmana uymaz. Özel konsol imalatında tasarım, kesim, kaynak ve kalınlık seçiminin nasıl birleştiğini anlatıyoruz.</p>
+      <a href="ozel-konsol-ve-braket-imalati-tarim-makineleri.html" data-section="post-11" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Devamını Oku →</a>
+    </div>
+  </article>
+  <article id="post-12" data-tag="fason-uretim" x-show="show('fason-uretim-nedir-kucuk-seri-metal-parca-imalati')" :style="{ order: ord('fason-uretim-nedir-kucuk-seri-metal-parca-imalati') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="fason-uretim-nedir-kucuk-seri-metal-parca-imalati.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-12" data-field="image">
+      <img src="../../assets/images/fabrika.webp" alt="Fason Üretim Nedir? Küçük Seri Metal Parça İmalatında Bilmeniz Gerekenler" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
+    <div class="p-6 flex flex-col flex-1">
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-12" data-field="date"><time datetime="2026-08-05">05 AĞUSTOS 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-12" data-field="category">Fason Üretim</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-12" data-field="title"><a href="fason-uretim-nedir-kucuk-seri-metal-parca-imalati.html" class="hover:text-[#fb923c] transition">Fason Üretim Nedir? Küçük Seri Metal Parça İmalatında Bilmeniz Gerekenler</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-12" data-field="excerpt">Fason üretim, kendi tesisini kurmadan üretim yapmanın yolu. Seri üretimden farkı, avantajları ve süreçte nelere dikkat edilmesi gerektiği.</p>
+      <a href="fason-uretim-nedir-kucuk-seri-metal-parca-imalati.html" data-section="post-12" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Devamını Oku →</a>
+    </div>
+  </article>
+  <article id="post-13" data-tag="fason-uretim" x-show="show('numune-parcadan-seri-uretime-fason-uretim-sureci')" :style="{ order: ord('numune-parcadan-seri-uretime-fason-uretim-sureci') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="numune-parcadan-seri-uretime-fason-uretim-sureci.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-13" data-field="image">
+      <img src="../../assets/images/hero-cnc-workshop.webp" alt="Numune Parçadan Seri Üretime: HydroPascal’da Fason Üretim Süreci" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
+    <div class="p-6 flex flex-col flex-1">
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-13" data-field="date"><time datetime="2026-08-01">01 AĞUSTOS 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-13" data-field="category">Fason Üretim</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-13" data-field="title"><a href="numune-parcadan-seri-uretime-fason-uretim-sureci.html" class="hover:text-[#fb923c] transition">Numune Parçadan Seri Üretime: HydroPascal’da Fason Üretim Süreci</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-13" data-field="excerpt">Elinizde sadece kırık bir parça varsa süreç yine de başlayabilir. Ölçümden seri üretime kadar beş adımın nasıl işlediğini anlatıyoruz.</p>
+      <a href="numune-parcadan-seri-uretime-fason-uretim-sureci.html" data-section="post-13" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Devamını Oku →</a>
+    </div>
+  </article>
+  <article id="post-14" data-tag="fason-uretim" x-show="show('standart-disi-hidrolik-parca-ozel-imalat-rehberi')" :style="{ order: ord('standart-disi-hidrolik-parca-ozel-imalat-rehberi') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="standart-disi-hidrolik-parca-ozel-imalat-rehberi.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-14" data-field="image">
+      <img src="../../assets/images/hero-hydraulic-cylinder.webp" alt="Standart Dışı Hidrolik Parça İhtiyacınız mı Var? Özel İmalat Rehberi" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
+    <div class="p-6 flex flex-col flex-1">
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-14" data-field="date"><time datetime="2026-07-28">28 TEMMUZ 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-14" data-field="category">Fason Üretim</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-14" data-field="title"><a href="standart-disi-hidrolik-parca-ozel-imalat-rehberi.html" class="hover:text-[#fb923c] transition">Standart Dışı Hidrolik Parça İhtiyacınız mı Var? Özel İmalat Rehberi</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-14" data-field="excerpt">Özel flanş, adaptör veya gövde gerektiğinde hassasiyet pazarlık konusu değildir. Basınç altında çalışan parçalarda nelere dikkat edilir?</p>
+      <a href="standart-disi-hidrolik-parca-ozel-imalat-rehberi.html" data-section="post-14" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Devamını Oku →</a>
+    </div>
+  </article>
+  <article id="post-15" data-tag="fason-uretim" x-show="show('cnc-isleme-ile-hassas-parca-uretimi-toleranslar')" :style="{ order: ord('cnc-isleme-ile-hassas-parca-uretimi-toleranslar') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="cnc-isleme-ile-hassas-parca-uretimi-toleranslar.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-15" data-field="image">
+      <img src="../../assets/images/cnc-machining-closeup.webp" alt="CNC İşleme ile Hassas Parça Üretimi: Toleranslar ve Kalite Kontrolü" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
+    <div class="p-6 flex flex-col flex-1">
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-15" data-field="date"><time datetime="2026-07-24">24 TEMMUZ 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-15" data-field="category">Fason Üretim</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-15" data-field="title"><a href="cnc-isleme-ile-hassas-parca-uretimi-toleranslar.html" class="hover:text-[#fb923c] transition">CNC İşleme ile Hassas Parça Üretimi: Toleranslar ve Kalite Kontrolü</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-15" data-field="excerpt">Tolerans, bir ölçünün ne kadar sapabileceğini tanımlar. Çok dar tolerans da çok geniş tolerans kadar sorunludur — nedenini açıklıyoruz.</p>
+      <a href="cnc-isleme-ile-hassas-parca-uretimi-toleranslar.html" data-section="post-15" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Devamını Oku →</a>
+    </div>
+  </article>
+  <article id="post-16" data-tag="dokum-dovme" x-show="show('dokum-mu-dovme-mi-hangi-uretim-yontemi-uygun')" :style="{ order: ord('dokum-mu-dovme-mi-hangi-uretim-yontemi-uygun') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="dokum-mu-dovme-mi-hangi-uretim-yontemi-uygun.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-16" data-field="image">
+      <img src="../../assets/images/forgings-4.webp" alt="Döküm mü Dövme mi? Parçanıza Hangi Üretim Yöntemi Uygun?" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
+    <div class="p-6 flex flex-col flex-1">
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-16" data-field="date"><time datetime="2026-07-20">20 TEMMUZ 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-16" data-field="category">Döküm &amp; Dövme</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-16" data-field="title"><a href="dokum-mu-dovme-mi-hangi-uretim-yontemi-uygun.html" class="hover:text-[#fb923c] transition">Döküm mü Dövme mi? Parçanıza Hangi Üretim Yöntemi Uygun?</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-16" data-field="excerpt">Döküm karmaşık geometride, dövme mukavemette öne çıkar. İki yöntem arasındaki farkı ve hangi parçada hangisinin tercih edildiğini anlatıyoruz.</p>
+      <a href="dokum-mu-dovme-mi-hangi-uretim-yontemi-uygun.html" data-section="post-16" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Devamını Oku →</a>
+    </div>
+  </article>
+  <article id="post-17" data-tag="dokum-dovme" x-show="show('pascalcast-ile-dokum-parca-tedariki-surec-ve-malzeme')" :style="{ order: ord('pascalcast-ile-dokum-parca-tedariki-surec-ve-malzeme') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="pascalcast-ile-dokum-parca-tedariki-surec-ve-malzeme.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-17" data-field="image">
+      <img src="../../assets/images/pascalcast-dokum-uretim.webp" alt="PascalCast ile Döküm Parça Tedariki: Süreç ve Malzeme Seçenekleri" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
+    <div class="p-6 flex flex-col flex-1">
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-17" data-field="date"><time datetime="2026-07-16">16 TEMMUZ 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-17" data-field="category">Döküm &amp; Dövme</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-17" data-field="title"><a href="pascalcast-ile-dokum-parca-tedariki-surec-ve-malzeme.html" class="hover:text-[#fb923c] transition">PascalCast ile Döküm Parça Tedariki: Süreç ve Malzeme Seçenekleri</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-17" data-field="excerpt">Kalıp hazırlığından son işlemeye, döküm parça tedarikinin adımları ve gri döküm, sfero ile çelik döküm arasındaki temel farklar.</p>
+      <a href="pascalcast-ile-dokum-parca-tedariki-surec-ve-malzeme.html" data-section="post-17" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Devamını Oku →</a>
+    </div>
+  </article>
+  <article id="post-18" data-tag="dokum-dovme" x-show="show('pascalforge-ile-dovme-parca-uretimi-dayaniklilik')" :style="{ order: ord('pascalforge-ile-dovme-parca-uretimi-dayaniklilik') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="pascalforge-ile-dovme-parca-uretimi-dayaniklilik.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-18" data-field="image">
+      <img src="../../assets/images/pascalforge-pascal-ile-dovme.webp" alt="PascalForge ile Dövme Parça Üretimi: Dayanıklılık Neden Önemli?" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
+    <div class="p-6 flex flex-col flex-1">
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-18" data-field="date"><time datetime="2026-07-12">12 TEMMUZ 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-18" data-field="category">Döküm &amp; Dövme</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-18" data-field="title"><a href="pascalforge-ile-dovme-parca-uretimi-dayaniklilik.html" class="hover:text-[#fb923c] transition">PascalForge ile Dövme Parça Üretimi: Dayanıklılık Neden Önemli?</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-18" data-field="excerpt">Dövme, metalin iç yapısını sıkıştırarak mukavemet kazandırır. Mil ve bağlantı kolu gibi parçalarda neden tercih edildiğini açıklıyoruz.</p>
+      <a href="pascalforge-ile-dovme-parca-uretimi-dayaniklilik.html" data-section="post-18" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Devamını Oku →</a>
+    </div>
+  </article>
+  <article id="post-19" data-tag="dokum-dovme" x-show="show('tarim-makineleri-icin-dokum-parca-kalite-kriterleri')" :style="{ order: ord('tarim-makineleri-icin-dokum-parca-kalite-kriterleri') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="tarim-makineleri-icin-dokum-parca-kalite-kriterleri.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-19" data-field="image">
+      <img src="../../assets/images/pascalcast-her-dokumde-hassasiyet.webp" alt="Tarım Makineleri İçin Döküm Parça Kalite Kriterleri Nelerdir?" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
+    <div class="p-6 flex flex-col flex-1">
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-19" data-field="date"><time datetime="2026-07-08">08 TEMMUZ 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-19" data-field="category">Döküm &amp; Dövme</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-19" data-field="title"><a href="tarim-makineleri-icin-dokum-parca-kalite-kriterleri.html" class="hover:text-[#fb923c] transition">Tarım Makineleri İçin Döküm Parça Kalite Kriterleri Nelerdir?</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-19" data-field="excerpt">Döküm parçada kalite üç başlıkta toplanır: iç sağlamlık, ölçü doğruluğu ve yüzey kalitesi. Her birinin sahadaki karşılığı farklıdır.</p>
+      <a href="tarim-makineleri-icin-dokum-parca-kalite-kriterleri.html" data-section="post-19" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Devamını Oku →</a>
+    </div>
+  </article>
+  <article id="post-20" data-tag="dokum-dovme" x-show="show('dovme-parcalarda-malzeme-secimi-hangi-celik')" :style="{ order: ord('dovme-parcalarda-malzeme-secimi-hangi-celik') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="dovme-parcalarda-malzeme-secimi-hangi-celik.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-20" data-field="image">
+      <img src="../../assets/images/pascalforge-equipment.webp" alt="Dövme Parçalarda Malzeme Seçimi: Hangi Çelik Hangi Uygulamaya Uygun?" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
+    <div class="p-6 flex flex-col flex-1">
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-20" data-field="date"><time datetime="2026-07-04">04 TEMMUZ 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-20" data-field="category">Döküm &amp; Dövme</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-20" data-field="title"><a href="dovme-parcalarda-malzeme-secimi-hangi-celik.html" class="hover:text-[#fb923c] transition">Dövme Parçalarda Malzeme Seçimi: Hangi Çelik Hangi Uygulamaya Uygun?</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-20" data-field="excerpt">Karbon çeliği mi, alaşımlı çelik mi? Seçimi belirleyen şey yük, ortam ve ısıl işlem beklentisi. Yanlış seçimin sonucu erken yorulma.</p>
+      <a href="dovme-parcalarda-malzeme-secimi-hangi-celik.html" data-section="post-20" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Devamını Oku →</a>
+    </div>
+  </article>
+  <article id="post-21" data-tag="dokum-dovme" x-show="show('simulasyon-destekli-dovme-hata-payini-azaltan-teknoloji')" :style="{ order: ord('simulasyon-destekli-dovme-hata-payini-azaltan-teknoloji') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="simulasyon-destekli-dovme-hata-payini-azaltan-teknoloji.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-21" data-field="image">
+      <img src="../../assets/images/forging-simulation.webp" alt="Simülasyon Destekli Dövme: Hata Payını Azaltan Teknoloji" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
+    <div class="p-6 flex flex-col flex-1">
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-21" data-field="date"><time datetime="2026-06-30">30 HAZİRAN 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-21" data-field="category">Döküm &amp; Dövme</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-21" data-field="title"><a href="simulasyon-destekli-dovme-hata-payini-azaltan-teknoloji.html" class="hover:text-[#fb923c] transition">Simülasyon Destekli Dövme: Hata Payını Azaltan Teknoloji</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-21" data-field="excerpt">Dövmede kalıp tasarımı sonucu belirler. Simülasyon, metalin nasıl akacağını üretimden önce göstererek deneme sayısını azaltır.</p>
+      <a href="simulasyon-destekli-dovme-hata-payini-azaltan-teknoloji.html" data-section="post-21" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Devamını Oku →</a>
+    </div>
+  </article>
+  <article id="post-22" data-tag="silindir" x-show="show('hidrolik-silindir-capi-ve-strok-nasil-hesaplanir')" :style="{ order: ord('hidrolik-silindir-capi-ve-strok-nasil-hesaplanir') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="hidrolik-silindir-capi-ve-strok-nasil-hesaplanir.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-22" data-field="image">
+      <img src="../../assets/images/hero-hydraulic-cylinder.webp" alt="Hidrolik Silindir Çapı ve Strok Nasıl Hesaplanır? (Adım Adım)" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
+    <div class="p-6 flex flex-col flex-1">
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-22" data-field="date"><time datetime="2026-06-26">26 HAZİRAN 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-22" data-field="category">Silindir Hesaplama</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-22" data-field="title"><a href="hidrolik-silindir-capi-ve-strok-nasil-hesaplanir.html" class="hover:text-[#fb923c] transition">Hidrolik Silindir Çapı ve Strok Nasıl Hesaplanır? (Adım Adım)</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-22" data-field="excerpt">Kuvvet, basınç ve alanın çarpımıdır — hesap buradan başlar. Çap ve strok belirlemenin adım adım mantığını anlatıyoruz.</p>
+      <a href="hidrolik-silindir-capi-ve-strok-nasil-hesaplanir.html" data-section="post-22" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Devamını Oku →</a>
+    </div>
+  </article>
+  <article id="post-23" data-tag="silindir" x-show="show('yanlis-silindir-seciminin-maliyeti-5-hata')" :style="{ order: ord('yanlis-silindir-seciminin-maliyeti-5-hata') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="yanlis-silindir-seciminin-maliyeti-5-hata.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-23" data-field="image">
+      <img src="../../assets/images/HPL-5.webp" alt="Yanlış Silindir Seçiminin Maliyeti: Sık Yapılan 5 Hata" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
+    <div class="p-6 flex flex-col flex-1">
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-23" data-field="date"><time datetime="2026-06-22">22 HAZİRAN 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-23" data-field="category">Silindir Hesaplama</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-23" data-field="title"><a href="yanlis-silindir-seciminin-maliyeti-5-hata.html" class="hover:text-[#fb923c] transition">Yanlış Silindir Seçiminin Maliyeti: Sık Yapılan 5 Hata</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-23" data-field="excerpt">Beş yaygın seçim hatası ve her birinin sahadaki somut karşılığı: erken arıza, sızıntı, performans kaybı ve gereksiz maliyet.</p>
+      <a href="yanlis-silindir-seciminin-maliyeti-5-hata.html" data-section="post-23" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Devamını Oku →</a>
+    </div>
+  </article>
+  <article id="post-24" data-tag="silindir" x-show="show('silindir-secim-programi-ile-dogru-silindiri-bulun')" :style="{ order: ord('silindir-secim-programi-ile-dogru-silindiri-bulun') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="silindir-secim-programi-ile-dogru-silindiri-bulun.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-24" data-field="image">
+      <img src="../../assets/images/hpl-guc-icin-insa-edildi.webp" alt="Silindir Seçim Programımızla Doğru Silindiri Bulun" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
+    <div class="p-6 flex flex-col flex-1">
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-24" data-field="date"><time datetime="2026-06-18">18 HAZİRAN 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-24" data-field="category">Silindir Hesaplama</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-24" data-field="title"><a href="silindir-secim-programi-ile-dogru-silindiri-bulun.html" class="hover:text-[#fb923c] transition">Silindir Seçim Programımızla Doğru Silindiri Bulun</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-24" data-field="excerpt">Beş değer girerek üretilen kuvveti ve eşleşen ürünleri görebilirsiniz. Programın ne yaptığını ve çıktısının nasıl okunacağını anlatıyoruz.</p>
+      <a href="silindir-secim-programi-ile-dogru-silindiri-bulun.html" data-section="post-24" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Devamını Oku →</a>
+    </div>
+  </article>
+  <article id="post-25" data-tag="silindir" x-show="show('cift-etkili-vs-tek-etkili-silindir-farki')" :style="{ order: ord('cift-etkili-vs-tek-etkili-silindir-farki') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="cift-etkili-vs-tek-etkili-silindir-farki.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-25" data-field="image">
+      <img src="../../assets/images/HPL-6.webp" alt="Çift Etkili vs Tek Etkili Silindir: Hangi Uygulamada Hangisi?" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
+    <div class="p-6 flex flex-col flex-1">
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-25" data-field="date"><time datetime="2026-06-14">14 HAZİRAN 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-25" data-field="category">Silindir Hesaplama</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-25" data-field="title"><a href="cift-etkili-vs-tek-etkili-silindir-farki.html" class="hover:text-[#fb923c] transition">Çift Etkili vs Tek Etkili Silindir: Hangi Uygulamada Hangisi?</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-25" data-field="excerpt">Tek etkili silindir tek yönde iter, geri dönüş yerçekimi veya yayla olur. Çift etkilide her iki yön de kontrollüdür. Hangisi nerede kullanılır?</p>
+      <a href="cift-etkili-vs-tek-etkili-silindir-farki.html" data-section="post-25" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Devamını Oku →</a>
+    </div>
+  </article>
+  <article id="post-26" data-tag="silindir" x-show="show('pompa-basinci-ve-silindir-performansi-iliskisi')" :style="{ order: ord('pompa-basinci-ve-silindir-performansi-iliskisi') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="pompa-basinci-ve-silindir-performansi-iliskisi.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-26" data-field="image">
+      <img src="../../assets/images/hero-factory-production-line.webp" alt="Pompa Basıncı ve Silindir Performansı Arasındaki İlişki" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
+    <div class="p-6 flex flex-col flex-1">
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-26" data-field="date"><time datetime="2026-06-10">10 HAZİRAN 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-26" data-field="category">Silindir Hesaplama</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-26" data-field="title"><a href="pompa-basinci-ve-silindir-performansi-iliskisi.html" class="hover:text-[#fb923c] transition">Pompa Basıncı ve Silindir Performansı Arasındaki İlişki</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-26" data-field="excerpt">Pompa basıncı kuvveti, pompa debisi hızı belirler. İkisinin silindirle nasıl eşleştirileceğini ve uyumsuzluğun sonuçlarını anlatıyoruz.</p>
+      <a href="pompa-basinci-ve-silindir-performansi-iliskisi.html" data-section="post-26" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Devamını Oku →</a>
+    </div>
+  </article>
+  <article id="post-27" data-tag="bakim" x-show="show('hidrolik-silindirde-sizinti-nedenleri-ve-cozumleri')" :style="{ order: ord('hidrolik-silindirde-sizinti-nedenleri-ve-cozumleri') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="hidrolik-silindirde-sizinti-nedenleri-ve-cozumleri.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-27" data-field="image">
+      <img src="../../assets/images/HPL-7.webp" alt="Hidrolik Silindirde Sızıntı: Nedenleri ve Çözüm Yolları" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
+    <div class="p-6 flex flex-col flex-1">
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-27" data-field="date"><time datetime="2026-06-06">06 HAZİRAN 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-27" data-field="category">Bakım</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-27" data-field="title"><a href="hidrolik-silindirde-sizinti-nedenleri-ve-cozumleri.html" class="hover:text-[#fb923c] transition">Hidrolik Silindirde Sızıntı: Nedenleri ve Çözüm Yolları</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-27" data-field="excerpt">Sızıntının üç ana kaynağı var ve her biri farklı bir müdahale gerektiriyor. Nereden geldiğini ayırt etmenin pratik yolları.</p>
+      <a href="hidrolik-silindirde-sizinti-nedenleri-ve-cozumleri.html" data-section="post-27" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Devamını Oku →</a>
+    </div>
+  </article>
+  <article id="post-28" data-tag="bakim" x-show="show('conta-seal-degisimi-ne-zaman-gerekir')" :style="{ order: ord('conta-seal-degisimi-ne-zaman-gerekir') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="conta-seal-degisimi-ne-zaman-gerekir.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-28" data-field="image">
+      <img src="../../assets/images/HPL-8.webp" alt="Conta (Seal) Değişimi Ne Zaman Gerekir? Belirtiler ve Bakım Takvimi" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
+    <div class="p-6 flex flex-col flex-1">
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-28" data-field="date"><time datetime="2026-06-02">02 HAZİRAN 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-28" data-field="category">Bakım</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-28" data-field="title"><a href="conta-seal-degisimi-ne-zaman-gerekir.html" class="hover:text-[#fb923c] transition">Conta (Seal) Değişimi Ne Zaman Gerekir? Belirtiler ve Bakım Takvimi</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-28" data-field="excerpt">Conta aşınması güç kaybı ve sızıntı olarak görülür. Değişim zamanını nasıl belirleyeceğinizi ve komple değişim kararını anlatıyoruz.</p>
+      <a href="conta-seal-degisimi-ne-zaman-gerekir.html" data-section="post-28" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Devamını Oku →</a>
+    </div>
+  </article>
+  <article id="post-29" data-tag="bakim" x-show="show('hidrolik-silindir-omrunu-uzatan-7-bakim-aliskanligi')" :style="{ order: ord('hidrolik-silindir-omrunu-uzatan-7-bakim-aliskanligi') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="hidrolik-silindir-omrunu-uzatan-7-bakim-aliskanligi.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-29" data-field="image">
+      <img src="../../assets/images/hpl-guc-icin-insa-edildi.webp" alt="Hidrolik Silindir Ömrünü Uzatan 7 Bakım Alışkanlığı" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
+    <div class="p-6 flex flex-col flex-1">
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-29" data-field="date"><time datetime="2026-05-29">29 MAYIS 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-29" data-field="category">Bakım</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-29" data-field="title"><a href="hidrolik-silindir-omrunu-uzatan-7-bakim-aliskanligi.html" class="hover:text-[#fb923c] transition">Hidrolik Silindir Ömrünü Uzatan 7 Bakım Alışkanlığı</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-29" data-field="excerpt">Yedi basit alışkanlık, silindir ömrünü belirgin şekilde uzatıyor. Her birinin neden işe yaradığını kısaca açıklıyoruz.</p>
+      <a href="hidrolik-silindir-omrunu-uzatan-7-bakim-aliskanligi.html" data-section="post-29" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Devamını Oku →</a>
+    </div>
+  </article>
+  <article id="post-30" data-tag="bakim" x-show="show('silindir-pistonunda-cizik-asinma-onarim-mi-degisim-mi')" :style="{ order: ord('silindir-pistonunda-cizik-asinma-onarim-mi-degisim-mi') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="silindir-pistonunda-cizik-asinma-onarim-mi-degisim-mi.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-30" data-field="image">
+      <img src="../../assets/images/hero-hydraulic-cylinder.webp" alt="Silindir Pistonunda Çizik/Aşınma: Onarım mı Değişim mi?" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
+    <div class="p-6 flex flex-col flex-1">
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-30" data-field="date"><time datetime="2026-05-25">25 MAYIS 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-30" data-field="category">Bakım</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-30" data-field="title"><a href="silindir-pistonunda-cizik-asinma-onarim-mi-degisim-mi.html" class="hover:text-[#fb923c] transition">Silindir Pistonunda Çizik/Aşınma: Onarım mı Değişim mi?</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-30" data-field="excerpt">Her çizik parça değişimi gerektirmez. Onarımın mümkün olduğu durumlarla doğrudan değişim gerektiren hasarı ayırt etmenin yolları.</p>
+      <a href="silindir-pistonunda-cizik-asinma-onarim-mi-degisim-mi.html" data-section="post-30" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Devamını Oku →</a>
+    </div>
+  </article>
+  <article id="post-31" data-tag="bakim" x-show="show('kisin-hidrolik-ekipman-bakimi')" :style="{ order: ord('kisin-hidrolik-ekipman-bakimi') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="kisin-hidrolik-ekipman-bakimi.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-31" data-field="image">
+      <img src="../../assets/images/hero-tractor-field.webp" alt="Kışın Hidrolik Ekipman Bakımı: Soğuk Havada Dikkat Edilmesi Gerekenler" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
+    <div class="p-6 flex flex-col flex-1">
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-31" data-field="date"><time datetime="2026-05-21">21 MAYIS 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-31" data-field="category">Bakım</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-31" data-field="title"><a href="kisin-hidrolik-ekipman-bakimi.html" class="hover:text-[#fb923c] transition">Kışın Hidrolik Ekipman Bakımı: Soğuk Havada Dikkat Edilmesi Gerekenler</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-31" data-field="excerpt">Soğuk, hidrolik yağı koyulaştırır ve contaları sertleştirir. Kış öncesi kontrol listesi ve depolama önerileri.</p>
+      <a href="kisin-hidrolik-ekipman-bakimi.html" data-section="post-31" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Devamını Oku →</a>
+    </div>
+  </article>
+  <article id="post-32" data-tag="bakim" x-show="show('oem-mi-muadil-mi-yedek-parca-secimi')" :style="{ order: ord('oem-mi-muadil-mi-yedek-parca-secimi') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="oem-mi-muadil-mi-yedek-parca-secimi.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-32" data-field="image">
+      <img src="../../assets/images/HPL-4.webp" alt="OEM mi Muadil mi? Yedek Parça Seçerken Bilmeniz Gerekenler" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
+    <div class="p-6 flex flex-col flex-1">
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-32" data-field="date"><time datetime="2026-05-17">17 MAYIS 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-32" data-field="category">Bakım</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-32" data-field="title"><a href="oem-mi-muadil-mi-yedek-parca-secimi.html" class="hover:text-[#fb923c] transition">OEM mi Muadil mi? Yedek Parça Seçerken Bilmeniz Gerekenler</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-32" data-field="excerpt">Muadil her zaman düşük kalite demek değil. Farkı belirleyen malzeme, tolerans ve tedarikçi şeffaflığı — bunları nasıl değerlendirirsiniz?</p>
+      <a href="oem-mi-muadil-mi-yedek-parca-secimi.html" data-section="post-32" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Devamını Oku →</a>
+    </div>
+  </article>
+  <article id="post-33" data-tag="kurumsal" x-show="show('hydropascal-hikayesi-2019dan-bugune')" :style="{ order: ord('hydropascal-hikayesi-2019dan-bugune') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="hydropascal-hikayesi-2019dan-bugune.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-33" data-field="image">
+      <img src="../../assets/images/fabrika.webp" alt="HydroPascal’ın Hikayesi: 2019’dan Bugüne Tarım Makineleri Yedek Parça Üretimi" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
+    <div class="p-6 flex flex-col flex-1">
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-33" data-field="date"><time datetime="2026-05-13">13 MAYIS 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-33" data-field="category">Kurumsal</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-33" data-field="title"><a href="hydropascal-hikayesi-2019dan-bugune.html" class="hover:text-[#fb923c] transition">HydroPascal’ın Hikayesi: 2019’dan Bugüne Tarım Makineleri Yedek Parça Üretimi</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-33" data-field="excerpt">Konya’da 2019’da kurulan HydroPascal, 2021’de PascalForge ve PascalCast ile dövme ve döküme genişledi. Hikayenin ana hatları.</p>
+      <a href="hydropascal-hikayesi-2019dan-bugune.html" data-section="post-33" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Devamını Oku →</a>
+    </div>
+  </article>
+  <article id="post-34" data-tag="kurumsal" x-show="show('turkiyeden-dunyaya-ihracat-sureci-ve-kalite-standartlari')" :style="{ order: ord('turkiyeden-dunyaya-ihracat-sureci-ve-kalite-standartlari') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="turkiyeden-dunyaya-ihracat-sureci-ve-kalite-standartlari.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-34" data-field="image">
+      <img src="../../assets/images/hero-factory-production-line.webp" alt="Türkiye’den Dünyaya: İhracat Sürecimiz ve Kalite Standartlarımız" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
+    <div class="p-6 flex flex-col flex-1">
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-34" data-field="date"><time datetime="2026-05-09">09 MAYIS 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-34" data-field="category">Kurumsal</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-34" data-field="title"><a href="turkiyeden-dunyaya-ihracat-sureci-ve-kalite-standartlari.html" class="hover:text-[#fb923c] transition">Türkiye’den Dünyaya: İhracat Sürecimiz ve Kalite Standartlarımız</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-34" data-field="excerpt">Uluslararası müşterilerle çalışmanın gerektirdiği şey belge kadar süreç netliği. Kalite standartlarımız ve iletişim akışımız.</p>
+      <a href="turkiyeden-dunyaya-ihracat-sureci-ve-kalite-standartlari.html" data-section="post-34" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Devamını Oku →</a>
+    </div>
+  </article>
+  <article id="post-35" data-tag="kurumsal" x-show="show('tarim-makineleri-yedek-parca-tedarik-zinciri')" :style="{ order: ord('tarim-makineleri-yedek-parca-tedarik-zinciri') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="tarim-makineleri-yedek-parca-tedarik-zinciri.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-35" data-field="image">
+      <img src="../../assets/images/pascalforge-spare-parts.webp" alt="Tarım Makineleri Sektöründe Yedek Parça Tedarik Zinciri Nasıl İşler?" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
+    <div class="p-6 flex flex-col flex-1">
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-35" data-field="date"><time datetime="2026-05-05">05 MAYIS 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-35" data-field="category">Kurumsal</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-35" data-field="title"><a href="tarim-makineleri-yedek-parca-tedarik-zinciri.html" class="hover:text-[#fb923c] transition">Tarım Makineleri Sektöründe Yedek Parça Tedarik Zinciri Nasıl İşler?</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-35" data-field="excerpt">Parçanın üreticiden kullanıcıya ulaşana kadar geçtiği halkalar ve bu zincirdeki gecikmelerin nedenleri.</p>
+      <a href="tarim-makineleri-yedek-parca-tedarik-zinciri.html" data-section="post-35" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Devamını Oku →</a>
+    </div>
+  </article>
+  <article id="post-36" data-tag="kurumsal" x-show="show('klasik-ve-modern-traktorler-icin-yedek-parca-bulmak')" :style="{ order: ord('klasik-ve-modern-traktorler-icin-yedek-parca-bulmak') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="klasik-ve-modern-traktorler-icin-yedek-parca-bulmak.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-36" data-field="image">
+      <img src="../../assets/images/oem-agir-hizmet-ust-baglanti-kolu.webp" alt="Klasik ve Modern Traktörler İçin Yedek Parça Bulmak Neden Zorlaşıyor?" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
+    <div class="p-6 flex flex-col flex-1">
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-36" data-field="date"><time datetime="2026-05-01">01 MAYIS 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-36" data-field="category">Kurumsal</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-36" data-field="title"><a href="klasik-ve-modern-traktorler-icin-yedek-parca-bulmak.html" class="hover:text-[#fb923c] transition">Klasik ve Modern Traktörler İçin Yedek Parça Bulmak Neden Zorlaşıyor?</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-36" data-field="excerpt">Orijinal parça üretimi bir noktada durur; ama traktörler çalışmaya devam eder. Bu boşluğun nasıl doldurulduğunu anlatıyoruz.</p>
+      <a href="klasik-ve-modern-traktorler-icin-yedek-parca-bulmak.html" data-section="post-36" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Devamını Oku →</a>
+    </div>
+  </article>
+  <article id="post-37" data-tag="kurumsal" x-show="show('dogru-tedarikci-secimi-hidrolik-parca-alirken')" :style="{ order: ord('dogru-tedarikci-secimi-hidrolik-parca-alirken') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="dogru-tedarikci-secimi-hidrolik-parca-alirken.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-37" data-field="image">
+      <img src="../../assets/images/hero-cnc-workshop.webp" alt="Doğru Tedarikçi Seçimi: Hidrolik Parça Alırken Nelere Dikkat Edilmeli?" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
+    <div class="p-6 flex flex-col flex-1">
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-37" data-field="date"><time datetime="2026-04-27">27 NİSAN 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-37" data-field="category">Kurumsal</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-37" data-field="title"><a href="dogru-tedarikci-secimi-hidrolik-parca-alirken.html" class="hover:text-[#fb923c] transition">Doğru Tedarikçi Seçimi: Hidrolik Parça Alırken Nelere Dikkat Edilmeli?</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-37" data-field="excerpt">Tedarikçi seçimi tek seferlik bir karar değil, tekrarlayan bir ilişkinin başlangıcı. Değerlendirmede bakılacak beş başlık.</p>
+      <a href="dogru-tedarikci-secimi-hidrolik-parca-alirken.html" data-section="post-37" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Devamını Oku →</a>
+    </div>
+  </article>
+  <article id="post-38" data-tag="kurumsal" x-show="show('sifirdan-teklife-ozel-parca-siparisi-nasil-verilir')" :style="{ order: ord('sifirdan-teklife-ozel-parca-siparisi-nasil-verilir') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="sifirdan-teklife-ozel-parca-siparisi-nasil-verilir.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-38" data-field="image">
+      <img src="../../assets/images/cnc-machining-closeup.webp" alt="Sıfırdan Teklife: HydroPascal ile Özel Parça Siparişi Nasıl Verilir?" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
+    <div class="p-6 flex flex-col flex-1">
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-38" data-field="date"><time datetime="2026-04-23">23 NİSAN 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-38" data-field="category">Kurumsal</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-38" data-field="title"><a href="sifirdan-teklife-ozel-parca-siparisi-nasil-verilir.html" class="hover:text-[#fb923c] transition">Sıfırdan Teklife: HydroPascal ile Özel Parça Siparişi Nasıl Verilir?</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-38" data-field="excerpt">İlk temastan teklife kadar beş adım. Her aşamada sizden ne bekleniyor ve süreç ne kadar sürüyor?</p>
+      <a href="sifirdan-teklife-ozel-parca-siparisi-nasil-verilir.html" data-section="post-38" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Devamını Oku →</a>
+    </div>
+  </article>
+  <article id="post-39" data-tag="kurumsal" x-show="show('toplu-alim-b2b-musterileri-icin-surec-rehberi')" :style="{ order: ord('toplu-alim-b2b-musterileri-icin-surec-rehberi') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="toplu-alim-b2b-musterileri-icin-surec-rehberi.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-39" data-field="image">
+      <img src="../../assets/images/pascalcast-dokum-uretim.webp" alt="Toplu Alım (B2B) Müşterileri İçin Süreç Rehberi" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
+    <div class="p-6 flex flex-col flex-1">
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-39" data-field="date"><time datetime="2026-04-19">19 NİSAN 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-39" data-field="category">Kurumsal</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-39" data-field="title"><a href="toplu-alim-b2b-musterileri-icin-surec-rehberi.html" class="hover:text-[#fb923c] transition">Toplu Alım (B2B) Müşterileri İçin Süreç Rehberi</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-39" data-field="excerpt">Toplu alımda belirleyici olan fiyat değil planlama. Teslim takvimi, kalite kontrolü ve uzun vadeli ilişkinin getirdikleri.</p>
+      <a href="toplu-alim-b2b-musterileri-icin-surec-rehberi.html" data-section="post-39" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Devamını Oku →</a>
+    </div>
+  </article>
+  <article id="post-40" data-tag="kurumsal" x-show="show('tarim-makineleri-yedek-parca-trendleri')" :style="{ order: ord('tarim-makineleri-yedek-parca-trendleri') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="tarim-makineleri-yedek-parca-trendleri.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-40" data-field="image">
+      <img src="../../assets/images/hpl-guc-icin-insa-edildi.webp" alt="Tarım Makineleri Yedek Parça Sektöründe Öne Çıkan Eğilimler" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
+    <div class="p-6 flex flex-col flex-1">
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-40" data-field="date"><time datetime="2026-04-15">15 NİSAN 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-40" data-field="category">Kurumsal</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-40" data-field="title"><a href="tarim-makineleri-yedek-parca-trendleri.html" class="hover:text-[#fb923c] transition">Tarım Makineleri Yedek Parça Sektöründe Öne Çıkan Eğilimler</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-40" data-field="excerpt">Dijital araçlar, fason üretime yönelim ve kısalan teslim beklentisi. Sektörde gözlemlenen üç eğilim ve HydroPascal’ın yaklaşımı.</p>
+      <a href="tarim-makineleri-yedek-parca-trendleri.html" data-section="post-40" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Devamını Oku →</a>
+    </div>
+  </article>
+  <article id="post-41" data-tag="urun-rehberi" x-show="show('ust-baglanti-kolu-toplink-nedir-ne-ise-yarar')" :style="{ order: ord('ust-baglanti-kolu-toplink-nedir-ne-ise-yarar') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="ust-baglanti-kolu-toplink-nedir-ne-ise-yarar.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-41" data-field="image">
+      <img src="../../assets/images/oem-agir-hizmet-ust-baglanti-kolu.webp" alt="Üst Bağlantı Kolu (TopLink) Nedir, Ne İşe Yarar?" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
+    <div class="p-6 flex flex-col flex-1">
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-41" data-field="date"><time datetime="2026-04-11">11 NİSAN 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-41" data-field="category">Ürün Rehberi</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-41" data-field="title"><a href="ust-baglanti-kolu-toplink-nedir-ne-ise-yarar.html" class="hover:text-[#fb923c] transition">Üst Bağlantı Kolu (TopLink) Nedir, Ne İşe Yarar?</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-41" data-field="excerpt">TopLink, ekipmanın çalışma açısını belirleyen elemandır. Tipleri, ölçü seçimi ve yanlış boyun ekipmana etkisi.</p>
+      <a href="ust-baglanti-kolu-toplink-nedir-ne-ise-yarar.html" data-section="post-41" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Devamını Oku →</a>
+    </div>
+  </article>
+  <article id="post-42" data-tag="urun-rehberi" x-show="show('dengeleme-kutusu-leveling-box-nasil-calisir')" :style="{ order: ord('dengeleme-kutusu-leveling-box-nasil-calisir') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="dengeleme-kutusu-leveling-box-nasil-calisir.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-42" data-field="image">
+      <img src="../../assets/images/HPL-1.webp" alt="Dengeleme Kutusu (Leveling Box) Nasıl Çalışır?" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
+    <div class="p-6 flex flex-col flex-1">
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-42" data-field="date"><time datetime="2026-04-07">07 NİSAN 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-42" data-field="category">Ürün Rehberi</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-42" data-field="title"><a href="dengeleme-kutusu-leveling-box-nasil-calisir.html" class="hover:text-[#fb923c] transition">Dengeleme Kutusu (Leveling Box) Nasıl Çalışır?</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-42" data-field="excerpt">Dengeleme kutusu, sağ alt kolun boyunu değiştirerek ekipmanın yatay dengesini kurar. Çalışma prensibi ve bakım belirtileri.</p>
+      <a href="dengeleme-kutusu-leveling-box-nasil-calisir.html" data-section="post-42" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Devamını Oku →</a>
+    </div>
+  </article>
+  <article id="post-43" data-tag="urun-rehberi" x-show="show('pimler-ve-baglanti-elemanlari-secim-kriterleri')" :style="{ order: ord('pimler-ve-baglanti-elemanlari-secim-kriterleri') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="pimler-ve-baglanti-elemanlari-secim-kriterleri.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-43" data-field="image">
+      <img src="../../assets/images/HPL-2.webp" alt="Pimler (Pin) ve Bağlantı Elemanları: Doğru Seçim Kriterleri" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
+    <div class="p-6 flex flex-col flex-1">
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-43" data-field="date"><time datetime="2026-04-03">03 NİSAN 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-43" data-field="category">Ürün Rehberi</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-43" data-field="title"><a href="pimler-ve-baglanti-elemanlari-secim-kriterleri.html" class="hover:text-[#fb923c] transition">Pimler (Pin) ve Bağlantı Elemanları: Doğru Seçim Kriterleri</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-43" data-field="excerpt">Pim küçük bir parça ama yükün tamamı üzerinden geçer. Çap, boy, emniyet tipi ve sertlik seçiminin mantığı.</p>
+      <a href="pimler-ve-baglanti-elemanlari-secim-kriterleri.html" data-section="post-43" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Devamını Oku →</a>
+    </div>
+  </article>
+  <article id="post-44" data-tag="urun-rehberi" x-show="show('yan-kollar-side-arms-uygulama-ve-secim-rehberi')" :style="{ order: ord('yan-kollar-side-arms-uygulama-ve-secim-rehberi') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="yan-kollar-side-arms-uygulama-ve-secim-rehberi.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-44" data-field="image">
+      <img src="../../assets/images/HPL-3.webp" alt="Yan Kollar (Side Arms): Uygulama Alanları ve Seçim Rehberi" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
+    <div class="p-6 flex flex-col flex-1">
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-44" data-field="date"><time datetime="2026-03-30">30 MART 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-44" data-field="category">Ürün Rehberi</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-44" data-field="title"><a href="yan-kollar-side-arms-uygulama-ve-secim-rehberi.html" class="hover:text-[#fb923c] transition">Yan Kollar (Side Arms): Uygulama Alanları ve Seçim Rehberi</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-44" data-field="excerpt">Yan kollar ekipmanın ağırlığını taşıyan elemanlardır. Sabit ve teleskopik tipler arasındaki fark ve seçim mantığı.</p>
+      <a href="yan-kollar-side-arms-uygulama-ve-secim-rehberi.html" data-section="post-44" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Devamını Oku →</a>
+    </div>
+  </article>
+  <article id="post-45" data-tag="urun-rehberi" x-show="show('stabilizator-zinciri-ne-ise-yarar')" :style="{ order: ord('stabilizator-zinciri-ne-ise-yarar') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="stabilizator-zinciri-ne-ise-yarar.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-45" data-field="image">
+      <img src="../../assets/images/HPL-4.webp" alt="Stabilizatör Zinciri Ne İşe Yarar, Ne Zaman Değiştirilmeli?" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
+    <div class="p-6 flex flex-col flex-1">
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-45" data-field="date"><time datetime="2026-03-26">26 MART 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-45" data-field="category">Ürün Rehberi</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-45" data-field="title"><a href="stabilizator-zinciri-ne-ise-yarar.html" class="hover:text-[#fb923c] transition">Stabilizatör Zinciri Ne İşe Yarar, Ne Zaman Değiştirilmeli?</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-45" data-field="excerpt">Stabilizatör zinciri, ekipmanın yanal salınımını sınırlar. Gevşeyen bir zincir, tüm bağlantı noktalarını yorar.</p>
+      <a href="stabilizator-zinciri-ne-ise-yarar.html" data-section="post-45" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Devamını Oku →</a>
+    </div>
+  </article>
+  <article id="post-46" data-tag="silindir" x-show="show('hidrolik-silindirde-basinc-sinifi-nedir')" :style="{ order: ord('hidrolik-silindirde-basinc-sinifi-nedir') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="hidrolik-silindirde-basinc-sinifi-nedir.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-46" data-field="image">
+      <img src="../../assets/images/hero-hydraulic-cylinder.webp" alt="Hidrolik Silindirde Basınç Sınıfı (Pressure Rating) Nedir?" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
+    <div class="p-6 flex flex-col flex-1">
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-46" data-field="date"><time datetime="2026-03-22">22 MART 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-46" data-field="category">Silindir Hesaplama</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-46" data-field="title"><a href="hidrolik-silindirde-basinc-sinifi-nedir.html" class="hover:text-[#fb923c] transition">Hidrolik Silindirde Basınç Sınıfı (Pressure Rating) Nedir?</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-46" data-field="excerpt">Çalışma basıncı, test basıncı ve patlama basıncı farklı şeylerdir. Basınç sınıfının ne anlattığını ve nerede bulunacağını açıklıyoruz.</p>
+      <a href="hidrolik-silindirde-basinc-sinifi-nedir.html" data-section="post-46" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Devamını Oku →</a>
+    </div>
+  </article>
+  <article id="post-47" data-tag="bakim" x-show="show('hidrolik-yag-secimi-silindir-performansina-etkisi')" :style="{ order: ord('hidrolik-yag-secimi-silindir-performansina-etkisi') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="hidrolik-yag-secimi-silindir-performansina-etkisi.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-47" data-field="image">
+      <img src="../../assets/images/HPL-5.webp" alt="Hidrolik Yağ Seçimi: Silindir Performansına Etkisi" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
+    <div class="p-6 flex flex-col flex-1">
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-47" data-field="date"><time datetime="2026-03-18">18 MART 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-47" data-field="category">Bakım</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-47" data-field="title"><a href="hidrolik-yag-secimi-silindir-performansina-etkisi.html" class="hover:text-[#fb923c] transition">Hidrolik Yağ Seçimi: Silindir Performansına Etkisi</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-47" data-field="excerpt">Hidrolik yağ sadece kuvvet iletmez; yağlar, soğutur ve contalarla temas eder. Seçimi belirleyen özellikler.</p>
+      <a href="hidrolik-yag-secimi-silindir-performansina-etkisi.html" data-section="post-47" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Devamını Oku →</a>
+    </div>
+  </article>
+  <article id="post-48" data-tag="bakim" x-show="show('hidrolik-sistemde-hava-bosaltma-bleeding')" :style="{ order: ord('hidrolik-sistemde-hava-bosaltma-bleeding') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="hidrolik-sistemde-hava-bosaltma-bleeding.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-48" data-field="image">
+      <img src="../../assets/images/HPL-6.webp" alt="Hidrolik Sistemde Hava Boşaltma (Bleeding) Nasıl Yapılır?" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
+    <div class="p-6 flex flex-col flex-1">
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-48" data-field="date"><time datetime="2026-03-14">14 MART 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-48" data-field="category">Bakım</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-48" data-field="title"><a href="hidrolik-sistemde-hava-bosaltma-bleeding.html" class="hover:text-[#fb923c] transition">Hidrolik Sistemde Hava Boşaltma (Bleeding) Nasıl Yapılır?</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-48" data-field="excerpt">Sistemde kalan hava sarsıntılı hareket ve güç kaybı yaratır. Genel hava boşaltma adımları ve dikkat edilecekler.</p>
+      <a href="hidrolik-sistemde-hava-bosaltma-bleeding.html" data-section="post-48" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Devamını Oku →</a>
+    </div>
+  </article>
+  <article id="post-49" data-tag="bakim" x-show="show('silindir-montajinda-sik-yapilan-hatalar')" :style="{ order: ord('silindir-montajinda-sik-yapilan-hatalar') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="silindir-montajinda-sik-yapilan-hatalar.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-49" data-field="image">
+      <img src="../../assets/images/HPL-7.webp" alt="Silindir Montajında Sık Yapılan Hatalar ve Nasıl Önlenir?" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
+    <div class="p-6 flex flex-col flex-1">
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-49" data-field="date"><time datetime="2026-03-10">10 MART 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-49" data-field="category">Bakım</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-49" data-field="title"><a href="silindir-montajinda-sik-yapilan-hatalar.html" class="hover:text-[#fb923c] transition">Silindir Montajında Sık Yapılan Hatalar ve Nasıl Önlenir?</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-49" data-field="excerpt">Montaj hatalarının çoğu ilk gün fark edilmez; birkaç ay sonra sızıntı olarak geri döner. En yaygın beş hata.</p>
+      <a href="silindir-montajinda-sik-yapilan-hatalar.html" data-section="post-49" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Devamını Oku →</a>
+    </div>
+  </article>
+  <article id="post-50" data-tag="urun-rehberi" x-show="show('traktor-uc-nokta-aski-sistemi-nasil-calisir')" :style="{ order: ord('traktor-uc-nokta-aski-sistemi-nasil-calisir') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="traktor-uc-nokta-aski-sistemi-nasil-calisir.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-50" data-field="image">
+      <img src="../../assets/images/hero-tractor-field.webp" alt="Traktör Üç Nokta Askı Sistemi (3-Point Hitch) Nasıl Çalışır?" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
+    <div class="p-6 flex flex-col flex-1">
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-50" data-field="date"><time datetime="2026-03-06">06 MART 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-50" data-field="category">Ürün Rehberi</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-50" data-field="title"><a href="traktor-uc-nokta-aski-sistemi-nasil-calisir.html" class="hover:text-[#fb923c] transition">Traktör Üç Nokta Askı Sistemi (3-Point Hitch) Nasıl Çalışır?</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-50" data-field="excerpt">Üç nokta askı, ekipmanı taşır, konumlandırır ve çeker. Bileşenlerin her birinin görevi ve HPL ürün karşılıkları.</p>
+      <a href="traktor-uc-nokta-aski-sistemi-nasil-calisir.html" data-section="post-50" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Devamını Oku →</a>
+    </div>
+  </article>
+  <article id="post-51" data-tag="urun-rehberi" x-show="show('oem-kod-ile-dogru-parcayi-nasil-bulursunuz')" :style="{ order: ord('oem-kod-ile-dogru-parcayi-nasil-bulursunuz') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="oem-kod-ile-dogru-parcayi-nasil-bulursunuz.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-51" data-field="image">
+      <img src="../../assets/images/HPL-2.webp" alt="OEM Kod ile Doğru Parçayı Nasıl Bulursunuz?" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
+    <div class="p-6 flex flex-col flex-1">
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-51" data-field="date"><time datetime="2026-03-02">02 MART 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-51" data-field="category">Ürün Rehberi</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-51" data-field="title"><a href="oem-kod-ile-dogru-parcayi-nasil-bulursunuz.html" class="hover:text-[#fb923c] transition">OEM Kod ile Doğru Parçayı Nasıl Bulursunuz?</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-51" data-field="excerpt">Marka ve model üzerinden arama çoğu zaman yetersiz kalır. OEM kod, parçanın teknik kimliğidir — nerede bulunur, nasıl kullanılır?</p>
+      <a href="oem-kod-ile-dogru-parcayi-nasil-bulursunuz.html" data-section="post-51" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Devamını Oku →</a>
+    </div>
+  </article>
+  <article id="post-52" data-tag="bakim" x-show="show('hidrolik-silindir-kurulum-oncesi-kontrol-listesi')" :style="{ order: ord('hidrolik-silindir-kurulum-oncesi-kontrol-listesi') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="hidrolik-silindir-kurulum-oncesi-kontrol-listesi.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-52" data-field="image">
+      <img src="../../assets/images/HPL-8.webp" alt="Hidrolik Silindir Kurulumundan Önce Kontrol Edilmesi Gerekenler" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
+    <div class="p-6 flex flex-col flex-1">
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-52" data-field="date"><time datetime="2026-02-26">26 ŞUBAT 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-52" data-field="category">Bakım</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-52" data-field="title"><a href="hidrolik-silindir-kurulum-oncesi-kontrol-listesi.html" class="hover:text-[#fb923c] transition">Hidrolik Silindir Kurulumundan Önce Kontrol Edilmesi Gerekenler</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-52" data-field="excerpt">Montaja başlamadan önce yapılacak on dakikalık kontrol, günler sürebilecek sorunları önler. Kontrol listesi ve gerekçeleri.</p>
+      <a href="hidrolik-silindir-kurulum-oncesi-kontrol-listesi.html" data-section="post-52" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Devamını Oku →</a>
+    </div>
+  </article>
+  <article id="post-53" data-tag="bakim" x-show="show('hidrolik-sistem-bakim-takvimi-nasil-olusturulur')" :style="{ order: ord('hidrolik-sistem-bakim-takvimi-nasil-olusturulur') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="hidrolik-sistem-bakim-takvimi-nasil-olusturulur.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-53" data-field="image">
+      <img src="../../assets/images/hpl-guc-icin-insa-edildi.webp" alt="Tarım Ekipmanlarında Hidrolik Sistem Bakım Takvimi Nasıl Oluşturulur?" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
+    <div class="p-6 flex flex-col flex-1">
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-53" data-field="date"><time datetime="2026-02-22">22 ŞUBAT 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-53" data-field="category">Bakım</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-53" data-field="title"><a href="hidrolik-sistem-bakim-takvimi-nasil-olusturulur.html" class="hover:text-[#fb923c] transition">Tarım Ekipmanlarında Hidrolik Sistem Bakım Takvimi Nasıl Oluşturulur?</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-53" data-field="excerpt">İyi bir bakım takvimi karmaşık değil, sürdürülebilir olandır. Günlük, haftalık ve mevsimsel kategorilerin kurulması.</p>
+      <a href="hidrolik-sistem-bakim-takvimi-nasil-olusturulur.html" data-section="post-53" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Devamını Oku →</a>
+    </div>
+  </article>
+  <article id="post-54" data-tag="bakim" x-show="show('hidrolik-silindir-onarimi-mi-yeni-silindir-mi')" :style="{ order: ord('hidrolik-silindir-onarimi-mi-yeni-silindir-mi') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="hidrolik-silindir-onarimi-mi-yeni-silindir-mi.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-54" data-field="image">
+      <img src="../../assets/images/hero-hydraulic-cylinder.webp" alt="Hidrolik Silindir Onarımı mı Yeni Silindir Alımı mı Daha Mantıklı?" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
+    <div class="p-6 flex flex-col flex-1">
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-54" data-field="date"><time datetime="2026-02-18">18 ŞUBAT 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-54" data-field="category">Bakım</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-54" data-field="title"><a href="hidrolik-silindir-onarimi-mi-yeni-silindir-mi.html" class="hover:text-[#fb923c] transition">Hidrolik Silindir Onarımı mı Yeni Silindir Alımı mı Daha Mantıklı?</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-54" data-field="excerpt">Karar, hasarın nerede olduğuna bağlı. Onarımın anlamlı olduğu durumlarla değişim gerektiren durumları ayırıyoruz.</p>
+      <a href="hidrolik-silindir-onarimi-mi-yeni-silindir-mi.html" data-section="post-54" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Devamını Oku →</a>
+    </div>
+  </article>
+  <article id="post-55" data-tag="fason-uretim" x-show="show('fason-uretimde-teknik-cizim-nasil-hazirlanir')" :style="{ order: ord('fason-uretimde-teknik-cizim-nasil-hazirlanir') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="fason-uretimde-teknik-cizim-nasil-hazirlanir.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-55" data-field="image">
+      <img src="../../assets/images/cnc-machining-closeup.webp" alt="Fason Üretimde Çizim (Teknik Resim) Nasıl Hazırlanır?" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
+    <div class="p-6 flex flex-col flex-1">
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-55" data-field="date"><time datetime="2026-02-14">14 ŞUBAT 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-55" data-field="category">Fason Üretim</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-55" data-field="title"><a href="fason-uretimde-teknik-cizim-nasil-hazirlanir.html" class="hover:text-[#fb923c] transition">Fason Üretimde Çizim (Teknik Resim) Nasıl Hazırlanır?</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-55" data-field="excerpt">Teknik çizim, üretimin ortak dilidir. İçinde ne bulunmalı ve çiziminiz yoksa nasıl ilerlersiniz?</p>
+      <a href="fason-uretimde-teknik-cizim-nasil-hazirlanir.html" data-section="post-55" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Devamını Oku →</a>
+    </div>
+  </article>
+  <article id="post-56" data-tag="fason-uretim" x-show="show('kucuk-isletmeler-icin-dusuk-adetli-fason-uretim')" :style="{ order: ord('kucuk-isletmeler-icin-dusuk-adetli-fason-uretim') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="kucuk-isletmeler-icin-dusuk-adetli-fason-uretim.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-56" data-field="image">
+      <img src="../../assets/images/fabrika.webp" alt="Küçük İşletmeler İçin Fason Üretimde Minimum Sipariş Adedi Neden Önemli Değil?" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
+    <div class="p-6 flex flex-col flex-1">
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-56" data-field="date"><time datetime="2026-02-10">10 ŞUBAT 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-56" data-field="category">Fason Üretim</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-56" data-field="title"><a href="kucuk-isletmeler-icin-dusuk-adetli-fason-uretim.html" class="hover:text-[#fb923c] transition">Küçük İşletmeler İçin Fason Üretimde Minimum Sipariş Adedi Neden Önemli Değil?</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-56" data-field="excerpt">Yüksek minimum adet, küçük işletmeler için gerçek bir engel. Esnek üretimin bunu nasıl aştığını anlatıyoruz.</p>
+      <a href="kucuk-isletmeler-icin-dusuk-adetli-fason-uretim.html" data-section="post-56" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Devamını Oku →</a>
+    </div>
+  </article>
+  <article id="post-57" data-tag="silindir" x-show="show('hidrolik-silindirlerde-krom-kaplama-neden-onemli')" :style="{ order: ord('hidrolik-silindirlerde-krom-kaplama-neden-onemli') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="hidrolik-silindirlerde-krom-kaplama-neden-onemli.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-57" data-field="image">
+      <img src="../../assets/images/HPL-6.webp" alt="Hidrolik Silindirlerde Krom Kaplama Neden Önemlidir?" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
+    <div class="p-6 flex flex-col flex-1">
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-57" data-field="date"><time datetime="2026-02-06">06 ŞUBAT 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-57" data-field="category">Silindir Hesaplama</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-57" data-field="title"><a href="hidrolik-silindirlerde-krom-kaplama-neden-onemli.html" class="hover:text-[#fb923c] transition">Hidrolik Silindirlerde Krom Kaplama Neden Önemlidir?</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-57" data-field="excerpt">Krom kaplama, piston kolunu hem korozyondan hem aşınmadan korur. Kaplama bozulduğunda ne olur ve nasıl fark edilir?</p>
+      <a href="hidrolik-silindirlerde-krom-kaplama-neden-onemli.html" data-section="post-57" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Devamını Oku →</a>
+    </div>
+  </article>
+  <article id="post-58" data-tag="urun-rehberi" x-show="show('traktor-atasmanlari-icin-dogru-hidrolik-baglanti')" :style="{ order: ord('traktor-atasmanlari-icin-dogru-hidrolik-baglanti') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="traktor-atasmanlari-icin-dogru-hidrolik-baglanti.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-58" data-field="image">
+      <img src="../../assets/images/hero-tractor-field.webp" alt="Traktör Ataşmanları İçin Doğru Hidrolik Bağlantı Nasıl Seçilir?" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
+    <div class="p-6 flex flex-col flex-1">
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-58" data-field="date"><time datetime="2026-02-02">02 ŞUBAT 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-58" data-field="category">Ürün Rehberi</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-58" data-field="title"><a href="traktor-atasmanlari-icin-dogru-hidrolik-baglanti.html" class="hover:text-[#fb923c] transition">Traktör Ataşmanları İçin Doğru Hidrolik Bağlantı Nasıl Seçilir?</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-58" data-field="excerpt">Her ataşman aynı hidrolik bağlantıyı istemez. Debi, basınç, çıkış sayısı ve bağlantı tipinin nasıl eşleştirileceği.</p>
+      <a href="traktor-atasmanlari-icin-dogru-hidrolik-baglanti.html" data-section="post-58" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Devamını Oku →</a>
+    </div>
+  </article>
+  <article id="post-59" data-tag="sss" x-show="show('hidrolik-silindir-satin-alirken-sik-sorulan-sorular')" :style="{ order: ord('hidrolik-silindir-satin-alirken-sik-sorulan-sorular') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="hidrolik-silindir-satin-alirken-sik-sorulan-sorular.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-59" data-field="image">
+      <img src="../../assets/images/hero-cnc-workshop.webp" alt="Sık Sorulan Sorular: Hidrolik Silindir Satın Alırken Merak Edilenler" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
+    <div class="p-6 flex flex-col flex-1">
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-59" data-field="date"><time datetime="2026-01-29">29 OCAK 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-59" data-field="category">SSS</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-59" data-field="title"><a href="hidrolik-silindir-satin-alirken-sik-sorulan-sorular.html" class="hover:text-[#fb923c] transition">Sık Sorulan Sorular: Hidrolik Silindir Satın Alırken Merak Edilenler</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-59" data-field="excerpt">Teslim süresi, özel ölçü, uyumluluk ve sipariş süreci hakkında en sık gelen soruların net cevapları.</p>
+      <a href="hidrolik-silindir-satin-alirken-sik-sorulan-sorular.html" data-section="post-59" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Devamını Oku →</a>
+    </div>
+  </article>
+  <article id="post-60" data-tag="sss" x-show="show('silindir-secim-programi-sik-sorulan-teknik-sorular')" :style="{ order: ord('silindir-secim-programi-sik-sorulan-teknik-sorular') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="silindir-secim-programi-sik-sorulan-teknik-sorular.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-60" data-field="image">
+      <img src="../../assets/images/hero-factory-production-line.webp" alt="HydroPascal Silindir Seçim Programı: Sık Sorulan Teknik Sorular" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
+    <div class="p-6 flex flex-col flex-1">
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-60" data-field="date"><time datetime="2026-01-25">25 OCAK 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-60" data-field="category">SSS</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-60" data-field="title"><a href="silindir-secim-programi-sik-sorulan-teknik-sorular.html" class="hover:text-[#fb923c] transition">HydroPascal Silindir Seçim Programı: Sık Sorulan Teknik Sorular</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-60" data-field="excerpt">Hangi değeri nereden bulacaksınız, sonucu nasıl okuyacaksınız ve aracın sınırları neler? Soru-cevap formatında.</p>
+      <a href="silindir-secim-programi-sik-sorulan-teknik-sorular.html" data-section="post-60" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Devamını Oku →</a>
+    </div>
+  </article>
+  </div>
 
 </section>
+<!-- BLOG LIST END -->
 </main>
 
 <!-- FOOTER START -->

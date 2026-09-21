@@ -112,6 +112,28 @@
   color: #fcd34d;
 }
 
+/* Nötr bilgi mesajı (katalog yükleniyor) — .hpl-notice tek başına renksizdi */
+.hpl-notice:not(.hpl-notice-warn) {
+  background: rgba(34, 211, 238, .08); /* cyan-400/8 */
+  border-color: rgba(34, 211, 238, .3);
+  color: #67e8f9; /* cyan-300 */
+}
+
+/* Mesaj içindeki "tekrar dene" — yeni bir buton stili değil, metin bağlantısı */
+.hpl-link-btn {
+  background: none;
+  border: 0;
+  padding: 0;
+  font: inherit;
+  color: inherit;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.hpl-link-btn:hover {
+  opacity: .8;
+}
+
 /* Accordion (ürün eşleştirme sonuçları) */
 .hpl-accordion {
   border: 1px solid rgba(255, 255, 255, .1);
@@ -264,6 +286,12 @@ html.light .hpl-notice-warn {
   background: var(--warn-tint);
   border-color: var(--warn);
   color: var(--warn);
+}
+
+html.light .hpl-notice:not(.hpl-notice-warn) {
+  background: var(--accent-tint);
+  border-color: var(--accent);
+  color: var(--accent-deep);
 }
 
 html.light .hpl-accordion {

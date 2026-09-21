@@ -25,6 +25,8 @@
   var customStrokes = [50, 100, 150, 200, 250, 300, 350, 400, 450, 500, 550, 600, 700, 800, 900, 1000, 1050, 1100, 1200, 1300, 1400, 1500];
 
   var JSON_URL = '../assets/data/urun_katalogu.json';
+  // Fallback used when fetch() is blocked (page opened via file://)
+  var CATALOG_JS_URL = '../assets/data/urun_katalogu.js';
   var IMAGE_BASE = '../assets/images/series/'; // expects {seri}.jpg
   var PLACEHOLDER_IMG =
     'data:image/svg+xml;utf8,' +
@@ -35,7 +37,9 @@
       '</svg>'
     );
 
-  var catalog = null; // filled after the JSON loads
+  var catalog = null;            // filled after the JSON loads
+  var catalogState = 'idle';     // idle | loading | ready | error
+  var pendingMatch = null;       // query made before the catalog arrived
 
   // TASK 10.5 — these two features existed only in the Turkish build
   // (calculation-program.js). The English calculator had neither the
@@ -101,22 +105,91 @@
   }
 
   function loadCatalog() {
+    if (catalogState === 'loading' || catalogState === 'ready') return;
+    catalogState = 'loading';
+
     fetch(JSON_URL)
       .then(function (res) {
         if (!res.ok) throw new Error('HTTP ' + res.status);
         return res.json();
       })
-      .then(function (data) {
-        catalog = data;
-      })
+      .then(onCatalogLoaded)
       .catch(function (err) {
-        console.error('Failed to load product catalog:', err);
-        var box = document.getElementById('hpl-matching-products');
-        if (box) {
-          box.innerHTML =
-            '<div class="hpl-notice hpl-notice-warn">Could not load the product catalog. Please make sure this page is opened via a web server (http://, not file://).</div>';
-        }
+        // fetch is blocked under file://; loading the same data through a
+        // <script> tag works around that browser restriction.
+        console.warn('Catalog fetch failed, falling back to <script> copy:', err);
+        loadCatalogViaScript();
       });
+  }
+
+  function loadCatalogViaScript() {
+    if (Array.isArray(window.HPL_URUN_KATALOGU)) {
+      onCatalogLoaded(window.HPL_URUN_KATALOGU);
+      return;
+    }
+
+    var tag = document.createElement('script');
+    tag.src = CATALOG_JS_URL;
+    tag.onload = function () {
+      if (Array.isArray(window.HPL_URUN_KATALOGU)) {
+        onCatalogLoaded(window.HPL_URUN_KATALOGU);
+      } else {
+        onCatalogFailed(new Error('Fallback catalog file did not contain the expected data.'));
+      }
+    };
+    tag.onerror = function () {
+      onCatalogFailed(new Error(CATALOG_JS_URL + ' could not be loaded.'));
+    };
+    document.head.appendChild(tag);
+  }
+
+  function onCatalogLoaded(data) {
+    if (!Array.isArray(data) || data.length === 0) {
+      onCatalogFailed(new Error('Catalog is empty or not in the expected format.'));
+      return;
+    }
+    catalog = data;
+    catalogState = 'ready';
+    flushPendingMatch();
+  }
+
+  function onCatalogFailed(err) {
+    console.error('Failed to load product catalog:', err);
+    catalogState = 'error';
+    catalog = null;
+    // If a calculation is waiting on the catalog, show the real error.
+    if (pendingMatch) {
+      renderCatalogError();
+    }
+  }
+
+  // Once the catalog arrives, finish the query the user made while waiting.
+  function flushPendingMatch() {
+    if (!pendingMatch) return;
+    var q = pendingMatch;
+    pendingMatch = null;
+    renderMatchingProducts(q.cDiam, q.rDiam, q.stroke);
+  }
+
+  function renderCatalogError() {
+    var box = document.getElementById('hpl-matching-products');
+    if (!box) return;
+    box.innerHTML =
+      '<div class="hpl-notice hpl-notice-warn">' +
+        'The product catalog could not be loaded, so we cannot list the matching stock products. ' +
+        'The calculation results above are still valid. ' +
+        '<button type="button" id="hpl-catalog-retry" class="hpl-link-btn">Try again</button>' +
+      '</div>';
+
+    var btn = document.getElementById('hpl-catalog-retry');
+    if (btn) {
+      btn.addEventListener('click', function () {
+        catalogState = 'idle';
+        pendingMatch = pendingMatch || lastMatchQuery;
+        box.innerHTML = '<div class="hpl-notice">Loading product catalog...</div>';
+        loadCatalog();
+      });
+    }
   }
 
   // ---------------------------------------------------------------------
@@ -262,11 +335,23 @@
   var specLabels = { piston_cap: 'ØA', mil_cap: 'ØB', strok: 'Stroke (C)' };
   var specOrder = ['piston_cap', 'mil_cap', 'strok', 'D', 'E', 'F1', 'F2', 'G', 'S', 'J', 'K', 'L', 'DF', 'L1', 'L2', 'Q', 'K2', 'Q1', 'Q2', 'R', 'I', 'M', 'N', 'O', 'LF', 'CH', 'P', 'F', 'S1', 'S2'];
 
+  var lastMatchQuery = null; // last query, for the "Try again" button
+
   function renderMatchingProducts(cDiam, rDiam, stroke) {
     var box = document.getElementById('hpl-matching-products');
+    lastMatchQuery = { cDiam: cDiam, rDiam: rDiam, stroke: stroke };
+
+    if (catalogState === 'error') {
+      pendingMatch = lastMatchQuery;
+      renderCatalogError();
+      return;
+    }
 
     if (!catalog) {
-      box.innerHTML = '<div class="hpl-notice hpl-notice-warn">Product catalog is not loaded yet, please try again in a few seconds.</div>';
+      // Catalog still in flight: remember the query and render it on arrival.
+      pendingMatch = lastMatchQuery;
+      if (catalogState === 'idle') loadCatalog();
+      box.innerHTML = '<div class="hpl-notice">Loading product catalog, matching products will appear shortly...</div>';
       return;
     }
 

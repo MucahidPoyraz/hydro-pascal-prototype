@@ -26,6 +26,8 @@
   var customStrokes = [50, 100, 150, 200, 250, 300, 350, 400, 450, 500, 550, 600, 700, 800, 900, 1000, 1050, 1100, 1200, 1300, 1400, 1500];
 
   var JSON_URL = '../assets/data/urun_katalogu.json';
+  // fetch() engellendiginde (sayfa file:// ile acildiginda) kullanilan yedek
+  var CATALOG_JS_URL = '../assets/data/urun_katalogu.js';
   var IMAGE_BASE = '../assets/images/series/'; // {seri}.jpg bekleniyor
   var PLACEHOLDER_IMG =
     'data:image/svg+xml;utf8,' +
@@ -36,7 +38,9 @@
       '</svg>'
     );
 
-  var catalog = null; // JSON yüklendikten sonra dolar
+  var catalog = null;            // JSON yüklendikten sonra dolar
+  var catalogState = 'idle';     // idle | loading | ready | error
+  var pendingMatch = null;       // katalog gelmeden önce yapılan sorgu
 
   // Ürün detay sayfasından (?tip=...) gelen HPL silindir tipi etiketleri
   var PRODUCT_TYPE_LABELS = {
@@ -76,22 +80,91 @@
   }
 
   function loadCatalog() {
+    if (catalogState === 'loading' || catalogState === 'ready') return;
+    catalogState = 'loading';
+
     fetch(JSON_URL)
       .then(function (res) {
         if (!res.ok) throw new Error('HTTP ' + res.status);
         return res.json();
       })
-      .then(function (data) {
-        catalog = data;
-      })
+      .then(onCatalogLoaded)
       .catch(function (err) {
-        console.error('Ürün kataloğu yüklenemedi:', err);
-        var box = document.getElementById('hpl-matching-products');
-        if (box) {
-          box.innerHTML =
-            '<div class="hpl-notice hpl-notice-warn">Ürün kataloğu yüklenemedi. Bu sayfayı bir web sunucusu üzerinden (file:// değil, http://) açtığınızdan emin olun.</div>';
-        }
+        // file:// altında fetch engellenir; aynı veriyi <script> ile denemek
+        // tarayıcı kısıtlamasını aşar.
+        console.warn('Katalog fetch ile yüklenemedi, <script> yedeğine geçiliyor:', err);
+        loadCatalogViaScript();
       });
+  }
+
+  function loadCatalogViaScript() {
+    if (Array.isArray(window.HPL_URUN_KATALOGU)) {
+      onCatalogLoaded(window.HPL_URUN_KATALOGU);
+      return;
+    }
+
+    var tag = document.createElement('script');
+    tag.src = CATALOG_JS_URL;
+    tag.onload = function () {
+      if (Array.isArray(window.HPL_URUN_KATALOGU)) {
+        onCatalogLoaded(window.HPL_URUN_KATALOGU);
+      } else {
+        onCatalogFailed(new Error('Yedek katalog dosyası beklenen veriyi içermiyor.'));
+      }
+    };
+    tag.onerror = function () {
+      onCatalogFailed(new Error(CATALOG_JS_URL + ' yüklenemedi.'));
+    };
+    document.head.appendChild(tag);
+  }
+
+  function onCatalogLoaded(data) {
+    if (!Array.isArray(data) || data.length === 0) {
+      onCatalogFailed(new Error('Katalog boş veya beklenen biçimde değil.'));
+      return;
+    }
+    catalog = data;
+    catalogState = 'ready';
+    flushPendingMatch();
+  }
+
+  function onCatalogFailed(err) {
+    console.error('Ürün kataloğu yüklenemedi:', err);
+    catalogState = 'error';
+    catalog = null;
+    // Hesaplama sonucu bekleyen bir sorgu varsa gerçek hatayı göster.
+    if (pendingMatch) {
+      renderCatalogError();
+    }
+  }
+
+  // Katalog geldiğinde, kullanıcı beklerken yaptığı sorguyu otomatik tamamla.
+  function flushPendingMatch() {
+    if (!pendingMatch) return;
+    var q = pendingMatch;
+    pendingMatch = null;
+    renderMatchingProducts(q.cDiam, q.rDiam, q.stroke);
+  }
+
+  function renderCatalogError() {
+    var box = document.getElementById('hpl-matching-products');
+    if (!box) return;
+    box.innerHTML =
+      '<div class="hpl-notice hpl-notice-warn">' +
+        'Ürün kataloğu yüklenemedi, bu yüzden ölçüye uyan hazır ürünleri listeleyemiyoruz. ' +
+        'Yukarıdaki hesaplama sonuçları geçerlidir. ' +
+        '<button type="button" id="hpl-catalog-retry" class="hpl-link-btn">Tekrar dene</button>' +
+      '</div>';
+
+    var btn = document.getElementById('hpl-catalog-retry');
+    if (btn) {
+      btn.addEventListener('click', function () {
+        catalogState = 'idle';
+        pendingMatch = pendingMatch || lastMatchQuery;
+        box.innerHTML = '<div class="hpl-notice">Ürün kataloğu yükleniyor...</div>';
+        loadCatalog();
+      });
+    }
   }
 
   // ---------------------------------------------------------------------
@@ -258,11 +331,23 @@
   var specLabels = { piston_cap: 'ØA', mil_cap: 'ØB', strok: 'Strok (C)' };
   var specOrder = ['piston_cap', 'mil_cap', 'strok', 'D', 'E', 'F1', 'F2', 'G', 'S', 'J', 'K', 'L', 'DF', 'L1', 'L2', 'Q', 'K2', 'Q1', 'Q2', 'R', 'I', 'M', 'N', 'O', 'LF', 'CH', 'P', 'F', 'S1', 'S2'];
 
+  var lastMatchQuery = null; // "Tekrar dene" için son sorgu
+
   function renderMatchingProducts(cDiam, rDiam, stroke) {
     var box = document.getElementById('hpl-matching-products');
+    lastMatchQuery = { cDiam: cDiam, rDiam: rDiam, stroke: stroke };
+
+    if (catalogState === 'error') {
+      pendingMatch = lastMatchQuery;
+      renderCatalogError();
+      return;
+    }
 
     if (!catalog) {
-      box.innerHTML = '<div class="hpl-notice hpl-notice-warn">Ürün kataloğu henüz yüklenmedi, lütfen birkaç saniye sonra tekrar deneyin.</div>';
+      // Katalog hâlâ yolda: sorguyu sakla, veri gelince otomatik listele.
+      pendingMatch = lastMatchQuery;
+      if (catalogState === 'idle') loadCatalog();
+      box.innerHTML = '<div class="hpl-notice">Ürün kataloğu yükleniyor, uygun ürünler birazdan listelenecek...</div>';
       return;
     }
 

@@ -194,46 +194,852 @@ html.light input::placeholder,html.light textarea::placeholder{color:#94a3b8!imp
   </div>
 </section>
 
-<!-- BLOG POST GRID -->
-<section class="max-w-7xl mx-auto px-6 lg:px-8 py-24 grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+<!-- BLOG LIST START — tools/blog/build.js tarafından üretilir, elle düzenlemeyin -->
+<section class="max-w-7xl mx-auto px-6 lg:px-8 pt-8 pb-24" x-data="{
+    q: '',
+    tag: 'all',
+    sort: 'new',
+    posts: [
+      { s: 'massey-ferguson-hydraulic-cylinder-selection-guide', t: 'Hydraulic Cylinder Selection Guide for Massey Ferguson Tractors', x: 'Bore, stroke and mounting mismatches cause most cylinder problems on Massey Ferguson tractors. Here are the five criteria to check before you buy.', g: 'marka-uyum', d: '2026-09-18' },
+      { s: 'fiat-tractor-top-link-replacement', t: 'How to Replace the Top Link on a Fiat Tractor', x: 'Play, noise and uneven lifting are often the signs of a tired top link. Here are the measurements you need to take before replacing it.', g: 'marka-uyum', d: '2026-09-14' },
+      { s: 'new-holland-oem-hydraulic-parts-compatibility-guide', t: 'OEM Hydraulic Parts Compatibility Guide for New Holland Tractors', x: 'OEM code matching is the shortest route to the right part for New Holland. We clarify the difference between genuine, OEM equivalent and poor-quality copies.', g: 'marka-uyum', d: '2026-09-10' },
+      { s: 'john-deere-leveling-box-faults-and-solutions', t: 'Leveling Box Faults on John Deere Tractors and How to Fix Them', x: 'If the leveling box is hard to turn or the implement leans to one side, the problem is usually in the screw mechanism. Diagnostic steps and decision criteria.', g: 'marka-uyum', d: '2026-09-06' },
+      { s: 'ford-tractor-side-arm-replacement-step-by-step', t: 'Ford Tractor Side Arm Replacement: A Step-by-Step Guide', x: 'Replacing a side arm is not difficult, but there is an order to it and safety steps to follow. What to know before removal and what to check after fitting.', g: 'marka-uyum', d: '2026-09-02' },
+      { s: 'choosing-the-right-hydraulic-cylinder-for-case-tractors', t: 'How to Choose the Right Cylinder for Case Tractors', x: 'Pressure rating and stroke compatibility are the two critical variables in cylinder selection for Case tractors. A wrong choice wears the seals first, then the pump.', g: 'marka-uyum', d: '2026-08-29' },
+      { s: 'deutz-tractor-pin-wear-signs-and-replacement-timing', t: 'Pin Wear on Deutz Tractors: Signs and When to Replace', x: 'A worn pin damages not only itself but also the bush and hole it sits in. Catching the signs early keeps the repair to a single part.', g: 'marka-uyum', d: '2026-08-25' },
+      { s: 'zetor-landini-fendt-compatible-spare-parts-guide', t: 'A Guide to Finding Zetor, Landini and Fendt Compatible Spare Parts', x: 'Waiting for parts for less common brands takes time. Searching by OEM code and contract manufacturing are two practical ways to shorten that wait.', g: 'marka-uyum', d: '2026-08-21' },
+      { s: 'custom-8-and-9-tooth-gear-manufacturing', t: 'Custom 8- and 9-Tooth Gear Manufacturing: How It Works and Who Needs It', x: 'Non-standard tooth counts often come from rare or older equipment. Which parameters do you need to specify in advance for custom gear manufacturing?', g: 'fason-uretim', d: '2026-08-17' },
+      { s: 'custom-shaft-manufacturing-contract-production-process', t: 'Custom Shaft Manufacturing: How the Contract Production Process Works', x: 'When a standard shaft cannot be found, custom manufacturing can be the fastest solution. Where material, tolerance and surface treatment decisions fit in.', g: 'fason-uretim', d: '2026-08-13' },
+      { s: 'custom-bracket-and-mount-manufacturing-agricultural-machinery', t: 'Custom Bracket and Mount Manufacturing: Examples for Agricultural Machinery', x: 'Standard brackets do not fit every implement. How design, cutting, welding and thickness selection come together in custom bracket manufacturing.', g: 'fason-uretim', d: '2026-08-09' },
+      { s: 'what-is-contract-manufacturing-small-batch-metal-parts', t: 'What Is Contract Manufacturing? What to Know About Small-Batch Metal Parts', x: 'Contract manufacturing is how you produce without building your own plant. How it differs from series production, its advantages and what to watch in the process.', g: 'fason-uretim', d: '2026-08-05' },
+      { s: 'from-sample-part-to-series-production-contract-manufacturing', t: 'From Sample Part to Series Production: The Contract Manufacturing Process at HydroPascal', x: 'Even if all you have is a broken part, the process can still start. How the five steps from measurement to series production work.', g: 'fason-uretim', d: '2026-08-01' },
+      { s: 'non-standard-hydraulic-parts-custom-manufacturing-guide', t: 'Need a Non-Standard Hydraulic Part? A Custom Manufacturing Guide', x: 'When a custom flange, adapter or housing is needed, precision is not negotiable. What to watch in parts that work under pressure.', g: 'fason-uretim', d: '2026-07-28' },
+      { s: 'precision-cnc-machining-tolerances-and-quality-control', t: 'Precision Parts with CNC Machining: Tolerances and Quality Control', x: 'A tolerance defines how far a dimension may deviate. A tolerance that is too tight is as problematic as one that is too loose — here is why.', g: 'fason-uretim', d: '2026-07-24' },
+      { s: 'casting-or-forging-which-method-suits-your-part', t: 'Casting or Forging? Which Production Method Suits Your Part?', x: 'Casting excels in complex geometry, forging in strength. The difference between the two methods and which is preferred for which part.', g: 'dokum-dovme', d: '2026-07-20' },
+      { s: 'cast-parts-supply-with-pascalcast-process-and-materials', t: 'Cast Parts Supply with PascalCast: Process and Material Options', x: 'From pattern preparation to finish machining: the steps of cast parts supply and the basic differences between grey iron, ductile iron and cast steel.', g: 'dokum-dovme', d: '2026-07-16' },
+      { s: 'forged-parts-with-pascalforge-why-durability-matters', t: 'Forged Parts with PascalForge: Why Does Durability Matter?', x: 'Forging compacts the internal structure of the metal and gives it strength. Why it is preferred for parts such as shafts and links.', g: 'dokum-dovme', d: '2026-07-12' },
+      { s: 'quality-criteria-for-cast-parts-in-agricultural-machinery', t: 'What Are the Quality Criteria for Cast Parts in Agricultural Machinery?', x: 'Quality in a cast part comes down to three headings: internal soundness, dimensional accuracy and surface quality. Each shows up differently in the field.', g: 'dokum-dovme', d: '2026-07-08' },
+      { s: 'material-selection-for-forged-parts-which-steel', t: 'Material Selection for Forged Parts: Which Steel for Which Application?', x: 'Carbon steel or alloy steel? The choice is decided by load, environment and heat treatment expectations. The result of the wrong choice is early fatigue.', g: 'dokum-dovme', d: '2026-07-04' },
+      { s: 'simulation-assisted-forging-technology', t: 'Simulation-Assisted Forging: The Technology That Reduces Error Margins', x: 'In forging, die design decides the result. Simulation shows how the metal will flow before production and reduces the number of trials.', g: 'dokum-dovme', d: '2026-06-30' },
+      { s: 'how-to-calculate-hydraulic-cylinder-bore-and-stroke', t: 'How to Calculate Hydraulic Cylinder Bore and Stroke (Step by Step)', x: 'Force is pressure multiplied by area — that is where the calculation starts. The step-by-step logic of sizing bore and stroke.', g: 'silindir', d: '2026-06-26' },
+      { s: 'cost-of-wrong-cylinder-selection-5-mistakes', t: 'The Cost of Choosing the Wrong Cylinder: 5 Common Mistakes', x: 'Five common selection mistakes and what each one means in the field: early failure, leakage, loss of performance and unnecessary cost.', g: 'silindir', d: '2026-06-22' },
+      { s: 'find-the-right-cylinder-with-our-selection-software', t: 'Find the Right Cylinder with Our Cylinder Selection Software', x: 'Enter five values and see the force produced and the matching products. What the software does and how to read its output.', g: 'silindir', d: '2026-06-18' },
+      { s: 'double-acting-vs-single-acting-cylinder', t: 'Double-Acting vs Single-Acting Cylinders: Which One for Which Application?', x: 'A single-acting cylinder pushes in one direction and returns by gravity or a spring. In a double-acting cylinder both directions are controlled. Which is used where?', g: 'silindir', d: '2026-06-14' },
+      { s: 'pump-pressure-and-cylinder-performance', t: 'The Relationship Between Pump Pressure and Cylinder Performance', x: 'Pump pressure determines force, pump flow determines speed. How to match both with the cylinder and what happens when they do not match.', g: 'silindir', d: '2026-06-10' },
+      { s: 'hydraulic-cylinder-leaks-causes-and-solutions', t: 'Hydraulic Cylinder Leaks: Causes and Solutions', x: 'Leaks have three main sources and each needs a different fix. Practical ways to tell where a leak is coming from.', g: 'bakim', d: '2026-06-06' },
+      { s: 'when-to-replace-hydraulic-cylinder-seals', t: 'When Do Seals Need Replacing? Signs and Maintenance Schedule', x: 'Seal wear shows up as loss of power and leakage. How to decide when to replace them and when to replace the whole cylinder.', g: 'bakim', d: '2026-06-02' },
+      { s: '7-maintenance-habits-that-extend-hydraulic-cylinder-life', t: '7 Maintenance Habits That Extend Hydraulic Cylinder Life', x: 'Seven simple habits noticeably extend cylinder life. We briefly explain why each of them works.', g: 'bakim', d: '2026-05-29' },
+      { s: 'scratched-cylinder-rod-repair-or-replace', t: 'Scratches and Wear on a Cylinder Rod: Repair or Replace?', x: 'Not every scratch means a new part. How to tell repairable damage from damage that calls for straight replacement.', g: 'bakim', d: '2026-05-25' },
+      { s: 'winter-maintenance-for-hydraulic-equipment', t: 'Winter Maintenance for Hydraulic Equipment: What to Watch in Cold Weather', x: 'Cold thickens hydraulic oil and hardens seals. A pre-winter checklist and storage recommendations.', g: 'bakim', d: '2026-05-21' },
+      { s: 'oem-or-aftermarket-choosing-spare-parts', t: 'OEM or Aftermarket? What to Know When Choosing Spare Parts', x: 'Aftermarket does not always mean low quality. What makes the difference is material, tolerance and supplier transparency — how do you assess them?', g: 'bakim', d: '2026-05-17' },
+      { s: 'hydropascal-story-since-2019', t: 'The HydroPascal Story: Agricultural Machinery Spare Parts Manufacturing Since 2019', x: 'Founded in Konya in 2019, HydroPascal expanded into forging and casting with PascalForge and PascalCast in 2021. The main lines of the story.', g: 'kurumsal', d: '2026-05-13' },
+      { s: 'from-turkiye-to-the-world-export-and-quality-standards', t: 'From Türkiye to the World: Our Export Process and Quality Standards', x: 'Working with international customers requires process clarity as much as certificates. Our quality standards and communication flow.', g: 'kurumsal', d: '2026-05-09' },
+      { s: 'agricultural-machinery-spare-parts-supply-chain', t: 'How Does the Spare Parts Supply Chain Work in Agricultural Machinery?', x: 'The links a part passes through from manufacturer to user, and why delays happen along the chain.', g: 'kurumsal', d: '2026-05-05' },
+      { s: 'why-finding-parts-for-classic-and-modern-tractors-is-harder', t: 'Why Is It Getting Harder to Find Parts for Classic and Modern Tractors?', x: 'Genuine part production stops at some point; but tractors keep working. How that gap is filled.', g: 'kurumsal', d: '2026-05-01' },
+      { s: 'choosing-the-right-hydraulic-parts-supplier', t: 'Choosing the Right Supplier: What to Look for When Buying Hydraulic Parts', x: 'Choosing a supplier is not a one-off decision but the start of a recurring relationship. Five headings to look at in your assessment.', g: 'kurumsal', d: '2026-04-27' },
+      { s: 'from-scratch-to-quote-ordering-custom-parts', t: 'From Scratch to Quote: How to Order a Custom Part from HydroPascal', x: 'Five steps from first contact to quote. What is expected from you at each stage and how long does the process take?', g: 'kurumsal', d: '2026-04-23' },
+      { s: 'bulk-purchase-b2b-process-guide', t: 'A Process Guide for Bulk Purchase (B2B) Customers', x: 'In bulk purchasing, what decides the outcome is not price but planning. Delivery schedules, quality control and what a long-term relationship brings.', g: 'kurumsal', d: '2026-04-19' },
+      { s: 'agricultural-machinery-spare-parts-trends', t: 'Emerging Trends in the Agricultural Machinery Spare Parts Sector', x: 'Digital tools, a shift toward contract manufacturing and shorter delivery expectations. Three trends observed in the sector and HydroPascal’s approach.', g: 'kurumsal', d: '2026-04-15' },
+      { s: 'what-is-a-top-link-and-what-does-it-do', t: 'What Is a Top Link and What Does It Do?', x: 'The top link sets the implement’s working angle. Its types, choosing dimensions and how the wrong length affects the implement.', g: 'urun-rehberi', d: '2026-04-11' },
+      { s: 'how-does-a-leveling-box-work', t: 'How Does a Leveling Box Work?', x: 'The leveling box sets the implement’s lateral level by changing the length of the right lower arm. Its working principle and maintenance signs.', g: 'urun-rehberi', d: '2026-04-07' },
+      { s: 'pins-and-connection-elements-selection-criteria', t: 'Pins and Connection Elements: Selection Criteria', x: 'A pin is a small part, but the whole load passes through it. The logic behind choosing diameter, length, retaining type and hardness.', g: 'urun-rehberi', d: '2026-04-03' },
+      { s: 'side-arms-applications-and-selection-guide', t: 'Side Arms: Applications and Selection Guide', x: 'Side arms are the elements that carry the implement’s weight. The difference between fixed and telescopic types and the selection logic.', g: 'urun-rehberi', d: '2026-03-30' },
+      { s: 'what-does-a-stabilizer-chain-do', t: 'What Does a Stabilizer Chain Do and When Should It Be Replaced?', x: 'The stabilizer chain limits the implement’s lateral sway. A slack chain wears out every connection point.', g: 'urun-rehberi', d: '2026-03-26' },
+      { s: 'what-is-hydraulic-cylinder-pressure-rating', t: 'What Is the Pressure Rating of a Hydraulic Cylinder?', x: 'Working pressure, test pressure and burst pressure are different things. What a pressure rating tells you and where to find it.', g: 'silindir', d: '2026-03-22' },
+      { s: 'choosing-hydraulic-oil-effect-on-cylinder-performance', t: 'Choosing Hydraulic Oil: Its Effect on Cylinder Performance', x: 'Hydraulic oil does not only transmit force; it lubricates, cools and is in contact with the seals. The properties that decide the choice.', g: 'bakim', d: '2026-03-18' },
+      { s: 'how-to-bleed-air-from-a-hydraulic-system', t: 'How Do You Bleed Air from a Hydraulic System?', x: 'Air left in the system causes jerky movement and loss of power. General air bleeding steps and what to watch for.', g: 'bakim', d: '2026-03-14' },
+      { s: 'common-cylinder-installation-mistakes', t: 'Common Cylinder Installation Mistakes and How to Prevent Them', x: 'Most installation mistakes are not noticed on day one; they come back months later as a leak. The most common five mistakes.', g: 'bakim', d: '2026-03-10' },
+      { s: 'how-does-a-tractor-three-point-hitch-work', t: 'How Does a Tractor Three-Point Hitch Work?', x: 'The three-point hitch carries, positions and pulls the implement. The job of each component and its HPL product counterpart.', g: 'urun-rehberi', d: '2026-03-06' },
+      { s: 'how-to-find-the-right-part-with-an-oem-code', t: 'How Do You Find the Right Part with an OEM Code?', x: 'Searching by brand and model is often not enough. The OEM code is the part’s technical identity — where do you find it and how do you use it?', g: 'urun-rehberi', d: '2026-03-02' },
+      { s: 'hydraulic-cylinder-pre-installation-checklist', t: 'What to Check Before Installing a Hydraulic Cylinder', x: 'A ten-minute check before installation prevents problems that could take days. The checklist and the reasons behind it.', g: 'bakim', d: '2026-02-26' },
+      { s: 'how-to-build-a-hydraulic-system-maintenance-schedule', t: 'How to Build a Hydraulic System Maintenance Schedule for Farm Equipment', x: 'A good maintenance schedule is not a complicated one but one you can keep up. Setting up daily, weekly and seasonal categories.', g: 'bakim', d: '2026-02-22' },
+      { s: 'repair-or-replace-a-hydraulic-cylinder', t: 'Repair or Replace: Which Makes More Sense for a Hydraulic Cylinder?', x: 'The decision depends on where the damage is. We separate the cases where repair makes sense from those that call for replacement.', g: 'bakim', d: '2026-02-18' },
+      { s: 'how-to-prepare-a-technical-drawing-for-contract-manufacturing', t: 'How to Prepare a Technical Drawing for Contract Manufacturing', x: 'A technical drawing is the common language of production. What should it contain, and how do you proceed if you have no drawing?', g: 'fason-uretim', d: '2026-02-14' },
+      { s: 'low-volume-contract-manufacturing-for-small-businesses', t: 'Why Minimum Order Quantity Doesn’t Matter in Contract Manufacturing for Small Businesses', x: 'High minimum quantities are a real barrier for small businesses. How flexible production gets around it.', g: 'fason-uretim', d: '2026-02-10' },
+      { s: 'why-chrome-plating-matters-on-hydraulic-cylinders', t: 'Why Does Chrome Plating Matter on Hydraulic Cylinders?', x: 'Chrome plating protects the piston rod from both corrosion and wear. What happens when the plating fails, and how do you notice?', g: 'silindir', d: '2026-02-06' },
+      { s: 'choosing-the-right-hydraulic-connection-for-tractor-attachments', t: 'How to Choose the Right Hydraulic Connection for Tractor Attachments', x: 'Not every attachment needs the same hydraulic connection. How to match flow, pressure, number of outlets and coupling type.', g: 'urun-rehberi', d: '2026-02-02' },
+      { s: 'faq-buying-a-hydraulic-cylinder', t: 'Frequently Asked Questions: What People Want to Know When Buying a Hydraulic Cylinder', x: 'Clear answers to the most common questions about lead time, custom sizes, compatibility and the ordering process.', g: 'sss', d: '2026-01-29' },
+      { s: 'cylinder-selection-software-technical-faq', t: 'HydroPascal Cylinder Selection Software: Frequently Asked Technical Questions', x: 'Where do you find each value, how do you read the result and what are the tool’s limits? In question-and-answer format.', g: 'sss', d: '2026-01-25' }
+    ],
+    norm(v) { return String(v).toLocaleLowerCase('en'); },
+    matches(p) {
+      const q = this.q.trim();
+      if (q === '') return true;
+      return this.norm(p.t + ' ' + p.x).includes(this.norm(q));
+    },
+    get found() { return this.posts.filter(p =&gt; (this.tag === 'all' || p.g === this.tag) &amp;&amp; this.matches(p)); },
+    get ordered() {
+      const list = this.found.slice();
+      if (this.sort === 'old') return list.sort((a, b) =&gt; a.d.localeCompare(b.d));
+      if (this.sort === 'az') return list.sort((a, b) =&gt; a.t.localeCompare(b.t, 'en'));
+      return list.sort((a, b) =&gt; b.d.localeCompare(a.d));
+    },
+    get count() { return this.found.length; },
+    show(slug) { return this.found.some(p =&gt; p.s === slug); },
+    ord(slug) { const i = this.ordered.findIndex(p =&gt; p.s === slug); return i === -1 ? 999 : i; },
+    reset() { this.q = ''; this.tag = 'all'; this.sort = 'new'; }
+  }">
 
-  <article id="post-1" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
-    <div class="h-48 w-full bg-white/10 flex items-center justify-center border-b border-white/10" data-section="post-1" data-field="image">
-      <svg class="h-12 w-12 text-slate-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.25" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16.5 8.5 12a2 2 0 0 1 2.8 0l4.7 4.5M14.5 14 16 12.5a2 2 0 0 1 2.8 0L21 14.7M4 6h16M4 3h16M4 9v10.5A1.5 1.5 0 0 0 5.5 21h13a1.5 1.5 0 0 0 1.5-1.5V9"/></svg>
+  <div class="max-w-md mx-auto mb-8">
+    <label for="blog-search" class="sr-only">Search post title or topic…</label>
+    <input id="blog-search" type="search" x-model="q" placeholder="Search post title or topic…" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white placeholder-slate-400 focus:border-[#fb923c] focus:ring-2 focus:ring-[#fb923c]/30 focus:outline-none transition">
+  </div>
+
+  <div class="flex justify-center mb-6">
+    <div class="inline-flex flex-wrap items-center justify-center gap-1 p-1 rounded-md border border-[var(--line)] bg-[var(--surface)]" role="group" aria-label="Blog category filter">
+        <button type="button" @click="tag = 'all'" :class="tag === 'all' ? 'bg-[var(--accent)] text-[#fff9f4]' : 'text-[var(--ink-soft)] hover:text-[var(--ink)] hover:bg-[var(--surface-2)]'" class="px-4 py-2 rounded-md text-xs font-mono uppercase tracking-wider font-semibold transition-all duration-200">All</button>
+        <button type="button" @click="tag = 'marka-uyum'" :class="tag === 'marka-uyum' ? 'bg-[var(--accent)] text-[#fff9f4]' : 'text-[var(--ink-soft)] hover:text-[var(--ink)] hover:bg-[var(--surface-2)]'" class="px-4 py-2 rounded-md text-xs font-mono uppercase tracking-wider font-semibold transition-all duration-200">Brand Compatibility</button>
+        <button type="button" @click="tag = 'fason-uretim'" :class="tag === 'fason-uretim' ? 'bg-[var(--accent)] text-[#fff9f4]' : 'text-[var(--ink-soft)] hover:text-[var(--ink)] hover:bg-[var(--surface-2)]'" class="px-4 py-2 rounded-md text-xs font-mono uppercase tracking-wider font-semibold transition-all duration-200">Contract Manufacturing</button>
+        <button type="button" @click="tag = 'dokum-dovme'" :class="tag === 'dokum-dovme' ? 'bg-[var(--accent)] text-[#fff9f4]' : 'text-[var(--ink-soft)] hover:text-[var(--ink)] hover:bg-[var(--surface-2)]'" class="px-4 py-2 rounded-md text-xs font-mono uppercase tracking-wider font-semibold transition-all duration-200">Casting &amp; Forging</button>
+        <button type="button" @click="tag = 'silindir'" :class="tag === 'silindir' ? 'bg-[var(--accent)] text-[#fff9f4]' : 'text-[var(--ink-soft)] hover:text-[var(--ink)] hover:bg-[var(--surface-2)]'" class="px-4 py-2 rounded-md text-xs font-mono uppercase tracking-wider font-semibold transition-all duration-200">Cylinder Sizing</button>
+        <button type="button" @click="tag = 'bakim'" :class="tag === 'bakim' ? 'bg-[var(--accent)] text-[#fff9f4]' : 'text-[var(--ink-soft)] hover:text-[var(--ink)] hover:bg-[var(--surface-2)]'" class="px-4 py-2 rounded-md text-xs font-mono uppercase tracking-wider font-semibold transition-all duration-200">Maintenance</button>
+        <button type="button" @click="tag = 'kurumsal'" :class="tag === 'kurumsal' ? 'bg-[var(--accent)] text-[#fff9f4]' : 'text-[var(--ink-soft)] hover:text-[var(--ink)] hover:bg-[var(--surface-2)]'" class="px-4 py-2 rounded-md text-xs font-mono uppercase tracking-wider font-semibold transition-all duration-200">Company</button>
+        <button type="button" @click="tag = 'urun-rehberi'" :class="tag === 'urun-rehberi' ? 'bg-[var(--accent)] text-[#fff9f4]' : 'text-[var(--ink-soft)] hover:text-[var(--ink)] hover:bg-[var(--surface-2)]'" class="px-4 py-2 rounded-md text-xs font-mono uppercase tracking-wider font-semibold transition-all duration-200">Product Guide</button>
+        <button type="button" @click="tag = 'sss'" :class="tag === 'sss' ? 'bg-[var(--accent)] text-[#fff9f4]' : 'text-[var(--ink-soft)] hover:text-[var(--ink)] hover:bg-[var(--surface-2)]'" class="px-4 py-2 rounded-md text-xs font-mono uppercase tracking-wider font-semibold transition-all duration-200">FAQ</button>
     </div>
+  </div>
+
+  <div class="flex flex-wrap items-center justify-center gap-3 mb-12">
+    <label for="blog-sort" class="text-sm font-semibold text-slate-300">Sort:</label>
+    <select id="blog-sort" x-model="sort" class="bg-white/5 border border-white/10 rounded-xl px-4 py-2 text-sm text-white focus:border-[#fb923c] focus:ring-2 focus:ring-[#fb923c]/30 focus:outline-none transition">
+      <option value="new" class="bg-slate-900">Newest</option>
+      <option value="old" class="bg-slate-900">Oldest</option>
+      <option value="az" class="bg-slate-900">Alphabetical (A-Z)</option>
+    </select>
+    <span class="font-mono text-xs uppercase tracking-wider text-slate-400" aria-live="polite"><span x-text="count">60</span> posts found</span>
+  </div>
+
+  <div x-show="count === 0" x-cloak class="flex items-center justify-center gap-3 flex-wrap text-center bg-[#fb923c]/10 border border-[#fb923c]/30 rounded-xl px-6 py-4 mb-12">
+    <span class="text-sm text-slate-200">Could not find what you were looking for? <strong class="text-white">Send us your question directly.</strong></span>
+    <button type="button" @click="reset()" class="text-sm font-semibold text-[#fb923c] hover:underline whitespace-nowrap">Clear Filters</button>
+    <a href="../teklif-al.html" class="text-sm font-semibold text-[#fb923c] hover:underline whitespace-nowrap">Request a Quote →</a>
+  </div>
+
+  <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+  <article id="post-1" data-tag="marka-uyum" x-show="show('massey-ferguson-hydraulic-cylinder-selection-guide')" :style="{ order: ord('massey-ferguson-hydraulic-cylinder-selection-guide') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="massey-ferguson-hydraulic-cylinder-selection-guide.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-1" data-field="image">
+      <img src="../../assets/images/hero-tractor-field.webp" alt="Hydraulic Cylinder Selection Guide for Massey Ferguson Tractors" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
     <div class="p-6 flex flex-col flex-1">
-      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-1" data-field="date">[DATE HERE]</p>
-      <h2 class="font-bold text-lg text-white mb-2" data-section="post-1" data-field="title">[POST TITLE HERE]</h2>
-      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-1" data-field="excerpt">[POST EXCERPT HERE — a short 1-2 sentence introduction to this article.]</p>
-      <a href="blog-post-template.html" data-section="post-1" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Read More →</a>
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-1" data-field="date"><time datetime="2026-09-18">18 SEP 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-1" data-field="category">Brand Compatibility</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-1" data-field="title"><a href="massey-ferguson-hydraulic-cylinder-selection-guide.html" class="hover:text-[#fb923c] transition">Hydraulic Cylinder Selection Guide for Massey Ferguson Tractors</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-1" data-field="excerpt">Bore, stroke and mounting mismatches cause most cylinder problems on Massey Ferguson tractors. Here are the five criteria to check before you buy.</p>
+      <a href="massey-ferguson-hydraulic-cylinder-selection-guide.html" data-section="post-1" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Read More →</a>
     </div>
   </article>
-
-  <article id="post-2" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
-    <div class="h-48 w-full bg-white/10 flex items-center justify-center border-b border-white/10" data-section="post-2" data-field="image">
-      <svg class="h-12 w-12 text-slate-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.25" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16.5 8.5 12a2 2 0 0 1 2.8 0l4.7 4.5M14.5 14 16 12.5a2 2 0 0 1 2.8 0L21 14.7M4 6h16M4 3h16M4 9v10.5A1.5 1.5 0 0 0 5.5 21h13a1.5 1.5 0 0 0 1.5-1.5V9"/></svg>
-    </div>
+  <article id="post-2" data-tag="marka-uyum" x-show="show('fiat-tractor-top-link-replacement')" :style="{ order: ord('fiat-tractor-top-link-replacement') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="fiat-tractor-top-link-replacement.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-2" data-field="image">
+      <img src="../../assets/images/oem-agir-hizmet-ust-baglanti-kolu.webp" alt="How to Replace the Top Link on a Fiat Tractor" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
     <div class="p-6 flex flex-col flex-1">
-      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-2" data-field="date">[DATE HERE]</p>
-      <h2 class="font-bold text-lg text-white mb-2" data-section="post-2" data-field="title">[POST TITLE HERE]</h2>
-      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-2" data-field="excerpt">[POST EXCERPT HERE — a short 1-2 sentence introduction to this article.]</p>
-      <a href="blog-post-template.html" data-section="post-2" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Read More →</a>
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-2" data-field="date"><time datetime="2026-09-14">14 SEP 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-2" data-field="category">Brand Compatibility</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-2" data-field="title"><a href="fiat-tractor-top-link-replacement.html" class="hover:text-[#fb923c] transition">How to Replace the Top Link on a Fiat Tractor</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-2" data-field="excerpt">Play, noise and uneven lifting are often the signs of a tired top link. Here are the measurements you need to take before replacing it.</p>
+      <a href="fiat-tractor-top-link-replacement.html" data-section="post-2" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Read More →</a>
     </div>
   </article>
-
-  <article id="post-3" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
-    <div class="h-48 w-full bg-white/10 flex items-center justify-center border-b border-white/10" data-section="post-3" data-field="image">
-      <svg class="h-12 w-12 text-slate-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.25" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16.5 8.5 12a2 2 0 0 1 2.8 0l4.7 4.5M14.5 14 16 12.5a2 2 0 0 1 2.8 0L21 14.7M4 6h16M4 3h16M4 9v10.5A1.5 1.5 0 0 0 5.5 21h13a1.5 1.5 0 0 0 1.5-1.5V9"/></svg>
-    </div>
+  <article id="post-3" data-tag="marka-uyum" x-show="show('new-holland-oem-hydraulic-parts-compatibility-guide')" :style="{ order: ord('new-holland-oem-hydraulic-parts-compatibility-guide') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="new-holland-oem-hydraulic-parts-compatibility-guide.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-3" data-field="image">
+      <img src="../../assets/images/HPL-2.webp" alt="OEM Hydraulic Parts Compatibility Guide for New Holland Tractors" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
     <div class="p-6 flex flex-col flex-1">
-      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-3" data-field="date">[DATE HERE]</p>
-      <h2 class="font-bold text-lg text-white mb-2" data-section="post-3" data-field="title">[POST TITLE HERE]</h2>
-      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-3" data-field="excerpt">[POST EXCERPT HERE — a short 1-2 sentence introduction to this article.]</p>
-      <a href="blog-post-template.html" data-section="post-3" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Read More →</a>
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-3" data-field="date"><time datetime="2026-09-10">10 SEP 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-3" data-field="category">Brand Compatibility</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-3" data-field="title"><a href="new-holland-oem-hydraulic-parts-compatibility-guide.html" class="hover:text-[#fb923c] transition">OEM Hydraulic Parts Compatibility Guide for New Holland Tractors</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-3" data-field="excerpt">OEM code matching is the shortest route to the right part for New Holland. We clarify the difference between genuine, OEM equivalent and poor-quality copies.</p>
+      <a href="new-holland-oem-hydraulic-parts-compatibility-guide.html" data-section="post-3" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Read More →</a>
     </div>
   </article>
+  <article id="post-4" data-tag="marka-uyum" x-show="show('john-deere-leveling-box-faults-and-solutions')" :style="{ order: ord('john-deere-leveling-box-faults-and-solutions') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="john-deere-leveling-box-faults-and-solutions.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-4" data-field="image">
+      <img src="../../assets/images/HPL-1.webp" alt="Leveling Box Faults on John Deere Tractors and How to Fix Them" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
+    <div class="p-6 flex flex-col flex-1">
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-4" data-field="date"><time datetime="2026-09-06">06 SEP 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-4" data-field="category">Brand Compatibility</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-4" data-field="title"><a href="john-deere-leveling-box-faults-and-solutions.html" class="hover:text-[#fb923c] transition">Leveling Box Faults on John Deere Tractors and How to Fix Them</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-4" data-field="excerpt">If the leveling box is hard to turn or the implement leans to one side, the problem is usually in the screw mechanism. Diagnostic steps and decision criteria.</p>
+      <a href="john-deere-leveling-box-faults-and-solutions.html" data-section="post-4" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Read More →</a>
+    </div>
+  </article>
+  <article id="post-5" data-tag="marka-uyum" x-show="show('ford-tractor-side-arm-replacement-step-by-step')" :style="{ order: ord('ford-tractor-side-arm-replacement-step-by-step') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="ford-tractor-side-arm-replacement-step-by-step.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-5" data-field="image">
+      <img src="../../assets/images/HPL-3.webp" alt="Ford Tractor Side Arm Replacement: A Step-by-Step Guide" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
+    <div class="p-6 flex flex-col flex-1">
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-5" data-field="date"><time datetime="2026-09-02">02 SEP 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-5" data-field="category">Brand Compatibility</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-5" data-field="title"><a href="ford-tractor-side-arm-replacement-step-by-step.html" class="hover:text-[#fb923c] transition">Ford Tractor Side Arm Replacement: A Step-by-Step Guide</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-5" data-field="excerpt">Replacing a side arm is not difficult, but there is an order to it and safety steps to follow. What to know before removal and what to check after fitting.</p>
+      <a href="ford-tractor-side-arm-replacement-step-by-step.html" data-section="post-5" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Read More →</a>
+    </div>
+  </article>
+  <article id="post-6" data-tag="marka-uyum" x-show="show('choosing-the-right-hydraulic-cylinder-for-case-tractors')" :style="{ order: ord('choosing-the-right-hydraulic-cylinder-for-case-tractors') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="choosing-the-right-hydraulic-cylinder-for-case-tractors.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-6" data-field="image">
+      <img src="../../assets/images/hero-hydraulic-cylinder.webp" alt="How to Choose the Right Cylinder for Case Tractors" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
+    <div class="p-6 flex flex-col flex-1">
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-6" data-field="date"><time datetime="2026-08-29">29 AUG 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-6" data-field="category">Brand Compatibility</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-6" data-field="title"><a href="choosing-the-right-hydraulic-cylinder-for-case-tractors.html" class="hover:text-[#fb923c] transition">How to Choose the Right Cylinder for Case Tractors</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-6" data-field="excerpt">Pressure rating and stroke compatibility are the two critical variables in cylinder selection for Case tractors. A wrong choice wears the seals first, then the pump.</p>
+      <a href="choosing-the-right-hydraulic-cylinder-for-case-tractors.html" data-section="post-6" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Read More →</a>
+    </div>
+  </article>
+  <article id="post-7" data-tag="marka-uyum" x-show="show('deutz-tractor-pin-wear-signs-and-replacement-timing')" :style="{ order: ord('deutz-tractor-pin-wear-signs-and-replacement-timing') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="deutz-tractor-pin-wear-signs-and-replacement-timing.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-7" data-field="image">
+      <img src="../../assets/images/HPL-2.webp" alt="Pin Wear on Deutz Tractors: Signs and When to Replace" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
+    <div class="p-6 flex flex-col flex-1">
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-7" data-field="date"><time datetime="2026-08-25">25 AUG 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-7" data-field="category">Brand Compatibility</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-7" data-field="title"><a href="deutz-tractor-pin-wear-signs-and-replacement-timing.html" class="hover:text-[#fb923c] transition">Pin Wear on Deutz Tractors: Signs and When to Replace</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-7" data-field="excerpt">A worn pin damages not only itself but also the bush and hole it sits in. Catching the signs early keeps the repair to a single part.</p>
+      <a href="deutz-tractor-pin-wear-signs-and-replacement-timing.html" data-section="post-7" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Read More →</a>
+    </div>
+  </article>
+  <article id="post-8" data-tag="marka-uyum" x-show="show('zetor-landini-fendt-compatible-spare-parts-guide')" :style="{ order: ord('zetor-landini-fendt-compatible-spare-parts-guide') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="zetor-landini-fendt-compatible-spare-parts-guide.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-8" data-field="image">
+      <img src="../../assets/images/fabrika.webp" alt="A Guide to Finding Zetor, Landini and Fendt Compatible Spare Parts" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
+    <div class="p-6 flex flex-col flex-1">
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-8" data-field="date"><time datetime="2026-08-21">21 AUG 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-8" data-field="category">Brand Compatibility</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-8" data-field="title"><a href="zetor-landini-fendt-compatible-spare-parts-guide.html" class="hover:text-[#fb923c] transition">A Guide to Finding Zetor, Landini and Fendt Compatible Spare Parts</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-8" data-field="excerpt">Waiting for parts for less common brands takes time. Searching by OEM code and contract manufacturing are two practical ways to shorten that wait.</p>
+      <a href="zetor-landini-fendt-compatible-spare-parts-guide.html" data-section="post-8" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Read More →</a>
+    </div>
+  </article>
+  <article id="post-9" data-tag="fason-uretim" x-show="show('custom-8-and-9-tooth-gear-manufacturing')" :style="{ order: ord('custom-8-and-9-tooth-gear-manufacturing') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="custom-8-and-9-tooth-gear-manufacturing.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-9" data-field="image">
+      <img src="../../assets/images/cnc-machining-closeup.webp" alt="Custom 8- and 9-Tooth Gear Manufacturing: How It Works and Who Needs It" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
+    <div class="p-6 flex flex-col flex-1">
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-9" data-field="date"><time datetime="2026-08-17">17 AUG 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-9" data-field="category">Contract Manufacturing</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-9" data-field="title"><a href="custom-8-and-9-tooth-gear-manufacturing.html" class="hover:text-[#fb923c] transition">Custom 8- and 9-Tooth Gear Manufacturing: How It Works and Who Needs It</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-9" data-field="excerpt">Non-standard tooth counts often come from rare or older equipment. Which parameters do you need to specify in advance for custom gear manufacturing?</p>
+      <a href="custom-8-and-9-tooth-gear-manufacturing.html" data-section="post-9" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Read More →</a>
+    </div>
+  </article>
+  <article id="post-10" data-tag="fason-uretim" x-show="show('custom-shaft-manufacturing-contract-production-process')" :style="{ order: ord('custom-shaft-manufacturing-contract-production-process') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="custom-shaft-manufacturing-contract-production-process.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-10" data-field="image">
+      <img src="../../assets/images/pascalforge-machine-parts.webp" alt="Custom Shaft Manufacturing: How the Contract Production Process Works" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
+    <div class="p-6 flex flex-col flex-1">
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-10" data-field="date"><time datetime="2026-08-13">13 AUG 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-10" data-field="category">Contract Manufacturing</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-10" data-field="title"><a href="custom-shaft-manufacturing-contract-production-process.html" class="hover:text-[#fb923c] transition">Custom Shaft Manufacturing: How the Contract Production Process Works</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-10" data-field="excerpt">When a standard shaft cannot be found, custom manufacturing can be the fastest solution. Where material, tolerance and surface treatment decisions fit in.</p>
+      <a href="custom-shaft-manufacturing-contract-production-process.html" data-section="post-10" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Read More →</a>
+    </div>
+  </article>
+  <article id="post-11" data-tag="fason-uretim" x-show="show('custom-bracket-and-mount-manufacturing-agricultural-machinery')" :style="{ order: ord('custom-bracket-and-mount-manufacturing-agricultural-machinery') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="custom-bracket-and-mount-manufacturing-agricultural-machinery.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-11" data-field="image">
+      <img src="../../assets/images/pascalforge-spare-parts.webp" alt="Custom Bracket and Mount Manufacturing: Examples for Agricultural Machinery" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
+    <div class="p-6 flex flex-col flex-1">
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-11" data-field="date"><time datetime="2026-08-09">09 AUG 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-11" data-field="category">Contract Manufacturing</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-11" data-field="title"><a href="custom-bracket-and-mount-manufacturing-agricultural-machinery.html" class="hover:text-[#fb923c] transition">Custom Bracket and Mount Manufacturing: Examples for Agricultural Machinery</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-11" data-field="excerpt">Standard brackets do not fit every implement. How design, cutting, welding and thickness selection come together in custom bracket manufacturing.</p>
+      <a href="custom-bracket-and-mount-manufacturing-agricultural-machinery.html" data-section="post-11" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Read More →</a>
+    </div>
+  </article>
+  <article id="post-12" data-tag="fason-uretim" x-show="show('what-is-contract-manufacturing-small-batch-metal-parts')" :style="{ order: ord('what-is-contract-manufacturing-small-batch-metal-parts') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="what-is-contract-manufacturing-small-batch-metal-parts.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-12" data-field="image">
+      <img src="../../assets/images/fabrika.webp" alt="What Is Contract Manufacturing? What to Know About Small-Batch Metal Parts" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
+    <div class="p-6 flex flex-col flex-1">
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-12" data-field="date"><time datetime="2026-08-05">05 AUG 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-12" data-field="category">Contract Manufacturing</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-12" data-field="title"><a href="what-is-contract-manufacturing-small-batch-metal-parts.html" class="hover:text-[#fb923c] transition">What Is Contract Manufacturing? What to Know About Small-Batch Metal Parts</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-12" data-field="excerpt">Contract manufacturing is how you produce without building your own plant. How it differs from series production, its advantages and what to watch in the process.</p>
+      <a href="what-is-contract-manufacturing-small-batch-metal-parts.html" data-section="post-12" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Read More →</a>
+    </div>
+  </article>
+  <article id="post-13" data-tag="fason-uretim" x-show="show('from-sample-part-to-series-production-contract-manufacturing')" :style="{ order: ord('from-sample-part-to-series-production-contract-manufacturing') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="from-sample-part-to-series-production-contract-manufacturing.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-13" data-field="image">
+      <img src="../../assets/images/hero-cnc-workshop.webp" alt="From Sample Part to Series Production: The Contract Manufacturing Process at HydroPascal" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
+    <div class="p-6 flex flex-col flex-1">
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-13" data-field="date"><time datetime="2026-08-01">01 AUG 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-13" data-field="category">Contract Manufacturing</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-13" data-field="title"><a href="from-sample-part-to-series-production-contract-manufacturing.html" class="hover:text-[#fb923c] transition">From Sample Part to Series Production: The Contract Manufacturing Process at HydroPascal</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-13" data-field="excerpt">Even if all you have is a broken part, the process can still start. How the five steps from measurement to series production work.</p>
+      <a href="from-sample-part-to-series-production-contract-manufacturing.html" data-section="post-13" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Read More →</a>
+    </div>
+  </article>
+  <article id="post-14" data-tag="fason-uretim" x-show="show('non-standard-hydraulic-parts-custom-manufacturing-guide')" :style="{ order: ord('non-standard-hydraulic-parts-custom-manufacturing-guide') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="non-standard-hydraulic-parts-custom-manufacturing-guide.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-14" data-field="image">
+      <img src="../../assets/images/hero-hydraulic-cylinder.webp" alt="Need a Non-Standard Hydraulic Part? A Custom Manufacturing Guide" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
+    <div class="p-6 flex flex-col flex-1">
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-14" data-field="date"><time datetime="2026-07-28">28 JUL 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-14" data-field="category">Contract Manufacturing</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-14" data-field="title"><a href="non-standard-hydraulic-parts-custom-manufacturing-guide.html" class="hover:text-[#fb923c] transition">Need a Non-Standard Hydraulic Part? A Custom Manufacturing Guide</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-14" data-field="excerpt">When a custom flange, adapter or housing is needed, precision is not negotiable. What to watch in parts that work under pressure.</p>
+      <a href="non-standard-hydraulic-parts-custom-manufacturing-guide.html" data-section="post-14" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Read More →</a>
+    </div>
+  </article>
+  <article id="post-15" data-tag="fason-uretim" x-show="show('precision-cnc-machining-tolerances-and-quality-control')" :style="{ order: ord('precision-cnc-machining-tolerances-and-quality-control') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="precision-cnc-machining-tolerances-and-quality-control.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-15" data-field="image">
+      <img src="../../assets/images/cnc-machining-closeup.webp" alt="Precision Parts with CNC Machining: Tolerances and Quality Control" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
+    <div class="p-6 flex flex-col flex-1">
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-15" data-field="date"><time datetime="2026-07-24">24 JUL 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-15" data-field="category">Contract Manufacturing</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-15" data-field="title"><a href="precision-cnc-machining-tolerances-and-quality-control.html" class="hover:text-[#fb923c] transition">Precision Parts with CNC Machining: Tolerances and Quality Control</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-15" data-field="excerpt">A tolerance defines how far a dimension may deviate. A tolerance that is too tight is as problematic as one that is too loose — here is why.</p>
+      <a href="precision-cnc-machining-tolerances-and-quality-control.html" data-section="post-15" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Read More →</a>
+    </div>
+  </article>
+  <article id="post-16" data-tag="dokum-dovme" x-show="show('casting-or-forging-which-method-suits-your-part')" :style="{ order: ord('casting-or-forging-which-method-suits-your-part') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="casting-or-forging-which-method-suits-your-part.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-16" data-field="image">
+      <img src="../../assets/images/forgings-4.webp" alt="Casting or Forging? Which Production Method Suits Your Part?" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
+    <div class="p-6 flex flex-col flex-1">
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-16" data-field="date"><time datetime="2026-07-20">20 JUL 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-16" data-field="category">Casting &amp; Forging</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-16" data-field="title"><a href="casting-or-forging-which-method-suits-your-part.html" class="hover:text-[#fb923c] transition">Casting or Forging? Which Production Method Suits Your Part?</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-16" data-field="excerpt">Casting excels in complex geometry, forging in strength. The difference between the two methods and which is preferred for which part.</p>
+      <a href="casting-or-forging-which-method-suits-your-part.html" data-section="post-16" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Read More →</a>
+    </div>
+  </article>
+  <article id="post-17" data-tag="dokum-dovme" x-show="show('cast-parts-supply-with-pascalcast-process-and-materials')" :style="{ order: ord('cast-parts-supply-with-pascalcast-process-and-materials') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="cast-parts-supply-with-pascalcast-process-and-materials.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-17" data-field="image">
+      <img src="../../assets/images/pascalcast-dokum-uretim.webp" alt="Cast Parts Supply with PascalCast: Process and Material Options" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
+    <div class="p-6 flex flex-col flex-1">
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-17" data-field="date"><time datetime="2026-07-16">16 JUL 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-17" data-field="category">Casting &amp; Forging</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-17" data-field="title"><a href="cast-parts-supply-with-pascalcast-process-and-materials.html" class="hover:text-[#fb923c] transition">Cast Parts Supply with PascalCast: Process and Material Options</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-17" data-field="excerpt">From pattern preparation to finish machining: the steps of cast parts supply and the basic differences between grey iron, ductile iron and cast steel.</p>
+      <a href="cast-parts-supply-with-pascalcast-process-and-materials.html" data-section="post-17" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Read More →</a>
+    </div>
+  </article>
+  <article id="post-18" data-tag="dokum-dovme" x-show="show('forged-parts-with-pascalforge-why-durability-matters')" :style="{ order: ord('forged-parts-with-pascalforge-why-durability-matters') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="forged-parts-with-pascalforge-why-durability-matters.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-18" data-field="image">
+      <img src="../../assets/images/pascalforge-pascal-ile-dovme.webp" alt="Forged Parts with PascalForge: Why Does Durability Matter?" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
+    <div class="p-6 flex flex-col flex-1">
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-18" data-field="date"><time datetime="2026-07-12">12 JUL 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-18" data-field="category">Casting &amp; Forging</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-18" data-field="title"><a href="forged-parts-with-pascalforge-why-durability-matters.html" class="hover:text-[#fb923c] transition">Forged Parts with PascalForge: Why Does Durability Matter?</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-18" data-field="excerpt">Forging compacts the internal structure of the metal and gives it strength. Why it is preferred for parts such as shafts and links.</p>
+      <a href="forged-parts-with-pascalforge-why-durability-matters.html" data-section="post-18" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Read More →</a>
+    </div>
+  </article>
+  <article id="post-19" data-tag="dokum-dovme" x-show="show('quality-criteria-for-cast-parts-in-agricultural-machinery')" :style="{ order: ord('quality-criteria-for-cast-parts-in-agricultural-machinery') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="quality-criteria-for-cast-parts-in-agricultural-machinery.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-19" data-field="image">
+      <img src="../../assets/images/pascalcast-her-dokumde-hassasiyet.webp" alt="What Are the Quality Criteria for Cast Parts in Agricultural Machinery?" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
+    <div class="p-6 flex flex-col flex-1">
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-19" data-field="date"><time datetime="2026-07-08">08 JUL 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-19" data-field="category">Casting &amp; Forging</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-19" data-field="title"><a href="quality-criteria-for-cast-parts-in-agricultural-machinery.html" class="hover:text-[#fb923c] transition">What Are the Quality Criteria for Cast Parts in Agricultural Machinery?</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-19" data-field="excerpt">Quality in a cast part comes down to three headings: internal soundness, dimensional accuracy and surface quality. Each shows up differently in the field.</p>
+      <a href="quality-criteria-for-cast-parts-in-agricultural-machinery.html" data-section="post-19" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Read More →</a>
+    </div>
+  </article>
+  <article id="post-20" data-tag="dokum-dovme" x-show="show('material-selection-for-forged-parts-which-steel')" :style="{ order: ord('material-selection-for-forged-parts-which-steel') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="material-selection-for-forged-parts-which-steel.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-20" data-field="image">
+      <img src="../../assets/images/pascalforge-equipment.webp" alt="Material Selection for Forged Parts: Which Steel for Which Application?" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
+    <div class="p-6 flex flex-col flex-1">
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-20" data-field="date"><time datetime="2026-07-04">04 JUL 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-20" data-field="category">Casting &amp; Forging</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-20" data-field="title"><a href="material-selection-for-forged-parts-which-steel.html" class="hover:text-[#fb923c] transition">Material Selection for Forged Parts: Which Steel for Which Application?</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-20" data-field="excerpt">Carbon steel or alloy steel? The choice is decided by load, environment and heat treatment expectations. The result of the wrong choice is early fatigue.</p>
+      <a href="material-selection-for-forged-parts-which-steel.html" data-section="post-20" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Read More →</a>
+    </div>
+  </article>
+  <article id="post-21" data-tag="dokum-dovme" x-show="show('simulation-assisted-forging-technology')" :style="{ order: ord('simulation-assisted-forging-technology') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="simulation-assisted-forging-technology.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-21" data-field="image">
+      <img src="../../assets/images/forging-simulation.webp" alt="Simulation-Assisted Forging: The Technology That Reduces Error Margins" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
+    <div class="p-6 flex flex-col flex-1">
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-21" data-field="date"><time datetime="2026-06-30">30 JUN 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-21" data-field="category">Casting &amp; Forging</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-21" data-field="title"><a href="simulation-assisted-forging-technology.html" class="hover:text-[#fb923c] transition">Simulation-Assisted Forging: The Technology That Reduces Error Margins</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-21" data-field="excerpt">In forging, die design decides the result. Simulation shows how the metal will flow before production and reduces the number of trials.</p>
+      <a href="simulation-assisted-forging-technology.html" data-section="post-21" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Read More →</a>
+    </div>
+  </article>
+  <article id="post-22" data-tag="silindir" x-show="show('how-to-calculate-hydraulic-cylinder-bore-and-stroke')" :style="{ order: ord('how-to-calculate-hydraulic-cylinder-bore-and-stroke') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="how-to-calculate-hydraulic-cylinder-bore-and-stroke.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-22" data-field="image">
+      <img src="../../assets/images/hero-hydraulic-cylinder.webp" alt="How to Calculate Hydraulic Cylinder Bore and Stroke (Step by Step)" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
+    <div class="p-6 flex flex-col flex-1">
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-22" data-field="date"><time datetime="2026-06-26">26 JUN 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-22" data-field="category">Cylinder Sizing</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-22" data-field="title"><a href="how-to-calculate-hydraulic-cylinder-bore-and-stroke.html" class="hover:text-[#fb923c] transition">How to Calculate Hydraulic Cylinder Bore and Stroke (Step by Step)</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-22" data-field="excerpt">Force is pressure multiplied by area — that is where the calculation starts. The step-by-step logic of sizing bore and stroke.</p>
+      <a href="how-to-calculate-hydraulic-cylinder-bore-and-stroke.html" data-section="post-22" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Read More →</a>
+    </div>
+  </article>
+  <article id="post-23" data-tag="silindir" x-show="show('cost-of-wrong-cylinder-selection-5-mistakes')" :style="{ order: ord('cost-of-wrong-cylinder-selection-5-mistakes') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="cost-of-wrong-cylinder-selection-5-mistakes.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-23" data-field="image">
+      <img src="../../assets/images/HPL-5.webp" alt="The Cost of Choosing the Wrong Cylinder: 5 Common Mistakes" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
+    <div class="p-6 flex flex-col flex-1">
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-23" data-field="date"><time datetime="2026-06-22">22 JUN 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-23" data-field="category">Cylinder Sizing</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-23" data-field="title"><a href="cost-of-wrong-cylinder-selection-5-mistakes.html" class="hover:text-[#fb923c] transition">The Cost of Choosing the Wrong Cylinder: 5 Common Mistakes</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-23" data-field="excerpt">Five common selection mistakes and what each one means in the field: early failure, leakage, loss of performance and unnecessary cost.</p>
+      <a href="cost-of-wrong-cylinder-selection-5-mistakes.html" data-section="post-23" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Read More →</a>
+    </div>
+  </article>
+  <article id="post-24" data-tag="silindir" x-show="show('find-the-right-cylinder-with-our-selection-software')" :style="{ order: ord('find-the-right-cylinder-with-our-selection-software') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="find-the-right-cylinder-with-our-selection-software.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-24" data-field="image">
+      <img src="../../assets/images/hpl-guc-icin-insa-edildi.webp" alt="Find the Right Cylinder with Our Cylinder Selection Software" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
+    <div class="p-6 flex flex-col flex-1">
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-24" data-field="date"><time datetime="2026-06-18">18 JUN 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-24" data-field="category">Cylinder Sizing</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-24" data-field="title"><a href="find-the-right-cylinder-with-our-selection-software.html" class="hover:text-[#fb923c] transition">Find the Right Cylinder with Our Cylinder Selection Software</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-24" data-field="excerpt">Enter five values and see the force produced and the matching products. What the software does and how to read its output.</p>
+      <a href="find-the-right-cylinder-with-our-selection-software.html" data-section="post-24" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Read More →</a>
+    </div>
+  </article>
+  <article id="post-25" data-tag="silindir" x-show="show('double-acting-vs-single-acting-cylinder')" :style="{ order: ord('double-acting-vs-single-acting-cylinder') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="double-acting-vs-single-acting-cylinder.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-25" data-field="image">
+      <img src="../../assets/images/HPL-6.webp" alt="Double-Acting vs Single-Acting Cylinders: Which One for Which Application?" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
+    <div class="p-6 flex flex-col flex-1">
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-25" data-field="date"><time datetime="2026-06-14">14 JUN 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-25" data-field="category">Cylinder Sizing</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-25" data-field="title"><a href="double-acting-vs-single-acting-cylinder.html" class="hover:text-[#fb923c] transition">Double-Acting vs Single-Acting Cylinders: Which One for Which Application?</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-25" data-field="excerpt">A single-acting cylinder pushes in one direction and returns by gravity or a spring. In a double-acting cylinder both directions are controlled. Which is used where?</p>
+      <a href="double-acting-vs-single-acting-cylinder.html" data-section="post-25" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Read More →</a>
+    </div>
+  </article>
+  <article id="post-26" data-tag="silindir" x-show="show('pump-pressure-and-cylinder-performance')" :style="{ order: ord('pump-pressure-and-cylinder-performance') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="pump-pressure-and-cylinder-performance.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-26" data-field="image">
+      <img src="../../assets/images/hero-factory-production-line.webp" alt="The Relationship Between Pump Pressure and Cylinder Performance" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
+    <div class="p-6 flex flex-col flex-1">
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-26" data-field="date"><time datetime="2026-06-10">10 JUN 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-26" data-field="category">Cylinder Sizing</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-26" data-field="title"><a href="pump-pressure-and-cylinder-performance.html" class="hover:text-[#fb923c] transition">The Relationship Between Pump Pressure and Cylinder Performance</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-26" data-field="excerpt">Pump pressure determines force, pump flow determines speed. How to match both with the cylinder and what happens when they do not match.</p>
+      <a href="pump-pressure-and-cylinder-performance.html" data-section="post-26" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Read More →</a>
+    </div>
+  </article>
+  <article id="post-27" data-tag="bakim" x-show="show('hydraulic-cylinder-leaks-causes-and-solutions')" :style="{ order: ord('hydraulic-cylinder-leaks-causes-and-solutions') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="hydraulic-cylinder-leaks-causes-and-solutions.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-27" data-field="image">
+      <img src="../../assets/images/HPL-7.webp" alt="Hydraulic Cylinder Leaks: Causes and Solutions" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
+    <div class="p-6 flex flex-col flex-1">
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-27" data-field="date"><time datetime="2026-06-06">06 JUN 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-27" data-field="category">Maintenance</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-27" data-field="title"><a href="hydraulic-cylinder-leaks-causes-and-solutions.html" class="hover:text-[#fb923c] transition">Hydraulic Cylinder Leaks: Causes and Solutions</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-27" data-field="excerpt">Leaks have three main sources and each needs a different fix. Practical ways to tell where a leak is coming from.</p>
+      <a href="hydraulic-cylinder-leaks-causes-and-solutions.html" data-section="post-27" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Read More →</a>
+    </div>
+  </article>
+  <article id="post-28" data-tag="bakim" x-show="show('when-to-replace-hydraulic-cylinder-seals')" :style="{ order: ord('when-to-replace-hydraulic-cylinder-seals') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="when-to-replace-hydraulic-cylinder-seals.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-28" data-field="image">
+      <img src="../../assets/images/HPL-8.webp" alt="When Do Seals Need Replacing? Signs and Maintenance Schedule" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
+    <div class="p-6 flex flex-col flex-1">
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-28" data-field="date"><time datetime="2026-06-02">02 JUN 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-28" data-field="category">Maintenance</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-28" data-field="title"><a href="when-to-replace-hydraulic-cylinder-seals.html" class="hover:text-[#fb923c] transition">When Do Seals Need Replacing? Signs and Maintenance Schedule</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-28" data-field="excerpt">Seal wear shows up as loss of power and leakage. How to decide when to replace them and when to replace the whole cylinder.</p>
+      <a href="when-to-replace-hydraulic-cylinder-seals.html" data-section="post-28" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Read More →</a>
+    </div>
+  </article>
+  <article id="post-29" data-tag="bakim" x-show="show('7-maintenance-habits-that-extend-hydraulic-cylinder-life')" :style="{ order: ord('7-maintenance-habits-that-extend-hydraulic-cylinder-life') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="7-maintenance-habits-that-extend-hydraulic-cylinder-life.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-29" data-field="image">
+      <img src="../../assets/images/hpl-guc-icin-insa-edildi.webp" alt="7 Maintenance Habits That Extend Hydraulic Cylinder Life" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
+    <div class="p-6 flex flex-col flex-1">
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-29" data-field="date"><time datetime="2026-05-29">29 MAY 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-29" data-field="category">Maintenance</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-29" data-field="title"><a href="7-maintenance-habits-that-extend-hydraulic-cylinder-life.html" class="hover:text-[#fb923c] transition">7 Maintenance Habits That Extend Hydraulic Cylinder Life</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-29" data-field="excerpt">Seven simple habits noticeably extend cylinder life. We briefly explain why each of them works.</p>
+      <a href="7-maintenance-habits-that-extend-hydraulic-cylinder-life.html" data-section="post-29" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Read More →</a>
+    </div>
+  </article>
+  <article id="post-30" data-tag="bakim" x-show="show('scratched-cylinder-rod-repair-or-replace')" :style="{ order: ord('scratched-cylinder-rod-repair-or-replace') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="scratched-cylinder-rod-repair-or-replace.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-30" data-field="image">
+      <img src="../../assets/images/hero-hydraulic-cylinder.webp" alt="Scratches and Wear on a Cylinder Rod: Repair or Replace?" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
+    <div class="p-6 flex flex-col flex-1">
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-30" data-field="date"><time datetime="2026-05-25">25 MAY 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-30" data-field="category">Maintenance</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-30" data-field="title"><a href="scratched-cylinder-rod-repair-or-replace.html" class="hover:text-[#fb923c] transition">Scratches and Wear on a Cylinder Rod: Repair or Replace?</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-30" data-field="excerpt">Not every scratch means a new part. How to tell repairable damage from damage that calls for straight replacement.</p>
+      <a href="scratched-cylinder-rod-repair-or-replace.html" data-section="post-30" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Read More →</a>
+    </div>
+  </article>
+  <article id="post-31" data-tag="bakim" x-show="show('winter-maintenance-for-hydraulic-equipment')" :style="{ order: ord('winter-maintenance-for-hydraulic-equipment') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="winter-maintenance-for-hydraulic-equipment.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-31" data-field="image">
+      <img src="../../assets/images/hero-tractor-field.webp" alt="Winter Maintenance for Hydraulic Equipment: What to Watch in Cold Weather" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
+    <div class="p-6 flex flex-col flex-1">
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-31" data-field="date"><time datetime="2026-05-21">21 MAY 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-31" data-field="category">Maintenance</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-31" data-field="title"><a href="winter-maintenance-for-hydraulic-equipment.html" class="hover:text-[#fb923c] transition">Winter Maintenance for Hydraulic Equipment: What to Watch in Cold Weather</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-31" data-field="excerpt">Cold thickens hydraulic oil and hardens seals. A pre-winter checklist and storage recommendations.</p>
+      <a href="winter-maintenance-for-hydraulic-equipment.html" data-section="post-31" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Read More →</a>
+    </div>
+  </article>
+  <article id="post-32" data-tag="bakim" x-show="show('oem-or-aftermarket-choosing-spare-parts')" :style="{ order: ord('oem-or-aftermarket-choosing-spare-parts') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="oem-or-aftermarket-choosing-spare-parts.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-32" data-field="image">
+      <img src="../../assets/images/HPL-4.webp" alt="OEM or Aftermarket? What to Know When Choosing Spare Parts" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
+    <div class="p-6 flex flex-col flex-1">
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-32" data-field="date"><time datetime="2026-05-17">17 MAY 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-32" data-field="category">Maintenance</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-32" data-field="title"><a href="oem-or-aftermarket-choosing-spare-parts.html" class="hover:text-[#fb923c] transition">OEM or Aftermarket? What to Know When Choosing Spare Parts</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-32" data-field="excerpt">Aftermarket does not always mean low quality. What makes the difference is material, tolerance and supplier transparency — how do you assess them?</p>
+      <a href="oem-or-aftermarket-choosing-spare-parts.html" data-section="post-32" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Read More →</a>
+    </div>
+  </article>
+  <article id="post-33" data-tag="kurumsal" x-show="show('hydropascal-story-since-2019')" :style="{ order: ord('hydropascal-story-since-2019') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="hydropascal-story-since-2019.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-33" data-field="image">
+      <img src="../../assets/images/fabrika.webp" alt="The HydroPascal Story: Agricultural Machinery Spare Parts Manufacturing Since 2019" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
+    <div class="p-6 flex flex-col flex-1">
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-33" data-field="date"><time datetime="2026-05-13">13 MAY 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-33" data-field="category">Company</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-33" data-field="title"><a href="hydropascal-story-since-2019.html" class="hover:text-[#fb923c] transition">The HydroPascal Story: Agricultural Machinery Spare Parts Manufacturing Since 2019</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-33" data-field="excerpt">Founded in Konya in 2019, HydroPascal expanded into forging and casting with PascalForge and PascalCast in 2021. The main lines of the story.</p>
+      <a href="hydropascal-story-since-2019.html" data-section="post-33" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Read More →</a>
+    </div>
+  </article>
+  <article id="post-34" data-tag="kurumsal" x-show="show('from-turkiye-to-the-world-export-and-quality-standards')" :style="{ order: ord('from-turkiye-to-the-world-export-and-quality-standards') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="from-turkiye-to-the-world-export-and-quality-standards.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-34" data-field="image">
+      <img src="../../assets/images/hero-factory-production-line.webp" alt="From Türkiye to the World: Our Export Process and Quality Standards" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
+    <div class="p-6 flex flex-col flex-1">
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-34" data-field="date"><time datetime="2026-05-09">09 MAY 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-34" data-field="category">Company</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-34" data-field="title"><a href="from-turkiye-to-the-world-export-and-quality-standards.html" class="hover:text-[#fb923c] transition">From Türkiye to the World: Our Export Process and Quality Standards</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-34" data-field="excerpt">Working with international customers requires process clarity as much as certificates. Our quality standards and communication flow.</p>
+      <a href="from-turkiye-to-the-world-export-and-quality-standards.html" data-section="post-34" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Read More →</a>
+    </div>
+  </article>
+  <article id="post-35" data-tag="kurumsal" x-show="show('agricultural-machinery-spare-parts-supply-chain')" :style="{ order: ord('agricultural-machinery-spare-parts-supply-chain') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="agricultural-machinery-spare-parts-supply-chain.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-35" data-field="image">
+      <img src="../../assets/images/pascalforge-spare-parts.webp" alt="How Does the Spare Parts Supply Chain Work in Agricultural Machinery?" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
+    <div class="p-6 flex flex-col flex-1">
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-35" data-field="date"><time datetime="2026-05-05">05 MAY 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-35" data-field="category">Company</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-35" data-field="title"><a href="agricultural-machinery-spare-parts-supply-chain.html" class="hover:text-[#fb923c] transition">How Does the Spare Parts Supply Chain Work in Agricultural Machinery?</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-35" data-field="excerpt">The links a part passes through from manufacturer to user, and why delays happen along the chain.</p>
+      <a href="agricultural-machinery-spare-parts-supply-chain.html" data-section="post-35" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Read More →</a>
+    </div>
+  </article>
+  <article id="post-36" data-tag="kurumsal" x-show="show('why-finding-parts-for-classic-and-modern-tractors-is-harder')" :style="{ order: ord('why-finding-parts-for-classic-and-modern-tractors-is-harder') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="why-finding-parts-for-classic-and-modern-tractors-is-harder.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-36" data-field="image">
+      <img src="../../assets/images/oem-agir-hizmet-ust-baglanti-kolu.webp" alt="Why Is It Getting Harder to Find Parts for Classic and Modern Tractors?" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
+    <div class="p-6 flex flex-col flex-1">
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-36" data-field="date"><time datetime="2026-05-01">01 MAY 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-36" data-field="category">Company</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-36" data-field="title"><a href="why-finding-parts-for-classic-and-modern-tractors-is-harder.html" class="hover:text-[#fb923c] transition">Why Is It Getting Harder to Find Parts for Classic and Modern Tractors?</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-36" data-field="excerpt">Genuine part production stops at some point; but tractors keep working. How that gap is filled.</p>
+      <a href="why-finding-parts-for-classic-and-modern-tractors-is-harder.html" data-section="post-36" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Read More →</a>
+    </div>
+  </article>
+  <article id="post-37" data-tag="kurumsal" x-show="show('choosing-the-right-hydraulic-parts-supplier')" :style="{ order: ord('choosing-the-right-hydraulic-parts-supplier') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="choosing-the-right-hydraulic-parts-supplier.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-37" data-field="image">
+      <img src="../../assets/images/hero-cnc-workshop.webp" alt="Choosing the Right Supplier: What to Look for When Buying Hydraulic Parts" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
+    <div class="p-6 flex flex-col flex-1">
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-37" data-field="date"><time datetime="2026-04-27">27 APR 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-37" data-field="category">Company</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-37" data-field="title"><a href="choosing-the-right-hydraulic-parts-supplier.html" class="hover:text-[#fb923c] transition">Choosing the Right Supplier: What to Look for When Buying Hydraulic Parts</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-37" data-field="excerpt">Choosing a supplier is not a one-off decision but the start of a recurring relationship. Five headings to look at in your assessment.</p>
+      <a href="choosing-the-right-hydraulic-parts-supplier.html" data-section="post-37" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Read More →</a>
+    </div>
+  </article>
+  <article id="post-38" data-tag="kurumsal" x-show="show('from-scratch-to-quote-ordering-custom-parts')" :style="{ order: ord('from-scratch-to-quote-ordering-custom-parts') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="from-scratch-to-quote-ordering-custom-parts.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-38" data-field="image">
+      <img src="../../assets/images/cnc-machining-closeup.webp" alt="From Scratch to Quote: How to Order a Custom Part from HydroPascal" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
+    <div class="p-6 flex flex-col flex-1">
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-38" data-field="date"><time datetime="2026-04-23">23 APR 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-38" data-field="category">Company</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-38" data-field="title"><a href="from-scratch-to-quote-ordering-custom-parts.html" class="hover:text-[#fb923c] transition">From Scratch to Quote: How to Order a Custom Part from HydroPascal</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-38" data-field="excerpt">Five steps from first contact to quote. What is expected from you at each stage and how long does the process take?</p>
+      <a href="from-scratch-to-quote-ordering-custom-parts.html" data-section="post-38" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Read More →</a>
+    </div>
+  </article>
+  <article id="post-39" data-tag="kurumsal" x-show="show('bulk-purchase-b2b-process-guide')" :style="{ order: ord('bulk-purchase-b2b-process-guide') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="bulk-purchase-b2b-process-guide.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-39" data-field="image">
+      <img src="../../assets/images/pascalcast-dokum-uretim.webp" alt="A Process Guide for Bulk Purchase (B2B) Customers" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
+    <div class="p-6 flex flex-col flex-1">
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-39" data-field="date"><time datetime="2026-04-19">19 APR 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-39" data-field="category">Company</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-39" data-field="title"><a href="bulk-purchase-b2b-process-guide.html" class="hover:text-[#fb923c] transition">A Process Guide for Bulk Purchase (B2B) Customers</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-39" data-field="excerpt">In bulk purchasing, what decides the outcome is not price but planning. Delivery schedules, quality control and what a long-term relationship brings.</p>
+      <a href="bulk-purchase-b2b-process-guide.html" data-section="post-39" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Read More →</a>
+    </div>
+  </article>
+  <article id="post-40" data-tag="kurumsal" x-show="show('agricultural-machinery-spare-parts-trends')" :style="{ order: ord('agricultural-machinery-spare-parts-trends') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="agricultural-machinery-spare-parts-trends.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-40" data-field="image">
+      <img src="../../assets/images/hpl-guc-icin-insa-edildi.webp" alt="Emerging Trends in the Agricultural Machinery Spare Parts Sector" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
+    <div class="p-6 flex flex-col flex-1">
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-40" data-field="date"><time datetime="2026-04-15">15 APR 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-40" data-field="category">Company</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-40" data-field="title"><a href="agricultural-machinery-spare-parts-trends.html" class="hover:text-[#fb923c] transition">Emerging Trends in the Agricultural Machinery Spare Parts Sector</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-40" data-field="excerpt">Digital tools, a shift toward contract manufacturing and shorter delivery expectations. Three trends observed in the sector and HydroPascal’s approach.</p>
+      <a href="agricultural-machinery-spare-parts-trends.html" data-section="post-40" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Read More →</a>
+    </div>
+  </article>
+  <article id="post-41" data-tag="urun-rehberi" x-show="show('what-is-a-top-link-and-what-does-it-do')" :style="{ order: ord('what-is-a-top-link-and-what-does-it-do') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="what-is-a-top-link-and-what-does-it-do.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-41" data-field="image">
+      <img src="../../assets/images/oem-agir-hizmet-ust-baglanti-kolu.webp" alt="What Is a Top Link and What Does It Do?" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
+    <div class="p-6 flex flex-col flex-1">
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-41" data-field="date"><time datetime="2026-04-11">11 APR 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-41" data-field="category">Product Guide</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-41" data-field="title"><a href="what-is-a-top-link-and-what-does-it-do.html" class="hover:text-[#fb923c] transition">What Is a Top Link and What Does It Do?</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-41" data-field="excerpt">The top link sets the implement’s working angle. Its types, choosing dimensions and how the wrong length affects the implement.</p>
+      <a href="what-is-a-top-link-and-what-does-it-do.html" data-section="post-41" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Read More →</a>
+    </div>
+  </article>
+  <article id="post-42" data-tag="urun-rehberi" x-show="show('how-does-a-leveling-box-work')" :style="{ order: ord('how-does-a-leveling-box-work') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="how-does-a-leveling-box-work.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-42" data-field="image">
+      <img src="../../assets/images/HPL-1.webp" alt="How Does a Leveling Box Work?" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
+    <div class="p-6 flex flex-col flex-1">
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-42" data-field="date"><time datetime="2026-04-07">07 APR 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-42" data-field="category">Product Guide</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-42" data-field="title"><a href="how-does-a-leveling-box-work.html" class="hover:text-[#fb923c] transition">How Does a Leveling Box Work?</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-42" data-field="excerpt">The leveling box sets the implement’s lateral level by changing the length of the right lower arm. Its working principle and maintenance signs.</p>
+      <a href="how-does-a-leveling-box-work.html" data-section="post-42" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Read More →</a>
+    </div>
+  </article>
+  <article id="post-43" data-tag="urun-rehberi" x-show="show('pins-and-connection-elements-selection-criteria')" :style="{ order: ord('pins-and-connection-elements-selection-criteria') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="pins-and-connection-elements-selection-criteria.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-43" data-field="image">
+      <img src="../../assets/images/HPL-2.webp" alt="Pins and Connection Elements: Selection Criteria" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
+    <div class="p-6 flex flex-col flex-1">
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-43" data-field="date"><time datetime="2026-04-03">03 APR 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-43" data-field="category">Product Guide</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-43" data-field="title"><a href="pins-and-connection-elements-selection-criteria.html" class="hover:text-[#fb923c] transition">Pins and Connection Elements: Selection Criteria</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-43" data-field="excerpt">A pin is a small part, but the whole load passes through it. The logic behind choosing diameter, length, retaining type and hardness.</p>
+      <a href="pins-and-connection-elements-selection-criteria.html" data-section="post-43" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Read More →</a>
+    </div>
+  </article>
+  <article id="post-44" data-tag="urun-rehberi" x-show="show('side-arms-applications-and-selection-guide')" :style="{ order: ord('side-arms-applications-and-selection-guide') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="side-arms-applications-and-selection-guide.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-44" data-field="image">
+      <img src="../../assets/images/HPL-3.webp" alt="Side Arms: Applications and Selection Guide" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
+    <div class="p-6 flex flex-col flex-1">
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-44" data-field="date"><time datetime="2026-03-30">30 MAR 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-44" data-field="category">Product Guide</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-44" data-field="title"><a href="side-arms-applications-and-selection-guide.html" class="hover:text-[#fb923c] transition">Side Arms: Applications and Selection Guide</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-44" data-field="excerpt">Side arms are the elements that carry the implement’s weight. The difference between fixed and telescopic types and the selection logic.</p>
+      <a href="side-arms-applications-and-selection-guide.html" data-section="post-44" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Read More →</a>
+    </div>
+  </article>
+  <article id="post-45" data-tag="urun-rehberi" x-show="show('what-does-a-stabilizer-chain-do')" :style="{ order: ord('what-does-a-stabilizer-chain-do') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="what-does-a-stabilizer-chain-do.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-45" data-field="image">
+      <img src="../../assets/images/HPL-4.webp" alt="What Does a Stabilizer Chain Do and When Should It Be Replaced?" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
+    <div class="p-6 flex flex-col flex-1">
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-45" data-field="date"><time datetime="2026-03-26">26 MAR 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-45" data-field="category">Product Guide</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-45" data-field="title"><a href="what-does-a-stabilizer-chain-do.html" class="hover:text-[#fb923c] transition">What Does a Stabilizer Chain Do and When Should It Be Replaced?</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-45" data-field="excerpt">The stabilizer chain limits the implement’s lateral sway. A slack chain wears out every connection point.</p>
+      <a href="what-does-a-stabilizer-chain-do.html" data-section="post-45" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Read More →</a>
+    </div>
+  </article>
+  <article id="post-46" data-tag="silindir" x-show="show('what-is-hydraulic-cylinder-pressure-rating')" :style="{ order: ord('what-is-hydraulic-cylinder-pressure-rating') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="what-is-hydraulic-cylinder-pressure-rating.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-46" data-field="image">
+      <img src="../../assets/images/hero-hydraulic-cylinder.webp" alt="What Is the Pressure Rating of a Hydraulic Cylinder?" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
+    <div class="p-6 flex flex-col flex-1">
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-46" data-field="date"><time datetime="2026-03-22">22 MAR 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-46" data-field="category">Cylinder Sizing</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-46" data-field="title"><a href="what-is-hydraulic-cylinder-pressure-rating.html" class="hover:text-[#fb923c] transition">What Is the Pressure Rating of a Hydraulic Cylinder?</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-46" data-field="excerpt">Working pressure, test pressure and burst pressure are different things. What a pressure rating tells you and where to find it.</p>
+      <a href="what-is-hydraulic-cylinder-pressure-rating.html" data-section="post-46" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Read More →</a>
+    </div>
+  </article>
+  <article id="post-47" data-tag="bakim" x-show="show('choosing-hydraulic-oil-effect-on-cylinder-performance')" :style="{ order: ord('choosing-hydraulic-oil-effect-on-cylinder-performance') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="choosing-hydraulic-oil-effect-on-cylinder-performance.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-47" data-field="image">
+      <img src="../../assets/images/HPL-5.webp" alt="Choosing Hydraulic Oil: Its Effect on Cylinder Performance" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
+    <div class="p-6 flex flex-col flex-1">
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-47" data-field="date"><time datetime="2026-03-18">18 MAR 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-47" data-field="category">Maintenance</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-47" data-field="title"><a href="choosing-hydraulic-oil-effect-on-cylinder-performance.html" class="hover:text-[#fb923c] transition">Choosing Hydraulic Oil: Its Effect on Cylinder Performance</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-47" data-field="excerpt">Hydraulic oil does not only transmit force; it lubricates, cools and is in contact with the seals. The properties that decide the choice.</p>
+      <a href="choosing-hydraulic-oil-effect-on-cylinder-performance.html" data-section="post-47" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Read More →</a>
+    </div>
+  </article>
+  <article id="post-48" data-tag="bakim" x-show="show('how-to-bleed-air-from-a-hydraulic-system')" :style="{ order: ord('how-to-bleed-air-from-a-hydraulic-system') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="how-to-bleed-air-from-a-hydraulic-system.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-48" data-field="image">
+      <img src="../../assets/images/HPL-6.webp" alt="How Do You Bleed Air from a Hydraulic System?" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
+    <div class="p-6 flex flex-col flex-1">
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-48" data-field="date"><time datetime="2026-03-14">14 MAR 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-48" data-field="category">Maintenance</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-48" data-field="title"><a href="how-to-bleed-air-from-a-hydraulic-system.html" class="hover:text-[#fb923c] transition">How Do You Bleed Air from a Hydraulic System?</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-48" data-field="excerpt">Air left in the system causes jerky movement and loss of power. General air bleeding steps and what to watch for.</p>
+      <a href="how-to-bleed-air-from-a-hydraulic-system.html" data-section="post-48" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Read More →</a>
+    </div>
+  </article>
+  <article id="post-49" data-tag="bakim" x-show="show('common-cylinder-installation-mistakes')" :style="{ order: ord('common-cylinder-installation-mistakes') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="common-cylinder-installation-mistakes.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-49" data-field="image">
+      <img src="../../assets/images/HPL-7.webp" alt="Common Cylinder Installation Mistakes and How to Prevent Them" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
+    <div class="p-6 flex flex-col flex-1">
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-49" data-field="date"><time datetime="2026-03-10">10 MAR 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-49" data-field="category">Maintenance</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-49" data-field="title"><a href="common-cylinder-installation-mistakes.html" class="hover:text-[#fb923c] transition">Common Cylinder Installation Mistakes and How to Prevent Them</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-49" data-field="excerpt">Most installation mistakes are not noticed on day one; they come back months later as a leak. The most common five mistakes.</p>
+      <a href="common-cylinder-installation-mistakes.html" data-section="post-49" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Read More →</a>
+    </div>
+  </article>
+  <article id="post-50" data-tag="urun-rehberi" x-show="show('how-does-a-tractor-three-point-hitch-work')" :style="{ order: ord('how-does-a-tractor-three-point-hitch-work') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="how-does-a-tractor-three-point-hitch-work.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-50" data-field="image">
+      <img src="../../assets/images/hero-tractor-field.webp" alt="How Does a Tractor Three-Point Hitch Work?" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
+    <div class="p-6 flex flex-col flex-1">
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-50" data-field="date"><time datetime="2026-03-06">06 MAR 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-50" data-field="category">Product Guide</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-50" data-field="title"><a href="how-does-a-tractor-three-point-hitch-work.html" class="hover:text-[#fb923c] transition">How Does a Tractor Three-Point Hitch Work?</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-50" data-field="excerpt">The three-point hitch carries, positions and pulls the implement. The job of each component and its HPL product counterpart.</p>
+      <a href="how-does-a-tractor-three-point-hitch-work.html" data-section="post-50" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Read More →</a>
+    </div>
+  </article>
+  <article id="post-51" data-tag="urun-rehberi" x-show="show('how-to-find-the-right-part-with-an-oem-code')" :style="{ order: ord('how-to-find-the-right-part-with-an-oem-code') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="how-to-find-the-right-part-with-an-oem-code.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-51" data-field="image">
+      <img src="../../assets/images/HPL-2.webp" alt="How Do You Find the Right Part with an OEM Code?" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
+    <div class="p-6 flex flex-col flex-1">
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-51" data-field="date"><time datetime="2026-03-02">02 MAR 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-51" data-field="category">Product Guide</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-51" data-field="title"><a href="how-to-find-the-right-part-with-an-oem-code.html" class="hover:text-[#fb923c] transition">How Do You Find the Right Part with an OEM Code?</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-51" data-field="excerpt">Searching by brand and model is often not enough. The OEM code is the part’s technical identity — where do you find it and how do you use it?</p>
+      <a href="how-to-find-the-right-part-with-an-oem-code.html" data-section="post-51" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Read More →</a>
+    </div>
+  </article>
+  <article id="post-52" data-tag="bakim" x-show="show('hydraulic-cylinder-pre-installation-checklist')" :style="{ order: ord('hydraulic-cylinder-pre-installation-checklist') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="hydraulic-cylinder-pre-installation-checklist.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-52" data-field="image">
+      <img src="../../assets/images/HPL-8.webp" alt="What to Check Before Installing a Hydraulic Cylinder" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
+    <div class="p-6 flex flex-col flex-1">
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-52" data-field="date"><time datetime="2026-02-26">26 FEB 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-52" data-field="category">Maintenance</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-52" data-field="title"><a href="hydraulic-cylinder-pre-installation-checklist.html" class="hover:text-[#fb923c] transition">What to Check Before Installing a Hydraulic Cylinder</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-52" data-field="excerpt">A ten-minute check before installation prevents problems that could take days. The checklist and the reasons behind it.</p>
+      <a href="hydraulic-cylinder-pre-installation-checklist.html" data-section="post-52" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Read More →</a>
+    </div>
+  </article>
+  <article id="post-53" data-tag="bakim" x-show="show('how-to-build-a-hydraulic-system-maintenance-schedule')" :style="{ order: ord('how-to-build-a-hydraulic-system-maintenance-schedule') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="how-to-build-a-hydraulic-system-maintenance-schedule.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-53" data-field="image">
+      <img src="../../assets/images/hpl-guc-icin-insa-edildi.webp" alt="How to Build a Hydraulic System Maintenance Schedule for Farm Equipment" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
+    <div class="p-6 flex flex-col flex-1">
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-53" data-field="date"><time datetime="2026-02-22">22 FEB 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-53" data-field="category">Maintenance</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-53" data-field="title"><a href="how-to-build-a-hydraulic-system-maintenance-schedule.html" class="hover:text-[#fb923c] transition">How to Build a Hydraulic System Maintenance Schedule for Farm Equipment</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-53" data-field="excerpt">A good maintenance schedule is not a complicated one but one you can keep up. Setting up daily, weekly and seasonal categories.</p>
+      <a href="how-to-build-a-hydraulic-system-maintenance-schedule.html" data-section="post-53" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Read More →</a>
+    </div>
+  </article>
+  <article id="post-54" data-tag="bakim" x-show="show('repair-or-replace-a-hydraulic-cylinder')" :style="{ order: ord('repair-or-replace-a-hydraulic-cylinder') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="repair-or-replace-a-hydraulic-cylinder.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-54" data-field="image">
+      <img src="../../assets/images/hero-hydraulic-cylinder.webp" alt="Repair or Replace: Which Makes More Sense for a Hydraulic Cylinder?" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
+    <div class="p-6 flex flex-col flex-1">
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-54" data-field="date"><time datetime="2026-02-18">18 FEB 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-54" data-field="category">Maintenance</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-54" data-field="title"><a href="repair-or-replace-a-hydraulic-cylinder.html" class="hover:text-[#fb923c] transition">Repair or Replace: Which Makes More Sense for a Hydraulic Cylinder?</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-54" data-field="excerpt">The decision depends on where the damage is. We separate the cases where repair makes sense from those that call for replacement.</p>
+      <a href="repair-or-replace-a-hydraulic-cylinder.html" data-section="post-54" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Read More →</a>
+    </div>
+  </article>
+  <article id="post-55" data-tag="fason-uretim" x-show="show('how-to-prepare-a-technical-drawing-for-contract-manufacturing')" :style="{ order: ord('how-to-prepare-a-technical-drawing-for-contract-manufacturing') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="how-to-prepare-a-technical-drawing-for-contract-manufacturing.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-55" data-field="image">
+      <img src="../../assets/images/cnc-machining-closeup.webp" alt="How to Prepare a Technical Drawing for Contract Manufacturing" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
+    <div class="p-6 flex flex-col flex-1">
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-55" data-field="date"><time datetime="2026-02-14">14 FEB 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-55" data-field="category">Contract Manufacturing</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-55" data-field="title"><a href="how-to-prepare-a-technical-drawing-for-contract-manufacturing.html" class="hover:text-[#fb923c] transition">How to Prepare a Technical Drawing for Contract Manufacturing</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-55" data-field="excerpt">A technical drawing is the common language of production. What should it contain, and how do you proceed if you have no drawing?</p>
+      <a href="how-to-prepare-a-technical-drawing-for-contract-manufacturing.html" data-section="post-55" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Read More →</a>
+    </div>
+  </article>
+  <article id="post-56" data-tag="fason-uretim" x-show="show('low-volume-contract-manufacturing-for-small-businesses')" :style="{ order: ord('low-volume-contract-manufacturing-for-small-businesses') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="low-volume-contract-manufacturing-for-small-businesses.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-56" data-field="image">
+      <img src="../../assets/images/fabrika.webp" alt="Why Minimum Order Quantity Doesn’t Matter in Contract Manufacturing for Small Businesses" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
+    <div class="p-6 flex flex-col flex-1">
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-56" data-field="date"><time datetime="2026-02-10">10 FEB 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-56" data-field="category">Contract Manufacturing</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-56" data-field="title"><a href="low-volume-contract-manufacturing-for-small-businesses.html" class="hover:text-[#fb923c] transition">Why Minimum Order Quantity Doesn’t Matter in Contract Manufacturing for Small Businesses</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-56" data-field="excerpt">High minimum quantities are a real barrier for small businesses. How flexible production gets around it.</p>
+      <a href="low-volume-contract-manufacturing-for-small-businesses.html" data-section="post-56" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Read More →</a>
+    </div>
+  </article>
+  <article id="post-57" data-tag="silindir" x-show="show('why-chrome-plating-matters-on-hydraulic-cylinders')" :style="{ order: ord('why-chrome-plating-matters-on-hydraulic-cylinders') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="why-chrome-plating-matters-on-hydraulic-cylinders.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-57" data-field="image">
+      <img src="../../assets/images/HPL-6.webp" alt="Why Does Chrome Plating Matter on Hydraulic Cylinders?" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
+    <div class="p-6 flex flex-col flex-1">
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-57" data-field="date"><time datetime="2026-02-06">06 FEB 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-57" data-field="category">Cylinder Sizing</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-57" data-field="title"><a href="why-chrome-plating-matters-on-hydraulic-cylinders.html" class="hover:text-[#fb923c] transition">Why Does Chrome Plating Matter on Hydraulic Cylinders?</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-57" data-field="excerpt">Chrome plating protects the piston rod from both corrosion and wear. What happens when the plating fails, and how do you notice?</p>
+      <a href="why-chrome-plating-matters-on-hydraulic-cylinders.html" data-section="post-57" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Read More →</a>
+    </div>
+  </article>
+  <article id="post-58" data-tag="urun-rehberi" x-show="show('choosing-the-right-hydraulic-connection-for-tractor-attachments')" :style="{ order: ord('choosing-the-right-hydraulic-connection-for-tractor-attachments') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="choosing-the-right-hydraulic-connection-for-tractor-attachments.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-58" data-field="image">
+      <img src="../../assets/images/hero-tractor-field.webp" alt="How to Choose the Right Hydraulic Connection for Tractor Attachments" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
+    <div class="p-6 flex flex-col flex-1">
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-58" data-field="date"><time datetime="2026-02-02">02 FEB 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-58" data-field="category">Product Guide</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-58" data-field="title"><a href="choosing-the-right-hydraulic-connection-for-tractor-attachments.html" class="hover:text-[#fb923c] transition">How to Choose the Right Hydraulic Connection for Tractor Attachments</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-58" data-field="excerpt">Not every attachment needs the same hydraulic connection. How to match flow, pressure, number of outlets and coupling type.</p>
+      <a href="choosing-the-right-hydraulic-connection-for-tractor-attachments.html" data-section="post-58" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Read More →</a>
+    </div>
+  </article>
+  <article id="post-59" data-tag="sss" x-show="show('faq-buying-a-hydraulic-cylinder')" :style="{ order: ord('faq-buying-a-hydraulic-cylinder') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="faq-buying-a-hydraulic-cylinder.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-59" data-field="image">
+      <img src="../../assets/images/hero-cnc-workshop.webp" alt="Frequently Asked Questions: What People Want to Know When Buying a Hydraulic Cylinder" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
+    <div class="p-6 flex flex-col flex-1">
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-59" data-field="date"><time datetime="2026-01-29">29 JAN 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-59" data-field="category">FAQ</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-59" data-field="title"><a href="faq-buying-a-hydraulic-cylinder.html" class="hover:text-[#fb923c] transition">Frequently Asked Questions: What People Want to Know When Buying a Hydraulic Cylinder</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-59" data-field="excerpt">Clear answers to the most common questions about lead time, custom sizes, compatibility and the ordering process.</p>
+      <a href="faq-buying-a-hydraulic-cylinder.html" data-section="post-59" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Read More →</a>
+    </div>
+  </article>
+  <article id="post-60" data-tag="sss" x-show="show('cylinder-selection-software-technical-faq')" :style="{ order: ord('cylinder-selection-software-technical-faq') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
+    <a href="cylinder-selection-software-technical-faq.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-60" data-field="image">
+      <img src="../../assets/images/hero-factory-production-line.webp" alt="HydroPascal Cylinder Selection Software: Frequently Asked Technical Questions" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
+    </a>
+    <div class="p-6 flex flex-col flex-1">
+      <p class="font-mono text-xs uppercase tracking-wider text-slate-500 mb-2" data-section="post-60" data-field="date"><time datetime="2026-01-25">25 JAN 2026</time></p>
+      <span class="inline-block w-fit mb-3 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-3 py-1" data-section="post-60" data-field="category">FAQ</span>
+      <h2 class="font-bold text-lg text-white mb-2" data-section="post-60" data-field="title"><a href="cylinder-selection-software-technical-faq.html" class="hover:text-[#fb923c] transition">HydroPascal Cylinder Selection Software: Frequently Asked Technical Questions</a></h2>
+      <p class="text-sm text-slate-400 mb-5 flex-1" data-section="post-60" data-field="excerpt">Where do you find each value, how do you read the result and what are the tool’s limits? In question-and-answer format.</p>
+      <a href="cylinder-selection-software-technical-faq.html" data-section="post-60" data-field="cta-text" class="text-[#fb923c] font-semibold hover:underline text-sm">Read More →</a>
+    </div>
+  </article>
+  </div>
 
 </section>
+<!-- BLOG LIST END -->
 </main>
 
 <!-- FOOTER START -->
