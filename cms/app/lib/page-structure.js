@@ -8,16 +8,17 @@
 // Preview and public rendering share this single code path.
 import fs from 'node:fs';
 import path from 'node:path';
-import {createRequire} from 'node:module';
+import {parseDocument} from 'htmlparser2';
 import {LAYOUT_KEY,componentTypes,detectedCollections,escapeAttr,escapeText,inferItemType,isKey,resolvePage,tokens,validateLayoutContent} from './page-schema.js';
 
-// htmlparser2 (ESM) is also require()d by sanitize-html. Loading it through
-// require() here too keeps Node's module loader from racing an async import
-// against that synchronous require when routes are imported concurrently.
-// Anchored at the runtime cwd, not import.meta.url: webpack inlines the build
-// machine's absolute path there, which does not exist on Vercel (/var/task).
-// The package is added to the trace in next.config.mjs.
-const {parseDocument}=createRequire(path.join(process.cwd(),'package.json'))('htmlparser2');
+// htmlparser2 is pure ESM (no CJS build as of v9+). A static top-level import
+// lets webpack bundle it into the server chunk like any other dependency —
+// evaluated once at module load, so there's no per-request race and no need
+// for manual output-file-tracing hacks (see next.config.mjs history). The
+// previous createRequire() approach broke on Vercel with ERR_REQUIRE_ESM
+// because webpack cannot bundle a dynamically-resolved require() call; the
+// runtime require() it left behind pointed straight at htmlparser2's ESM
+// dist file, which Node's CJS require() cannot load in that context.
 const siteRoot=path.resolve(process.cwd(),'..');
 const FIXED_TAGS=new Set(['script','style','template','noscript']);
 const cache=new Map();
