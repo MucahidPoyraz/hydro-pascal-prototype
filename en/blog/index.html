@@ -195,10 +195,12 @@ html.light input::placeholder,html.light textarea::placeholder{color:#94a3b8!imp
 </section>
 
 <!-- BLOG LIST START — tools/blog/build.js tarafından üretilir, elle düzenlemeyin -->
-<section class="max-w-7xl mx-auto px-6 lg:px-8 pt-8 pb-24" x-data="{
+<section class="catalog-workspace blog-archive pt-8 pb-24" x-data="{
     q: '',
-    tag: 'all',
+    category: 'all',
     sort: 'new',
+    page: 1,
+    pageSize: 9,
     posts: [
       { s: 'massey-ferguson-hydraulic-cylinder-selection-guide', t: 'Hydraulic Cylinder Selection Guide for Massey Ferguson Tractors', x: 'Bore, stroke and mounting mismatches cause most cylinder problems on Massey Ferguson tractors. Here are the five criteria to check before you buy.', g: 'marka-uyum', d: '2026-09-18' },
       { s: 'fiat-tractor-top-link-replacement', t: 'How to Replace the Top Link on a Fiat Tractor', x: 'Play, noise and uneven lifting are often the signs of a tired top link. Here are the measurements you need to take before replacing it.', g: 'marka-uyum', d: '2026-09-14' },
@@ -261,13 +263,17 @@ html.light input::placeholder,html.light textarea::placeholder{color:#94a3b8!imp
       { s: 'faq-buying-a-hydraulic-cylinder', t: 'Frequently Asked Questions: What People Want to Know When Buying a Hydraulic Cylinder', x: 'Clear answers to the most common questions about lead time, custom sizes, compatibility and the ordering process.', g: 'sss', d: '2026-01-29' },
       { s: 'cylinder-selection-software-technical-faq', t: 'HydroPascal Cylinder Selection Software: Frequently Asked Technical Questions', x: 'Where do you find each value, how do you read the result and what are the tool’s limits? In question-and-answer format.', g: 'sss', d: '2026-01-25' }
     ],
+    categoryLabels: { 'marka-uyum': 'Brand Compatibility', 'fason-uretim': 'Contract Manufacturing', 'dokum-dovme': 'Casting & Forging', 'silindir': 'Cylinder Sizing', 'bakim': 'Maintenance', 'kurumsal': 'Company', 'urun-rehberi': 'Product Guide', 'sss': 'FAQ' },
+    categories() { return [...new Set(this.posts.map(p => p.g).filter(Boolean))].sort((a, b) => this.categoryLabel(a).localeCompare(this.categoryLabel(b), 'en')); },
+    categoryLabel(value) { const post = this.posts.find(p => p.g === value && p.c); return post?.c || this.categoryLabels[value] || value.replaceAll('-', ' '); },
+    pageNumbers() { const start = Math.max(1, Math.min(this.page - 2, this.pageCount - 4)); const end = Math.min(this.pageCount, start + 4); return Array.from({length: end - start + 1}, (_, index) => start + index); },
     norm(v) { return String(v).toLocaleLowerCase('en'); },
     matches(p) {
       const q = this.q.trim();
       if (q === '') return true;
-      return this.norm(p.t + ' ' + p.x).includes(this.norm(q));
+      return this.norm(p.t + ' ' + p.x + ' ' + (p.c || this.categoryLabel(p.g))).includes(this.norm(q));
     },
-    get found() { return this.posts.filter(p =&gt; (this.tag === 'all' || p.g === this.tag) &amp;&amp; this.matches(p)); },
+    get found() { return this.posts.filter(p =&gt; (this.category === 'all' || p.g === this.category) &amp;&amp; this.matches(p)); },
     get ordered() {
       const list = this.found.slice();
       if (this.sort === 'old') return list.sort((a, b) =&gt; a.d.localeCompare(b.d));
@@ -275,47 +281,30 @@ html.light input::placeholder,html.light textarea::placeholder{color:#94a3b8!imp
       return list.sort((a, b) =&gt; b.d.localeCompare(a.d));
     },
     get count() { return this.found.length; },
-    show(slug) { return this.found.some(p =&gt; p.s === slug); },
+    get pageCount() { return Math.max(1, Math.ceil(this.count / this.pageSize)); },
+    get pageStart() { return this.count ? (this.page - 1) * this.pageSize + 1 : 0; },
+    get pageEnd() { return Math.min(this.page * this.pageSize, this.count); },
+    show(slug) { return this.ordered.slice((this.page - 1) * this.pageSize, this.page * this.pageSize).some(p =&gt; p.s === slug); },
     ord(slug) { const i = this.ordered.findIndex(p =&gt; p.s === slug); return i === -1 ? 999 : i; },
-    reset() { this.q = ''; this.tag = 'all'; this.sort = 'new'; }
+    reset() { this.q = ''; this.category = 'all'; this.sort = 'new'; this.page = 1; }
   }">
 
-  <div class="max-w-md mx-auto mb-8">
-    <label for="blog-search" class="sr-only">Search post title or topic…</label>
-    <input id="blog-search" type="search" x-model="q" placeholder="Search post title or topic…" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white placeholder-slate-400 focus:border-[#fb923c] focus:ring-2 focus:ring-[#fb923c]/30 focus:outline-none transition">
+  <div class="catalog-shell">
+  <div class="catalog-toolbar blog-catalog-toolbar">
+    <label class="catalog-search"><span aria-hidden="true">⌕</span><span class="sr-only">Search blog posts</span><input id="blog-search" type="search" x-model="q" @input="page = 1" placeholder="Search post title or topic…"></label>
+    <label class="catalog-control"><span class="sr-only">Category</span><select aria-label="Blog category" x-model="category" @change="page = 1"><option value="all">All categories</option><template x-for="name in categories()" :key="name"><option :value="name" x-text="categoryLabel(name)"></option></template></select></label>
+    <label class="catalog-control"><span class="sr-only">Sort</span><select id="blog-sort" aria-label="Sort by" x-model="sort" @change="page = 1"><option value="new">Newest</option><option value="old">Oldest</option><option value="az">Title: A–Z</option></select></label>
+    <label class="catalog-control catalog-page-size"><span>Per page</span><select id="blog-page-size" aria-label="Posts per page" x-model.number="pageSize" @change="page = 1"><option value="9">9</option><option value="18">18</option><option value="36">36</option><option value="60">60</option></select></label>
+    <span class="blog-results-count" aria-live="polite"><b x-text="count">60</b> posts</span>
   </div>
 
-  <div class="flex justify-center mb-6">
-    <div class="inline-flex flex-wrap items-center justify-center gap-1 p-1 rounded-md border border-[var(--line)] bg-[var(--surface)]" role="group" aria-label="Blog category filter">
-        <button type="button" @click="tag = 'all'" :class="tag === 'all' ? 'bg-[var(--accent)] text-[#fff9f4]' : 'text-[var(--ink-soft)] hover:text-[var(--ink)] hover:bg-[var(--surface-2)]'" class="px-4 py-2 rounded-md text-xs font-mono uppercase tracking-wider font-semibold transition-all duration-200">All</button>
-        <button type="button" @click="tag = 'marka-uyum'" :class="tag === 'marka-uyum' ? 'bg-[var(--accent)] text-[#fff9f4]' : 'text-[var(--ink-soft)] hover:text-[var(--ink)] hover:bg-[var(--surface-2)]'" class="px-4 py-2 rounded-md text-xs font-mono uppercase tracking-wider font-semibold transition-all duration-200">Brand Compatibility</button>
-        <button type="button" @click="tag = 'fason-uretim'" :class="tag === 'fason-uretim' ? 'bg-[var(--accent)] text-[#fff9f4]' : 'text-[var(--ink-soft)] hover:text-[var(--ink)] hover:bg-[var(--surface-2)]'" class="px-4 py-2 rounded-md text-xs font-mono uppercase tracking-wider font-semibold transition-all duration-200">Contract Manufacturing</button>
-        <button type="button" @click="tag = 'dokum-dovme'" :class="tag === 'dokum-dovme' ? 'bg-[var(--accent)] text-[#fff9f4]' : 'text-[var(--ink-soft)] hover:text-[var(--ink)] hover:bg-[var(--surface-2)]'" class="px-4 py-2 rounded-md text-xs font-mono uppercase tracking-wider font-semibold transition-all duration-200">Casting &amp; Forging</button>
-        <button type="button" @click="tag = 'silindir'" :class="tag === 'silindir' ? 'bg-[var(--accent)] text-[#fff9f4]' : 'text-[var(--ink-soft)] hover:text-[var(--ink)] hover:bg-[var(--surface-2)]'" class="px-4 py-2 rounded-md text-xs font-mono uppercase tracking-wider font-semibold transition-all duration-200">Cylinder Sizing</button>
-        <button type="button" @click="tag = 'bakim'" :class="tag === 'bakim' ? 'bg-[var(--accent)] text-[#fff9f4]' : 'text-[var(--ink-soft)] hover:text-[var(--ink)] hover:bg-[var(--surface-2)]'" class="px-4 py-2 rounded-md text-xs font-mono uppercase tracking-wider font-semibold transition-all duration-200">Maintenance</button>
-        <button type="button" @click="tag = 'kurumsal'" :class="tag === 'kurumsal' ? 'bg-[var(--accent)] text-[#fff9f4]' : 'text-[var(--ink-soft)] hover:text-[var(--ink)] hover:bg-[var(--surface-2)]'" class="px-4 py-2 rounded-md text-xs font-mono uppercase tracking-wider font-semibold transition-all duration-200">Company</button>
-        <button type="button" @click="tag = 'urun-rehberi'" :class="tag === 'urun-rehberi' ? 'bg-[var(--accent)] text-[#fff9f4]' : 'text-[var(--ink-soft)] hover:text-[var(--ink)] hover:bg-[var(--surface-2)]'" class="px-4 py-2 rounded-md text-xs font-mono uppercase tracking-wider font-semibold transition-all duration-200">Product Guide</button>
-        <button type="button" @click="tag = 'sss'" :class="tag === 'sss' ? 'bg-[var(--accent)] text-[#fff9f4]' : 'text-[var(--ink-soft)] hover:text-[var(--ink)] hover:bg-[var(--surface-2)]'" class="px-4 py-2 rounded-md text-xs font-mono uppercase tracking-wider font-semibold transition-all duration-200">FAQ</button>
-    </div>
+  <div x-show="count === 0" x-cloak class="catalog-empty">
+    <b>No posts match your search.</b>
+    <button type="button" @click="reset()">Clear filters</button>
+    <a href="../teklif-al.html" class="catalog-secondary">Contact us</a>
   </div>
 
-  <div class="flex flex-wrap items-center justify-center gap-3 mb-12">
-    <label for="blog-sort" class="text-sm font-semibold text-slate-300">Sort:</label>
-    <select id="blog-sort" x-model="sort" class="bg-white/5 border border-white/10 rounded-xl px-4 py-2 text-sm text-white focus:border-[#fb923c] focus:ring-2 focus:ring-[#fb923c]/30 focus:outline-none transition">
-      <option value="new" class="bg-slate-900">Newest</option>
-      <option value="old" class="bg-slate-900">Oldest</option>
-      <option value="az" class="bg-slate-900">Alphabetical (A-Z)</option>
-    </select>
-    <span class="font-mono text-xs uppercase tracking-wider text-slate-400" aria-live="polite"><span x-text="count">60</span> posts found</span>
-  </div>
-
-  <div x-show="count === 0" x-cloak class="flex items-center justify-center gap-3 flex-wrap text-center bg-[#fb923c]/10 border border-[#fb923c]/30 rounded-xl px-6 py-4 mb-12">
-    <span class="text-sm text-slate-200">Could not find what you were looking for? <strong class="text-white">Send us your question directly.</strong></span>
-    <button type="button" @click="reset()" class="text-sm font-semibold text-[#fb923c] hover:underline whitespace-nowrap">Clear Filters</button>
-    <a href="../teklif-al.html" class="text-sm font-semibold text-[#fb923c] hover:underline whitespace-nowrap">Request a Quote →</a>
-  </div>
-
-  <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+  <div class="catalog-grid blog-card-grid">
   <article id="post-1" data-tag="marka-uyum" x-show="show('massey-ferguson-hydraulic-cylinder-selection-guide')" :style="{ order: ord('massey-ferguson-hydraulic-cylinder-selection-guide') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
     <a href="massey-ferguson-hydraulic-cylinder-selection-guide.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-1" data-field="image">
       <img src="../../assets/images/hero-tractor-field.webp" alt="Hydraulic Cylinder Selection Guide for Massey Ferguson Tractors" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
@@ -1038,6 +1027,11 @@ html.light input::placeholder,html.light textarea::placeholder{color:#94a3b8!imp
   </article>
   </div>
 
+  <nav class="blog-pagination" x-show="count &gt; 0" x-cloak aria-label="Pagination">
+    <span><b x-text="pageStart"></b>–<b x-text="pageEnd"></b> / <b x-text="count"></b> posts</span>
+    <div class="blog-pagination-pages"><button type="button" @click="page = Math.max(1, page - 1)" :disabled="page &lt;= 1">‹ Previous</button><template x-for="number in pageNumbers()" :key="number"><button type="button" @click="page = number" :class="page === number ? 'is-current' : ''" :aria-current="page === number ? 'page' : null" x-text="number"></button></template><button type="button" @click="page = Math.min(pageCount, page + 1)" :disabled="page &gt;= pageCount">Next ›</button></div>
+  </nav>
+  </div>
 </section>
 <!-- BLOG LIST END -->
 </main>
@@ -1045,7 +1039,7 @@ html.light input::placeholder,html.light textarea::placeholder{color:#94a3b8!imp
 <!-- FOOTER START -->
 <footer class="relative bg-slate-950 border-t border-white/10 text-slate-400 overflow-hidden">
   <div class="pointer-events-none absolute -top-40 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-gradient-to-br from-[#fb923c]/15 to-[#fb923c]/10 rounded-full blur-3xl"></div>
-  <div class="relative max-w-7xl mx-auto px-6 lg:px-8 py-20 grid grid-cols-1 md:grid-cols-4 gap-12">
+  <div class="relative max-w-7xl mx-auto px-6 lg:px-8 py-20 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
     <div>
       <img src="../../assets/images/logo/hpl-logo-yatay.svg" alt="HydroPascal" width="142" height="48" loading="lazy" class="hpl-logo-light h-12 mb-5 w-auto object-contain"><img src="../../assets/images/logo/hpl-logo-yatay-dark.svg" alt="HydroPascal" width="142" height="48" loading="lazy" class="hpl-logo-dark h-12 mb-5 w-auto object-contain">
       <p class="text-sm leading-relaxed text-slate-400">As HPL HydroPascal, we have been manufacturing Hydraulic Cylinder Systems since 2019, delivering consistent quality and reliability to the agricultural machinery sector.</p>

@@ -4,7 +4,8 @@
   "description": "HydroPascal statik site regresyon testleri. Siteyle birlikte DEPLOY EDİLMEZ.",
   "scripts": {
     "test": "node site-butunlugu.test.js && node tr-en-parite.test.js && node tema-tutarliligi.test.js && node hesaplayici-teklif.test.js && node canli-formlar.test.js && node prototip-formlar.test.js",
-    "test:hizli": "node site-butunlugu.test.js && node tr-en-parite.test.js && node tema-tutarliligi.test.js && node hesaplayici-teklif.test.js"
+    "test:hizli": "node site-butunlugu.test.js && node tr-en-parite.test.js && node tema-tutarliligi.test.js && node hesaplayici-teklif.test.js",
+    "test:cms": "node cms-api-smoke.test.js && node page-structure.test.mjs && node contextual-cms.test.mjs && node admin-system.test.mjs && node --test product-seo.test.js legacy-blog-import.test.js seo-analytics.test.mjs"
   },
   "devDependencies": {
     "jsdom": "^26.0.0"

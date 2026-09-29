@@ -1,0 +1,13 @@
+{
+  "name": "hydropascal-site",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": ["cms"],
+  "scripts": {
+    "dev": "npm run dev --workspace=hydropascal-cms-prototype",
+    "build": "npm run build --workspace=hydropascal-cms-prototype",
+    "start": "npm run start --workspace=hydropascal-cms-prototype",
+    "cms:import-legacy-blogs": "npm run import:legacy-blogs --workspace=hydropascal-cms-prototype",
+    "cms:restore-content": "npm run restore:content --workspace=hydropascal-cms-prototype"
+  }
+}

@@ -5,13 +5,14 @@ const path = require('path');
 const vm = require('vm');
 
 const SITE = path.resolve(__dirname, '..');
-const SKIP_DIRS = new Set(['.git', 'node_modules', 'tests', 'prototip-formlar', 'Claude outputs']);
+const SKIP_DIRS = new Set(['.git', '.next', 'node_modules', 'tests', 'prototip-formlar', 'Claude outputs']);
 let pass = 0, fail = 0;
 function check(n, c, e) { if (c) { pass++; } else { fail++; console.log('  FAIL  ' + n + (e ? '  -> ' + e : '')); } }
 
 function walk(dir, out = []) {
   for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
-    if (SKIP_DIRS.has(e.name)) continue;
+    // .next* covers isolated Next.js builds (CMS_BUILD_DIR) such as .next-context-test.
+    if (SKIP_DIRS.has(e.name) || e.name.startsWith('.next')) continue;
     const p = path.join(dir, e.name);
     if (e.isDirectory()) walk(p, out); else if (p.endsWith('.html')) out.push(p);
   }

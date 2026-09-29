@@ -193,7 +193,14 @@ html.light .shadow-black\/20{box-shadow:0 10px 25px -5px rgba(15,23,42,.08)!impo
 
 <section class="max-w-7xl mx-auto px-6 lg:px-8 py-14 grid md:grid-cols-2 gap-14 items-start">
   <div class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-10 flex items-center justify-center">
-    <img :src="product.image" :alt="product.title" class="max-h-80 w-full object-contain" width="400" height="400" loading="lazy">
+    <img :src="product.selectedImage || product.image" :alt="product.title" class="max-h-80 w-full object-contain" width="400" height="400" loading="lazy">
+  </div>
+  <div x-show="product.gallery && product.gallery.length" class="md:col-span-2 flex flex-wrap gap-3 -mt-10" aria-label="Ürün görselleri">
+    <template x-for="(photo, index) in product.gallery" :key="photo.id || photo.url || index">
+      <button type="button" @click="product.selectedImage = photo.url" :aria-label="photo.alt || product.title + ' görsel ' + (index + 1)" class="h-20 w-20 overflow-hidden rounded-xl border border-white/15 bg-white/5 hover:border-[#fb923c]">
+        <img :src="photo.url" :alt="photo.alt || product.title" class="h-full w-full object-contain" loading="lazy">
+      </button>
+    </template>
   </div>
   <div class="min-w-0">
     <span class="inline-block mb-4 text-xs font-semibold tracking-widest uppercase text-[#fb923c] bg-white/5 border border-white/10 rounded-full px-4 py-1.5" x-text="product.categoryLabel"></span>
@@ -544,12 +551,17 @@ function productDetail() {
       const params = new URLSearchParams(window.location.search);
       const id = params.get('id');
       const p = PRODUCTS[id] || PRODUCTS['cift-etkili'];
+      const saved = window.__CMS_PRODUCT_OVERRIDE__;
+      if (saved && saved.slug === id) {
+        Object.assign(p, saved);
+        p.category = p.category || (p.parent === 'oem-parts.html' ? 'oem' : 'hydraulic');
+        p.selectedImage = p.image;
+      }
       // teklif-al.html'deki "İlgilendiğiniz Ürün/Hizmet" seçeneğiyle eşleştir
       p.interestValue = p.category === 'oem' ? 'oem-parts' : 'hpl-hydraulic';
       // Breadcrumb'daki orta seviye etiketi (oem-parts.html / hpl-products.html başlıklarıyla birebir)
       p.breadcrumbLabel = p.category === 'oem' ? 'OEM Parça' : 'HPL Ürünleri';
       this.product = p;
-      document.title = p.title + " | HydroPascal Hidrolik Silindir";
     }
   }
 }

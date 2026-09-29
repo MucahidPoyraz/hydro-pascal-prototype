@@ -137,6 +137,17 @@
     });
   }
 
+  /* Ölçüm için yalnızca form türü ve aşama yayınlanır (alan değeri ASLA).
+     assets/js/hp-analytics.js "hp:form" olayını dinler; ölçüm kapalıysa
+     olayı dinleyen yoktur ve hiçbir şey olmaz. */
+  function emit(form, stage, errorType) {
+    try {
+      var detail = { stage: stage, formType: form.getAttribute('data-hpl-form') || 'contact' };
+      if (errorType) { detail.errorType = errorType; }
+      document.dispatchEvent(new CustomEvent('hp:form', { detail: detail }));
+    } catch (e) { /* ölçüm hatası formu asla bozmaz */ }
+  }
+
   function hiddenInput(form, name, value) {
     if (form.querySelector('input[name="' + name + '"]')) { return; }
     var el = document.createElement('input');
@@ -270,6 +281,13 @@
       syncConsent();
     }
 
+    var started = false;
+    form.addEventListener('focusin', function () {
+      if (started) { return; }
+      started = true;
+      emit(form, 'start');
+    });
+
     form.addEventListener('submit', function (e) {
       e.preventDefault();
 
@@ -283,6 +301,7 @@
         status.className = STATUS_WARN;
         status.textContent = T.consent;
         consent.focus();
+        emit(form, 'error', 'validation');
         return;
       }
 
@@ -290,16 +309,19 @@
       if (files && !files.valid()) {
         status.className = STATUS_WARN;
         status.textContent = files.count() > CONFIG.maxFiles ? T.tooManyFiles : T.tooLarge;
+        emit(form, 'error', 'validation');
         return;
       }
 
       if (!CONFIG.target) {
         renderNotConfigured(status);
+        emit(form, 'error', 'not_configured');
         return;
       }
 
       var originalLabel = btn.textContent;
       var hasFile = files && files.count() > 0;
+      emit(form, 'submit');
 
       // --- Dosya ekli gönderim: AJAX ek taşımadığı için klasik POST'a düş ---
       if (hasFile && !CONFIG.ajaxSupportsFiles) {
@@ -344,8 +366,11 @@
           if (files) { files.clear(); }
           // rıza sıfırlandığı için buton yeniden kilitlenir
           btn.disabled = consent ? !consent.checked : false;
+          // yalnızca sunucu başarıyı onayladıktan sonra
+          emit(form, 'success');
         })
         .catch(function (err) {
+          emit(form, 'error', (err && err.name === 'TypeError') ? 'network' : 'server');
           status.className = STATUS_WARN;
           status.textContent = (err && err.name === 'TypeError') ? T.network : T.error;
           btn.disabled = false;

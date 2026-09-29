@@ -195,10 +195,12 @@ html.light input::placeholder,html.light textarea::placeholder{color:#94a3b8!imp
 </section>
 
 <!-- BLOG LIST START — tools/blog/build.js tarafından üretilir, elle düzenlemeyin -->
-<section class="max-w-7xl mx-auto px-6 lg:px-8 pt-8 pb-24" x-data="{
+<section class="catalog-workspace blog-archive pt-8 pb-24" x-data="{
     q: '',
-    tag: 'all',
+    category: 'all',
     sort: 'new',
+    page: 1,
+    pageSize: 9,
     posts: [
       { s: 'massey-ferguson-hidrolik-silindir-secim-rehberi', t: 'Massey Ferguson Traktörler İçin Hidrolik Silindir Seçim Rehberi', x: 'Massey Ferguson traktörlerde çap, strok ve bağlantı tipi uyumsuzluğu en sık görülen silindir hatalarının kaynağı. Doğru seçim için bakmanız gereken beş kriter.', g: 'marka-uyum', d: '2026-09-18' },
       { s: 'fiat-traktor-ust-baglanti-kolu-toplink-degisimi', t: 'Fiat Traktör Üst Bağlantı Kolu (TopLink) Nasıl Değiştirilir?', x: 'Oynama, gürültü ve dengesiz kaldırma çoğu zaman yorulmuş bir üst bağlantı kolunun işareti. Değişim öncesi hangi ölçüleri almanız gerektiğini anlatıyoruz.', g: 'marka-uyum', d: '2026-09-14' },
@@ -261,13 +263,17 @@ html.light input::placeholder,html.light textarea::placeholder{color:#94a3b8!imp
       { s: 'hidrolik-silindir-satin-alirken-sik-sorulan-sorular', t: 'Sık Sorulan Sorular: Hidrolik Silindir Satın Alırken Merak Edilenler', x: 'Teslim süresi, özel ölçü, uyumluluk ve sipariş süreci hakkında en sık gelen soruların net cevapları.', g: 'sss', d: '2026-01-29' },
       { s: 'silindir-secim-programi-sik-sorulan-teknik-sorular', t: 'HydroPascal Silindir Seçim Programı: Sık Sorulan Teknik Sorular', x: 'Hangi değeri nereden bulacaksınız, sonucu nasıl okuyacaksınız ve aracın sınırları neler? Soru-cevap formatında.', g: 'sss', d: '2026-01-25' }
     ],
+    categoryLabels: { 'marka-uyum': 'Marka Uyumluluğu', 'fason-uretim': 'Fason Üretim', 'dokum-dovme': 'Döküm & Dövme', 'silindir': 'Silindir Hesaplama', 'bakim': 'Bakım', 'kurumsal': 'Kurumsal', 'urun-rehberi': 'Ürün Rehberi', 'sss': 'SSS' },
+    categories() { return [...new Set(this.posts.map(p => p.g).filter(Boolean))].sort((a, b) => this.categoryLabel(a).localeCompare(this.categoryLabel(b), 'tr')); },
+    categoryLabel(value) { const post = this.posts.find(p => p.g === value && p.c); return post?.c || this.categoryLabels[value] || value.replaceAll('-', ' '); },
+    pageNumbers() { const start = Math.max(1, Math.min(this.page - 2, this.pageCount - 4)); const end = Math.min(this.pageCount, start + 4); return Array.from({length: end - start + 1}, (_, index) => start + index); },
     norm(v) { return String(v).toLocaleLowerCase('tr'); },
     matches(p) {
       const q = this.q.trim();
       if (q === '') return true;
-      return this.norm(p.t + ' ' + p.x).includes(this.norm(q));
+      return this.norm(p.t + ' ' + p.x + ' ' + (p.c || this.categoryLabel(p.g))).includes(this.norm(q));
     },
-    get found() { return this.posts.filter(p =&gt; (this.tag === 'all' || p.g === this.tag) &amp;&amp; this.matches(p)); },
+    get found() { return this.posts.filter(p =&gt; (this.category === 'all' || p.g === this.category) &amp;&amp; this.matches(p)); },
     get ordered() {
       const list = this.found.slice();
       if (this.sort === 'old') return list.sort((a, b) =&gt; a.d.localeCompare(b.d));
@@ -275,47 +281,30 @@ html.light input::placeholder,html.light textarea::placeholder{color:#94a3b8!imp
       return list.sort((a, b) =&gt; b.d.localeCompare(a.d));
     },
     get count() { return this.found.length; },
-    show(slug) { return this.found.some(p =&gt; p.s === slug); },
+    get pageCount() { return Math.max(1, Math.ceil(this.count / this.pageSize)); },
+    get pageStart() { return this.count ? (this.page - 1) * this.pageSize + 1 : 0; },
+    get pageEnd() { return Math.min(this.page * this.pageSize, this.count); },
+    show(slug) { return this.ordered.slice((this.page - 1) * this.pageSize, this.page * this.pageSize).some(p =&gt; p.s === slug); },
     ord(slug) { const i = this.ordered.findIndex(p =&gt; p.s === slug); return i === -1 ? 999 : i; },
-    reset() { this.q = ''; this.tag = 'all'; this.sort = 'new'; }
+    reset() { this.q = ''; this.category = 'all'; this.sort = 'new'; this.page = 1; }
   }">
 
-  <div class="max-w-md mx-auto mb-8">
-    <label for="blog-search" class="sr-only">Yazı başlığı veya konu ara…</label>
-    <input id="blog-search" type="search" x-model="q" placeholder="Yazı başlığı veya konu ara…" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white placeholder-slate-400 focus:border-[#fb923c] focus:ring-2 focus:ring-[#fb923c]/30 focus:outline-none transition">
+  <div class="catalog-shell">
+  <div class="catalog-toolbar blog-catalog-toolbar">
+    <label class="catalog-search"><span aria-hidden="true">⌕</span><span class="sr-only">Yazı başlığı veya konu ara</span><input id="blog-search" type="search" x-model="q" @input="page = 1" placeholder="Yazı başlığı veya konu ara…"></label>
+    <label class="catalog-control"><span class="sr-only">Kategori</span><select aria-label="Blog kategorisi" x-model="category" @change="page = 1"><option value="all">Tüm kategoriler</option><template x-for="name in categories()" :key="name"><option :value="name" x-text="categoryLabel(name)"></option></template></select></label>
+    <label class="catalog-control"><span class="sr-only">Sıralama</span><select id="blog-sort" aria-label="Sıralama" x-model="sort" @change="page = 1"><option value="new">En yeni</option><option value="old">En eski</option><option value="az">Başlık: A–Z</option></select></label>
+    <label class="catalog-control catalog-page-size"><span>Sayfa başına</span><select id="blog-page-size" aria-label="Sayfa başına yazı" x-model.number="pageSize" @change="page = 1"><option value="9">9</option><option value="18">18</option><option value="36">36</option><option value="60">60</option></select></label>
+    <span class="blog-results-count" aria-live="polite"><b x-text="count">60</b> yazı</span>
   </div>
 
-  <div class="flex justify-center mb-6">
-    <div class="inline-flex flex-wrap items-center justify-center gap-1 p-1 rounded-md border border-[var(--line)] bg-[var(--surface)]" role="group" aria-label="Blog kategorisi filtresi">
-        <button type="button" @click="tag = 'all'" :class="tag === 'all' ? 'bg-[var(--accent)] text-[#fff9f4]' : 'text-[var(--ink-soft)] hover:text-[var(--ink)] hover:bg-[var(--surface-2)]'" class="px-4 py-2 rounded-md text-xs font-mono uppercase tracking-wider font-semibold transition-all duration-200">Tümü</button>
-        <button type="button" @click="tag = 'marka-uyum'" :class="tag === 'marka-uyum' ? 'bg-[var(--accent)] text-[#fff9f4]' : 'text-[var(--ink-soft)] hover:text-[var(--ink)] hover:bg-[var(--surface-2)]'" class="px-4 py-2 rounded-md text-xs font-mono uppercase tracking-wider font-semibold transition-all duration-200">Marka Uyumluluğu</button>
-        <button type="button" @click="tag = 'fason-uretim'" :class="tag === 'fason-uretim' ? 'bg-[var(--accent)] text-[#fff9f4]' : 'text-[var(--ink-soft)] hover:text-[var(--ink)] hover:bg-[var(--surface-2)]'" class="px-4 py-2 rounded-md text-xs font-mono uppercase tracking-wider font-semibold transition-all duration-200">Fason Üretim</button>
-        <button type="button" @click="tag = 'dokum-dovme'" :class="tag === 'dokum-dovme' ? 'bg-[var(--accent)] text-[#fff9f4]' : 'text-[var(--ink-soft)] hover:text-[var(--ink)] hover:bg-[var(--surface-2)]'" class="px-4 py-2 rounded-md text-xs font-mono uppercase tracking-wider font-semibold transition-all duration-200">Döküm &amp; Dövme</button>
-        <button type="button" @click="tag = 'silindir'" :class="tag === 'silindir' ? 'bg-[var(--accent)] text-[#fff9f4]' : 'text-[var(--ink-soft)] hover:text-[var(--ink)] hover:bg-[var(--surface-2)]'" class="px-4 py-2 rounded-md text-xs font-mono uppercase tracking-wider font-semibold transition-all duration-200">Silindir Hesaplama</button>
-        <button type="button" @click="tag = 'bakim'" :class="tag === 'bakim' ? 'bg-[var(--accent)] text-[#fff9f4]' : 'text-[var(--ink-soft)] hover:text-[var(--ink)] hover:bg-[var(--surface-2)]'" class="px-4 py-2 rounded-md text-xs font-mono uppercase tracking-wider font-semibold transition-all duration-200">Bakım</button>
-        <button type="button" @click="tag = 'kurumsal'" :class="tag === 'kurumsal' ? 'bg-[var(--accent)] text-[#fff9f4]' : 'text-[var(--ink-soft)] hover:text-[var(--ink)] hover:bg-[var(--surface-2)]'" class="px-4 py-2 rounded-md text-xs font-mono uppercase tracking-wider font-semibold transition-all duration-200">Kurumsal</button>
-        <button type="button" @click="tag = 'urun-rehberi'" :class="tag === 'urun-rehberi' ? 'bg-[var(--accent)] text-[#fff9f4]' : 'text-[var(--ink-soft)] hover:text-[var(--ink)] hover:bg-[var(--surface-2)]'" class="px-4 py-2 rounded-md text-xs font-mono uppercase tracking-wider font-semibold transition-all duration-200">Ürün Rehberi</button>
-        <button type="button" @click="tag = 'sss'" :class="tag === 'sss' ? 'bg-[var(--accent)] text-[#fff9f4]' : 'text-[var(--ink-soft)] hover:text-[var(--ink)] hover:bg-[var(--surface-2)]'" class="px-4 py-2 rounded-md text-xs font-mono uppercase tracking-wider font-semibold transition-all duration-200">SSS</button>
-    </div>
+  <div x-show="count === 0" x-cloak class="catalog-empty">
+    <b>Aramanızla eşleşen yazı bulunamadı.</b>
+    <button type="button" @click="reset()">Filtreleri temizle</button>
+    <a href="../teklif-al.html" class="catalog-secondary">Teklif / soru gönder</a>
   </div>
 
-  <div class="flex flex-wrap items-center justify-center gap-3 mb-12">
-    <label for="blog-sort" class="text-sm font-semibold text-slate-300">Sıralama:</label>
-    <select id="blog-sort" x-model="sort" class="bg-white/5 border border-white/10 rounded-xl px-4 py-2 text-sm text-white focus:border-[#fb923c] focus:ring-2 focus:ring-[#fb923c]/30 focus:outline-none transition">
-      <option value="new" class="bg-slate-900">En Yeni</option>
-      <option value="old" class="bg-slate-900">En Eski</option>
-      <option value="az" class="bg-slate-900">Alfabetik (A-Z)</option>
-    </select>
-    <span class="font-mono text-xs uppercase tracking-wider text-slate-400" aria-live="polite"><span x-text="count">60</span> yazı bulundu</span>
-  </div>
-
-  <div x-show="count === 0" x-cloak class="flex items-center justify-center gap-3 flex-wrap text-center bg-[#fb923c]/10 border border-[#fb923c]/30 rounded-xl px-6 py-4 mb-12">
-    <span class="text-sm text-slate-200">Aradığınız konuyu bulamadınız mı? <strong class="text-white">Sorunuzu doğrudan bize iletin.</strong></span>
-    <button type="button" @click="reset()" class="text-sm font-semibold text-[#fb923c] hover:underline whitespace-nowrap">Filtreleri Temizle</button>
-    <a href="../teklif-al.html" class="text-sm font-semibold text-[#fb923c] hover:underline whitespace-nowrap">Teklif / Soru Gönder →</a>
-  </div>
-
-  <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+  <div class="catalog-grid blog-card-grid">
   <article id="post-1" data-tag="marka-uyum" x-show="show('massey-ferguson-hidrolik-silindir-secim-rehberi')" :style="{ order: ord('massey-ferguson-hidrolik-silindir-secim-rehberi') }" class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl hover:-translate-y-2 hover:border-[#fb923c]/40 hover:shadow-[#fb923c]/20 transition-all duration-300 flex flex-col overflow-hidden">
     <a href="massey-ferguson-hidrolik-silindir-secim-rehberi.html" tabindex="-1" aria-hidden="true" class="block h-48 w-full bg-white/10 border-b border-white/10 overflow-hidden" data-section="post-1" data-field="image">
       <img src="../../assets/images/hero-tractor-field.webp" alt="Massey Ferguson Traktörler İçin Hidrolik Silindir Seçim Rehberi" loading="lazy" width="400" height="192" class="h-48 w-full object-cover">
@@ -1038,6 +1027,11 @@ html.light input::placeholder,html.light textarea::placeholder{color:#94a3b8!imp
   </article>
   </div>
 
+  <nav class="blog-pagination" x-show="count &gt; 0" x-cloak aria-label="Sayfalama">
+    <span><b x-text="pageStart"></b>–<b x-text="pageEnd"></b> / <b x-text="count"></b> yazı</span>
+    <div class="blog-pagination-pages"><button type="button" @click="page = Math.max(1, page - 1)" :disabled="page &lt;= 1">‹ Önceki</button><template x-for="number in pageNumbers()" :key="number"><button type="button" @click="page = number" :class="page === number ? 'is-current' : ''" :aria-current="page === number ? 'page' : null" x-text="number"></button></template><button type="button" @click="page = Math.min(pageCount, page + 1)" :disabled="page &gt;= pageCount">Sonraki ›</button></div>
+  </nav>
+  </div>
 </section>
 <!-- BLOG LIST END -->
 </main>
@@ -1045,7 +1039,7 @@ html.light input::placeholder,html.light textarea::placeholder{color:#94a3b8!imp
 <!-- FOOTER START -->
 <footer class="relative bg-slate-950 border-t border-white/10 text-slate-400 overflow-hidden">
   <div class="pointer-events-none absolute -top-40 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-gradient-to-br from-[#fb923c]/15 to-[#fb923c]/10 rounded-full blur-3xl"></div>
-  <div class="relative max-w-7xl mx-auto px-6 lg:px-8 py-20 grid grid-cols-1 md:grid-cols-4 gap-12">
+  <div class="relative max-w-7xl mx-auto px-6 lg:px-8 py-20 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
     <div>
       <img src="../../assets/images/logo/hpl-logo-yatay.svg" alt="HydroPascal" width="142" height="48" loading="lazy" class="hpl-logo-light h-12 mb-5 w-auto object-contain"><img src="../../assets/images/logo/hpl-logo-yatay-dark.svg" alt="HydroPascal" width="142" height="48" loading="lazy" class="hpl-logo-dark h-12 mb-5 w-auto object-contain">
       <p class="text-sm leading-relaxed text-slate-400">HPL HydroPascal olarak, 2019 yılından bu yana Hidrolik Silindir Sistemleri üretiyor, tarım makineleri sektörüne tutarlı kalite ve güvenilirlik sunuyoruz.</p>
