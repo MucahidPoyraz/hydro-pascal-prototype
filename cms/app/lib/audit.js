@@ -4,7 +4,7 @@ import {clientAddress} from './auth.js';
 import {dbEnabled,insertDbAudit,readDbAudit} from './content-db.js';
 
 // Append-only admin audit trail (JSON lines) next to the content store.
-const dataRoot = () => path.resolve(process.env.CMS_DATA_DIR || path.join(process.cwd(), 'data'));
+const dataRoot = () => path.resolve(process.env.CMS_DATA_DIR || (process.env.VERCEL ? '/tmp/hydropascal-cms' : path.join(process.cwd(), 'data')));
 const auditFile = () => path.join(dataRoot(), 'audit.log');
 const MAX_BYTES = 5 * 1024 * 1024;
 

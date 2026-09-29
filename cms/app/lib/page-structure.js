@@ -14,7 +14,10 @@ import {LAYOUT_KEY,componentTypes,detectedCollections,escapeAttr,escapeText,infe
 // htmlparser2 (ESM) is also require()d by sanitize-html. Loading it through
 // require() here too keeps Node's module loader from racing an async import
 // against that synchronous require when routes are imported concurrently.
-const {parseDocument}=createRequire(import.meta.url)('htmlparser2');
+// Anchored at the runtime cwd, not import.meta.url: webpack inlines the build
+// machine's absolute path there, which does not exist on Vercel (/var/task).
+// The package is added to the trace in next.config.mjs.
+const {parseDocument}=createRequire(path.join(process.cwd(),'package.json'))('htmlparser2');
 const siteRoot=path.resolve(process.cwd(),'..');
 const FIXED_TAGS=new Set(['script','style','template','noscript']);
 const cache=new Map();

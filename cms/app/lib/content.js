@@ -13,7 +13,8 @@ import {safeUrl} from './page-schema.js';
 import {dbEnabled,readDbSnapshot,mutateDb} from './content-db.js';
 import sanitizeHtml from 'sanitize-html';
 const siteRoot=path.resolve(process.cwd(),'..');
-export const dataRoot=path.resolve(process.env.CMS_DATA_DIR||path.join(process.cwd(),'data'));
+// Vercel's deployment folder is read-only; only /tmp is writable there (ephemeral, per instance).
+export const dataRoot=path.resolve(process.env.CMS_DATA_DIR||(process.env.VERCEL?'/tmp/hydropascal-cms':path.join(process.cwd(),'data')));
 const contentFile=path.join(dataRoot,'content.json');
 const lockFile=path.join(dataRoot,'content.lock');
 const backupRoot=path.join(dataRoot,'backups');
