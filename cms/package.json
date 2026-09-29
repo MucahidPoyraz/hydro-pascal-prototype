@@ -10,7 +10,8 @@
     "import:legacy-blogs": "node scripts/import-legacy-blogs.mjs",
     "restore:content": "node scripts/restore-content-backup.mjs",
     "repair:categories": "node scripts/repair-category-relations.mjs",
-    "migrate:mssql": "node scripts/migrate-to-mssql.mjs"
+    "migrate:mssql": "node scripts/migrate-to-mssql.mjs",
+    "publish:iis": "node scripts/publish-iis.mjs"
   },
   "dependencies": {
     "lucide-react": "^1.48.0",

@@ -66,6 +66,18 @@ Tek zincir: **CMS verisi → `lib/seo-model.js` (eşleme) → `lib/seo.js` (head
 
 SMTP ayarlarını panelde **Site kimliği → Form e-postası bağlantısı** bölümünden girin. E-posta ayarı boşken talepler yine panele kaydedilir; hızlı yanıt düğmesi e-posta istemcisinde düzenlenebilir taslak oluşturur.
 
+## Natro / IIS'e yayın (Plesk Windows + iisnode)
+
+`dotnet publish`in karşılığı: `npm run publish:iis -- <boş klasör>`. Betik (`scripts/publish-iis.mjs`) Next'i `standalone` olarak derler (`.next-publish/`) ve FTP ile `httpdocs`'a olduğu gibi yüklenecek klasörü üretir:
+
+- `web.config` + `hp-server.cjs` (`deploy/iis/`): tüm istekler iisnode üzerinden Node uygulamasına gider (sayfalar MSSQL içeriğinden üretilir); `cms`, `node_modules`, `iisnode` URL'den erişilemez.
+- `index.html`, `robots.txt`, `sitemap.xml`, `assets/`, `tr/`, `en/`: uygulamanın okuduğu site şablonları.
+- `cms/`: derlenmiş sunucu + yalnızca gereken `node_modules`; `cms/data/uploads|attachments` yüklemeler için (IIS uygulama havuzuna yazma izni gerekir).
+- `cms/.env.production`: ilk yayında `.env.local`'deki `MSSQL_*` + yeni `ADMIN_PASSWORD`/`ADMIN_TOKEN` + `SITE_URL` ile oluşturulur, sonraki yayınlarda korunur. Git'e ve kimseyle paylaşmayın.
+- Yerel `data/content.json` ve yedekler pakete girmez.
+
+Sunucuda Plesk → Node.js: uygulama kökü ve belge kökü `httpdocs`, başlangıç dosyası `hp-server.cjs`, Node.js ≥ 20.9. Yerel deneme: `PORT=3000 node <paket>/hp-server.cjs`.
+
 ## Komutlar
 
 `CMS_DATA_DIR` ortam değişkeni içerik JSON dosyası, yüklenen görseller ve form eklerinin tutulduğu klasörü seçer. Varsayılan `cms/data` klasörüdür; üretimde bu yolu kalıcı disk birimine bağlayın.
@@ -73,6 +85,7 @@ SMTP ayarlarını panelde **Site kimliği → Form e-postası bağlantısı** b�
 - `npm run dev` — geliştirme sunucusu
 - `npm run build` — üretim derlemesi (Webpack)
 - `npm run repair:categories` — eski içe aktarımdan kalan kategori kayıtlarını onarır (HTML kaçışlı adlar, ayrı kayıt olarak tutulmuş İngilizce blog kategorileri). Varsayılan kuru çalıştırmadır; `-- --apply` ile yazar ve önce yedek alır (MSSQL'de `cms_content_backups`, dosya deposunda `data/backups/`).
+- `npm run publish:iis -- <klasör>` — Natro/IIS için FTP'ye hazır yayın paketi (yukarıya bakın).
 - `npm run migrate:mssql` — `data/content.json`'ı MSSQL içerik deposuna aktarır (yukarıya bakın).
 - `npm start` — üretim sunucusu
 
