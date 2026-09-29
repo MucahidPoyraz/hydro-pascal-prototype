@@ -1,0 +1,60 @@
+/* Structural page editor (Sitede düzenle): tree, item lists, properties.
+   Same palette/radii/type scale as the existing .visual-* editor classes. */
+.visual-editor-left .visual-tree-search { flex: 0 0 auto; flex-direction: row; }
+.structure-tree { padding: 2px 0 10px; }
+.structure-tree ul { margin: 0; padding: 0; list-style: none; }
+.structure-line { display: flex; min-width: 0; align-items: center; border-radius: 6px; }
+.structure-line[draggable=true] { cursor: grab; }
+.structure-line.is-hidden .structure-label { color: #a2a69d; text-decoration: line-through; text-decoration-color: #c9c5bb; }
+.is-dragging > .structure-line, .structure-item.is-dragging { opacity: .45; }
+.structure-toggle { display: grid; flex: 0 0 18px; width: 18px; height: 26px; place-items: center; padding: 0; border: 0; background: transparent; color: #9a9e95; font-size: 10px; }
+.structure-toggle:disabled { cursor: default; }
+.structure-row { display: flex; width: 100%; min-width: 0; min-height: 28px; align-items: center; gap: 6px; overflow: hidden; padding: 4px 7px 4px calc(6px + var(--depth,0) * 12px); border: 0; border-radius: 6px; background: transparent; color: #585d54; text-align: left; font-size: 10px; }
+.structure-row:hover { background: #f7f6f2; color: #30342d; }
+.structure-row:focus-visible, .structure-toggle:focus-visible { outline: 2px solid #d17b54; outline-offset: -2px; }
+.structure-row.is-selected { background: #fff2e9; color: #9d4e2c; }
+.structure-row.is-page { margin-bottom: 4px; padding-left: 7px; font-weight: 700; }
+.structure-row.is-section { font-weight: 600; }
+.structure-row.is-field { color: #767b72; }
+.structure-row.is-field small, .structure-row small { margin-left: auto; overflow: hidden; max-width: 45%; color: #9a9e95; font-size: 8px; text-overflow: ellipsis; white-space: nowrap; }
+.structure-icon { flex: 0 0 14px; color: #a85a36; text-align: center; }
+.structure-label { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.structure-badge { flex: 0 0 auto; padding: 1px 5px; border: 1px solid #efd9c9; border-radius: 999px; background: #fff7f1; color: #a0532f; font-size: 8px; font-style: normal; font-weight: 600; }
+.structure-badge.is-hidden { border-color: #e2dfd7; background: #f4f3ef; color: #767b72; }
+.structure-empty { padding: 5px 7px 5px 50px; color: #9a9e95; font-size: 9px; }
+
+.structure-palette .visual-block-row { gap: 8px; }
+.structure-inline-button { width: auto !important; padding: 0 7px; font-size: 9px; }
+
+.structure-properties { min-height: 0; flex: 1; overflow: auto; padding-bottom: 14px; }
+.structure-back { display: block; margin: 0 0 7px; padding: 0; border: 0; background: none; color: #a0532f; font-size: 9px; font-weight: 600; text-align: left; }
+.structure-actions { display: flex; flex-wrap: wrap; gap: 5px; padding: 10px 12px; border-bottom: 1px solid #efede7; }
+.structure-actions button, .structure-item-actions button { min-width: 30px; min-height: 30px; padding: 4px 8px; border: 1px solid #e5e2da; border-radius: 6px; background: #fff; color: #4e534a; font-size: 10px; font-weight: 600; }
+.structure-actions button:hover:not(:disabled), .structure-item-actions button:hover:not(:disabled) { border-color: #dfad91; background: #fff8f4; color: #9d4e2c; }
+.structure-actions button:disabled, .structure-item-actions button:disabled, .structure-add-item:disabled { cursor: not-allowed; opacity: .4; }
+.structure-actions .is-danger:hover:not(:disabled), .structure-item-actions .is-danger:hover:not(:disabled) { border-color: #e7b5aa; background: #fff4f1; color: #a33d2c; }
+.structure-notice { margin: 10px 12px 0; padding: 8px 9px; border: 1px solid #e8e5dd; border-radius: 7px; background: #f7f6f2; color: #686d64; font-size: 9px; line-height: 1.5; }
+.structure-field .visual-property-field > label { display: block; color: inherit; font: inherit; }
+.structure-field.is-focused .visual-property-field > label { color: #a0532f; }
+.structure-field.is-focused .visual-property-field input, .structure-field.is-focused .visual-property-field textarea { border-color: #d17b54; }
+.structure-field select { width: 100%; min-height: 34px; padding: 6px 8px; border: 1px solid #e4e1d9; border-radius: 7px; background: #fff; color: #363a33; font: 10px 'IBM Plex Sans', sans-serif; }
+.structure-status { display: block; margin: -6px 12px 10px; color: #767b72; font-size: 9px; }
+
+.structure-collection { margin: 12px 12px 0; padding-top: 12px; border-top: 1px solid #ece9e2; }
+.structure-collection > header { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; margin-bottom: 7px; color: #4c5148; font-size: 10px; }
+.structure-collection > header small { color: #8c9087; font-size: 9px; }
+.structure-items { margin: 0; padding: 0; list-style: none; }
+.structure-item { display: grid; grid-template-columns: 14px minmax(0, 1fr); align-items: center; gap: 4px 6px; padding: 6px; border: 1px solid #efede7; border-radius: 7px; background: #fff; }
+.structure-item + .structure-item { margin-top: 5px; }
+.structure-item.is-selected { border-color: #e8b39a; background: #fff8f4; }
+.structure-item.is-hidden .structure-item-label > span { color: #9a9e95; text-decoration: line-through; }
+.structure-handle { color: #b1b4ab; font-size: 11px; cursor: grab; }
+.structure-item-label { display: flex; min-width: 0; align-items: center; gap: 5px; padding: 3px 0; border: 0; background: none; color: #3f443c; text-align: left; font-size: 10px; font-weight: 600; }
+.structure-item-label > span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.structure-item-label:focus-visible { outline: 2px solid #d17b54; outline-offset: 2px; border-radius: 4px; }
+.structure-item-actions { display: flex; grid-column: 1 / -1; flex-wrap: wrap; gap: 4px; }
+.structure-item-actions button { min-width: 28px; min-height: 28px; padding: 2px 6px; }
+.structure-empty-state { padding: 16px 10px; border: 1px dashed #e0cdbf; border-radius: 7px; background: #fffaf6; color: #8a6552; text-align: center; font-size: 10px; }
+.structure-empty-state p { margin: 0; }
+.structure-add-item { width: 100%; min-height: 34px; margin-top: 8px; border: 1px dashed #dfb8a4; border-radius: 7px; background: #fff8f4; color: #a5532e; font-size: 10px; font-weight: 700; }
+.structure-add-item:hover:not(:disabled) { border-style: solid; }

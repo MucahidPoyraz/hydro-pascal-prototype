@@ -1,0 +1,13 @@
+node_modules
+.next
+.next-context-test/
+.env*
+!.env.example
+data/*.json
+data/backups/
+data/uploads/
+data/attachments/
+public/uploads/*
+!.keep
+data/audit*.log
+.next-*/

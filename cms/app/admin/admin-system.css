@@ -1,0 +1,175 @@
+/* Shared admin system: PageHeader, DataTable selection/bulk/empty states, RowActions menu, confirm dialog.
+   Only values that already exist in app/style.css: lines #e4e1d9/#eeece6, accent #df5f1f, warning #efd9b6/#fff5e5/#825414,
+   danger #f0d5cb/#fff8f5/#fff0e9/#a3462a, radii 6/8/9px, IBM Plex Sans/Mono, breakpoints 1100/800/620. */
+
+/* Screen-reader-only text. Used by the table toolbar labels since the start but never defined, so labels leaked visibly. */
+.sr-only { position: absolute !important; width: 1px !important; height: 1px !important; padding: 0 !important; margin: -1px !important; overflow: hidden !important; clip: rect(0 0 0 0) !important; white-space: nowrap !important; border: 0 !important; }
+
+.admin .admin-page-header h3 { display: flex; align-items: baseline; gap: 8px; }
+.admin .admin-page-header h3 .muted-count { font: 500 11px 'IBM Plex Mono', monospace; color: #858a80; }
+.admin .admin-page-header p { max-width: 720px; }
+
+/* Toolbar meta (clear filters + count) stays on the first toolbar row */
+.admin .dt-toolbar-meta { display: flex; flex: 0 0 auto; align-self: flex-start; min-height: 38px; align-items: center; justify-content: flex-end; gap: 8px; }
+.admin .table-search input[type=search]::-webkit-search-cancel-button { display: none; }
+
+/* Selection */
+.admin .table-scroll th.dt-select,
+.admin .table-scroll td.dt-select { width: 44px; padding: 0 0 0 14px; }
+.admin .table-scroll .dt-select input[type=checkbox] { width: 16px; min-width: 0; height: 16px; min-height: 0; margin: 0; padding: 0; accent-color: #df5f1f; cursor: pointer; }
+.admin .table-scroll tbody tr.is-selected { background: #fff8f5; }
+.admin .table-scroll tbody tr.is-selected:hover { background: #fff0e9; }
+
+/* Bulk action bar */
+.admin .dt-bulkbar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; margin: 0 0 10px; padding: 8px 10px 8px 14px; border: 1px solid #f0d5cb; border-radius: 9px; background: #fff8f5; font-size: 11px; color: #4f554c; }
+.admin .dt-bulkbar > b { font-weight: 600; white-space: nowrap; }
+.admin .dt-bulk-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+.admin .dt-bulk-clear { margin-left: auto; }
+.admin .dt-link { padding: 0; border: 0; background: none; color: #c94f17; font: inherit; text-decoration: underline; text-underline-offset: 2px; cursor: pointer; }
+
+/* Actions column keeps its width stable and right-aligned; ••• is square like the other compact icon buttons */
+.admin .table-scroll th.dt-actions,
+.admin .table-scroll td.dt-actions { width: 1%; white-space: nowrap; text-align: right; }
+.admin .table-scroll td.dt-actions .admin-row-actions { flex-wrap: nowrap; }
+.admin .admin-button-icon.row-menu-trigger { width: 30px; min-width: 30px; letter-spacing: .08em; font-size: 12px; }
+
+/* Empty / loading / error states (same height as the other admin empty states) */
+.admin .dt-empty-row td { height: auto !important; padding: 0 !important; }
+.admin .dt-state { display: flex; min-height: 140px; flex-direction: column; align-items: center; justify-content: center; gap: 8px; padding: 22px 16px; color: #858a80; font-size: 11px; text-align: center; }
+.admin .dt-state b { color: #4f554c; font-size: 12px; font-weight: 600; }
+.admin .dt-state.is-error b { color: #a3462a; }
+
+/* Row actions overflow menu (portaled to body, so not clipped by the table scroller) */
+.row-menu { position: fixed; z-index: 60; width: 210px; padding: 5px; border: 1px solid #e4e1d9; border-radius: 8px; background: #fff; box-shadow: 0 24px 60px #20221f33; font: 11px 'IBM Plex Sans', sans-serif; }
+.row-menu-item { display: flex; width: 100%; min-height: 34px; align-items: center; padding: 7px 10px; border: 0; border-radius: 6px; background: transparent; color: #4f554c; text-align: left; font: 500 11px 'IBM Plex Sans', sans-serif; cursor: pointer; }
+.row-menu-item:hover:not(:disabled) { background: #f3f2ee; }
+.row-menu-item:focus-visible { outline: 2px solid #d98159; outline-offset: -2px; background: #f3f2ee; }
+.row-menu-item.is-danger { color: #a3462a; }
+.row-menu-item.is-danger:hover:not(:disabled), .row-menu-item.is-danger:focus-visible { background: #fff0e9; }
+.row-menu-item:disabled { opacity: .45; cursor: not-allowed; }
+
+/* Dialogs live on document.body (outside .admin), so button variants need dialog-scoped rules too. */
+.relation-dialog .admin-button-danger { border-color: #f0d5cb; background: #fff8f5; color: #a3462a; }
+.relation-dialog .admin-button-danger:hover:not(:disabled) { border-color: #e9b6a3; background: #fff0e9; }
+.relation-dialog .admin-button-primary:hover:not(:disabled) { background: #c94f17; }
+.relation-dialog .admin-button:focus-visible { outline: 2px solid #d98159; outline-offset: 2px; }
+.confirm-dialog .confirm-dialog-body { display: flex; flex-direction: column; gap: 14px; padding: 22px 24px; }
+.confirm-dialog .confirm-dialog-message { margin: 0; color: #565b53; font-size: 12px; line-height: 1.6; white-space: pre-line; }
+.confirm-dialog .relation-dialog-actions { flex-wrap: wrap; }
+
+/* While a publish reloads server data the workspace is inert, so no edit can be overwritten mid-refresh. */
+.admin #admin-content[aria-busy=true] { opacity: .62; cursor: progress; transition: opacity .15s; }
+
+/* Save-state chip variants */
+.admin .save-state.is-busy { color: #825414; }
+.admin .save-state.is-failed { color: #a3462a; }
+.admin .save-state.is-published { color: #38633b; }
+
+/* Menu draft banner (header/footer) — the existing warning palette */
+.admin .draft-banner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 16px; margin: 0 0 16px; padding: 12px 14px; border: 1px solid #efd9b6; border-radius: 9px; background: #fff5e5; color: #825414; font-size: 11px; line-height: 1.5; }
+.admin .draft-banner b { display: block; margin-bottom: 2px; color: #30342d; font-size: 12px; }
+.admin .draft-banner .admin-heading-actions { flex: 0 0 auto; }
+
+/* Recent admin activity (dashboard) */
+.admin .audit-list { margin: 0; padding: 0; list-style: none; }
+.admin .audit-list li { display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 12px; padding: 9px 2px; border-top: 1px solid #f0eee9; font-size: 11px; color: #565b53; }
+.admin .audit-list time { color: #858a80; font: 10px 'IBM Plex Mono', monospace; }
+
+/* Controlled overflow: when a wide table scrolls, the actions column stays pinned and reachable. */
+@media (min-width: 621px) {
+  .admin .table-scroll tbody tr { background: #fff; }
+  .admin .table-scroll tbody tr:hover { background: #fbfaf7; }
+  .admin .table-scroll tbody tr.is-selected { background: #fff8f5; }
+  .admin .table-scroll tbody tr.is-selected:hover { background: #fff0e9; }
+  .admin .table-scroll th.dt-actions,
+  .admin .table-scroll td.dt-actions { position: sticky; right: 0; }
+  .admin .table-scroll td.dt-actions { z-index: 1; background: inherit; box-shadow: -12px 0 12px -12px #20221f33; }
+  .admin .table-scroll th.dt-actions { z-index: 2; background: #f8f8f5; box-shadow: -12px 0 12px -12px #20221f33; }
+  .admin .table-entity small, .admin .table-customer small { max-width: min(260px, 22vw); }
+  .admin .table-scroll td .table-slug { display: block; max-width: 220px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+}
+
+/* Tablet: drop secondary columns instead of squeezing every column */
+@media (min-width: 621px) and (max-width: 1100px) {
+  .admin .table-scroll .dt-secondary { display: none; }
+}
+
+@media (max-width: 800px) {
+  .admin .dt-toolbar-meta { align-self: stretch; justify-content: space-between; }
+}
+
+@media (max-width: 640px) {
+  .confirm-dialog .confirm-dialog-body { padding: 18px; }
+  .confirm-dialog .relation-dialog-actions { display: grid; grid-template-columns: minmax(0, 1fr); }
+}
+
+/* Mobile: rows are stacked cards (style.css); keep the checkbox in the card corner */
+@media (max-width: 620px) {
+  .admin .table-filters { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .admin .table-scroll tr { position: relative; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .admin .table-scroll td select { width: 100%; min-width: 0; max-width: 100%; }
+  .admin .table-scroll td a, .admin .table-scroll td code { max-width: 100%; white-space: normal; overflow-wrap: anywhere; }
+  .admin .table-scroll td.dt-select { position: absolute; top: 12px; right: 12px; width: auto; min-height: 0; padding: 0; border: 0; }
+  .admin .table-scroll td.dt-select:before { content: none; }
+  .admin .table-scroll td.dt-select + td { grid-column: 1 / -1; padding-right: 30px; }
+  .admin .table-scroll tr.dt-empty-row { display: block; padding: 0; }
+  .admin .table-scroll td.dt-actions { width: auto; grid-column: 1 / -1; text-align: left; }
+  .admin .table-scroll td.dt-actions .admin-row-actions { flex-wrap: wrap; justify-content: flex-start; }
+  .admin .dt-bulkbar { align-items: stretch; flex-direction: column; }
+  .admin .dt-bulk-actions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .admin .dt-bulk-actions .admin-button, .admin .dt-bulk-clear { width: 100%; white-space: normal; }
+  .admin .dt-bulk-clear { margin-left: 0; }
+  .admin .draft-banner .admin-heading-actions { grid-template-columns: minmax(0, 1fr); }
+  .admin .audit-list li { grid-template-columns: 1fr; gap: 3px; }
+}
+
+/* SEO panels (admin-seo-panel.jsx / admin-seo-settings.jsx). Existing values only:
+   lines #e5e2da/#e8e5de, ok #2f7d55, warning #825414/#fff5e5, danger #a3462a/#fff8f5, radii 6/8/9px. */
+.admin .seo-preview-grid { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr) minmax(0, 1fr); gap: 12px; }
+.admin .seo-preview-grid .seo-search-preview { display: flex; flex-direction: column; gap: 6px; padding: 14px 16px; border: 1px solid #e5e2da; border-radius: 9px; background: #fff; }
+.admin .seo-social-preview { display: flex; min-width: 0; flex-direction: column; gap: 4px; overflow: hidden; border: 1px solid #e5e2da; border-radius: 9px; background: #fff; }
+.admin .seo-social-preview > span { padding: 10px 12px 4px; color: #858980; font-size: 9px; font-weight: 700; letter-spacing: .08em; }
+.admin .seo-social-preview img, .admin .seo-social-empty { width: 100%; aspect-ratio: 1.91 / 1; object-fit: cover; background: #f3f2ee; }
+.admin .seo-social-empty { display: flex; align-items: center; justify-content: center; color: #858980; font-size: 11px; }
+.admin .seo-social-preview small { padding: 6px 12px 0; color: #858980; font: 10px 'IBM Plex Mono', monospace; overflow-wrap: anywhere; }
+.admin .seo-social-preview b { padding: 0 12px; color: #292c27; font-size: 12px; line-height: 1.4; }
+.admin .seo-social-preview p { margin: 0; padding: 0 12px 12px; color: #62685f; font-size: 11px; line-height: 1.5; }
+.admin .seo-social-preview.is-x b { padding-bottom: 2px; }
+.admin .seo-social-preview.is-x small { padding: 0 12px 12px; }
+.admin .seo-checks { display: flex; flex-wrap: wrap; gap: 6px; margin: 0; padding: 0; list-style: none; }
+.admin .seo-checks li { display: inline-flex; align-items: center; gap: 6px; padding: 5px 9px; border: 1px solid #e8e5de; border-radius: 6px; background: #fff; color: #4f554c; font-size: 11px; }
+.admin .seo-checks li > span { font-weight: 700; }
+.admin .seo-checks li.is-ok > span { color: #2f7d55; }
+.admin .seo-checks li.is-warn { border-color: #efd9b6; background: #fff5e5; color: #825414; }
+.admin .seo-checks li.is-fail { border-color: #f0d5cb; background: #fff8f5; color: #a3462a; }
+.admin .seo-count { color: #858980; font-size: 10px; font-weight: 400; line-height: 1.5; }
+.admin .seo-count.is-over { color: #a3462a; }
+.admin .seo-mode-options { display: grid; gap: 8px; margin-bottom: 15px; }
+.admin .seo-mode-options .seo-index-field.is-selected { border-color: #df5f1f; }
+.admin .seo-index-field input[type=radio] { width: 17px; min-width: 17px; height: 17px; margin: 0; accent-color: #df5f1f; }
+.admin .seo-event-list { display: grid; gap: 6px; }
+.admin .seo-event-list > div { display: grid; grid-template-columns: 190px 64px 1fr; align-items: baseline; gap: 4px 10px; padding: 8px 0; border-top: 1px solid #eeece6; font-size: 11px; color: #4f554c; }
+.admin .seo-event-list code { font: 500 11px 'IBM Plex Mono', monospace; color: #292c27; }
+.admin .seo-event-list b { justify-self: start; padding: 2px 6px; border-radius: 6px; background: #fff8f5; color: #a3462a; font-size: 9px; font-weight: 600; }
+.admin .seo-event-list small { grid-column: 1 / -1; color: #858980; font: 10px 'IBM Plex Mono', monospace; }
+.admin .seo-steps { margin: 0; padding-left: 18px; color: #4f554c; font-size: 11px; line-height: 1.8; }
+.admin .seo-steps code { font: 10px 'IBM Plex Mono', monospace; overflow-wrap: anywhere; }
+.admin .redirect-list { display: grid; gap: 10px; }
+.admin .redirect-row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) 130px auto auto; align-items: end; gap: 10px; padding-bottom: 10px; border-bottom: 1px solid #eeece6; }
+.admin .seo-level { padding: 3px 7px; border-radius: 6px; font-size: 10px; font-weight: 600; }
+.admin .seo-level.is-ok { background: #f3f2ee; color: #2f7d55; }
+.admin .seo-level.is-warn { background: #fff5e5; color: #825414; }
+.admin .seo-level.is-fail { background: #fff8f5; color: #a3462a; }
+.admin .page-seo-view { display: flex; flex-direction: column; gap: 15px; }
+.admin .page-seo-view > .hint { margin: 0; }
+.admin .blog-seo-fields-grid { padding-top: 12px; }
+@media (max-width: 1100px) { .admin .seo-preview-grid { grid-template-columns: 1fr 1fr; } .admin .seo-preview-grid .seo-search-preview { grid-column: 1 / -1; } }
+@media (max-width: 800px) { .admin .redirect-row { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 620px) { .admin .seo-preview-grid, .admin .redirect-row { grid-template-columns: 1fr; } .admin .seo-event-list > div { grid-template-columns: 1fr; } }
+/* SEO panels sit inside the two-column .formgrid: previews, checks and hints span the full row;
+   checkbox rows stay horizontal like the existing product index toggle. */
+:is(.product-seo-fields, .page-seo-fields, .blog-seo-fields-grid, .seo-pixel-grid) > :is(.seo-preview-grid, .seo-checks, .hint, .wide) { grid-column: 1 / -1; }
+.admin .seo-checks { align-items: flex-start; }
+.admin .seo-index-field { flex-direction: row; }
+.admin .seo-index-field > span { font-weight: 500; line-height: 1.5; }
+
